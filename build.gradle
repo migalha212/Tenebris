@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'com.ldts.t14g01.Tenebris'
@@ -10,10 +11,15 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'com.googlecode.lanterna', name: 'lanterna', version: '3.1.1'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass.set('com.ldts.t14g01.Tenebris.Tenebris')
 }
