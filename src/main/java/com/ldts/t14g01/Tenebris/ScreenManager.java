@@ -16,7 +16,10 @@ public class ScreenManager {
     public static final int MAIN_MENU = 5;
     public static final int ARENA = 12;
 
-    public static Screen createScreen(int multiplier) throws IOException {
+    public static Screen newScreen(int multiplier, Screen oldScreen) throws IOException {
+        // Properly delete old screen if needed
+        if (oldScreen != null) oldScreen.stopScreen();
+
         // Calculate Terminal Cell Count
         final int numberCols = BASE_WIDTH * multiplier;
         final int numberRows = BASE_HEIGHT * multiplier;
@@ -38,7 +41,7 @@ public class ScreenManager {
                                 new Font("Monospaced", Font.BOLD, fontSize)
                         )
                 ).createScreen();
-        
+
         screen.startScreen();
         screen.doResizeIfNecessary();
         return screen;
