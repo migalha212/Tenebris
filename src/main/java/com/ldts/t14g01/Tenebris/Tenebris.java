@@ -1,32 +1,40 @@
 package com.ldts.t14g01.Tenebris;
 
 import com.googlecode.lanterna.screen.Screen;
-import com.ldts.t14g01.Tenebris.menus.MainMenu;
+import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
+import com.ldts.t14g01.Tenebris.screen.ScreenManager;
+import com.ldts.t14g01.Tenebris.screen.ScreenRelauchHandler;
+
 import java.io.IOException;
 
-public class Tenebris {
+public class Tenebris implements ScreenRelauchHandler, ScreenGetter {
     private Screen screen;
+    private final State state;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Tenebris tenebris = new Tenebris();
         tenebris.run();
     }
 
     Tenebris() throws IOException {
-        this.screen = ScreenManager.createScreen(ScreenManager.MAIN_MENU);
-        screen.startScreen();
+        // Init game state
+        this.state = State.initState();
+        ScreenManager.setScreenRelaunchHandler(this);
     }
 
-    public void run() throws IOException {
-        MainMenu mainMenu = new MainMenu();
-
-        boolean gameStart = mainMenu.runMenu(screen);
-        screen.stopScreen();
-
-        if (gameStart) {
-            System.out.println("Starting the game...");
-        } else {
-            System.out.println("Exiting Tenebris.");
+    public void run() throws IOException, InterruptedException {
+        if (this.state.isInMenu()) {
+            this.screen = ScreenManager.newScreen(ScreenManager.MAIN_MENU);
+            this.state.runMenu(this);
         }
+    }
+
+    // Receives new screen when it is relaunched
+    public void screenRelauchHandler(Screen screen) {
+        this.screen = screen;
+    }
+
+    public Screen getScreen() {
+        return this.screen;
     }
 }
