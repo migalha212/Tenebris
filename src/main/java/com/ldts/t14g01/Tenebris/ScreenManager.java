@@ -16,13 +16,19 @@ public class ScreenManager {
     public static final int MAIN_MENU = 5;
     public static final int ARENA = 12;
 
-    public static Screen newScreen(int multiplier, Screen oldScreen) throws IOException {
+    private static Screen currentScreen = null;
+    private static int currentScreenSize = 0;
+
+    public static Screen newScreen(int screenSize) throws IOException {
+        // Return current screen if no changes are needed
+        if (ScreenManager.currentScreenSize == screenSize && ScreenManager.currentScreen != null) return ScreenManager.currentScreen;
+
         // Properly delete old screen if needed
-        if (oldScreen != null) oldScreen.stopScreen();
+        if (ScreenManager.currentScreen != null) ScreenManager.currentScreen.stopScreen();
 
         // Calculate Terminal Cell Count
-        final int numberCols = BASE_WIDTH * multiplier;
-        final int numberRows = BASE_HEIGHT * multiplier;
+        final int numberCols = BASE_WIDTH * screenSize;
+        final int numberRows = BASE_HEIGHT * screenSize;
 
         // Get screen dimensions
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -42,9 +48,14 @@ public class ScreenManager {
                         )
                 ).createScreen();
 
+        // Screen initial config
         screen.startScreen();
         screen.doResizeIfNecessary();
         screen.setCursorPosition(null);
+
+        // Update state info
+        ScreenManager.currentScreen = screen;
+        ScreenManager.currentScreenSize = screenSize;
         return screen;
     }
 }
