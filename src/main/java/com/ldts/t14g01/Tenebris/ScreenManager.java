@@ -44,6 +44,7 @@ public class ScreenManager {
 
         screen.startScreen();
         screen.doResizeIfNecessary();
+        screen.setCursorPosition(null);
         return screen;
     }
 }
