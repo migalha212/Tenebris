@@ -38,7 +38,8 @@ public class ScreenManager {
                                 new Font("Monospaced", Font.BOLD, fontSize)
                         )
                 ).createScreen();
-
+        
+        screen.startScreen();
         screen.doResizeIfNecessary();
         return screen;
     }
