@@ -3,11 +3,11 @@ package com.ldts.t14g01.Tenebris;
 import com.googlecode.lanterna.screen.Screen;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
 import com.ldts.t14g01.Tenebris.screen.ScreenManager;
-import com.ldts.t14g01.Tenebris.screen.ScreenRelauchHandler;
+import com.ldts.t14g01.Tenebris.screen.ScreenRelaunchHandler;
 
 import java.io.IOException;
 
-public class Tenebris implements ScreenRelauchHandler, ScreenGetter {
+public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
     private Screen screen;
     private final State state;
 
@@ -30,7 +30,7 @@ public class Tenebris implements ScreenRelauchHandler, ScreenGetter {
     }
 
     // Receives new screen when it is relaunched
-    public void screenRelauchHandler(Screen screen) {
+    public void screenRelaunchHandler(Screen screen) {
         this.screen = screen;
     }
 

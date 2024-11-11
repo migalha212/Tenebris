@@ -23,7 +23,7 @@ public class ScreenManager implements TerminalResizeListener {
 
     // State variables
     private static ScreenManager screenManager = null;
-    private static ScreenRelauchHandler screenRelauchHandler = null;
+    private static ScreenRelaunchHandler screenRelaunchHandler = null;
     private static Screen screen = null;
     private static TerminalSize terminalSize = null;
     private static int screenSize = 0;
@@ -102,11 +102,11 @@ public class ScreenManager implements TerminalResizeListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ScreenManager.screenRelauchHandler.screenRelauchHandler(ScreenManager.screen);
+        ScreenManager.screenRelaunchHandler.screenRelaunchHandler(ScreenManager.screen);
     }
 
-    public static void setScreenRelaunchHandler(ScreenRelauchHandler screenRelauchHandler) {
-        ScreenManager.screenRelauchHandler = screenRelauchHandler;
+    public static void setScreenRelaunchHandler(ScreenRelaunchHandler screenRelaunchHandler) {
+        ScreenManager.screenRelaunchHandler = screenRelaunchHandler;
     }
 
 }
