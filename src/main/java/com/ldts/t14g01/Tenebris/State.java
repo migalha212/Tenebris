@@ -2,9 +2,6 @@ package com.ldts.t14g01.Tenebris;
 
 import com.ldts.t14g01.Tenebris.menus.MainMenu;
 import com.ldts.t14g01.Tenebris.menus.Menu;
-import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
-
-import java.io.IOException;
 
 public class State {
     private GameData gameData;
@@ -28,14 +25,8 @@ public class State {
         return inMenu;
     }
 
-    public void runMenu(ScreenGetter screenGetter) throws IOException, InterruptedException {
-        // Run menus
-        while (this.menu != null && this.inMenu)
-            this.menu.run(screenGetter, this);
-
-        // Clear Menu State
-        this.inMenu = false;
-        this.menu = null;
+    public void setInMenu(boolean inMenu) {
+        this.inMenu = inMenu;
     }
 
     // Returns true is the game has any save loaded
