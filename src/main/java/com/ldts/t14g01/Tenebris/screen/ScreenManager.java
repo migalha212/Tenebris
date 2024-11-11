@@ -18,7 +18,7 @@ public class ScreenManager implements TerminalResizeListener {
     private static final int BASE_HEIGHT = 5;
 
     // Default Sizes
-    public static final int MAIN_MENU = 5;
+    public static final int MAIN_MENU = 4;
     public static final int ARENA = 12;
 
     // State variables
@@ -93,6 +93,7 @@ public class ScreenManager implements TerminalResizeListener {
     }
 
     // Used to handel when terminal is resized
+    @Override
     public void onResized(Terminal terminal, TerminalSize newTerminalSize) {
         if (newTerminalSize.equals(ScreenManager.terminalSize)) return; // Don't do anything unless it actually changed
         try {

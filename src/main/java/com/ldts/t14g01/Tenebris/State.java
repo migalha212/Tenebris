@@ -37,4 +37,25 @@ public class State {
         this.inMenu = false;
         this.menu = null;
     }
+
+    // Returns true is the game has any save loaded
+    public boolean hasLoadedGame() {
+        return this.gameData != null;
+    }
+
+    public Menu currentMenu() {
+        if (!this.inMenu) return null;
+        return this.menu;
+    }
+
+    public void setNextMenu(Menu menu) {
+        this.menu = menu;
+        this.inMenu = true;
+    }
+
+    public void quit() {
+        this.menu = null;
+        this.gameData = null;
+        this.inMenu = false;
+    }
 }
