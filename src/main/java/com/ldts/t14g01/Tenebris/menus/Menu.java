@@ -7,4 +7,6 @@ import java.io.IOException;
 
 public interface Menu {
     void run(ScreenGetter screenGetter, State state) throws IOException, InterruptedException;
+
+    String getName();
 }
