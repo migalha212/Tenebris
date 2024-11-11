@@ -32,9 +32,6 @@ public class ScreenManager implements TerminalResizeListener {
     }
 
     public static Screen newScreen(int screenSize) throws IOException {
-        // Properly delete old screen if needed
-        if (ScreenManager.screen != null) ScreenManager.screen.stopScreen();
-
         // Calculate Terminal Cell Count
         final int numberCols = BASE_WIDTH * screenSize;
         final int numberRows = BASE_HEIGHT * screenSize;
@@ -45,6 +42,9 @@ public class ScreenManager implements TerminalResizeListener {
         // Return current screen if no changes are needed
         if (terminalSize.equals(ScreenManager.terminalSize) && ScreenManager.screen != null)
             return ScreenManager.screen;
+
+        // Properly delete old screen if needed
+        if (ScreenManager.screen != null) ScreenManager.screen.stopScreen();
 
         // Get screen dimensions
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -87,8 +87,8 @@ public class ScreenManager implements TerminalResizeListener {
 
         // Screen initial config
         screen.startScreen();
-        screen.doResizeIfNecessary();
         screen.setCursorPosition(null);
+        screen.doResizeIfNecessary();
         return screen;
     }
 

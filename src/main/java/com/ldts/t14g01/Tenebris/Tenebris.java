@@ -23,9 +23,10 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
     }
 
     public void run() throws IOException, InterruptedException {
+        // Run while in menus of in a game
         while (this.state.hasLoadedGame() || this.state.isInMenu()) {
             // Run Menus
-            while (this.state.currentMenu() != null && this.state.isInMenu()) {
+            while (this.state.isInMenu() && this.state.currentMenu() != null) {
                 this.screen = ScreenManager.newScreen(ScreenManager.MAIN_MENU);
                 this.state.currentMenu().run(this, this.state);
             }
@@ -35,6 +36,8 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
             this.state.setNextMenu(null);
         }
 
+        // End of Game
+        // Close Screen
         this.screen.close();
     }
 

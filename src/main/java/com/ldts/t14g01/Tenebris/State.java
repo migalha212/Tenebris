@@ -41,7 +41,7 @@ public class State {
 
     public void setNextMenu(Menu menu) {
         this.menu = menu;
-        this.inMenu = true;
+        this.inMenu = menu == null ? false : true;
     }
 
     public void quit() {
