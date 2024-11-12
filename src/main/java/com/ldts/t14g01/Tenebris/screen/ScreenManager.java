@@ -67,8 +67,8 @@ public class ScreenManager implements TerminalResizeListener {
                         )
                 )
 
-                // Create Terminal
-                .createTerminal();
+                // Create Terminal Emulator
+                .createTerminalEmulator();
 
         // Create ScreenManager object that will handle the terminal resize
         if (ScreenManager.screenManager == null)
