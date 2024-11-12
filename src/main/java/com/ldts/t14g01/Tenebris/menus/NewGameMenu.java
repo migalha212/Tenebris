@@ -16,22 +16,18 @@ import java.util.List;
 public class NewGameMenu implements Menu {
     private static final String name = "New Game";
     private int selectedOption;
-    private final List<String> options;
+
+    enum Difficulty{
+        Easy,
+        Medium,
+        Champion,
+        Heartless
+    }
 
     public NewGameMenu(){
         this.selectedOption = 0;
-        this.options = new ArrayList<>();
-        setOptions();
     }
-    
-    private void setOptions(){
-        options.add("Easy");
-        options.add("Medium");
-        options.add("Hard");
-        options.add("Champion");
-        options.add("HEARTLESS");
 
-    }
 
     @Override
     public void run(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {
@@ -53,8 +49,9 @@ public class NewGameMenu implements Menu {
             KeyStroke keyStroke = screen.pollInput();
             if (keyStroke != null){
                 switch (keyStroke.getKeyType()){
-                    case ArrowUp -> selectedOption = (selectedOption - 1 + options.size()) % options.size();
-                    case ArrowDown -> selectedOption = (selectedOption + 1) % options.size();
+                    case ArrowUp -> selectedOption = (selectedOption - 1 + Difficulty.values().length)
+                            % Difficulty.values().length;
+                    case ArrowDown -> selectedOption = (selectedOption + 1) % Difficulty.values().length;
                     //case Enter -> this.executeOption(state);
                     case Escape -> this.backToMain(state);
                     case EOF -> this.handleEOFCharacter(screenGetter, state);
@@ -96,24 +93,35 @@ public class NewGameMenu implements Menu {
                 );
 
         // Draw Options
-        for(int i = 0; i < this.options.size(); i++){
-            String name = this.options.get(i);
-            ;
+        for(Difficulty difficulty : Difficulty.values()){
+
 
             TextColor color = TextColor.ANSI.WHITE;
 
             // Highlight selected Option
-            if(i == selectedOption){
+            if(difficulty.ordinal() == selectedOption){
                 color = TextColor.ANSI.YELLOW;
             }
 
             // Draw Option
             textGraphics
                     .setForegroundColor(color)
-                    .putString(4, 10 + i, name);
+                    .putString(4, 10 + difficulty.ordinal(), difficulty.name());
         }
 
         // TO DO: Draw Option Description
+        String description = "";
+        switch (selectedOption){
+            case 0 -> description = "Meant for beginners"; //to explore\nand learn the ways of Tenebris";
+            case 1 -> description = "Increased combat difficulty";
+            case 2 -> description = "Unforgiving challenge awaits";
+            case 3 -> description = "Good Luck.";
+        }
+
+        textGraphics
+                .setForegroundColor(TextColor.ANSI.WHITE)
+                .putString(25,10  + selectedOption,description);
+
 
         screen.refresh();
     }
