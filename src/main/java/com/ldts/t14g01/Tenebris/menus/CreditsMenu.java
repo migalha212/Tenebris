@@ -102,7 +102,7 @@ public class CreditsMenu implements Menu {
         //Draw Authors' Name
         List<String> nameAuthor = new ArrayList<>();
         nameAuthor.add("T14G01:");
-        nameAuthor.add("Claúdio Meireles");
+        nameAuthor.add("Cláudio Meireles");
         nameAuthor.add("Dinis Silva");
         nameAuthor.add("Miguel Pereira");
 
