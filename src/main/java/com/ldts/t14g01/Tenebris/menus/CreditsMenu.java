@@ -86,6 +86,16 @@ public class CreditsMenu implements Menu {
                         CreditsMenu.name
                 );
 
+        //Draw Back Button
+        String backText = "Back";
+        textGraphics
+                .setForegroundColor(TextColor.ANSI.YELLOW)
+                        .putString(
+                                centerX - backText.length() / 2,
+                                screen.getTerminalSize().getRows() - 3,
+                                backText
+                        );
+
         // Update Screen
         screen.refresh();
     }
