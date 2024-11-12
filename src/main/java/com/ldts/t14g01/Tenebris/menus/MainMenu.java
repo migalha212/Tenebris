@@ -32,6 +32,7 @@ public class MainMenu implements Menu {
             options.add(new LevelsMenu());
 
         options.add(new SettingsMenu());
+        options.add(new HowToPlayMenu());
         options.add(new CreditsMenu());
 
         // Quit option

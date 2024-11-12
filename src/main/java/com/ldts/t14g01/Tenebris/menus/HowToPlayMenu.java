@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HowToPlayMenu implements Menu {
-    private static final String name = "Credits";
+    private static final String name = "How to Play";
 
     public HowToPlayMenu() {
     }
