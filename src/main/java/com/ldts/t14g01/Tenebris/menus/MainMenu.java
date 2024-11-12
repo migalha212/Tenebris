@@ -86,22 +86,21 @@ public class MainMenu implements Menu {
         // Get TextGraphics
         TextGraphics textGraphics = screen.newTextGraphics();
 
-        // Get center (y axis) position
+        // Get center x and center y position
         int centerX = screen.getTerminalSize().getColumns() / 2;
         int centerY = screen.getTerminalSize().getRows() / 2;
 
-        //Align Options Left
+        // Align Options Left
         int leftX = 4;
 
         // Draw Title
         textGraphics
                 .setForegroundColor(TextColor.ANSI.WHITE)
                 .putString(
-                        centerX - MainMenu.name.length()/2,
+                        centerX - MainMenu.name.length() / 2,
                         centerY - 4,
                         MainMenu.name
                 );
-
 
 
         // Draw options (left-aligned)
