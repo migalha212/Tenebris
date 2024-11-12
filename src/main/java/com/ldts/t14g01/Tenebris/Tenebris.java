@@ -43,7 +43,7 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
 
     // Receives new screen when it is relaunched
     @Override
-    public void screenRelaunchHandler(Screen screen) {
+    public void handle(Screen screen) {
         this.screen = screen;
     }
 

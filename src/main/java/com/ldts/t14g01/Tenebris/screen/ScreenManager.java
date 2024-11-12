@@ -95,15 +95,18 @@ public class ScreenManager implements TerminalResizeListener {
     // Used to handel when terminal is resized
     @Override
     public void onResized(Terminal terminal, TerminalSize newTerminalSize) {
-        if (newTerminalSize.equals(ScreenManager.terminalSize)) return; // Don't do anything unless it actually changed
-        try {
-            ScreenManager.screen.stopScreen();
-            ScreenManager.screen = null;
-            ScreenManager.newScreen(ScreenManager.screenSize);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ScreenManager.screenRelaunchHandler.screenRelaunchHandler(ScreenManager.screen);
+        // Don't do anything unless it actually changed
+        if (newTerminalSize.equals(ScreenManager.terminalSize)) return;
+
+        if (ScreenManager.screen != null)
+            try {
+                ScreenManager.screen.stopScreen();
+                ScreenManager.screen = null;
+                ScreenManager.newScreen(ScreenManager.screenSize);
+                ScreenManager.screenRelaunchHandler.handle(ScreenManager.screen);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
     }
 
     public static void setScreenRelaunchHandler(ScreenRelaunchHandler screenRelaunchHandler) {
