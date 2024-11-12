@@ -86,20 +86,25 @@ public class MainMenu implements Menu {
         // Get TextGraphics
         TextGraphics textGraphics = screen.newTextGraphics();
 
-        // Get center position
+        // Get center (y axis) position
         int centerX = screen.getTerminalSize().getColumns() / 2;
         int centerY = screen.getTerminalSize().getRows() / 2;
+
+        //Align Options Left
+        int leftX = 4;
 
         // Draw Title
         textGraphics
                 .setForegroundColor(TextColor.ANSI.WHITE)
                 .putString(
-                        centerX - MainMenu.name.length() / 2,
+                        centerX - MainMenu.name.length()/2,
                         centerY - 4,
                         MainMenu.name
                 );
 
-        // Draw options
+
+
+        // Draw options (left-aligned)
         for (int i = 0; i < this.options.size(); i++) {
             Menu menu = this.options.get(i);
             String name = menu == null ? "Exit" : menu.getName();
@@ -108,14 +113,13 @@ public class MainMenu implements Menu {
 
             // Add markers for the selected option
             if (i == selectedOption) {
-                name = "> " + name + " <";
                 color = TextColor.ANSI.YELLOW;
             }
 
             // Draw option
             textGraphics
                     .setForegroundColor(color)
-                    .putString(centerX - 4, centerY + i, name);
+                    .putString(leftX, centerY + i, name);
         }
 
         // Update Screen
