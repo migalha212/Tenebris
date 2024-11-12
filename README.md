@@ -1,4 +1,4 @@
-### LDTS T14G01 - TENEBRIS  
+# LDTS T14G01 - TENEBRIS  
 
 ## Game Description
 
@@ -8,7 +8,7 @@
 
 This project was developed by Cláudio Meireles (up202306618@up.pt), Dinis Silva (up202306207@up.pt) and Miguel Pereira (up202304387@up.pt).
 
-For a more detailed version of this description click here.
+For a more detailed version of this description click [here](./docs/README.md).
 
 ## Screenshots
 
