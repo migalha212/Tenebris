@@ -14,8 +14,12 @@ import java.util.List;
 
 public class HowToPlayMenu implements Menu {
     private static final String name = "How to Play";
+    private int selectedOption;
+    private final List<String> options;
 
     public HowToPlayMenu() {
+        this.selectedOption = 0;
+        this.options = new ArrayList<>();
     }
 
     @Override
@@ -67,14 +71,23 @@ public class HowToPlayMenu implements Menu {
         int centerX = screen.getTerminalSize().getColumns() / 2;
         int centerY = screen.getTerminalSize().getRows() / 2;
 
+        //X axis Offset
+        int offsetX = 4;
+
         // Draw Title;
-        textGraphics
-                .setForegroundColor(TextColor.Factory.fromString("#DAA520"))
+        List<String> titleLines = new ArrayList<>();
+        titleLines.add(HowToPlayMenu.name);
+        titleLines.add("───────────────");
+
+        for (int i = 0; i < titleLines.size(); i++) {
+            textGraphics
+                    .setForegroundColor(TextColor.Factory.fromString("#DAA520"))
                     .putString(
-                            centerX - HowToPlayMenu.name.length()/2,
-                            centerY - 8,
-                            HowToPlayMenu.name
+                            offsetX,
+                            centerY - 8 + i,
+                            titleLines.get(i)
                     );
+        }
 
         // Draw Back Button
         String backText = "Back";
