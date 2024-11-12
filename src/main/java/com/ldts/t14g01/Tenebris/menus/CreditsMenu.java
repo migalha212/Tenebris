@@ -14,18 +14,8 @@ import java.util.List;
 
 public class CreditsMenu implements Menu {
     private static final String name = "Credits";
-    private int selectedOption;
-    private final List<Menu> options;
 
-    public CreditsMenu(){
-        this.selectedOption = 0;
-        this.options = new ArrayList<>();
-    }
-
-    private void updateOptions(State state) {
-        options.clear();
-        options.add(new MainMenu());
-    }
+    public CreditsMenu(){}
 
     @Override
     public String getName() {
@@ -35,7 +25,6 @@ public class CreditsMenu implements Menu {
     @Override
     public void run(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {
         //Get options
-        updateOptions(state);
         Screen screen;
 
         // While the active menu is this
@@ -167,7 +156,7 @@ public class CreditsMenu implements Menu {
     //Set next menu to the selected option
     //By now, the only option is to go back to Main Menu
     private void executeOption(State state) {
-        Menu nextMenu = this.options.get(this.selectedOption);
+        Menu nextMenu = new MainMenu();
         state.setNextMenu(nextMenu);
     }
 
