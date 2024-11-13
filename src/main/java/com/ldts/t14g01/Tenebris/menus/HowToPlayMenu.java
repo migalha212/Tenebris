@@ -143,7 +143,7 @@ public class HowToPlayMenu implements Menu {
             case 0 -> showMenuNavigationControls(textGraphics);
             case 1 -> showDefaultControls(textGraphics);
             case 2 -> showObjective(textGraphics);
-//            case 3 ->
+            case 3 -> showGameBasics(textGraphics);
 //            case 4 ->
 //            case 5 ->
 //            case 6 ->
@@ -231,6 +231,37 @@ public class HowToPlayMenu implements Menu {
             textGraphics
                     .setForegroundColor(color)
                     .putString(25, 6 + i + space, lines.get(i));
+        }
+    }
+
+    private void showGameBasics(TextGraphics textGraphics){
+        List<String> gameBasics = new ArrayList<>();
+        gameBasics.add("Health Points (HP)");
+        gameBasics.add("Represents the damage that an Entity");
+        gameBasics.add("can take before dying.");
+        gameBasics.add("Energy (EN)");
+        gameBasics.add("Required to fire weapons;");
+        gameBasics.add("Regenerates over time.");
+        gameBasics.add("Damage (DMG)");
+        gameBasics.add("Indicates how much HP is lost when an");
+        gameBasics.add("Entity or obstacle inflicts damage.");
+
+        int space = 0;
+
+        for (int i = 0; i < gameBasics.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            if (i == 0 || i == 3 || i == 6){
+                color = TextColor.ANSI.CYAN;
+                if (i != 0){
+                    space++;
+                }
+            }
+
+            // Draw Game Basics Explanation
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(25, 5 + i + space, gameBasics.get(i));
         }
     }
 
