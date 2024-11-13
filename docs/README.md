@@ -58,7 +58,7 @@ This menu can be opened while in-game. It lets you pause your game and gives you
 #### Attributes of entities (main character and monsters)
 
 - **Health Points** (HP) : the amount of damage an Entity can take before dying.
-- **Damage** (DMG) : the amount of HP that will be taken away from an Entity in the interaction.
+- **Damage** (DMG) : the amount of HP that will be taken away from an Entity in the interaction (Monsters only).
 - **Energy** (EN) : a resource the Player uses to fire his weapons (Main Character only).
 
 #### Map Elements
