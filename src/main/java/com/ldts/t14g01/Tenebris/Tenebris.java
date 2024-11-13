@@ -34,6 +34,12 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
             // Clear Menu State
             this.state.setInMenu(false);
             this.state.setNextMenu(null);
+
+            // Run Game
+            while (this.state.hasLoadedGame()){
+                this.screen = ScreenManager.newScreen(ScreenManager.ARENA);
+                //this.state.currentArena().run(this, this.state);
+            }
         }
 
         // End of Game

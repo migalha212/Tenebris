@@ -49,4 +49,12 @@ public class State {
         this.gameData = null;
         this.inMenu = false;
     }
+
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
+    }
+
+    public void currentArena() {
+
+    }
 }

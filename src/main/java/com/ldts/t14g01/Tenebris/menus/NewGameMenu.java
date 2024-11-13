@@ -1,28 +1,23 @@
 package com.ldts.t14g01.Tenebris.menus;
 
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.graphics.TextImage;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
+import com.ldts.t14g01.Tenebris.GameData;
 import com.ldts.t14g01.Tenebris.State;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
-
-
+import com.ldts.t14g01.Tenebris.utils.Difficulty;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+
 
 public class NewGameMenu implements Menu {
     private static final String name = "New Game";
     private int selectedOption;
-
-    enum Difficulty{
-        Easy,
-        Medium,
-        Champion,
-        Heartless
-    }
 
     public NewGameMenu(){
         this.selectedOption = 0;
@@ -52,7 +47,7 @@ public class NewGameMenu implements Menu {
                     case ArrowUp -> selectedOption = (selectedOption - 1 + Difficulty.values().length)
                             % Difficulty.values().length;
                     case ArrowDown -> selectedOption = (selectedOption + 1) % Difficulty.values().length;
-                    //case Enter -> this.executeOption(state);
+                    case Enter -> this.executeOption(state);
                     case Escape -> this.backToMain(state);
                     case EOF -> this.handleEOFCharacter(screenGetter, state);
                 }
@@ -64,6 +59,19 @@ public class NewGameMenu implements Menu {
                 }
             }
         }
+    }
+
+    private void executeOption(State state) {
+        Difficulty difficulty = Arrays.stream(Difficulty.values()).toList().get(selectedOption);
+       /* switch (selectedOption){
+            case 0 -> difficulty = Difficulty.Easy;
+            case 1 -> difficulty = Difficulty.Medium;
+            case 2 -> difficulty = Difficulty.Champion;
+            case 3 -> difficulty = Difficulty.Heartless;
+        } */
+        GameData gameData = new GameData(difficulty);
+        state.setGameData(gameData);
+        state.setNextMenu(null);
     }
 
 
