@@ -27,6 +27,7 @@ public class HowToPlayMenu implements Menu {
     public void updateOptions(){
         options.add("Menu Navigation");
         options.add("Default Controls");
+        options.add("Objective");
         options.add("Game Basics");
         options.add("Weapons");
         options.add("Enemies");
@@ -141,12 +142,13 @@ public class HowToPlayMenu implements Menu {
         switch (selectedOption) {
             case 0 -> showMenuNavigationControls(textGraphics);
             case 1 -> showDefaultControls(textGraphics);
-//            case 2 ->
+            case 2 -> showObjective(textGraphics);
 //            case 3 ->
 //            case 4 ->
 //            case 5 ->
 //            case 6 ->
 //            case 7 ->
+//            case 8 ->
         }
 
         // Update Screen
@@ -202,6 +204,33 @@ public class HowToPlayMenu implements Menu {
             textGraphics
                     .setForegroundColor(color)
                     .putString(43, 6 + i, defaultAimControls.get(i));
+        }
+    }
+
+    private void showObjective(TextGraphics textGraphics){
+        List<String> lines = new ArrayList<>();
+        lines.add("Play as Dylan Macron, ");
+        lines.add("a character fighting for survival," );
+        lines.add("as he battles monsters ");
+        lines.add("across different arenas.");
+        lines.add("Collect weapons, ");
+        lines.add("manage resources, ");
+        lines.add("and adapt to different enemies and ");
+        lines.add("bosses to progress.");
+
+        int space = 0;
+
+        for (int i = 0; i < lines.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            if (i == 4){
+                space = 1;
+            }
+
+            // Draw Game Objective Explanation
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(25, 6 + i + space, lines.get(i));
         }
     }
 
