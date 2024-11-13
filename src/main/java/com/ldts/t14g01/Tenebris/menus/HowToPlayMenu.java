@@ -326,7 +326,7 @@ public class HowToPlayMenu implements Menu {
                 }
             }
 
-            // Draw Weapon Stats
+            // Draw Monster Info
             textGraphics
                     .setForegroundColor(color)
                     .putString(23, 2 + i + space, monsterInfo.get(i));
@@ -360,7 +360,7 @@ public class HowToPlayMenu implements Menu {
                 }
             }
 
-            // Draw Weapon Stats
+            // Draw Difficulty Levels Information
             textGraphics
                     .setForegroundColor(color)
                     .putString(23, 1 + i + space, difficultyLevelExplain.get(i));
@@ -395,7 +395,6 @@ public class HowToPlayMenu implements Menu {
                     .setForegroundColor(color)
                     .putString(23, 4 + i + space, mapElementsInfo.get(i));
         }
-
     }
 
     // When pressing Escape or Q or "Back Button" the game will return to the Main Menu
