@@ -140,8 +140,8 @@ public class HowToPlayMenu implements Menu {
             }
         }
 
-//        switch (selectedOption) {
-//            case 0 ->
+        switch (selectedOption) {
+            case 0 -> showMenuNavigationControls(textGraphics);
 //            case 1 ->
 //            case 2 ->
 //            case 3 ->
@@ -149,10 +149,27 @@ public class HowToPlayMenu implements Menu {
 //            case 5 ->
 //            case 6 ->
 //            case 7 ->
-//        }
+        }
 
         // Update Screen
         screen.refresh();
+    }
+
+    private void showMenuNavigationControls(TextGraphics textGraphics){
+        List<String> navigationOptions = new ArrayList<>();
+        navigationOptions.add("↑ - Move Up");
+        navigationOptions.add("↓ - Move Down");
+        navigationOptions.add("Enter - Select Option");
+        navigationOptions.add("Q / ESC - Go to Previous Menu");
+
+        for (int i = 0; i < navigationOptions.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            // Draw Navigation Controls Explanation
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(25, 6 + i, navigationOptions.get(i));
+        }
     }
 
     // When pressing Escape or Q or "Back Button" the game will return to the Main Menu
