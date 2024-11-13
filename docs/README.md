@@ -19,7 +19,7 @@ First menu of the game. It will show up when opening the game and from here you 
 - **Levels** : This option just appears if you have already some saved game session. It is used to select one of the unlocked levels to play next.
 - **Settings** : Allows you to personalize various aspects of the game experience.
 - **How to Play** : Explains you how you can play the game.
-- **Credits** : Shows the credits of the game 
+- **Credits** : Shows the credits of the game. 
 - **Exit** : Exits game.
 
 #### Pause Menu
@@ -35,18 +35,22 @@ This menu can be opened while in-game. It lets you pause your game and gives you
 - **Back to Main Menu** : Goes to Main Menu.
 
 #### Difficulties
-- **Easy**:     The player’s HP resets at the beginning of every arena; 
-            The player has a bigger starting Health Pool;
-            Every monster drops a bit of energy, energy regenerates at a normal level.	
+- **Easy**:
+  - The player’s HP resets at the beginning of every arena; 
+  - The player has a bigger starting Health Pool;
+  - Every monster drops a bit of energy, energy regenerates at a normal level.	
 
-- **Normal**:   The player’s HP resets at the beginning of every arena;
-            Every monster drops a bit of energy, energy regeneration slightly reduzed.
+- **Medium**:
+  - The player’s HP resets at the beginning of every arena;
+  - Every monster drops a bit of energy, energy regeneration slightly reduzed.
 
-- **Champion**: The player's HP resets at the beginning of every level;
-            Only bigger monsters drop energy.
+- **Champion**:
+  - The player's HP resets at the beginning of every level;
+  - Only bigger monsters drop energy.
 
-- **Heartless**: Champion difficulty level;
-            If you die, game over!
+- **Heartless**:
+  - Champion difficulty level;
+  - If you die, game over!
 
 
 ### Planned to be Implemented
@@ -58,69 +62,85 @@ This menu can be opened while in-game. It lets you pause your game and gives you
 - **Energy** (EN) : a resource the Player uses to fire his weapons (Main Character only).
 
 #### Map Elements
-- **Standard Wall**:    Has collision all around;
-                    No Entity can pass through;
-                    Bullets can’t pass through.
+- **Standard Wall**:
+  - Has collision all around;
+  - No Entity can pass through;
+  - Bullets can’t pass through.
 
-- **Destructible Wall/Crates**: Has HP, and when it’s HP is depleted it is destroyed, otherwise acts like a standard wall.
+- **Destructible Wall/Crates**:
+  - Has HP, and when it’s HP is depleted it is destroyed, otherwise acts like a standard wall.
 
-- **Spike** :           Same as a Standard wall but deals some amount of Damage to Entities that collide with it.
+- **Spike** :
+  - Same as a Standard wall but deals some amount of Damage to Entities that collide with it.
             
-- **Sand Bag** :        Has collision all around;
-                    No Entity can pass through;
-                    Bullets go over it.
+- **Sand Bag** :
+  - Has collision all around;
+  - No Entity can pass through;
+  - Bullets go over it.
         
 #### Dylan Macron (Main Character)
 
-- **Starting Health Pool** :    150 hp for easy difficulty;
-                            100 hp for all others.
+- **Starting Health Pool** :
+  - 150 hp for easy difficulty;
+  - 100 hp for all others.
 
-- **Starting Energy Pool** :    100 en for every difficulty;
+- **Starting Energy Pool** :
+  - 100 en for every difficulty.
     
-- **Starting Energy Regen** :   1 en per second for easy;
-                            0,5 en per second for hard;
+- **Starting Energy Regen** :
+  - 1 en per second for Easy;
+  - 0,5 en per second for Medium;
+  - 0,1 en per second for Champion. 
 
 #### Weapons Available
-- **Simple Weapon** :       Fire Rate - 2 bullets per second;
-                        Energy Cost to Shot - 10 en per bullet;
-                        Damage - 5 hp;
+- **Simple Weapon** :
+  - Fire Rate - 2 bullets per second;
+  - Energy Cost to Shot - 10 en per bullet;
+  - Damage - 5 hp.
 
-- **Explosion Weapon** :    Fire Rate - 0,25 bullets per second;
-                        Energy Cost to shot - 25 en per bullet;
-                        Ability - when reaches a wall or a Monster it deals damage to all enemies in a radius of 4 tiles;
-                        Damage - (15 - 3,75 * radius) hp.
+- **Explosion Weapon** :
+  - Fire Rate - 0,25 bullets per second;
+  - Energy Cost to shot - 25 en per bullet;
+  - Ability - when reaches a wall or a Monster it deals damage to all enemies in a radius of 4 tiles;
+  - Damage - (15 - 3,75 * radius) hp.
 
-- **Death Ray (Laser)** :   Energy Cost to shot - 20en per second active;
-                        Ability - gives damage to all enemies in that direction;
-                        Max Laser duration - 5 seconds;
-                        Cooldown - 1 minute;
-                        Damage - 20 hp / sec.
+- **Death Ray (Laser)** :
+  - Energy Cost to shot - 20en per second active;
+  - Ability - gives damage to all enemies in that direction;
+  - Max Laser duration - 5 seconds;
+  - Cooldown - 1 minute;
+  - Damage - 20 hp / sec.
 
 #### Monsters
-- **Tenebris Peon**:          Health Points : 20 hp; 
-                          Speed : Normal;
-                          Damage : 15 hp;
-                          Range : 1 tile.
+- **Tenebris Peon**:
+  - Health Points : 20 hp; 
+  - Speed : Normal;
+  - Damage : 15 hp;
+  - Range : 1 tile.
 
-- **Tenebris Heavy**:         Health Points : 50 hp;
-                          Speed : Slow;       
-                          Damage : 10 hp;
-                          Range : 1 tile.
+- **Tenebris Heavy**:
+  - Health Points : 50 hp;
+  - Speed : Slow;       
+  - Damage : 10 hp;
+  - Range : 1 tile.
             
-- **Tenebris Spiked Scout**:  Health Points : 15 hp;
-                          Speed : Fast;
-                          Damage : 35 hp;     
-                          Range : 1 tile.
+- **Tenebris Spiked Scout**:
+  - Health Points : 15 hp;
+  - Speed : Fast;
+  - Damage : 35 hp;     
+  - Range : 1 tile.
 
-- **Tenebris Harbinger** :    Health Points : 20 hp;
-                          Speed : Normal;
-                          Damage: 35hp;
-                          Range : 5 tiles.
+- **Tenebris Harbinger** :
+  - Health Points : 20 hp;
+  - Speed : Normal;
+  - Damage: 35hp;
+  - Range : 5 tiles.
 
-- **Tenebris Warden** :       Health Points : 75 hp;     
-                          Speed : Normal;
-                          Damage : 45 hp;
-                          Range : 1 tile.
+- **Tenebris Warden** :
+  - Health Points : 75 hp;     
+  - Speed : Normal;
+  - Damage : 45 hp;
+  - Range : 1 tile.
 
 #### Bosses
 
