@@ -146,7 +146,7 @@ public class HowToPlayMenu implements Menu {
             case 3 -> showGameBasics(textGraphics);
             case 4 -> showWeaponsStats(textGraphics);
             case 5 -> showMonsterInfo(textGraphics);
-//            case 6 ->
+            case 6 -> showBossesInfo(textGraphics);
             case 7 -> showDifficultyLevelsExplanation(textGraphics);
             case 8 -> showMapElements(textGraphics);
         }
@@ -331,6 +331,52 @@ public class HowToPlayMenu implements Menu {
                     .setForegroundColor(color)
                     .putString(23, 2 + i + space, monsterInfo.get(i));
         }
+    }
+
+    private void showBossesInfo(TextGraphics textGraphics){
+        List<String> bossesIntro = new ArrayList<>();
+        bossesIntro.add("They have unique arenas & attack phases");
+        bossesIntro.add("Follow attack cues and destroy their");
+        bossesIntro.add("weak points to defeat them!");
+        for (int i = 0; i < bossesIntro.size(); i++) {
+            TextColor color = TextColor.ANSI.GREEN_BRIGHT;
+
+            // Draw Intro
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(23, 1 + i, bossesIntro.get(i));
+        }
+
+        List<String> bossesInfo = new ArrayList<>();
+        bossesInfo.add("Black Sum Emissary");
+        bossesInfo.add("Avoid marked spots to dodge attacks");
+        bossesInfo.add("Shoot upwards to damage");
+        bossesInfo.add("Abyssal Archon");
+        bossesInfo.add("Destroy 2 Abyssal Bulbs to reach Phase 2");
+        bossesInfo.add("Then attack! But maneuver carefully.");
+        bossesInfo.add("Nightmare Sovereign");
+        bossesInfo.add("Moves through different arenas,");
+        bossesInfo.add("Each with unique challenges!");
+        bossesInfo.add("Survive or defeat him. Choose wisely!");
+
+        int space = 0;
+
+        for (int i = 0; i < bossesInfo.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            if (i % 3 == 0 && i < bossesInfo.size() - 1){
+                color = TextColor.ANSI.CYAN;
+                if (i != 0){
+                    space++;
+                }
+            }
+
+            // Draw Bosses Info
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(23, 5 + i + space, bossesInfo.get(i));
+        }
+
     }
 
     private void showDifficultyLevelsExplanation(TextGraphics textGraphics){
