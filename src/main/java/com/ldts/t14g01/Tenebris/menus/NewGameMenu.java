@@ -1,9 +1,7 @@
 package com.ldts.t14g01.Tenebris.menus;
 
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.graphics.TextImage;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -11,16 +9,17 @@ import com.ldts.t14g01.Tenebris.GameData;
 import com.ldts.t14g01.Tenebris.State;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
+
 import java.io.IOException;
-import java.util.Arrays;
 
 
 public class NewGameMenu implements Menu {
     private static final String name = "New Game";
+    private static final Difficulty[] options = Difficulty.values();
     private int selectedOption;
 
-    public NewGameMenu(){
-        this.selectedOption = 0;
+    public NewGameMenu() {
+        this.selectedOption = Difficulty.Normal.ordinal();
     }
 
 
@@ -29,9 +28,9 @@ public class NewGameMenu implements Menu {
 
         Screen screen;
 
-        //While this is the active Menu
-        while(this.equals(state.currentMenu())){
-            // get the up-to-date screen
+        // While this is the active Menu
+        while (this.equals(state.currentMenu())) {
+            // Get the up-to-date screen
             screen = screenGetter.getScreen();
 
             // Draw the menu
@@ -42,19 +41,18 @@ public class NewGameMenu implements Menu {
 
             // Read keystroke
             KeyStroke keyStroke = screen.pollInput();
-            if (keyStroke != null){
-                switch (keyStroke.getKeyType()){
-                    case ArrowUp -> selectedOption = (selectedOption - 1 + Difficulty.values().length)
-                            % Difficulty.values().length;
-                    case ArrowDown -> selectedOption = (selectedOption + 1) % Difficulty.values().length;
+            if (keyStroke != null) {
+                switch (keyStroke.getKeyType()) {
+                    case ArrowUp -> selectedOption = (selectedOption - 1 + options.length) % options.length;
+                    case ArrowDown -> selectedOption = (selectedOption + 1) % options.length;
                     case Enter -> this.executeOption(state);
                     case Escape -> this.backToMain(state);
                     case EOF -> this.handleEOFCharacter(screenGetter, state);
                 }
-                if(keyStroke.getCharacter() != null) {
+                if (keyStroke.getCharacter() != null) {
                     switch (keyStroke.getCharacter()) {
                         case 'Q', 'q' -> this.backToMain(state);
-                        //case 'E' , 'e' -> this.executeOption(state);
+                        case 'E', 'e' -> this.executeOption(state);
                     }
                 }
             }
@@ -62,16 +60,12 @@ public class NewGameMenu implements Menu {
     }
 
     private void executeOption(State state) {
-        Difficulty difficulty = Arrays.stream(Difficulty.values()).toList().get(selectedOption);
-       /* switch (selectedOption){
-            case 0 -> difficulty = Difficulty.Easy;
-            case 1 -> difficulty = Difficulty.Medium;
-            case 2 -> difficulty = Difficulty.Champion;
-            case 3 -> difficulty = Difficulty.Heartless;
-        } */
+        Difficulty difficulty = options[this.selectedOption];
         GameData gameData = new GameData(difficulty);
         state.setGameData(gameData);
-        state.setNextMenu(null);
+
+        // Temporary while arena isn't created
+        state.setNextMenu(new MainMenu());
     }
 
 
@@ -81,14 +75,11 @@ public class NewGameMenu implements Menu {
     }
 
 
-    private void draw(Screen screen) throws IOException{
+    private void draw(Screen screen) throws IOException {
         // Clear current screen
         screen.clear();
 
-        // Get Screen center
-        int centerX = screen.getTerminalSize().getColumns() / 2;
-        int centerY = screen.getTerminalSize().getRows() / 2;
-
+        // Get textGraphics
         TextGraphics textGraphics = screen.newTextGraphics();
 
         // Place Menu Tittle
@@ -101,15 +92,11 @@ public class NewGameMenu implements Menu {
                 );
 
         // Draw Options
-        for(Difficulty difficulty : Difficulty.values()){
-
-
+        for (Difficulty difficulty : options) {
             TextColor color = TextColor.ANSI.WHITE;
 
             // Highlight selected Option
-            if(difficulty.ordinal() == selectedOption){
-                color = TextColor.ANSI.YELLOW;
-            }
+            if (difficulty.ordinal() == this.selectedOption) color = TextColor.ANSI.YELLOW;
 
             // Draw Option
             textGraphics
@@ -117,18 +104,19 @@ public class NewGameMenu implements Menu {
                     .putString(4, 10 + difficulty.ordinal(), difficulty.name());
         }
 
-        // TO DO: Draw Option Description
+        // ToDo: Improve messages
         String description = "";
-        switch (selectedOption){
-            case 0 -> description = "Meant for beginners"; //to explore\nand learn the ways of Tenebris";
-            case 1 -> description = "Increased combat difficulty";
-            case 2 -> description = "Unforgiving challenge awaits";
-            case 3 -> description = "Good Luck.";
+        switch (options[this.selectedOption]) {
+            case Easy -> description = "Meant for beginners"; //to explore\nand learn the ways of Tenebris";
+            case Normal -> description = "Increased combat difficulty";
+            case Champion -> description = "Unforgiving challenge awaits";
+            case Heartless -> description = "Good Luck.";
         }
 
+        // Draw option description
         textGraphics
                 .setForegroundColor(TextColor.ANSI.WHITE)
-                .putString(25,10  + selectedOption,description);
+                .putString(25, 10 + selectedOption, description);
 
 
         screen.refresh();
@@ -140,7 +128,7 @@ public class NewGameMenu implements Menu {
         state.setNextMenu(mainMenu);
     }
 
-    private void handleEOFCharacter(ScreenGetter screenGetter, State state) throws  IOException, InterruptedException{
+    private void handleEOFCharacter(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {
         // Wait to give possible screen reload time
         Thread.sleep(250);
 
@@ -150,5 +138,7 @@ public class NewGameMenu implements Menu {
             if (keyStroke.getKeyType() == KeyType.EOF) this.quit(state);
     }
 
-    private void quit(State state) {state.quit();}
+    private void quit(State state) {
+        state.quit();
+    }
 }
