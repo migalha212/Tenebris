@@ -133,7 +133,7 @@ public class HowToPlayMenu implements Menu {
                         .setForegroundColor(color)
                         .putString(
                                 centerX - options.get(i).length() / 2,
-                                screen.getTerminalSize().getRows() - 3,
+                                screen.getTerminalSize().getRows() - 2,
                                 options.get(i)
                         );
             }
@@ -144,7 +144,7 @@ public class HowToPlayMenu implements Menu {
             case 1 -> showDefaultControls(textGraphics);
             case 2 -> showObjective(textGraphics);
             case 3 -> showGameBasics(textGraphics);
-//            case 4 ->
+            case 4 -> showWeaponsStats(textGraphics);
 //            case 5 ->
 //            case 6 ->
 //            case 7 ->
@@ -263,6 +263,44 @@ public class HowToPlayMenu implements Menu {
                     .setForegroundColor(color)
                     .putString(25, 5 + i + space, gameBasics.get(i));
         }
+    }
+
+    private void showWeaponsStats(TextGraphics textGraphics){
+        List<String> weaponsStats = new ArrayList<>();
+        weaponsStats.add("Simple Shot");
+        weaponsStats.add("  • Fire Rate     : 2 bullets/s");
+        weaponsStats.add("  • Energy Cost   : 10 EN/bullet");
+        weaponsStats.add("  • Damage : 5 HP");
+        weaponsStats.add("Explosion Shot");
+        weaponsStats.add("  • Fire Rate     : 4 shots/s");
+        weaponsStats.add("  • Energy Cost   : 25 EN/bullet");
+        weaponsStats.add("  • Damage : (15 - 3,75 per radius) HP");
+        weaponsStats.add("  • Max Radius: 4 tiles");
+        weaponsStats.add("Death Ray (Laser)");
+        weaponsStats.add("  • Cooldown      : 1 minute");
+        weaponsStats.add("  • Energy Cost   : 20 EN/s");
+        weaponsStats.add("  • Damage : 20 HP/s");
+        weaponsStats.add("  • Max Duration: 5 seconds");
+
+        int space = 0;
+
+        for (int i = 0; i < weaponsStats.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            if (i == 0 || i == 4 || i == 9){
+                color = TextColor.ANSI.CYAN;
+                if (i != 0){
+                    space++;
+                }
+            }
+
+            // Draw Weapon Stats
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(25, 1 + i + space, weaponsStats.get(i));
+        }
+
+
     }
 
     // When pressing Escape or Q or "Back Button" the game will return to the Main Menu
