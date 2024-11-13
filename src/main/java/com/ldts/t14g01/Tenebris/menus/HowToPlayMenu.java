@@ -156,19 +156,26 @@ public class HowToPlayMenu implements Menu {
     }
 
     private void showMenuNavigationControls(TextGraphics textGraphics){
-        List<String> navigationOptions = new ArrayList<>();
-        navigationOptions.add("↑ - Move Up");
-        navigationOptions.add("↓ - Move Down");
-        navigationOptions.add("Enter - Select Option");
-        navigationOptions.add("Q / ESC - Go to Previous Menu");
+        List<String> navigationOptions= new ArrayList<>();
+        navigationOptions.add(" - Move Up");
+        navigationOptions.add(" - Move Down");
+        navigationOptions.add(" - Select Option");
+        navigationOptions.add(" - Go to Previous Menu");
+
+        List<String> navigationKeys= new ArrayList<>();
+        navigationKeys.add("↑");
+        navigationKeys.add("↓");
+        navigationKeys.add("Enter");
+        navigationKeys.add("Q / ESC");
 
         for (int i = 0; i < navigationOptions.size(); i++) {
-            TextColor color = TextColor.ANSI.WHITE;
-
             // Draw Navigation Controls Explanation
             textGraphics
-                    .setForegroundColor(color)
-                    .putString(23, 6 + i, navigationOptions.get(i));
+                    .setForegroundColor(TextColor.ANSI.CYAN)
+                    .putString(23, 6 + i, navigationKeys.get(i));
+            textGraphics
+                    .setForegroundColor(TextColor.ANSI.WHITE)
+                    .putString(23 + navigationKeys.get(i).length(), 6 + i, navigationOptions.get(i));
         }
     }
 
