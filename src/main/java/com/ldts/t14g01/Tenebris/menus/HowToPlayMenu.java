@@ -147,7 +147,7 @@ public class HowToPlayMenu implements Menu {
             case 4 -> showWeaponsStats(textGraphics);
             case 5 -> showMonsterInfo(textGraphics);
 //            case 6 ->
-//            case 7 ->
+            case 7 -> showDifficultyLevelsExplanation(textGraphics);
 //            case 8 ->
         }
 
@@ -168,7 +168,7 @@ public class HowToPlayMenu implements Menu {
             // Draw Navigation Controls Explanation
             textGraphics
                     .setForegroundColor(color)
-                    .putString(25, 6 + i, navigationOptions.get(i));
+                    .putString(23, 6 + i, navigationOptions.get(i));
         }
     }
 
@@ -230,7 +230,7 @@ public class HowToPlayMenu implements Menu {
             // Draw Game Objective Explanation
             textGraphics
                     .setForegroundColor(color)
-                    .putString(25, 6 + i + space, lines.get(i));
+                    .putString(23, 6 + i + space, lines.get(i));
         }
     }
 
@@ -261,7 +261,7 @@ public class HowToPlayMenu implements Menu {
             // Draw Game Basics Explanation
             textGraphics
                     .setForegroundColor(color)
-                    .putString(25, 5 + i + space, gameBasics.get(i));
+                    .putString(23, 5 + i + space, gameBasics.get(i));
         }
     }
 
@@ -297,7 +297,7 @@ public class HowToPlayMenu implements Menu {
             // Draw Weapon Stats
             textGraphics
                     .setForegroundColor(color)
-                    .putString(25, 1 + i + space, weaponsStats.get(i));
+                    .putString(23, 1 + i + space, weaponsStats.get(i));
         }
     }
 
@@ -329,10 +329,44 @@ public class HowToPlayMenu implements Menu {
             // Draw Weapon Stats
             textGraphics
                     .setForegroundColor(color)
-                    .putString(25, 2 + i + space, monsterInfo.get(i));
+                    .putString(23, 2 + i + space, monsterInfo.get(i));
         }
     }
 
+    private void showDifficultyLevelsExplanation(TextGraphics textGraphics){
+        List<String> difficultyLevelExplain = new ArrayList<>();
+        difficultyLevelExplain.add("Easy");
+        difficultyLevelExplain.add("• Higher HP that resets in each arena");
+        difficultyLevelExplain.add("• Normal EN regeneration, frequent drops");
+        difficultyLevelExplain.add("Normal");
+        difficultyLevelExplain.add("• Standard HP that resets in each arena");
+        difficultyLevelExplain.add("• Slower EN regeneration, frequent drops");
+        difficultyLevelExplain.add("Champion");
+        difficultyLevelExplain.add("• Standard HP that resets in each level");
+        difficultyLevelExplain.add("• Only larger monsters drop EN");
+        difficultyLevelExplain.add("Heartless");
+        difficultyLevelExplain.add("• 'Champion' rules");
+        difficultyLevelExplain.add("• No respawn!");
+
+        int space = 0;
+
+        for (int i = 0; i < difficultyLevelExplain.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            if (i % 3 == 0){
+                color = TextColor.ANSI.CYAN;
+                if (i != 0){
+                    space++;
+                }
+            }
+
+            // Draw Weapon Stats
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(23, 1 + i + space, difficultyLevelExplain.get(i));
+        }
+
+    }
 
     // When pressing Escape or Q or "Back Button" the game will return to the Main Menu
     private void returnToMainMenu(State state) {
