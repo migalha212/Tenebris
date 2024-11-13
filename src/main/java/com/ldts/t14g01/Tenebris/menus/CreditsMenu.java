@@ -5,8 +5,9 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
-import com.ldts.t14g01.Tenebris.State;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
+import com.ldts.t14g01.Tenebris.state.State;
+import com.ldts.t14g01.Tenebris.state.States;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,41 +20,34 @@ public class CreditsMenu implements Menu {
     }
 
     @Override
-    public String getName() {
-        return CreditsMenu.name;
-    }
-
-    @Override
-    public void run(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {
+    public void run(State state, ScreenGetter screenGetter) throws IOException, InterruptedException {
         // Get options
         Screen screen;
 
-        // While the active menu is this
-        while (this.equals(state.currentMenu())) {
-            // Get most up-to-date screen
-            screen = screenGetter.getScreen();
+        // Get most up-to-date screen
+        screen = screenGetter.getScreen();
 
-            // Draw menu
-            draw(screen);
+        // Draw menu
+        draw(screen);
 
-            // Delay
-            Thread.sleep(50);
+        // Delay
+        Thread.sleep(50);
 
-            // Read keystroke
-            KeyStroke keyStroke = screen.pollInput();
-            if (keyStroke != null) {
-                switch (keyStroke.getKeyType()) {
-                    case Enter -> this.returnToMainMenu(state);
-                    case Escape -> this.returnToMainMenu(state);
-                    case EOF -> this.handleEOFCharacter(screenGetter, state);
-                }
-                if (keyStroke.getCharacter() != null) {
-                    switch (keyStroke.getCharacter()) {
-                        case 'Q', 'q', 'E', 'e' -> this.returnToMainMenu(state);
-                    }
+        // Read keystroke
+        KeyStroke keyStroke = screen.pollInput();
+        if (keyStroke != null) {
+            switch (keyStroke.getKeyType()) {
+                case Enter -> this.returnToMainMenu(state);
+                case Escape -> this.returnToMainMenu(state);
+                case EOF -> this.handleEOFCharacter(screenGetter, state);
+            }
+            if (keyStroke.getCharacter() != null) {
+                switch (keyStroke.getCharacter()) {
+                    case 'Q', 'q', 'E', 'e' -> this.returnToMainMenu(state);
                 }
             }
         }
+
     }
 
     private void draw(Screen screen) throws IOException {
@@ -159,8 +153,7 @@ public class CreditsMenu implements Menu {
     //Set next menu to the selected option
     //By now, the only option is to go back to Main Menu
     private void returnToMainMenu(State state) {
-        Menu nextMenu = new MainMenu();
-        state.setNextMenu(nextMenu);
+        state.setState(States.MAIN_MENU);
     }
 
     private void quit(State state) {

@@ -4,12 +4,13 @@ import com.googlecode.lanterna.screen.Screen;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
 import com.ldts.t14g01.Tenebris.screen.ScreenManager;
 import com.ldts.t14g01.Tenebris.screen.ScreenRelaunchHandler;
+import com.ldts.t14g01.Tenebris.state.State;
 
 import java.io.IOException;
 
 public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
-    private Screen screen;
     private final State state;
+    private Screen screen;
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Tenebris tenebris = new Tenebris();
@@ -18,28 +19,26 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
 
     Tenebris() throws IOException {
         // Init game state
-        this.state = State.initState();
+        this.state = State.getInstance();
         ScreenManager.setScreenRelaunchHandler(this);
     }
 
     public void run() throws IOException, InterruptedException {
-        // Run while in menus of in a game
-        while (this.state.hasLoadedGame() || this.state.isInMenu()) {
-            // Run Menus
-            while (this.state.isInMenu() && this.state.currentMenu() != null) {
-                this.screen = ScreenManager.newScreen(ScreenManager.MAIN_MENU);
-                this.state.currentMenu().run(this, this.state);
-            }
+        long frameTime = 1 / 30;
 
-            // Clear Menu State
-            this.state.setInMenu(false);
-            this.state.setNextMenu(null);
+        // While the game is running
+        while (this.state.isRunning()) {
+            // Record start time
+            long startTime = System.currentTimeMillis();
 
-            // Run Game
-            while (this.state.hasLoadedGame()){
-                this.screen = ScreenManager.newScreen(ScreenManager.ARENA);
-                //this.state.currentArena().run(this, this.state);
-            }
+            // Update screen
+            this.screen = ScreenManager.newScreen(ScreenManager.MAIN_MENU);
+            this.state.tick(this);
+
+            // Wait
+            long endTime = System.currentTimeMillis();
+            long waitTime = endTime - startTime - frameTime;
+            if (waitTime > 0) Thread.sleep(waitTime);
         }
 
         // End of Game

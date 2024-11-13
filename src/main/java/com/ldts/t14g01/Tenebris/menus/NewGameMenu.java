@@ -6,8 +6,9 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.ldts.t14g01.Tenebris.GameData;
-import com.ldts.t14g01.Tenebris.State;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
+import com.ldts.t14g01.Tenebris.state.State;
+import com.ldts.t14g01.Tenebris.state.States;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
 
 import java.io.IOException;
@@ -22,41 +23,33 @@ public class NewGameMenu implements Menu {
         this.selectedOption = Difficulty.Normal.ordinal();
     }
 
-
     @Override
-    public void run(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {
+    public void run(State state, ScreenGetter screenGetter) throws IOException, InterruptedException {
 
-        Screen screen;
+        // Get the up-to-date screen
+        Screen screen = screenGetter.getScreen();
 
-        // While this is the active Menu
-        while (this.equals(state.currentMenu())) {
-            // Get the up-to-date screen
-            screen = screenGetter.getScreen();
+        // Draw the menu
+        draw(screen);
 
-            // Draw the menu
-            draw(screen);
-
-            // Delay
-            Thread.sleep(50);
-
-            // Read keystroke
-            KeyStroke keyStroke = screen.pollInput();
-            if (keyStroke != null) {
-                switch (keyStroke.getKeyType()) {
-                    case ArrowUp -> selectedOption = (selectedOption - 1 + options.length) % options.length;
-                    case ArrowDown -> selectedOption = (selectedOption + 1) % options.length;
-                    case Enter -> this.executeOption(state);
-                    case Escape -> this.backToMain(state);
-                    case EOF -> this.handleEOFCharacter(screenGetter, state);
-                }
-                if (keyStroke.getCharacter() != null) {
-                    switch (keyStroke.getCharacter()) {
-                        case 'Q', 'q' -> this.backToMain(state);
-                        case 'E', 'e' -> this.executeOption(state);
-                    }
+        // Read keystroke
+        KeyStroke keyStroke = screen.pollInput();
+        if (keyStroke != null) {
+            switch (keyStroke.getKeyType()) {
+                case ArrowUp -> selectedOption = (selectedOption - 1 + options.length) % options.length;
+                case ArrowDown -> selectedOption = (selectedOption + 1) % options.length;
+                case Enter -> this.executeOption(state);
+                case Escape -> this.backToMain(state);
+                case EOF -> this.handleEOFCharacter(screenGetter, state);
+            }
+            if (keyStroke.getCharacter() != null) {
+                switch (keyStroke.getCharacter()) {
+                    case 'Q', 'q' -> this.backToMain(state);
+                    case 'E', 'e' -> this.executeOption(state);
                 }
             }
         }
+
     }
 
     private void executeOption(State state) {
@@ -65,15 +58,8 @@ public class NewGameMenu implements Menu {
         state.setGameData(gameData);
 
         // Temporary while arena isn't created
-        state.setNextMenu(new MainMenu());
+        state.setState(States.MAIN_MENU);
     }
-
-
-    @Override
-    public String getName() {
-        return NewGameMenu.name;
-    }
-
 
     private void draw(Screen screen) throws IOException {
         // Clear current screen
@@ -124,8 +110,7 @@ public class NewGameMenu implements Menu {
 
     // When pressing Escape or Q the game will return to the Main Menu
     private void backToMain(State state) {
-        Menu mainMenu = new MainMenu();
-        state.setNextMenu(mainMenu);
+        state.setState(States.MAIN_MENU);
     }
 
     private void handleEOFCharacter(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {

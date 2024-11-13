@@ -86,8 +86,8 @@ public class ScreenManager implements TerminalResizeListener {
         ScreenManager.screenSize = screenSize;
 
         // Screen initial config
-        screen.startScreen();
         screen.setCursorPosition(null);
+        screen.startScreen();
         screen.doResizeIfNecessary();
         return screen;
     }
