@@ -5,10 +5,8 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
-import com.ldts.t14g01.Tenebris.GameData;
 import com.ldts.t14g01.Tenebris.State;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
-import com.ldts.t14g01.Tenebris.utils.Difficulty;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -142,7 +140,7 @@ public class HowToPlayMenu implements Menu {
 
         switch (selectedOption) {
             case 0 -> showMenuNavigationControls(textGraphics);
-//            case 1 ->
+            case 1 -> showDefaultControls(textGraphics);
 //            case 2 ->
 //            case 3 ->
 //            case 4 ->
@@ -169,6 +167,41 @@ public class HowToPlayMenu implements Menu {
             textGraphics
                     .setForegroundColor(color)
                     .putString(25, 6 + i, navigationOptions.get(i));
+        }
+    }
+
+    private void showDefaultControls(TextGraphics textGraphics){
+        List<String> defaultMovementControls = new ArrayList<>();
+        defaultMovementControls.add("Move Character:");
+        defaultMovementControls.add("   W - Up");
+        defaultMovementControls.add("   A - Left");
+        defaultMovementControls.add("   S - Down");
+        defaultMovementControls.add("   D - Right");
+
+        for (int i = 0; i < defaultMovementControls.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            // Draw Movement Controls Explanation
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(25, 6 + i, defaultMovementControls.get(i));
+        }
+
+        List<String> defaultAimControls = new ArrayList<>();
+        defaultAimControls.add("Aim Controls:");
+        defaultAimControls.add("    ↑ - Up");
+        defaultAimControls.add("    ← - Left");
+        defaultAimControls.add("    ↓ - Down");
+        defaultAimControls.add("    → - Right");
+        defaultAimControls.add("    Space - Shoot");
+
+        for (int i = 0; i < defaultAimControls.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            // Draw Aim Controls Explanation
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(43, 6 + i, defaultAimControls.get(i));
         }
     }
 
