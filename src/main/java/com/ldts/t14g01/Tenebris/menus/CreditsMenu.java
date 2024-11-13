@@ -30,9 +30,6 @@ public class CreditsMenu implements Menu {
         // Draw menu
         draw(screen);
 
-        // Delay
-        Thread.sleep(50);
-
         // Read keystroke
         KeyStroke keyStroke = screen.pollInput();
         if (keyStroke != null) {

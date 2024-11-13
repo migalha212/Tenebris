@@ -24,7 +24,7 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
     }
 
     public void run() throws IOException, InterruptedException {
-        long frameTime = 1 / 30;
+        long frameTime = 1000 / 30;
 
         // While the game is running
         while (this.state.isRunning()) {
@@ -37,7 +37,7 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
 
             // Wait
             long endTime = System.currentTimeMillis();
-            long waitTime = endTime - startTime - frameTime;
+            long waitTime = frameTime - (endTime - startTime);
             if (waitTime > 0) Thread.sleep(waitTime);
         }
 
