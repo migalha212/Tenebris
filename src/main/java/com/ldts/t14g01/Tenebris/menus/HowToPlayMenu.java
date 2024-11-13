@@ -145,7 +145,7 @@ public class HowToPlayMenu implements Menu {
             case 2 -> showObjective(textGraphics);
             case 3 -> showGameBasics(textGraphics);
             case 4 -> showWeaponsStats(textGraphics);
-//            case 5 ->
+            case 5 -> showMonsterInfo(textGraphics);
 //            case 6 ->
 //            case 7 ->
 //            case 8 ->
@@ -299,9 +299,40 @@ public class HowToPlayMenu implements Menu {
                     .setForegroundColor(color)
                     .putString(25, 1 + i + space, weaponsStats.get(i));
         }
-
-
     }
+
+    private void showMonsterInfo(TextGraphics textGraphics){
+        List<String> monsterInfo = new ArrayList<>();
+        monsterInfo.add("Tenebris Peon");
+        monsterInfo.add("Melee range, low HP, moderate damage");
+        monsterInfo.add("Tenebris Heavy");
+        monsterInfo.add("High HP, low damage");
+        monsterInfo.add("Tenebris Spiked Scout");
+        monsterInfo.add("Low HP, high collision damage");
+        monsterInfo.add("Tenebris Harbinger");
+        monsterInfo.add("High damage, Range attacker, low HP");
+        monsterInfo.add("Tenebris Warden");
+        monsterInfo.add("Mini-Boss: High HP, high fire rate");
+
+        int space = 0;
+
+        for (int i = 0; i < monsterInfo.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            if (i % 2 == 0){
+                color = TextColor.ANSI.CYAN;
+                if (i != 0){
+                    space++;
+                }
+            }
+
+            // Draw Weapon Stats
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(25, 2 + i + space, monsterInfo.get(i));
+        }
+    }
+
 
     // When pressing Escape or Q or "Back Button" the game will return to the Main Menu
     private void returnToMainMenu(State state) {
