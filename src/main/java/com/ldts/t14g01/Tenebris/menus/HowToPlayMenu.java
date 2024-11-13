@@ -5,12 +5,15 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
+import com.ldts.t14g01.Tenebris.GameData;
 import com.ldts.t14g01.Tenebris.State;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
+import com.ldts.t14g01.Tenebris.utils.Difficulty;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HowToPlayMenu implements Menu {
     private static final String name = "How to Play";
@@ -20,6 +23,19 @@ public class HowToPlayMenu implements Menu {
     public HowToPlayMenu() {
         this.selectedOption = 0;
         this.options = new ArrayList<>();
+        updateOptions();
+    }
+
+    public void updateOptions(){
+        options.add("Menu Navigation");
+        options.add("Default Controls");
+        options.add("Game Basics");
+        options.add("Weapons");
+        options.add("Enemies");
+        options.add("Bosses");
+        options.add("Difficulty Levels");
+        options.add("Map Elements");
+        options.add("Back");
     }
 
     @Override
@@ -47,7 +63,9 @@ public class HowToPlayMenu implements Menu {
             KeyStroke keyStroke = screen.pollInput();
             if (keyStroke != null) {
                 switch (keyStroke.getKeyType()) {
-                    case Enter -> this.returnToMainMenu(state);
+                    case ArrowUp -> selectedOption = (selectedOption - 1 + options.size()) % options.size();
+                    case ArrowDown -> selectedOption = (selectedOption + 1) % options.size();
+                    case Enter -> this.executeOption(state);
                     case Escape -> this.returnToMainMenu(state);
                     case EOF -> this.handleEOFCharacter(screenGetter, state);
                 }
@@ -57,6 +75,14 @@ public class HowToPlayMenu implements Menu {
                     }
                 }
             }
+        }
+    }
+
+    private void executeOption(State state) {
+        String Option = options.get(this.selectedOption);
+        //As the only selectable option is the Back Button
+        if (Objects.equals(Option, "Back")){
+            state.setNextMenu(new MainMenu());
         }
     }
 
@@ -89,22 +115,47 @@ public class HowToPlayMenu implements Menu {
                     );
         }
 
-        // Draw Back Button
-        String backText = "Back";
-        textGraphics
-                .setForegroundColor(TextColor.ANSI.YELLOW)
-                .putString(
-                        centerX - backText.length() / 2,
-                        screen.getTerminalSize().getRows() - 3,
-                        backText
-                );
+        //Draw Options
+        for (int i = 0; i < options.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            // Highlight selected Option
+            if (i == this.selectedOption) color = TextColor.ANSI.YELLOW;
+
+            // Draw Option
+            if (i != options.size() - 1){
+                textGraphics
+                        .setForegroundColor(color)
+                        .putString(offsetX, 6 + i, options.get(i));
+
+            //Draw Back Button (special case)
+            } else {
+                textGraphics
+                        .setForegroundColor(color)
+                        .putString(
+                                centerX - options.get(i).length() / 2,
+                                screen.getTerminalSize().getRows() - 3,
+                                options.get(i)
+                        );
+            }
+        }
+
+//        switch (selectedOption) {
+//            case 0 ->
+//            case 1 ->
+//            case 2 ->
+//            case 3 ->
+//            case 4 ->
+//            case 5 ->
+//            case 6 ->
+//            case 7 ->
+//        }
 
         // Update Screen
         screen.refresh();
     }
 
-    //Set next menu to the selected option
-    //By now, the only option is to go back to Main Menu
+    // When pressing Escape or Q or "Back Button" the game will return to the Main Menu
     private void returnToMainMenu(State state) {
         Menu nextMenu = new MainMenu();
         state.setNextMenu(nextMenu);
