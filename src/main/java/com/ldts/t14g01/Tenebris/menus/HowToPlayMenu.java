@@ -148,7 +148,7 @@ public class HowToPlayMenu implements Menu {
             case 5 -> showMonsterInfo(textGraphics);
 //            case 6 ->
             case 7 -> showDifficultyLevelsExplanation(textGraphics);
-//            case 8 ->
+            case 8 -> showMapElements(textGraphics);
         }
 
         // Update Screen
@@ -364,6 +364,36 @@ public class HowToPlayMenu implements Menu {
             textGraphics
                     .setForegroundColor(color)
                     .putString(23, 1 + i + space, difficultyLevelExplain.get(i));
+        }
+    }
+
+    private void showMapElements(TextGraphics textGraphics){
+        List<String> mapElementsInfo = new ArrayList<>();
+        mapElementsInfo.add("Standard Wall");
+        mapElementsInfo.add("Blocks movement and bullets");
+        mapElementsInfo.add("Destructible Wall/Crates");
+        mapElementsInfo.add("Can be destroyed with bullets");
+        mapElementsInfo.add("Spike");
+        mapElementsInfo.add("Deals damage on contact");
+        mapElementsInfo.add("Sand bag");
+        mapElementsInfo.add("Blocks movement but not bullets");
+
+        int space = 0;
+
+        for (int i = 0; i < mapElementsInfo.size(); i++) {
+            TextColor color = TextColor.ANSI.WHITE;
+
+            if (i % 2 == 0){
+                color = TextColor.ANSI.CYAN;
+                if (i != 0){
+                    space++;
+                }
+            }
+
+            // Draw Map Elements Info
+            textGraphics
+                    .setForegroundColor(color)
+                    .putString(23, 4 + i + space, mapElementsInfo.get(i));
         }
 
     }
