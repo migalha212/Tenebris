@@ -24,7 +24,7 @@ public class HowToPlayMenu implements Menu {
         updateOptions();
     }
 
-    public void updateOptions(){
+    public void updateOptions() {
         options.add("Menu Navigation");
         options.add("Default Controls");
         options.add("Objective");
@@ -80,7 +80,7 @@ public class HowToPlayMenu implements Menu {
     private void executeOption(State state) {
         String Option = options.get(this.selectedOption);
         //As the only selectable option is the Back Button
-        if (Objects.equals(Option, "Back")){
+        if (Objects.equals(Option, "Back")) {
             state.setNextMenu(new MainMenu());
         }
     }
@@ -122,12 +122,12 @@ public class HowToPlayMenu implements Menu {
             if (i == this.selectedOption) color = TextColor.ANSI.YELLOW;
 
             // Draw Option
-            if (i != options.size() - 1){
+            if (i != options.size() - 1) {
                 textGraphics
                         .setForegroundColor(color)
                         .putString(offsetX, 6 + i, options.get(i));
 
-            //Draw Back Button (special case)
+                // Draw Back Button (special case)
             } else {
                 textGraphics
                         .setForegroundColor(color)
@@ -155,14 +155,14 @@ public class HowToPlayMenu implements Menu {
         screen.refresh();
     }
 
-    private void showMenuNavigationControls(TextGraphics textGraphics){
-        List<String> navigationOptions= new ArrayList<>();
+    private void showMenuNavigationControls(TextGraphics textGraphics) {
+        List<String> navigationOptions = new ArrayList<>();
         navigationOptions.add(" - Move Up");
         navigationOptions.add(" - Move Down");
         navigationOptions.add(" - Select Option");
         navigationOptions.add(" - Go to Previous Menu");
 
-        List<String> navigationKeys= new ArrayList<>();
+        List<String> navigationKeys = new ArrayList<>();
         navigationKeys.add("↑");
         navigationKeys.add("↓");
         navigationKeys.add("Enter");
@@ -179,7 +179,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showDefaultControls(TextGraphics textGraphics){
+    private void showDefaultControls(TextGraphics textGraphics) {
         List<String> defaultMovementControls = new ArrayList<>();
         defaultMovementControls.add("Move Character:");
         defaultMovementControls.add("   W - Up");
@@ -202,7 +202,7 @@ public class HowToPlayMenu implements Menu {
         defaultAimControls.add("    ← - Left");
         defaultAimControls.add("    ↓ - Down");
         defaultAimControls.add("    → - Right");
-        defaultAimControls.add("    Space - Shoot");
+        defaultAimControls.add("Space - Shoot");
 
         for (int i = 0; i < defaultAimControls.size(); i++) {
             TextColor color = TextColor.ANSI.WHITE;
@@ -214,10 +214,10 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showObjective(TextGraphics textGraphics){
+    private void showObjective(TextGraphics textGraphics) {
         List<String> lines = new ArrayList<>();
         lines.add("Play as Dylan Macron, ");
-        lines.add("a character fighting for survival," );
+        lines.add("a character fighting for survival,");
         lines.add("as he battles monsters ");
         lines.add("across different arenas.");
         lines.add("Collect weapons, ");
@@ -230,7 +230,7 @@ public class HowToPlayMenu implements Menu {
         for (int i = 0; i < lines.size(); i++) {
             TextColor color = TextColor.ANSI.WHITE;
 
-            if (i == 4){
+            if (i == 4) {
                 space = 1;
             }
 
@@ -241,7 +241,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showGameBasics(TextGraphics textGraphics){
+    private void showGameBasics(TextGraphics textGraphics) {
         List<String> gameBasics = new ArrayList<>();
         gameBasics.add("Health Points (HP)");
         gameBasics.add("Represents the damage that an Entity");
@@ -258,9 +258,9 @@ public class HowToPlayMenu implements Menu {
         for (int i = 0; i < gameBasics.size(); i++) {
             TextColor color = TextColor.ANSI.WHITE;
 
-            if (i == 0 || i == 3 || i == 6){
+            if (i == 0 || i == 3 || i == 6) {
                 color = TextColor.ANSI.CYAN;
-                if (i != 0){
+                if (i != 0) {
                     space++;
                 }
             }
@@ -272,31 +272,31 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showWeaponsStats(TextGraphics textGraphics){
+    private void showWeaponsStats(TextGraphics textGraphics) {
         List<String> weaponsStats = new ArrayList<>();
         weaponsStats.add("Simple Shot");
         weaponsStats.add("  • Fire Rate     : 2 bullets/s");
         weaponsStats.add("  • Energy Cost   : 10 EN/bullet");
-        weaponsStats.add("  • Damage : 5 HP");
+        weaponsStats.add("  • Damage        : 5 HP");
         weaponsStats.add("Explosion Shot");
         weaponsStats.add("  • Fire Rate     : 4 shots/s");
         weaponsStats.add("  • Energy Cost   : 25 EN/bullet");
-        weaponsStats.add("  • Damage : (15 - 3,75 per radius) HP");
-        weaponsStats.add("  • Max Radius: 4 tiles");
+        weaponsStats.add("  • Damage        : 15 - 3,75 HP");
+        weaponsStats.add("  • Max Radius    : 4 tiles");
         weaponsStats.add("Death Ray (Laser)");
         weaponsStats.add("  • Cooldown      : 1 minute");
         weaponsStats.add("  • Energy Cost   : 20 EN/s");
-        weaponsStats.add("  • Damage : 20 HP/s");
-        weaponsStats.add("  • Max Duration: 5 seconds");
+        weaponsStats.add("  • Damage        : 20 HP/s");
+        weaponsStats.add("  • Max Duration  : 5 seconds");
 
         int space = 0;
 
         for (int i = 0; i < weaponsStats.size(); i++) {
             TextColor color = TextColor.ANSI.WHITE;
 
-            if (i == 0 || i == 4 || i == 9){
+            if (i == 0 || i == 4 || i == 9) {
                 color = TextColor.ANSI.CYAN;
-                if (i != 0){
+                if (i != 0) {
                     space++;
                 }
             }
@@ -308,7 +308,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showMonsterInfo(TextGraphics textGraphics){
+    private void showMonsterInfo(TextGraphics textGraphics) {
         List<String> monsterInfo = new ArrayList<>();
         monsterInfo.add("Tenebris Peon");
         monsterInfo.add("Melee range, low HP, moderate damage");
@@ -326,9 +326,9 @@ public class HowToPlayMenu implements Menu {
         for (int i = 0; i < monsterInfo.size(); i++) {
             TextColor color = TextColor.ANSI.WHITE;
 
-            if (i % 2 == 0){
+            if (i % 2 == 0) {
                 color = TextColor.ANSI.CYAN;
-                if (i != 0){
+                if (i != 0) {
                     space++;
                 }
             }
@@ -340,9 +340,9 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showBossesInfo(TextGraphics textGraphics){
+    private void showBossesInfo(TextGraphics textGraphics) {
         List<String> bossesIntro = new ArrayList<>();
-        bossesIntro.add("They have unique arenas & attack phases");
+        bossesIntro.add("Bosses have unique arenas & attack phases");
         bossesIntro.add("Follow attack cues and destroy their");
         bossesIntro.add("weak points to defeat them!");
         for (int i = 0; i < bossesIntro.size(); i++) {
@@ -371,9 +371,9 @@ public class HowToPlayMenu implements Menu {
         for (int i = 0; i < bossesInfo.size(); i++) {
             TextColor color = TextColor.ANSI.WHITE;
 
-            if (i % 3 == 0 && i < bossesInfo.size() - 1){
+            if (i % 3 == 0 && i < bossesInfo.size() - 1) {
                 color = TextColor.ANSI.CYAN;
-                if (i != 0){
+                if (i != 0) {
                     space++;
                 }
             }
@@ -386,7 +386,7 @@ public class HowToPlayMenu implements Menu {
 
     }
 
-    private void showDifficultyLevelsExplanation(TextGraphics textGraphics){
+    private void showDifficultyLevelsExplanation(TextGraphics textGraphics) {
         List<String> difficultyLevelExplain = new ArrayList<>();
         difficultyLevelExplain.add("Easy");
         difficultyLevelExplain.add("• Higher HP that resets in each arena");
@@ -406,9 +406,9 @@ public class HowToPlayMenu implements Menu {
         for (int i = 0; i < difficultyLevelExplain.size(); i++) {
             TextColor color = TextColor.ANSI.WHITE;
 
-            if (i % 3 == 0){
+            if (i % 3 == 0) {
                 color = TextColor.ANSI.CYAN;
-                if (i != 0){
+                if (i != 0) {
                     space++;
                 }
             }
@@ -420,7 +420,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showMapElements(TextGraphics textGraphics){
+    private void showMapElements(TextGraphics textGraphics) {
         List<String> mapElementsInfo = new ArrayList<>();
         mapElementsInfo.add("Standard Wall");
         mapElementsInfo.add("Blocks movement and bullets");
@@ -436,9 +436,9 @@ public class HowToPlayMenu implements Menu {
         for (int i = 0; i < mapElementsInfo.size(); i++) {
             TextColor color = TextColor.ANSI.WHITE;
 
-            if (i % 2 == 0){
+            if (i % 2 == 0) {
                 color = TextColor.ANSI.CYAN;
-                if (i != 0){
+                if (i != 0) {
                     space++;
                 }
             }
