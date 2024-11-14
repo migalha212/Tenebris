@@ -20,7 +20,7 @@ public class MainMenu implements Menu {
 
     public MainMenu(State state) {
         this.selectedOption = 0;
-        
+
         // Get options
         this.options = new ArrayList<>();
         this.updateOptions(state);
@@ -103,9 +103,12 @@ public class MainMenu implements Menu {
         options.add(States.LOAD_GAME_MENU);
 
         // Levels only visible if a game is loaded
-        if (state.hasLoadedGame())
+        if (state.hasLoadedGame()) {
             options.add(States.LEVELS_MENU);
+            options.add(States.STATISTICS_MENU);
+        }
 
+        options.add(States.HOW_TO_PLAY_MENU);
         options.add(States.SETTINGS_MENU);
         options.add(States.CREDITS_MENU);
 
@@ -122,6 +125,7 @@ public class MainMenu implements Menu {
             case LOAD_GAME_MENU -> name = "Load Game";
             case LEVELS_MENU -> name = "Levels";
             case STATISTICS_MENU -> name = "Statistics";
+            case HOW_TO_PLAY_MENU -> name = "How to Play";
             case SETTINGS_MENU -> name = "Settings";
             case CREDITS_MENU -> name = "Credits";
             case null -> name = "Exit";

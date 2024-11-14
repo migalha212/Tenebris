@@ -1,10 +1,7 @@
 package com.ldts.t14g01.Tenebris.state;
 
 import com.ldts.t14g01.Tenebris.GameData;
-import com.ldts.t14g01.Tenebris.menus.CreditsMenu;
-import com.ldts.t14g01.Tenebris.menus.MainMenu;
-import com.ldts.t14g01.Tenebris.menus.Menu;
-import com.ldts.t14g01.Tenebris.menus.NewGameMenu;
+import com.ldts.t14g01.Tenebris.menus.*;
 import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
 
 import java.io.IOException;
@@ -43,6 +40,7 @@ public class State {
         switch (state) {
             case MAIN_MENU -> this.menu = new MainMenu(this);
             case NEW_GAME_MENU -> this.menu = new NewGameMenu();
+            case HOW_TO_PLAY_MENU -> this.menu = new HowToPlayMenu();
             case CREDITS_MENU -> this.menu = new CreditsMenu();
 
             // ToDo: Fill this with the other menus when they work
