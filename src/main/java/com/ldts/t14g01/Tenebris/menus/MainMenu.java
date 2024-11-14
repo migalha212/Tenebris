@@ -31,8 +31,8 @@ public class MainMenu implements Menu {
         if (state.hasLoadedGame())
             options.add(new LevelsMenu());
 
-        options.add(new SettingsMenu());
         options.add(new HowToPlayMenu());
+        options.add(new SettingsMenu());
         options.add(new CreditsMenu());
 
         // Quit option
