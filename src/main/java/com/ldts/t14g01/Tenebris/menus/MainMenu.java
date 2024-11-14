@@ -2,10 +2,8 @@ package com.ldts.t14g01.Tenebris.menus;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
-import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
+import com.ldts.t14g01.Tenebris.gui.Action;
+import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.state.State;
 import com.ldts.t14g01.Tenebris.state.States;
 
@@ -27,42 +25,29 @@ public class MainMenu implements Menu {
     }
 
     @Override
-    public void run(State state, ScreenGetter screenGetter) throws IOException, InterruptedException {
-        // Get most up-to-date screen
-        Screen screen = screenGetter.getScreen();
-
-        // Draw menu
-        draw(screen);
-
-        // Read keystroke
-        KeyStroke keyStroke = screen.pollInput();
-        if (keyStroke != null) {
-            switch (keyStroke.getKeyType()) {
-                case ArrowUp -> selectedOption = (selectedOption - 1 + options.size()) % options.size();
-                case ArrowDown -> selectedOption = (selectedOption + 1) % options.size();
-                case Enter -> this.executeOption(state);
-                case Escape -> this.quit(state);
-                case EOF -> this.handleEOFCharacter(screenGetter, state);
+    public void tick(State state, Action action) {
+        switch (action) {
+            case LOOK_UP -> selectedOption = (selectedOption - 1 + options.size()) % options.size();
+            case LOOK_DOWN -> selectedOption = (selectedOption + 1) % options.size();
+            case EXEC -> this.executeOption(state);
+            case ESC, QUIT -> this.quit(state);
+            case null, default -> {
             }
-            if (keyStroke.getCharacter() != null)
-                switch (keyStroke.getCharacter()) {
-                    case 'Q', 'q' -> this.quit(state);
-                    case 'E', 'e' -> this.executeOption(state);
-                }
         }
 
     }
 
-    private void draw(Screen screen) throws IOException {
+    @Override
+    public void draw(GUI gui) throws IOException {
         // Clear Screen
-        screen.clear();
+        gui.clear();
 
         // Get TextGraphics
-        TextGraphics textGraphics = screen.newTextGraphics();
+        TextGraphics textGraphics = gui.getTextGraphics();
 
         // Get center x and center y position
-        int centerX = screen.getTerminalSize().getColumns() / 2;
-        int centerY = screen.getTerminalSize().getRows() / 2;
+        int centerX = gui.getTerminalSize().getColumns() / 2;
+        int centerY = gui.getTerminalSize().getRows() / 2;
 
         // Align Options Left
         int leftX = 4;
@@ -94,7 +79,7 @@ public class MainMenu implements Menu {
         }
 
         // Update Screen
-        screen.refresh();
+        gui.refresh();
     }
 
     private void updateOptions(State state) {
@@ -134,7 +119,6 @@ public class MainMenu implements Menu {
         return name;
     }
 
-    // Set next menu to the selected option
     private void executeOption(State state) {
         States nextState = options.get(selectedOption);
 
@@ -147,15 +131,5 @@ public class MainMenu implements Menu {
 
     private void quit(State state) {
         state.quit();
-    }
-
-    private void handleEOFCharacter(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {
-        // Wait to give possible screen reload time
-        Thread.sleep(250);
-
-        Screen screen = screenGetter.getScreen();
-        KeyStroke keyStroke = screen.pollInput();
-        if (keyStroke != null)
-            if (keyStroke.getKeyType() == KeyType.EOF) this.quit(state);
     }
 }

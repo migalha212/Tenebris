@@ -1,16 +1,14 @@
 package com.ldts.t14g01.Tenebris;
 
-import com.googlecode.lanterna.screen.Screen;
-import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
-import com.ldts.t14g01.Tenebris.screen.ScreenManager;
-import com.ldts.t14g01.Tenebris.screen.ScreenRelaunchHandler;
+import com.ldts.t14g01.Tenebris.gui.Action;
+import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.state.State;
 
 import java.io.IOException;
 
-public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
+public class Tenebris {
     private final State state;
-    private Screen screen;
+    private GUI gui;
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Tenebris tenebris = new Tenebris();
@@ -20,7 +18,7 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
     Tenebris() throws IOException {
         // Init game state
         this.state = State.getInstance();
-        ScreenManager.setScreenRelaunchHandler(this);
+        this.gui = GUI.getGUI();
     }
 
     public void run() throws IOException, InterruptedException {
@@ -31,9 +29,17 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
             // Record start time
             long startTime = System.currentTimeMillis();
 
-            // Update screen
-            this.screen = ScreenManager.newScreen(ScreenManager.MAIN_MENU);
-            this.state.tick(this);
+            // Get action
+            Action action = gui.getAction();
+
+            // Close game if window was closed
+            if (gui.quited()) {
+                this.state.quit();
+                continue;
+            }
+
+            // Tick game
+            this.state.tick(gui, action);
 
             // Wait
             long endTime = System.currentTimeMillis();
@@ -43,17 +49,6 @@ public class Tenebris implements ScreenRelaunchHandler, ScreenGetter {
 
         // End of Game
         // Close Screen
-        this.screen.close();
-    }
-
-    // Receives new screen when it is relaunched
-    @Override
-    public void handle(Screen screen) {
-        this.screen = screen;
-    }
-
-    @Override
-    public Screen getScreen() {
-        return this.screen;
+        this.gui.close();
     }
 }

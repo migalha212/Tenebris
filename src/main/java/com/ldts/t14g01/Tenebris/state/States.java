@@ -1,7 +1,5 @@
 package com.ldts.t14g01.Tenebris.state;
 
-import com.ldts.t14g01.Tenebris.menus.Menu;
-
 public enum States {
     MAIN_MENU,
     NEW_GAME_MENU,

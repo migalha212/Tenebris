@@ -2,10 +2,8 @@ package com.ldts.t14g01.Tenebris.menus;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
-import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
+import com.ldts.t14g01.Tenebris.gui.Action;
+import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.state.State;
 import com.ldts.t14g01.Tenebris.state.States;
 
@@ -34,48 +32,28 @@ public class HowToPlayMenu implements Menu {
     }
 
     @Override
-    public void run(State state, ScreenGetter screenGetter) throws IOException, InterruptedException {
-        // Get most up-to-date screen
-        Screen screen = screenGetter.getScreen();
-
-        // Draw menu
-        draw(screen);
-
-        // Read keystroke
-        KeyStroke keyStroke = screen.pollInput();
-        if (keyStroke != null) {
-            switch (keyStroke.getKeyType()) {
-                case ArrowUp -> selectedOption = (selectedOption - 1 + options.length) % options.length;
-                case ArrowDown -> selectedOption = (selectedOption + 1) % options.length;
-                case Enter -> this.executeOption(state);
-                case Escape -> this.returnToMainMenu(state);
-                case EOF -> this.handleEOFCharacter(screenGetter, state);
-            }
-            if (keyStroke.getCharacter() != null) {
-                switch (keyStroke.getCharacter()) {
-                    case 'Q', 'q', 'E', 'e' -> this.returnToMainMenu(state);
-                }
-            }
+    public void tick(State state, Action action) {
+        switch (action) {
+            case LOOK_UP -> selectedOption = (selectedOption - 1 + options.length) % options.length;
+            case LOOK_DOWN -> selectedOption = (selectedOption + 1) % options.length;
+            case EXEC -> this.executeOption(state);
+            case ESC, QUIT -> this.returnToMainMenu(state);
+            case null, default -> {}
         }
 
     }
 
-    private void executeOption(State state) {
-        // As the only selectable option is the Back Button
-        if ("Back".equals(this.options[this.selectedOption]))
-            state.setState(States.MAIN_MENU);
-    }
-
-    private void draw(Screen screen) throws IOException {
-        //Clear Screen
-        screen.clear();
+    @Override
+    public void draw(GUI gui) throws IOException {
+        // Clear Screen
+        gui.clear();
 
         // Get TextGraphics
-        TextGraphics textGraphics = screen.newTextGraphics();
+        TextGraphics textGraphics = gui.getTextGraphics();
 
         // Get center position
-        int centerX = screen.getTerminalSize().getColumns() / 2;
-        int centerY = screen.getTerminalSize().getRows() / 2;
+        int centerX = gui.getTerminalSize().getColumns() / 2;
+        int centerY = gui.getTerminalSize().getRows() / 2;
 
         //X axis Offset
         int offsetX = 4;
@@ -108,7 +86,7 @@ public class HowToPlayMenu implements Menu {
                         .setForegroundColor(color)
                         .putString(
                                 centerX - options[i].length() / 2,
-                                screen.getTerminalSize().getRows() - 2,
+                                gui.getTerminalSize().getRows() - 2,
                                 options[i]
                         );
             }
@@ -133,7 +111,7 @@ public class HowToPlayMenu implements Menu {
         }
 
         // Update Screen
-        screen.refresh();
+        gui.refresh();
     }
 
     private void showMenuNavigationControls(TextGraphics textGraphics) {
@@ -144,9 +122,9 @@ public class HowToPlayMenu implements Menu {
         navigationOptions.add(" - Go to Previous Menu");
 
         List<String> navigationKeys = new ArrayList<>();
-        navigationKeys.add("↑");
-        navigationKeys.add("↓");
-        navigationKeys.add("Enter");
+        navigationKeys.add("      ↑");
+        navigationKeys.add("      ↓");
+        navigationKeys.add("  Enter");
         navigationKeys.add("Q / ESC");
 
         for (int i = 0; i < navigationOptions.size(); i++) {
@@ -436,18 +414,9 @@ public class HowToPlayMenu implements Menu {
         state.setState(States.MAIN_MENU);
     }
 
-    private void quit(State state) {
-        state.quit();
+    private void executeOption(State state) {
+        // As the only selectable option is the Back Button
+        if ("Back".equals(this.options[this.selectedOption]))
+            state.setState(States.MAIN_MENU);
     }
-
-    private void handleEOFCharacter(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {
-        // Wait to give possible screen reload time
-        Thread.sleep(250);
-
-        Screen screen = screenGetter.getScreen();
-        KeyStroke keyStroke = screen.pollInput();
-        if (keyStroke != null)
-            if (keyStroke.getKeyType() == KeyType.EOF) this.quit(state);
-    }
-
 }

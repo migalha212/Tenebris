@@ -1,8 +1,9 @@
 package com.ldts.t14g01.Tenebris.state;
 
 import com.ldts.t14g01.Tenebris.GameData;
+import com.ldts.t14g01.Tenebris.gui.Action;
+import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.menus.*;
-import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
 
 import java.io.IOException;
 
@@ -25,14 +26,14 @@ public class State {
         this.gameData = gameData;
     }
 
-    public boolean setState(States state) {
-        if (this.state == state) return true;
+    public void setState(States state) {
+        if (this.state == state) return;
 
         // Sanity check
         switch (state) {
             case IN_GAME, PAUSE_MENU, STATISTICS_MENU, LEVELS_MENU -> {
                 // Invalid state because no gameData has been loaded
-                if (this.gameData == null) return false;
+                if (this.gameData == null) return;
             }
         }
 
@@ -49,16 +50,28 @@ public class State {
 
         // Update state
         this.state = state;
-        return true;
     }
 
     public void setGameData(GameData gameData) {
         this.gameData = gameData;
     }
 
-    public void tick(ScreenGetter screenGetter) throws IOException, InterruptedException {
-        this.menu.run(this, screenGetter);
+    public void tick(GUI gui, Action action) throws IOException, InterruptedException {
+        // Update gui
+        switch (this.state) {
+            case IN_GAME -> gui.setType(GUI.Type.GRAPHICS);
+            case null, default -> gui.setType(GUI.Type.MENU);
+        }
 
+        // ToDo: Handle arena
+        this.menu.tick(this, action);
+
+        // Draw GUI
+        if (gui.stable()) {
+            gui.setIsDrawing(true);
+            this.menu.draw(gui);
+            gui.setIsDrawing(false);
+        }
     }
 
     public boolean isRunning() {

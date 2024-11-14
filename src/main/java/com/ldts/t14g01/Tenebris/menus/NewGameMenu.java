@@ -2,11 +2,9 @@ package com.ldts.t14g01.Tenebris.menus;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
 import com.ldts.t14g01.Tenebris.GameData;
-import com.ldts.t14g01.Tenebris.screen.ScreenGetter;
+import com.ldts.t14g01.Tenebris.gui.Action;
+import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.state.State;
 import com.ldts.t14g01.Tenebris.state.States;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
@@ -15,7 +13,6 @@ import java.io.IOException;
 
 
 public class NewGameMenu implements Menu {
-    private static final String name = "New Game";
     private static final Difficulty[] options = Difficulty.values();
     private int selectedOption;
 
@@ -24,49 +21,23 @@ public class NewGameMenu implements Menu {
     }
 
     @Override
-    public void run(State state, ScreenGetter screenGetter) throws IOException, InterruptedException {
-
-        // Get the up-to-date screen
-        Screen screen = screenGetter.getScreen();
-
-        // Draw the menu
-        draw(screen);
-
-        // Read keystroke
-        KeyStroke keyStroke = screen.pollInput();
-        if (keyStroke != null) {
-            switch (keyStroke.getKeyType()) {
-                case ArrowUp -> selectedOption = (selectedOption - 1 + options.length) % options.length;
-                case ArrowDown -> selectedOption = (selectedOption + 1) % options.length;
-                case Enter -> this.executeOption(state);
-                case Escape -> this.backToMain(state);
-                case EOF -> this.handleEOFCharacter(screenGetter, state);
-            }
-            if (keyStroke.getCharacter() != null) {
-                switch (keyStroke.getCharacter()) {
-                    case 'Q', 'q' -> this.backToMain(state);
-                    case 'E', 'e' -> this.executeOption(state);
-                }
-            }
+    public void tick(State state, Action action) {
+        switch (action) {
+            case LOOK_UP -> selectedOption = (selectedOption - 1 + options.length) % options.length;
+            case LOOK_DOWN -> selectedOption = (selectedOption + 1) % options.length;
+            case EXEC -> this.executeOption(state);
+            case ESC, QUIT -> this.backToMain(state);
+            case null, default -> {}
         }
-
     }
 
-    private void executeOption(State state) {
-        Difficulty difficulty = options[this.selectedOption];
-        GameData gameData = new GameData(difficulty);
-        state.setGameData(gameData);
+    @Override
+    public void draw(GUI gui) throws IOException {
+        // Clear Screen
+        gui.clear();
 
-        // Temporary while arena isn't created
-        state.setState(States.MAIN_MENU);
-    }
-
-    private void draw(Screen screen) throws IOException {
-        // Clear current screen
-        screen.clear();
-
-        // Get textGraphics
-        TextGraphics textGraphics = screen.newTextGraphics();
+        // Get Text Graphics
+        TextGraphics textGraphics = gui.getTextGraphics();
 
         // Place Menu Tittle
         textGraphics
@@ -105,25 +76,20 @@ public class NewGameMenu implements Menu {
                 .putString(25, 10 + selectedOption, description);
 
 
-        screen.refresh();
+        gui.refresh();
+    }
+
+    private void executeOption(State state) {
+        Difficulty difficulty = options[this.selectedOption];
+        GameData gameData = new GameData(difficulty);
+        state.setGameData(gameData);
+
+        // Temporary while arena isn't created
+        state.setState(States.MAIN_MENU);
     }
 
     // When pressing Escape or Q the game will return to the Main Menu
     private void backToMain(State state) {
         state.setState(States.MAIN_MENU);
-    }
-
-    private void handleEOFCharacter(ScreenGetter screenGetter, State state) throws IOException, InterruptedException {
-        // Wait to give possible screen reload time
-        Thread.sleep(250);
-
-        Screen screen = screenGetter.getScreen();
-        KeyStroke keyStroke = screen.pollInput();
-        if (keyStroke != null)
-            if (keyStroke.getKeyType() == KeyType.EOF) this.quit(state);
-    }
-
-    private void quit(State state) {
-        state.quit();
     }
 }
