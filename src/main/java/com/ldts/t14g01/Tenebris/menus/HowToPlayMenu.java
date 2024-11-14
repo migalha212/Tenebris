@@ -38,7 +38,8 @@ public class HowToPlayMenu implements Menu {
             case LOOK_DOWN -> selectedOption = (selectedOption + 1) % options.length;
             case EXEC -> this.executeOption(state);
             case ESC, QUIT -> this.returnToMainMenu(state);
-            case null, default -> {}
+            case null, default -> {
+            }
         }
 
     }
@@ -139,37 +140,60 @@ public class HowToPlayMenu implements Menu {
     }
 
     private void showDefaultControls(TextGraphics textGraphics) {
-        List<String> defaultMovementControls = new ArrayList<>();
-        defaultMovementControls.add("Move Character:");
-        defaultMovementControls.add("   W - Up");
-        defaultMovementControls.add("   A - Left");
-        defaultMovementControls.add("   S - Down");
-        defaultMovementControls.add("   D - Right");
+        textGraphics
+                .setForegroundColor(TextColor.ANSI.WHITE)
+                .putString(25, 6, "Move Character:");
 
-        for (int i = 0; i < defaultMovementControls.size(); i++) {
-            TextColor color = TextColor.ANSI.WHITE;
+        List<String> defaultMovementDescription = new ArrayList<>();
+        defaultMovementDescription.add(" - Up");
+        defaultMovementDescription.add(" - Left");
+        defaultMovementDescription.add(" - Down");
+        defaultMovementDescription.add(" - Right");
 
+        List<String> defaultMovementKeys = new ArrayList<>();
+        defaultMovementKeys.add("   W");
+        defaultMovementKeys.add("   A");
+        defaultMovementKeys.add("   S");
+        defaultMovementKeys.add("   D");
+
+        for (int i = 0; i < defaultMovementDescription.size(); i++) {
             // Draw Movement Controls Explanation
             textGraphics
-                    .setForegroundColor(color)
-                    .putString(25, 6 + i, defaultMovementControls.get(i));
+                    .setForegroundColor(TextColor.ANSI.WHITE)
+                    .putString(29, 7 + i, defaultMovementDescription.get(i));
+
+            textGraphics
+                    .setForegroundColor(TextColor.ANSI.CYAN)
+                    .putString(25, 7 + i, defaultMovementKeys.get(i));
         }
 
-        List<String> defaultAimControls = new ArrayList<>();
-        defaultAimControls.add("Aim Controls:");
-        defaultAimControls.add("    ↑ - Up");
-        defaultAimControls.add("    ← - Left");
-        defaultAimControls.add("    ↓ - Down");
-        defaultAimControls.add("    → - Right");
-        defaultAimControls.add("Space - Shoot");
+        textGraphics
+                .setForegroundColor(TextColor.ANSI.WHITE)
+                .putString(43, 6, "Aim Controls:");
 
-        for (int i = 0; i < defaultAimControls.size(); i++) {
-            TextColor color = TextColor.ANSI.WHITE;
+        List<String> defaultAimDescription = new ArrayList<>();
+        defaultAimDescription.add(" - Up");
+        defaultAimDescription.add(" - Left");
+        defaultAimDescription.add(" - Down");
+        defaultAimDescription.add(" - Right");
+        defaultAimDescription.add(" - Shoot");
 
+        List<String> defaultAimKeys = new ArrayList<>();
+        defaultAimKeys.add("    ↑");
+        defaultAimKeys.add("    ←");
+        defaultAimKeys.add("    ↓");
+        defaultAimKeys.add("    →");
+        defaultAimKeys.add("Space");
+
+        for (int i = 0; i < defaultAimDescription.size(); i++) {
             // Draw Aim Controls Explanation
             textGraphics
-                    .setForegroundColor(color)
-                    .putString(43, 6 + i, defaultAimControls.get(i));
+                    .setForegroundColor(TextColor.ANSI.CYAN)
+                    .putString(43, 7 + i, defaultAimKeys.get(i));
+
+            textGraphics
+                    .setForegroundColor(TextColor.ANSI.WHITE)
+                    .putString(48, 7 + i, defaultAimDescription.get(i));
         }
     }
 
