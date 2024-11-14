@@ -56,7 +56,7 @@ public class HowToPlayMenu implements Menu {
         int centerX = gui.getTerminalSize().getColumns() / 2;
         int centerY = gui.getTerminalSize().getRows() / 2;
 
-        //X axis Offset
+        // X axis Offset
         int offsetX = 4;
 
         // Draw Title;
@@ -92,13 +92,14 @@ public class HowToPlayMenu implements Menu {
                         );
             }
             // Draw other Option
-            else {
+            else
                 textGraphics
                         .setForegroundColor(color)
                         .putString(offsetX, 6 + i, options[i]);
-            }
+
         }
 
+        // Draw Information of the selected option
         switch (selectedOption) {
             case 0 -> showMenuNavigationControls(textGraphics);
             case 1 -> showDefaultControls(textGraphics);
