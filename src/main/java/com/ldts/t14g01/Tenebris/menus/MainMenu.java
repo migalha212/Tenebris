@@ -34,7 +34,6 @@ public class MainMenu implements Menu {
             case null, default -> {
             }
         }
-
     }
 
     @Override
@@ -85,16 +84,20 @@ public class MainMenu implements Menu {
     private void updateOptions(State state) {
         options.clear();
         options.add(States.NEW_GAME_MENU);
-        options.add(States.LOAD_GAME_MENU);
+
+        // ToDo: Add Load Menu Implementation
+        // options.add(States.LOAD_GAME_MENU);
 
         // Levels only visible if a game is loaded
         if (state.hasLoadedGame()) {
-            options.add(States.LEVELS_MENU);
-            options.add(States.STATISTICS_MENU);
+            // ToDo: Add Levels Menu Implementation
+            // options.add(States.LEVELS_MENU);
+            
+            // ToDo: Add Statistics Menu Implementation
+            // options.add(States.STATISTICS_MENU);
         }
 
         options.add(States.HOW_TO_PLAY_MENU);
-        options.add(States.SETTINGS_MENU);
         options.add(States.CREDITS_MENU);
 
         // Quit option
@@ -111,7 +114,6 @@ public class MainMenu implements Menu {
             case LEVELS_MENU -> name = "Levels";
             case STATISTICS_MENU -> name = "Statistics";
             case HOW_TO_PLAY_MENU -> name = "How to Play";
-            case SETTINGS_MENU -> name = "Settings";
             case CREDITS_MENU -> name = "Credits";
             case null -> name = "Exit";
             default -> name = "";

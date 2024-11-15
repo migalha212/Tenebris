@@ -101,22 +101,22 @@ public class HowToPlayMenu implements Menu {
 
         // Draw Information of the selected option
         switch (selectedOption) {
-            case 0 -> showMenuNavigationControls(textGraphics);
-            case 1 -> showDefaultControls(textGraphics);
-            case 2 -> showObjective(textGraphics);
-            case 3 -> showGameBasics(textGraphics);
-            case 4 -> showWeaponsStats(textGraphics);
-            case 5 -> showMonsterInfo(textGraphics);
-            case 6 -> showBossesInfo(textGraphics);
-            case 7 -> showDifficultyLevelsExplanation(textGraphics);
-            case 8 -> showMapElements(textGraphics);
+            case 0 -> drawMenuNavigationControls(textGraphics);
+            case 1 -> drawDefaultControls(textGraphics);
+            case 2 -> drawObjective(textGraphics);
+            case 3 -> drawGameBasics(textGraphics);
+            case 4 -> drawWeaponsStats(textGraphics);
+            case 5 -> drawMonsterInfo(textGraphics);
+            case 6 -> drawBossesInfo(textGraphics);
+            case 7 -> drawDifficultyLevelsExplanation(textGraphics);
+            case 8 -> drawMapElements(textGraphics);
         }
 
         // Update Screen
         gui.refresh();
     }
 
-    private void showMenuNavigationControls(TextGraphics textGraphics) {
+    private void drawMenuNavigationControls(TextGraphics textGraphics) {
         List<String> navigationOptions = new ArrayList<>();
         navigationOptions.add(" - Move Up");
         navigationOptions.add(" - Move Down");
@@ -140,7 +140,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showDefaultControls(TextGraphics textGraphics) {
+    private void drawDefaultControls(TextGraphics textGraphics) {
         textGraphics
                 .setForegroundColor(TextColor.ANSI.WHITE)
                 .putString(25, 6, "Move Character:");
@@ -198,7 +198,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showObjective(TextGraphics textGraphics) {
+    private void drawObjective(TextGraphics textGraphics) {
         List<String> lines = new ArrayList<>();
         lines.add("Play as Dylan Macron, ");
         lines.add("a character fighting for survival,");
@@ -225,7 +225,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showGameBasics(TextGraphics textGraphics) {
+    private void drawGameBasics(TextGraphics textGraphics) {
         List<String> gameBasics = new ArrayList<>();
         gameBasics.add("Health Points (HP)");
         gameBasics.add("Represents the damage that an Entity");
@@ -256,7 +256,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showWeaponsStats(TextGraphics textGraphics) {
+    private void drawWeaponsStats(TextGraphics textGraphics) {
         List<String> weaponsStats = new ArrayList<>();
         weaponsStats.add("Simple Shot");
         weaponsStats.add("  • Fire Rate     : 2 bullets/s");
@@ -292,7 +292,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showMonsterInfo(TextGraphics textGraphics) {
+    private void drawMonsterInfo(TextGraphics textGraphics) {
         List<String> monsterInfo = new ArrayList<>();
         monsterInfo.add("Tenebris Peon");
         monsterInfo.add("Melee range, low HP, moderate damage");
@@ -324,7 +324,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showBossesInfo(TextGraphics textGraphics) {
+    private void drawBossesInfo(TextGraphics textGraphics) {
         List<String> bossesIntro = new ArrayList<>();
         bossesIntro.add("Bosses have unique arenas & attack phases");
         bossesIntro.add("Follow attack cues and destroy their");
@@ -370,7 +370,7 @@ public class HowToPlayMenu implements Menu {
 
     }
 
-    private void showDifficultyLevelsExplanation(TextGraphics textGraphics) {
+    private void drawDifficultyLevelsExplanation(TextGraphics textGraphics) {
         List<String> difficultyLevelExplain = new ArrayList<>();
         difficultyLevelExplain.add("Easy");
         difficultyLevelExplain.add("• Higher HP that resets in each arena");
@@ -404,7 +404,7 @@ public class HowToPlayMenu implements Menu {
         }
     }
 
-    private void showMapElements(TextGraphics textGraphics) {
+    private void drawMapElements(TextGraphics textGraphics) {
         List<String> mapElementsInfo = new ArrayList<>();
         mapElementsInfo.add("Standard Wall");
         mapElementsInfo.add("Blocks movement and bullets");

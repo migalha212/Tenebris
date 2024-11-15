@@ -6,7 +6,6 @@ public enum States {
     LOAD_GAME_MENU,
     LEVELS_MENU,
     HOW_TO_PLAY_MENU,
-    SETTINGS_MENU,
     CREDITS_MENU,
     STATISTICS_MENU,
     IN_GAME,

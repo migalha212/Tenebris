@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Tenebris {
     private final State state;
-    private GUI gui;
+    private final GUI gui;
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Tenebris tenebris = new Tenebris();
@@ -41,14 +41,13 @@ public class Tenebris {
             // Tick game
             this.state.tick(gui, action);
 
-            // Wait
+            // Wait to limit frame rate
             long endTime = System.currentTimeMillis();
             long waitTime = frameTime - (endTime - startTime);
             if (waitTime > 0) Thread.sleep(waitTime);
         }
 
-        // End of Game
-        // Close Screen
+        // End of Game so Close Screen
         this.gui.close();
     }
 }

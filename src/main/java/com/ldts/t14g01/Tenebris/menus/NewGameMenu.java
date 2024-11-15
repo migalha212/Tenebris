@@ -11,7 +11,6 @@ import com.ldts.t14g01.Tenebris.utils.Difficulty;
 
 import java.io.IOException;
 
-
 public class NewGameMenu implements Menu {
     private static final Difficulty[] options = Difficulty.values();
     private int selectedOption;

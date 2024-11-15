@@ -1,6 +1,5 @@
 package com.ldts.t14g01.Tenebris.utils;
 
-
 import java.util.Objects;
 import java.util.Random;
 
@@ -20,7 +19,6 @@ public class Position {
     public int y() {
         return this.y;
     }
-
 
     public void set(Position p) {
         this.x = p.x;
