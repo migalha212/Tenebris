@@ -19,8 +19,8 @@ public class MainMenuView extends View<Menu> {
         // ToDo : Draw Background
 
         // Get center x and center y position
-        int centerX = gui.getTerminalSize().getColumns() / 2;
-        int centerY = gui.getTerminalSize().getRows() / 2;
+        int centerX = gui.getWindowSize().x() / 2;
+        int centerY = gui.getWindowSize().y() / 2;
 
         // Align Options Left
         int leftX = 4;

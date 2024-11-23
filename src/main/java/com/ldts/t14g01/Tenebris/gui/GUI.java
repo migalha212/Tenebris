@@ -25,19 +25,19 @@ public class GUI implements TerminalResizeListener {
     private static final int BASE_WIDTH = 16;
     private static final int BASE_HEIGHT = 5;
     private static final int MENU_SCALE = 4;
-    private static final int GRAPHICS_SCALE = 20;
+    private static final int ARENA_SCALE = 20;
 
     // Screen Types
     public enum Type {
-        GRAPHICS,
-        MENU,
-        YELLOW
+        ARENA,
+        MENU
     }
 
     // Colors
     public enum Colors {
         WHITE,
-        YELLOW, BLACK
+        BLACK,
+        YELLOW
     }
 
     // Instance Variables
@@ -45,7 +45,6 @@ public class GUI implements TerminalResizeListener {
     private Type type;
     private TerminalSize terminalSize;
     private boolean quitted = false;
-    private boolean isDrawing = false;
 
     private GUI() {
     }
@@ -79,7 +78,7 @@ public class GUI implements TerminalResizeListener {
         int scale = 0;
         switch (this.type) {
             case MENU -> scale = GUI.MENU_SCALE;
-            case GRAPHICS -> scale = GUI.GRAPHICS_SCALE;
+            case ARENA -> scale = GUI.ARENA_SCALE;
             case null, default -> scale = GUI.MENU_SCALE;
         }
         final int numberCols = BASE_WIDTH * scale;
@@ -129,43 +128,10 @@ public class GUI implements TerminalResizeListener {
         screen.doResizeIfNecessary();
     }
 
-    public void close() throws IOException {
-        // Wait while the screen is being drawn to
-        while (this.isDrawing) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        if (this.screen != null) this.screen.stopScreen();
-    }
-
-    public boolean quited() {
-        return this.quitted;
-    }
-
-    public boolean stable() {
-        return this.screen != null;
-    }
-
-    public void clear() {
-        if (this.stable()) this.screen.clear();
-    }
-
-    public TextGraphics getTextGraphics() {
-        return this.screen.newTextGraphics();
-    }
-
-    public TerminalSize getTerminalSize() {
-        return this.screen.getTerminalSize();
-    }
-
-    public void refresh() throws IOException {
-        this.screen.refresh();
-    }
-
+    // Actions
     public Action getAction() throws IOException, InterruptedException {
+        if (this.quitted) return Action.QUIT;
+
         // Return null if no screen
         if (this.screen == null) return null;
 
@@ -194,6 +160,42 @@ public class GUI implements TerminalResizeListener {
         return action;
     }
 
+    // Drawing
+    public void drawText(String text, Position position, Colors foreGround, Colors backGround) {
+        TextGraphics tg = this.screen.newTextGraphics();
+        tg.setForegroundColor(GUI.mapTextColor(foreGround));
+        tg.setBackgroundColor(GUI.mapTextColor(backGround));
+        tg.putString(position.x(), position.y(), text);
+    }
+
+    // Screen Management
+    public void refresh() throws IOException {
+        if (this.stable()) this.screen.refresh();
+    }
+
+    public void clear() {
+        if (this.stable()) this.screen.clear();
+    }
+
+    public void close() throws IOException {
+        if (this.stable()) this.screen.stopScreen();
+    }
+
+    // Utils
+    public boolean stable() {
+        return this.screen != null;
+    }
+
+    public Position getWindowSize() {
+        TerminalSize ts = null;
+        if (this.stable()) ts = this.screen.getTerminalSize();
+
+        Position size = new Position(0, 0);
+        if (ts != null) size = new Position(ts.getColumns(), ts.getRows());
+
+        return size;
+    }
+
     private void handleEOF() throws InterruptedException, IOException {
         // Wait to give possible screen reload time
         Thread.sleep(250);
@@ -203,6 +205,17 @@ public class GUI implements TerminalResizeListener {
             if (keyStroke.getKeyType() == KeyType.EOF) this.quitted = true;
     }
 
+    private static TextColor mapTextColor(GUI.Colors color) {
+        TextColor mapped = TextColor.ANSI.WHITE;
+        switch (color) {
+            case BLACK -> mapped = TextColor.ANSI.BLACK;
+            case WHITE -> mapped = TextColor.ANSI.WHITE;
+            case YELLOW -> mapped = TextColor.ANSI.YELLOW;
+        }
+        return mapped;
+    }
+
+    @Override
     public void onResized(Terminal terminal, TerminalSize newSize) {
         // Don't do anything unless it actually changed
         if (newSize.equals(this.terminalSize)) return;
@@ -215,27 +228,4 @@ public class GUI implements TerminalResizeListener {
             throw new RuntimeException(e);
         }
     }
-
-    public void setIsDrawing(boolean isDrawing) {
-        this.isDrawing = isDrawing;
-    }
-
-
-    private static TextColor mapTextColor(GUI.Colors color) {
-        TextColor mapped = TextColor.ANSI.WHITE;
-        switch (color) {
-            case BLACK -> mapped = TextColor.ANSI.BLACK;
-            case WHITE -> mapped = TextColor.ANSI.WHITE;
-            case YELLOW -> mapped = TextColor.ANSI.YELLOW;
-        }
-        return mapped;
-    }
-
-    public void drawText(String text, Position position, Colors foreGround, Colors backGround) {
-        TextGraphics tg = this.screen.newTextGraphics();
-        tg.setForegroundColor(GUI.mapTextColor(foreGround));
-        tg.setBackgroundColor(GUI.mapTextColor(backGround));
-        tg.putString(position.x(), position.y(), text);
-    }
-
 }
