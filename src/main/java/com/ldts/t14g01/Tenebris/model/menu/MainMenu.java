@@ -1,6 +1,5 @@
 package com.ldts.t14g01.Tenebris.model.menu;
 
-import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.controller.menu.MainMenuController;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
