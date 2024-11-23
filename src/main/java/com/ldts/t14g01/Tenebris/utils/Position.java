@@ -25,42 +25,6 @@ public class Position {
         this.y = p.y;
     }
 
-    public void moveUp() {
-        this.y--;
-    }
-
-    public void moveDown() {
-        this.y++;
-    }
-
-    public void moveRight() {
-        this.x++;
-    }
-
-    public void moveLeft() {
-        this.x--;
-    }
-
-    public Position plus(Position position) {
-        return new Position(
-                this.x + position.x,
-                this.y + position.y
-        );
-    }
-
-    public Position minus(Position position) {
-        return new Position(
-                this.x - position.x,
-                this.y - position.y
-        );
-    }
-
-    public static Position random(int maxX, int maxY) {
-        return new Position(
-                new Random().nextInt(maxX),
-                new Random().nextInt(maxY)
-        );
-    }
 
     @Override
     public boolean equals(Object o) {
