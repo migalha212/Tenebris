@@ -18,6 +18,7 @@ public class MainMenuController extends Controller<Menu> {
         switch (MainMenu.MainMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case New_Game -> stateChanger.setState(new MenuState(new NewGameMenu()));
             case Exit -> this.quit(stateChanger);
+            // ToDo: Add Other Menus when they are available
             case null, default -> {
             }
         }

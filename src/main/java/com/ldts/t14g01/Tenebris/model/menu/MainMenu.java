@@ -21,15 +21,15 @@ public class MainMenu extends Menu {
 
     public MainMenu(SaveDataProvider saveDataProvider) {
         super();
-        this.createOptions(saveDataProvider.getSaveData());
+        this.createOptions(saveDataProvider);
     }
 
-    private void createOptions(SaveData saveData) {
+    private void createOptions(SaveDataProvider saveDataProvider) {
         this.options.add(MainMenuOptions.New_Game.name());
         this.options.add(MainMenuOptions.Load_Game.name());
 
         // Levels only visible if a game is loaded
-        if (saveData != null) {
+        if (saveDataProvider.getSaveData() != null) {
             this.options.add(MainMenuOptions.Levels.name());
             this.options.add(MainMenuOptions.Statistics.name());
         }
