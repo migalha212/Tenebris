@@ -7,7 +7,6 @@ import com.ldts.t14g01.Tenebris.view.menu.MainMenuView;
 import com.ldts.t14g01.Tenebris.view.View;
 
 public class MainMenu extends Menu {
-    private static final String name = "Main Menu";
     public enum MainMenuOptions {
         New_Game,
         Load_Game,

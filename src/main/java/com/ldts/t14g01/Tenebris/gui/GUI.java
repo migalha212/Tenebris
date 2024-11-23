@@ -15,7 +15,9 @@ public interface GUI {
     enum Colors {
         WHITE,
         BLACK,
-        YELLOW
+        YELLOW,
+        BRIGHT_YELLOW,
+        CYAN
     }
 
     static GUI getGUI() {
