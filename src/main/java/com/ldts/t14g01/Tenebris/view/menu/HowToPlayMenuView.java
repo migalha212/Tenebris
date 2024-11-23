@@ -69,13 +69,13 @@ public class HowToPlayMenuView extends View<Menu> {
             switch (HowToPlayMenu.HowToPlayMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
                 case Menu_Navigation -> drawMenuNavigationControls(gui);
                 case Default_Controls -> drawDefaultControls(gui);
-                case Objective -> drawObjective(gui);
-                case Game_Basics -> drawGameBasics(gui);
-                case Weapons -> drawWeapons();
-                case Enemies -> drawEnemies(gui);
-                case Bosses -> drawBosses(gui);
-                case Difficulty_Levels -> drawDifficultyLevels(gui);
-                case Map_Elements -> drawMapElements(gui);
+                //case Objective -> drawObjective(gui);
+                //case Game_Basics -> drawGameBasics(gui);
+                //case Weapons -> drawWeapons();
+                //case Enemies -> drawEnemies(gui);
+                //case Bosses -> drawBosses(gui);
+                //case Difficulty_Levels -> drawDifficultyLevels(gui);
+                //case Map_Elements -> drawMapElements(gui);
             }
         }
     }

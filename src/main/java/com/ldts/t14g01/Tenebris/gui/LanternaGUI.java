@@ -196,7 +196,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         TextColor mapped = TextColor.ANSI.WHITE;
         switch (color) {
             case BLACK -> mapped = TextColor.ANSI.BLACK;
-            case WHITE -> mapped = TextColor.ANSI.WHITE;
+            case CYAN -> mapped = TextColor.ANSI.CYAN;
             case YELLOW -> mapped = TextColor.ANSI.YELLOW;
             case BRIGHT_YELLOW -> mapped = TextColor.Factory.fromString("#DAA520");
         }

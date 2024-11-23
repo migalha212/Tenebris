@@ -19,8 +19,8 @@ public class CreditsMenuView extends View<Menu> {
         gui.setType(GUI.Type.MENU);
 
         // Get center position
-        int centerX = gui.getTerminalSize().getColumns() / 2;
-        int centerY = gui.getTerminalSize().getRows() / 2;
+        int centerX = gui.getWindowSize().x() / 2;
+        int centerY = gui.getWindowSize().y() / 2;
 
         // X axis Offset
         int offsetX = 4;
@@ -32,10 +32,10 @@ public class CreditsMenuView extends View<Menu> {
 
         for (int i = 0; i < titleLines.size(); i++) {
             gui.drawText(
-              titleLines.get(i),
-              new Position(offsetX, centerY - 8 + i),
-              GUI.Colors.BRIGHT_YELLOW,
-              GUI.Colors.BLACK
+                    titleLines.get(i),
+                    new Position(offsetX, centerY - 8 + i),
+                    GUI.Colors.BRIGHT_YELLOW,
+                    GUI.Colors.BLACK
             );
         }
 
@@ -47,8 +47,10 @@ public class CreditsMenuView extends View<Menu> {
         for (int i = 0; i < titleLines.size(); i++) {
             gui.drawText(
                     ucInfoLines.get(i),
-                    new Position(gui.getTerminalSize().getColumns() - offsetX - ucInfoLines.get(i).length(),
-                            centerY - 8 + i),
+                    new Position(
+                            gui.getWindowSize().x() - offsetX - ucInfoLines.get(i).length(),
+                            centerY - 8 + i
+                    ),
                     GUI.Colors.WHITE,
                     GUI.Colors.BLACK
             );
@@ -87,7 +89,10 @@ public class CreditsMenuView extends View<Menu> {
         for (int i = 0; i < professorsLines.size(); i++) {
             gui.drawText(
                     professorsLines.get(i),
-                    new Position(gui.getTerminalSize().getColumns() - offsetX - professorsLines.get(i).length(), centerY - 1 + i),
+                    new Position(
+                            gui.getWindowSize().x() - offsetX - professorsLines.get(i).length(),
+                            centerY - 1 + i
+                    ),
                     GUI.Colors.WHITE,
                     GUI.Colors.BLACK
             );
@@ -97,7 +102,10 @@ public class CreditsMenuView extends View<Menu> {
         String backText = "Back";
         gui.drawText(
                 "Back",
-                new Position(centerX - backText.length() / 2, gui.getTerminalSize().getRows() - 3),
+                new Position(
+                        centerX - backText.length() / 2,
+                        gui.getWindowSize().y() - 3
+                ),
                 GUI.Colors.YELLOW,
                 GUI.Colors.BLACK
         );
