@@ -1,4 +1,4 @@
-package com.ldts.t14g01.Tenebris.model.Elements;
+package com.ldts.t14g01.Tenebris.model.gameelement;
 
 import com.ldts.t14g01.Tenebris.utils.Position;
 

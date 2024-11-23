@@ -1,5 +1,6 @@
-package com.ldts.t14g01.Tenebris.model.Elements;
+package com.ldts.t14g01.Tenebris.model.gameelement.entity;
 
+import com.ldts.t14g01.Tenebris.model.gameelement.GameElement;
 import com.ldts.t14g01.Tenebris.utils.Position;
 
 public class Entity extends GameElement {
