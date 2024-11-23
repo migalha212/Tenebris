@@ -3,6 +3,7 @@ package com.ldts.t14g01.Tenebris.controller.menu;
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.model.menu.HowToPlayMenu;
+import com.ldts.t14g01.Tenebris.model.menu.CreditsMenu;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.model.menu.NewGameMenu;
@@ -19,6 +20,7 @@ public class MainMenuController extends Controller<Menu> {
         switch (MainMenu.MainMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case New_Game -> stateChanger.setState(new MenuState(new NewGameMenu()));
             case How_to_Play -> stateChanger.setState(new MenuState(new HowToPlayMenu()));
+            case Credits -> stateChanger.setState(new MenuState(new CreditsMenu()));
             case Exit -> this.quit(stateChanger);
             // ToDo: Add Other Menus when they are available
             case null, default -> {
