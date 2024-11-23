@@ -10,8 +10,14 @@ public class Entity extends GameElement {
     private double maxEnergy;
     private Position moveSpeed;
 
-    public Entity(int x, int y) {
+    public Entity(int x, int y, int maxHp, double maxEnergy) {
         super(x, y);
+        this.maxHp = maxHp;
+        this.hp = maxHp;
+        this.maxEnergy = maxEnergy;
+        this.energy = maxEnergy;
+        this.moveSpeed = new Position(0, 0);
+
     }
 
     public double getEnergy() {
@@ -55,7 +61,7 @@ public class Entity extends GameElement {
     }
 
     public boolean isAlive() {
-        return hp <= 0;
+        return hp > 0;
     }
 
     public Position updatePosition() {
