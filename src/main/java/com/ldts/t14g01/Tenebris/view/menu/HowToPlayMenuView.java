@@ -73,7 +73,7 @@ public class HowToPlayMenuView extends View<Menu> {
                 case Objective -> drawObjective(gui);
                 case Game_Basics -> drawGameBasics(gui);
                 case Weapons -> drawWeapons(gui);
-//                case Enemies -> drawEnemies(gui);
+                case Enemies -> drawEnemies(gui);
 //                case Bosses -> drawBosses(gui);
 //                case Difficulty_Levels -> drawDifficultyLevels(gui);
 //                case Map_Elements -> drawMapElements(gui);
@@ -288,6 +288,41 @@ public class HowToPlayMenuView extends View<Menu> {
             gui.drawText(
                     weaponsStats.get(i),
                     new Position(23, 1 + i + space),
+                    color,
+                    GUI.Colors.BLACK
+            );
+        }
+    }
+
+    private void drawEnemies(GUI gui) {
+        List<String> monsterInfo = new ArrayList<>();
+        monsterInfo.add("Tenebris Peon");
+        monsterInfo.add("Melee range, low HP, moderate damage");
+        monsterInfo.add("Tenebris Heavy");
+        monsterInfo.add("High HP, low damage");
+        monsterInfo.add("Tenebris Spiked Scout");
+        monsterInfo.add("Low HP, high collision damage");
+        monsterInfo.add("Tenebris Harbinger");
+        monsterInfo.add("High damage, Range attacker, low HP");
+        monsterInfo.add("Tenebris Warden");
+        monsterInfo.add("Mini-Boss: High HP, high fire rate");
+
+        int space = 0;
+
+        for (int i = 0; i < monsterInfo.size(); i++) {
+            GUI.Colors color = GUI.Colors.WHITE;
+
+            if (i % 2 == 0) {
+                color = GUI.Colors.CYAN;
+                if (i != 0) {
+                    space++;
+                }
+            }
+
+            // Draw Monster Info
+            gui.drawText(
+                    monsterInfo.get(i),
+                    new Position(23, 2 + i + space),
                     color,
                     GUI.Colors.BLACK
             );
