@@ -1,4 +1,4 @@
-package com.ldts.t14g01.Tenebris;
+package com.ldts.t14g01.Tenebris.savedata;
 
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
 

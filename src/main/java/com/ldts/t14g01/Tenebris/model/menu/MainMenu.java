@@ -1,7 +1,10 @@
 package com.ldts.t14g01.Tenebris.model.menu;
 
-import com.ldts.t14g01.Tenebris.SaveData;
-import com.ldts.t14g01.Tenebris.view.MainMenuView;
+import com.ldts.t14g01.Tenebris.savedata.SaveData;
+import com.ldts.t14g01.Tenebris.controller.Controller;
+import com.ldts.t14g01.Tenebris.controller.menu.MainMenuController;
+import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.view.menu.MainMenuView;
 import com.ldts.t14g01.Tenebris.view.View;
 
 public class MainMenu extends Menu {
@@ -16,9 +19,9 @@ public class MainMenu extends Menu {
         Exit
     }
 
-    public MainMenu(SaveData saveData) {
+    public MainMenu(SaveDataProvider saveDataProvider) {
         super();
-        this.createOptions(saveData);
+        this.createOptions(saveDataProvider.getSaveData());
     }
 
     private void createOptions(SaveData saveData) {
@@ -39,5 +42,10 @@ public class MainMenu extends Menu {
     @Override
     public View<Menu> getView() {
         return new MainMenuView(this);
+    }
+
+    @Override
+    public Controller<Menu> getController() {
+        return new MainMenuController(this);
     }
 }

@@ -1,7 +1,6 @@
 package com.ldts.t14g01.Tenebris.state;
 
 import com.ldts.t14g01.Tenebris.controller.Controller;
-import com.ldts.t14g01.Tenebris.controller.MenuController;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.view.View;
 
@@ -17,6 +16,6 @@ public class MenuState extends State<Menu> {
 
     @Override
     protected Controller<Menu> getController() {
-        return new MenuController(this.getModel());
+        return this.getModel().getController();
     }
 }

@@ -1,5 +1,6 @@
 package com.ldts.t14g01.Tenebris.model.menu;
 
+import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.view.View;
 
 import java.util.ArrayList;
@@ -33,4 +34,6 @@ public abstract class Menu {
     }
 
     public abstract View<Menu> getView();
+
+    public abstract Controller<Menu> getController();
 }
