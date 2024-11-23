@@ -17,6 +17,7 @@ public interface GUI {
         BLACK,
         YELLOW,
         BRIGHT_YELLOW,
+        BRIGHT_GREEN,
         CYAN
     }
 
