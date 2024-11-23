@@ -32,7 +32,8 @@ public class NewGameMenuController extends Controller<Menu> {
             case LOOK_UP -> this.getModel().moveUp();
             case LOOK_DOWN -> this.getModel().moveDown();
             case EXEC -> this.executeOption(stateChanger, saveDataProvider);
-            case ESC, QUIT -> this.quit(stateChanger);
+            case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            case QUIT -> this.quit(stateChanger);
             case null, default -> {
             }
         }
