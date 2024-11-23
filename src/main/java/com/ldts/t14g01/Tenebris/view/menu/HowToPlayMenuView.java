@@ -7,6 +7,7 @@ import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.utils.Position;
 import com.ldts.t14g01.Tenebris.view.View;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,9 +75,9 @@ public class HowToPlayMenuView extends View<Menu> {
                 case Game_Basics -> drawGameBasics(gui);
                 case Weapons -> drawWeapons(gui);
                 case Enemies -> drawEnemies(gui);
-//                case Bosses -> drawBosses(gui);
-//                case Difficulty_Levels -> drawDifficultyLevels(gui);
-//                case Map_Elements -> drawMapElements(gui);
+                case Bosses -> drawBosses(gui);
+                case Difficulty_Levels -> drawDifficultyLevels(gui);
+                case Map_Elements -> drawMapElements(gui);
             }
         }
     }
@@ -329,6 +330,122 @@ public class HowToPlayMenuView extends View<Menu> {
         }
     }
 
+    private void drawBosses(GUI gui) {
+        List<String> bossesIntro = new ArrayList<>();
+        bossesIntro.add("Bosses have unique arenas & attack phases");
+        bossesIntro.add("Follow attack cues and destroy their");
+        bossesIntro.add("weak points to defeat them!");
+        for (int i = 0; i < bossesIntro.size(); i++) {
+            // Draw Intro
+            gui.drawText(
+                    bossesIntro.get(i),
+                    new Position(23, 1 + i),
+                    GUI.Colors.BRIGHT_GREEN,
+                    GUI.Colors.BLACK
+            );
+        }
 
+        List<String> bossesInfo = new ArrayList<>();
+        bossesInfo.add("Black Sum Emissary");
+        bossesInfo.add("Avoid marked spots to dodge attacks");
+        bossesInfo.add("Shoot upwards to damage");
+        bossesInfo.add("Abyssal Archon");
+        bossesInfo.add("Destroy 2 Abyssal Bulbs to reach Phase 2");
+        bossesInfo.add("Then attack! But maneuver carefully.");
+        bossesInfo.add("Nightmare Sovereign");
+        bossesInfo.add("Moves through different arenas,");
+        bossesInfo.add("Each with unique challenges!");
+        bossesInfo.add("Survive or defeat him. Choose wisely!");
 
+        int space = 0;
+
+        for (int i = 0; i < bossesInfo.size(); i++) {
+            GUI.Colors color = GUI.Colors.WHITE;
+
+            if (i % 3 == 0 && i < bossesInfo.size() - 1) {
+                color = GUI.Colors.CYAN;
+                if (i != 0) {
+                    space++;
+                }
+            }
+
+            // Draw Bosses Info
+            gui.drawText(
+                    bossesInfo.get(i),
+                    new Position(23, 5 + i + space),
+                    color,
+                    GUI.Colors.BLACK
+            );
+        }
+    }
+
+    private void drawDifficultyLevels(GUI gui) {
+        List<String> difficultyLevelExplain = new ArrayList<>();
+        difficultyLevelExplain.add("Easy");
+        difficultyLevelExplain.add("• Higher HP that resets in each arena");
+        difficultyLevelExplain.add("• Normal EN regeneration, frequent drops");
+        difficultyLevelExplain.add("Normal");
+        difficultyLevelExplain.add("• Standard HP that resets in each arena");
+        difficultyLevelExplain.add("• Slower EN regeneration, frequent drops");
+        difficultyLevelExplain.add("Champion");
+        difficultyLevelExplain.add("• Standard HP that resets in each level");
+        difficultyLevelExplain.add("• Only larger monsters drop EN");
+        difficultyLevelExplain.add("Heartless");
+        difficultyLevelExplain.add("• 'Champion' rules");
+        difficultyLevelExplain.add("• No respawn!");
+
+        int space = 0;
+
+        for (int i = 0; i < difficultyLevelExplain.size(); i++) {
+            GUI.Colors color = GUI.Colors.WHITE;
+
+            if (i % 3 == 0) {
+                color = GUI.Colors.CYAN;
+                if (i != 0) {
+                    space++;
+                }
+            }
+
+            // Draw Difficulty Levels Information
+            gui.drawText(
+                    difficultyLevelExplain.get(i),
+                    new Position(23, 1 + i + space),
+                    color,
+                    GUI.Colors.BLACK
+            );
+        }
+    }
+
+    private void drawMapElements(GUI gui) {
+        List<String> mapElementsInfo = new ArrayList<>();
+        mapElementsInfo.add("Standard Wall");
+        mapElementsInfo.add("Blocks movement and bullets");
+        mapElementsInfo.add("Destructible Wall/Crates");
+        mapElementsInfo.add("Can be destroyed with bullets");
+        mapElementsInfo.add("Spike");
+        mapElementsInfo.add("Deals damage on contact");
+        mapElementsInfo.add("Sand bag");
+        mapElementsInfo.add("Blocks movement but not bullets");
+
+        int space = 0;
+
+        for (int i = 0; i < mapElementsInfo.size(); i++) {
+            GUI.Colors color = GUI.Colors.WHITE;
+
+            if (i % 2 == 0) {
+                color = GUI.Colors.CYAN;
+                if (i != 0) {
+                    space++;
+                }
+            }
+
+            // Draw Map Elements Info
+            gui.drawText(
+                    mapElementsInfo.get(i),
+                    new Position(23, 4 + i + space),
+                    color,
+                    GUI.Colors.BLACK
+            );
+        }
+    }
 }
