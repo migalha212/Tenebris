@@ -1,6 +1,7 @@
 package com.ldts.t14g01.Tenebris.gui;
 
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -10,11 +11,13 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalResizeListener;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
+import com.ldts.t14g01.Tenebris.utils.Position;
 
 import java.awt.*;
 import java.io.IOException;
 
 public class GUI implements TerminalResizeListener {
+    // Singleton
     private static final GUI guiInstance = new GUI();
 
     // Sets target window size and aspect ratio
@@ -27,7 +30,14 @@ public class GUI implements TerminalResizeListener {
     // Screen Types
     public enum Type {
         GRAPHICS,
-        MENU
+        MENU,
+        YELLOW
+    }
+
+    // Colors
+    public enum Colors {
+        WHITE,
+        YELLOW, BLACK
     }
 
     // Instance Variables
@@ -37,7 +47,6 @@ public class GUI implements TerminalResizeListener {
     private boolean quitted = false;
     private boolean isDrawing = false;
 
-    // Set Default type
     private GUI() {
     }
 
@@ -141,7 +150,7 @@ public class GUI implements TerminalResizeListener {
     }
 
     public void clear() {
-        this.screen.clear();
+        if (this.stable()) this.screen.clear();
     }
 
     public TextGraphics getTextGraphics() {
@@ -210,4 +219,23 @@ public class GUI implements TerminalResizeListener {
     public void setIsDrawing(boolean isDrawing) {
         this.isDrawing = isDrawing;
     }
+
+
+    private static TextColor mapTextColor(GUI.Colors color) {
+        TextColor mapped = TextColor.ANSI.WHITE;
+        switch (color) {
+            case BLACK -> mapped = TextColor.ANSI.BLACK;
+            case WHITE -> mapped = TextColor.ANSI.WHITE;
+            case YELLOW -> mapped = TextColor.ANSI.YELLOW;
+        }
+        return mapped;
+    }
+
+    public void drawText(String text, Position position, Colors foreGround, Colors backGround) {
+        TextGraphics tg = this.screen.newTextGraphics();
+        tg.setForegroundColor(GUI.mapTextColor(foreGround));
+        tg.setBackgroundColor(GUI.mapTextColor(backGround));
+        tg.putString(position.x(), position.y(), text);
+    }
+
 }
