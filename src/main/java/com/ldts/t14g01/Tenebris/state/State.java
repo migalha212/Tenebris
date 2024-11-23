@@ -19,13 +19,13 @@ public abstract class State<T> {
         this.controller = getController();
     }
 
-    protected abstract View<T> getView();
-
-    protected abstract Controller<T> getController();
-
     public T getModel() {
         return model;
     }
+
+    protected abstract View<T> getView();
+
+    protected abstract Controller<T> getController();
 
     public void tick(GUI gui, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
         Action action = gui.getAction();
