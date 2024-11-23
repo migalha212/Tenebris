@@ -1,4 +1,4 @@
-package com.ldts.t14g01.Tenebris.model.gameelement.arenaelement;
+package com.ldts.t14g01.Tenebris.model.arena.arenaelement;
 
 public class BreakableWall extends Wall{
     int hp;
