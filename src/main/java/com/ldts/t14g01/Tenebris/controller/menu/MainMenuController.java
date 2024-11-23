@@ -2,11 +2,7 @@ package com.ldts.t14g01.Tenebris.controller.menu;
 
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
-import com.ldts.t14g01.Tenebris.model.menu.HowToPlayMenu;
-import com.ldts.t14g01.Tenebris.model.menu.CreditsMenu;
-import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
-import com.ldts.t14g01.Tenebris.model.menu.Menu;
-import com.ldts.t14g01.Tenebris.model.menu.NewGameMenu;
+import com.ldts.t14g01.Tenebris.model.menu.*;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;

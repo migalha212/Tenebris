@@ -3,8 +3,8 @@ package com.ldts.t14g01.Tenebris.model.menu;
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.controller.menu.MainMenuController;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
-import com.ldts.t14g01.Tenebris.view.menu.MainMenuView;
 import com.ldts.t14g01.Tenebris.view.View;
+import com.ldts.t14g01.Tenebris.view.menu.MainMenuView;
 
 public class MainMenu extends Menu {
     public enum MainMenuOptions {

@@ -1,7 +1,6 @@
 package com.ldts.t14g01.Tenebris.utils;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class Position {
     private int x;

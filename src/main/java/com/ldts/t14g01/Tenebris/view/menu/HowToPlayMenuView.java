@@ -1,13 +1,11 @@
 package com.ldts.t14g01.Tenebris.view.menu;
 
-import com.googlecode.lanterna.TextColor;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.HowToPlayMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.utils.Position;
 import com.ldts.t14g01.Tenebris.view.View;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

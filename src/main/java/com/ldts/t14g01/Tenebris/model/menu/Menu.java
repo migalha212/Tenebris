@@ -10,7 +10,7 @@ public abstract class Menu {
     List<String> options;
     int selectedOption;
 
-    protected Menu () {
+    protected Menu() {
         this.options = new ArrayList<>();
         selectedOption = 0;
     }
