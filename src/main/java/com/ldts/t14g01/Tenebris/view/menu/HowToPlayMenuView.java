@@ -1,5 +1,6 @@
 package com.ldts.t14g01.Tenebris.view.menu;
 
+import com.googlecode.lanterna.TextColor;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.HowToPlayMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
@@ -69,13 +70,13 @@ public class HowToPlayMenuView extends View<Menu> {
             switch (HowToPlayMenu.HowToPlayMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
                 case Menu_Navigation -> drawMenuNavigationControls(gui);
                 case Default_Controls -> drawDefaultControls(gui);
-                //case Objective -> drawObjective(gui);
-                //case Game_Basics -> drawGameBasics(gui);
-                //case Weapons -> drawWeapons();
-                //case Enemies -> drawEnemies(gui);
-                //case Bosses -> drawBosses(gui);
-                //case Difficulty_Levels -> drawDifficultyLevels(gui);
-                //case Map_Elements -> drawMapElements(gui);
+                case Objective -> drawObjective(gui);
+                case Game_Basics -> drawGameBasics(gui);
+                case Weapons -> drawWeapons(gui);
+//                case Enemies -> drawEnemies(gui);
+//                case Bosses -> drawBosses(gui);
+//                case Difficulty_Levels -> drawDifficultyLevels(gui);
+//                case Map_Elements -> drawMapElements(gui);
             }
         }
     }
@@ -188,5 +189,111 @@ public class HowToPlayMenuView extends View<Menu> {
             );
         }
     }
+
+    private void drawObjective(GUI gui) {
+        List<String> lines = new ArrayList<>();
+        lines.add("Play as Dylan Macron, ");
+        lines.add("a character fighting for survival,");
+        lines.add("as he battles monsters ");
+        lines.add("across different arenas.");
+        lines.add("Collect weapons, ");
+        lines.add("manage resources, ");
+        lines.add("and adapt to different enemies and ");
+        lines.add("bosses to progress.");
+
+        int space = 0;
+
+        for (int i = 0; i < lines.size(); i++) {
+            if (i == 4) {
+                space = 1;
+            }
+
+            // Draw Game Objective Explanation
+            gui.drawText(
+                    lines.get(i),
+                    new Position(
+                            23,
+                            6 + i + space
+                    ),
+                    GUI.Colors.WHITE,
+                    GUI.Colors.BLACK
+            );
+        }
+    }
+
+    private void drawGameBasics(GUI gui) {
+        List<String> gameBasics = new ArrayList<>();
+        gameBasics.add("Health Points (HP)");
+        gameBasics.add("Represents the damage that an Entity");
+        gameBasics.add("can take before dying.");
+        gameBasics.add("Energy (EN)");
+        gameBasics.add("Required to fire weapons;");
+        gameBasics.add("Regenerates over time.");
+        gameBasics.add("Damage (DMG)");
+        gameBasics.add("Indicates how much HP is lost when an");
+        gameBasics.add("Entity or obstacle inflicts damage.");
+
+        int space = 0;
+
+        for (int i = 0; i < gameBasics.size(); i++) {
+            GUI.Colors color = GUI.Colors.WHITE;
+
+            if (i == 0 || i == 3 || i == 6) {
+                color = GUI.Colors.CYAN;
+                if (i != 0) {
+                    space++;
+                }
+            }
+
+            // Draw Game Basics Explanation
+            gui.drawText(
+                    gameBasics.get(i),
+                    new Position(23, 5 + i + space),
+                    color,
+                    GUI.Colors.BLACK
+            );
+        }
+    }
+
+    private void drawWeapons(GUI gui) {
+        List<String> weaponsStats = new ArrayList<>();
+        weaponsStats.add("Simple Shot");
+        weaponsStats.add("  • Fire Rate     : 2 bullets/s");
+        weaponsStats.add("  • Energy Cost   : 10 EN/bullet");
+        weaponsStats.add("  • Damage        : 5 HP");
+        weaponsStats.add("Explosion Shot");
+        weaponsStats.add("  • Fire Rate     : 4 shots/s");
+        weaponsStats.add("  • Energy Cost   : 25 EN/bullet");
+        weaponsStats.add("  • Damage        : 15 - 3,75 HP");
+        weaponsStats.add("  • Max Radius    : 4 tiles");
+        weaponsStats.add("Death Ray (Laser)");
+        weaponsStats.add("  • Cooldown      : 1 minute");
+        weaponsStats.add("  • Energy Cost   : 20 EN/s");
+        weaponsStats.add("  • Damage        : 20 HP/s");
+        weaponsStats.add("  • Max Duration  : 5 seconds");
+
+        int space = 0;
+
+        for (int i = 0; i < weaponsStats.size(); i++) {
+            GUI.Colors color = GUI.Colors.WHITE;
+
+            if (i == 0 || i == 4 || i == 9) {
+                color = GUI.Colors.CYAN;
+                if (i != 0) {
+                    space++;
+                }
+            }
+
+            // Draw Weapon Stats
+            gui.drawText(
+                    weaponsStats.get(i),
+                    new Position(23, 1 + i + space),
+                    color,
+                    GUI.Colors.BLACK
+            );
+        }
+    }
+
+
 
 }
