@@ -2,18 +2,22 @@ package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.utils.Position;
 
-public class GameElement {
-    private Position position;
+public abstract class GameElement {
+    protected Position position;
+    protected final int size;
 
-    public GameElement(int x, int y) {
-        position = new Position(x, y);
+    public GameElement(Position position, int size) {
+        this.position = position;
+        this.size = size;
     }
 
     public Position getPosition() {
         return position;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public int getSize() {
+        return this.size;
     }
+
+    public abstract void interact(GameElement other);
 }
