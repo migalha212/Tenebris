@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Menu {
-    List<String> options;
-    int selectedOption;
+    protected List<String> options;
+    protected int selectedOption;
 
     protected Menu() {
         this.options = new ArrayList<>();

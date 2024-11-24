@@ -10,6 +10,7 @@ public class NewGameMenu extends Menu {
     public NewGameMenu() {
         super();
         this.createOptions();
+        this.selectedOption = Difficulty.Normal.ordinal();
     }
 
     private void createOptions() {
