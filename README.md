@@ -24,7 +24,7 @@ First menu of the game. It will show up when opening the game and from here you 
 > Load Game, Levels and Statistics options only appear once the player has at least one saved game.
 
 ### New Game Menu
-Allows players to select their preferred difficulty level. [Options](#difficulty-levels) include Easy, Normal, Champion and Heartless, each accompanied by a brief description to guide the player. Once a difficulty is selected, the game proceeds to start.
+Allows players to select their preferred difficulty level. Options include Easy, Normal, Champion and Heartless, each accompanied by a brief description to guide the player. Once a difficulty is selected, the game proceeds to start.
 
 ### How to Play Menu
 Provides essential gameplay information, including navigation, controls, objective (of the game), the game basics and details about weapons, enemies, bosses, difficulty levels, and map elements. Navigation instructions are shown on the right, with options to move through the menu or go back.
