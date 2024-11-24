@@ -141,6 +141,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
                 switch (keyStroke.getCharacter()) {
                     case 'E', 'e', ' ' -> action = Action.EXEC;
                     case 'Q', 'q' -> action = Action.QUIT;
+                    case 'W', 'w' -> action = Action.MOVE_UP;
+                    case 'S', 's' -> action = Action.MOVE_DOWN;
+                    case 'A', 'a' -> action = Action.MOVE_LEFT;
+                    case 'D', 'd' -> action = Action.MOVE_RIGHT;
                 }
         }
 
