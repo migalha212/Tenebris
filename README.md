@@ -43,6 +43,27 @@ Although it is not yet fully apparent in gameplay due to ongoing feature develop
 
 ## Game Screenshots and Mockups
 
+[comment]: <> (Dylan Movement Showcase)
+
+<h3 align="center">
+  Dylan Movement Showcase
+</h3>
+
+<p align="center">
+<img src="docs/resources/mockups/Dylan.gif">
+</p>
+
+[comment]: <> (Monster Movement Showcase)
+
+<h3 align="center">
+  Monster Movement Showcase
+</h3>
+
+<p align="center">
+<img src="docs/resources/mockups/Monster.gif">
+</p>
+
+
 [comment]: <> (Main Menu Design)
 
 <h3 align="center">
