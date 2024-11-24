@@ -27,6 +27,8 @@ public abstract class State<T> {
 
     protected abstract Controller<T> getController();
 
+    public abstract GUI.Type getGUIType();
+
     public void tick(GUI gui, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
         Action action = gui.getAction();
         controller.tick(action, stateChanger, saveDataProvider);

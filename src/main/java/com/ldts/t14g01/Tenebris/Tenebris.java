@@ -20,15 +20,15 @@ public class Tenebris implements StateChanger, SaveDataProvider {
         tenebris.run();
     }
 
-    Tenebris() {
+    Tenebris() throws IOException {
         // Init game state
-        this.state = new MenuState(new MainMenu(this));
         this.gui = GUI.getGUI();
         this.saveData = null;
+        this.setState(new MenuState(new MainMenu(this)));
     }
 
     public void run() throws IOException, InterruptedException {
-        long frameTime = 1000 / 30;
+        long frameTime = 1000 / 60;
 
         // While the game is running
         while (this.state != null) {
@@ -49,8 +49,9 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     }
 
     @Override
-    public void setState(State state) {
+    public void setState(State state) throws IOException {
         this.state = state;
+        if (this.state != null) this.gui.setType(this.state.getGUIType());
     }
 
     @Override

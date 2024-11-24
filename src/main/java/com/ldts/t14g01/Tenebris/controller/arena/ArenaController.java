@@ -8,6 +8,8 @@ import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
+import java.io.IOException;
+
 
 public class ArenaController extends Controller<Arena> {
     public ArenaController(Arena model) {
@@ -15,12 +17,16 @@ public class ArenaController extends Controller<Arena> {
     }
 
     @Override
-    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) {
+    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (action) {
             case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             case QUIT -> stateChanger.setState(null);
+            case MOVE_UP, MOVE_DOWN, MOVE_RIGHT, MOVE_LEFT ->
+                    this.getModel().getDylan().getController().tick(action, stateChanger, saveDataProvider);
             case null, default -> {
             }
         }
+
+        this.getModel().getDylan().getController().update();
     }
 }

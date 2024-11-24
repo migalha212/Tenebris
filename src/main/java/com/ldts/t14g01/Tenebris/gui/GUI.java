@@ -33,6 +33,8 @@ public interface GUI {
     // Drawing
     void drawText(String text, Position position, Colors foreGround, Colors backGround);
 
+    void drawRectangle(Position topLeft, Position size, Colors color);
+
     // Screen Management
     void refresh() throws IOException;
 

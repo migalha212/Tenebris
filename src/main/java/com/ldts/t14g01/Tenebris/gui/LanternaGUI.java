@@ -1,5 +1,6 @@
 package com.ldts.t14g01.Tenebris.gui;
 
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
@@ -14,18 +15,59 @@ import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
 import com.ldts.t14g01.Tenebris.utils.Position;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class LanternaGUI implements GUI, TerminalResizeListener {
     // Singleton
-    private static final GUI guiInstance = new LanternaGUI();
+    private static final GUI guiInstance;
+
+    static {
+        try {
+            guiInstance = new LanternaGUI();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static final Font ARENA_BASE_FONT;
+
+    static {
+        // Load Square Font for the Arena
+        URL resource = LanternaGUI.class.getClassLoader().getResource("fonts/square.ttf");
+        File fontFile = null;
+        Font font;
+
+        try {
+            fontFile = new File(resource.toURI());
+            font = null;
+            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(font);
+        ARENA_BASE_FONT = font;
+    }
 
     // Sets target window size and aspect ratio
-    private static final double SCREEN_OCCUPANCY = 0.7;
+    private static final double MENU_SCREEN_OCCUPANCY = 0.65;
+    private static final double ARENA_SCREEN_OCCUPANCY = 0.8;
     private static final int MENU_WIDTH = 64;
     private static final int MENU_HEIGHT = 20;
-    private static final int ARENA_WIDTH = 1600;
-    private static final int ARENA_HEIGHT = 1000;
+    private static final int ARENA_WIDTH = 480;
+    private static final int ARENA_HEIGHT = 300;
 
     // Instance Variables
     private Screen screen;
@@ -33,13 +75,15 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     private TerminalSize terminalSize;
     private boolean quitted = false;
 
-    private LanternaGUI() {
+
+    private LanternaGUI() throws IOException, FontFormatException, URISyntaxException {
     }
 
     public static GUI getGUI() {
         return LanternaGUI.guiInstance;
     }
 
+    @Override
     public void setType(Type type) throws IOException {
         // In case it's null close the screen
         if (type == null) {
@@ -54,7 +98,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         // Switch type
         this.type = type;
         this.createScreen();
-
     }
 
     private void createScreen() throws IOException {
@@ -73,7 +116,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
                 numberCols = LanternaGUI.ARENA_WIDTH;
                 numberRows = LanternaGUI.ARENA_HEIGHT;
             }
-            case null, default -> {}
+            case null, default -> {
+            }
         }
 
         // Create TerminalSize
@@ -82,30 +126,37 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         // Get user's screen dimensions
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
+        double screen_occupancy = LanternaGUI.MENU_SCREEN_OCCUPANCY;
+        if (this.type == Type.ARENA) screen_occupancy = LanternaGUI.ARENA_SCREEN_OCCUPANCY;
+
         // Calculate terminal window dimensions (80% of screen)
-        int windowHeight = (int) (screenHeight * SCREEN_OCCUPANCY);
+        int windowHeight = (int) (screenHeight * screen_occupancy);
 
         // Calculate font size and height
         int fontSize = windowHeight / numberRows;
 
         // Set up Lanterna terminal with calculated font size
-        Terminal terminal = new DefaultTerminalFactory()
-                // Set Terminal Size
-                .setInitialTerminalSize(terminalSize)
+        DefaultTerminalFactory dtf = new DefaultTerminalFactory();
 
-                // Set Font Configuration
-                // ToDo: Change font for graphics
-                .setTerminalEmulatorFontConfiguration(
-                        SwingTerminalFontConfiguration.newInstance(
-                                new Font("Monospaced", Font.BOLD, fontSize)
-                        )
-                )
+        // Set Terminal Size
+        dtf.setInitialTerminalSize(terminalSize);
 
-                // Create Terminal Emulator
-                .createTerminalEmulator();
+        // Set Font Configuration
+        switch (this.type) {
+            case MENU -> dtf.setTerminalEmulatorFontConfiguration(
+                    SwingTerminalFontConfiguration.newInstance(
+                            new Font("Monospaced", Font.BOLD, fontSize)
+                    )
+            );
+            case ARENA -> dtf.setTerminalEmulatorFontConfiguration(
+                    SwingTerminalFontConfiguration.newInstance(
+                            LanternaGUI.ARENA_BASE_FONT.deriveFont(Font.PLAIN, fontSize)
+                    )
+            );
+        }
 
-        // Add terminal Resize Listener
-        terminal.addResizeListener(this);
+        // Create Terminal Emulator
+        Terminal terminal = dtf.createTerminalEmulator();
 
         // Create Screen
         Screen screen = new TerminalScreen(terminal);
@@ -114,6 +165,9 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         this.screen = screen;
         this.terminalSize = terminalSize;
 
+        // Add terminal Resize Listener
+        terminal.addResizeListener(this);
+
         // Screen initial config
         screen.setCursorPosition(null);
         screen.startScreen();
@@ -121,6 +175,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     }
 
     // Actions
+    @Override
     public Action getAction() throws IOException, InterruptedException {
         if (this.quitted) return Action.QUIT;
 
@@ -157,6 +212,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     }
 
     // Drawing
+    @Override
     public void drawText(String text, Position position, Colors foreGround, Colors backGround) {
         TextGraphics tg = this.screen.newTextGraphics();
         tg.setForegroundColor(LanternaGUI.mapTextColor(foreGround));
@@ -164,24 +220,49 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         tg.putString(position.x(), position.y(), text);
     }
 
+    @Override
+    public void drawRectangle(Position topLeft, Position size, Colors color) {
+        TextGraphics tg = this.screen.newTextGraphics();
+        tg.setBackgroundColor(LanternaGUI.mapTextColor(color));
+        tg.drawRectangle(
+                new TerminalPosition(topLeft.x(), topLeft.y()),
+                new TerminalSize(size.x(), size.y()),
+                ' '
+        );
+    }
+
     // Screen Management
+    @Override
     public void refresh() throws IOException {
         if (this.stable()) this.screen.refresh();
     }
 
+    @Override
     public void clear() {
-        if (this.stable()) this.screen.clear();
+        if (this.stable()) {
+            TextGraphics tg = this.screen.newTextGraphics();
+            tg.setBackgroundColor(TextColor.ANSI.BLACK);
+            tg.fillRectangle(
+                    new TerminalPosition(0, 0),
+                    this.screen.getTerminalSize(),
+                    ' '
+            );
+        }
+
     }
 
+    @Override
     public void close() throws IOException {
         if (this.stable()) this.screen.stopScreen();
     }
 
     // Utils
+    @Override
     public boolean stable() {
         return this.screen != null;
     }
 
+    @Override
     public Position getWindowSize() {
         TerminalSize ts = null;
         if (this.stable()) ts = this.screen.getTerminalSize();
@@ -225,5 +306,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // This function is only used for tests and should not be used in any other way
+    public void setScreen(Screen screen) {
+        this.screen = screen;
     }
 }

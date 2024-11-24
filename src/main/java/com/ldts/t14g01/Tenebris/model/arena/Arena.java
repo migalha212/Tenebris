@@ -1,5 +1,7 @@
 package com.ldts.t14g01.Tenebris.model.arena;
 
+import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
+import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
 import com.ldts.t14g01.Tenebris.utils.Pair;
 import com.ldts.t14g01.Tenebris.utils.Position;
 
@@ -7,12 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Arena {
-    private List<GameElement> elements;
+    private final List<GameElement> elements;
+    private final List<Monster> monsters;
 
-    public Arena() {}
+    private Dylan dylan;
+
+    public Arena() {
+        this.elements = new ArrayList<>();
+        this.monsters = new ArrayList<>();
+
+        addElement(new Dylan(
+                new Position(4, 4),
+                2,
+                10,
+                4
+        ));
+    }
 
     public void addElement(GameElement element) {
-        this.elements.add(element);
+        if (element instanceof Dylan && this.dylan == null) this.dylan = (Dylan) element;
+        else if (element instanceof Monster) this.monsters.add((Monster) element);
+        else this.elements.add(element);
     }
 
     public void checkCollisions() {
@@ -23,9 +40,13 @@ public class Arena {
                     if (Position.inRange(e1.position, e2.position, e1.size + e2.size))
                         collisions.add(new Pair<>(e1, e2));
 
-        for (Pair<GameElement> p: collisions) {
+        for (Pair<GameElement> p : collisions) {
             p.first.interact(p.second);
             p.second.interact(p.first);
         }
+    }
+
+    public Dylan getDylan() {
+        return this.dylan;
     }
 }

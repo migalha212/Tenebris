@@ -15,7 +15,6 @@ public class NewGameMenuView extends View<Menu> {
 
     @Override
     protected void drawElements(GUI gui) throws IOException {
-        gui.setType(GUI.Type.MENU);
         // ToDo : Draw BackGround
 
         // Place Menu Tittle

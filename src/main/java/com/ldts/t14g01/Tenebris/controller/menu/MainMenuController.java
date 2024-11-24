@@ -7,12 +7,14 @@ import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
+import java.io.IOException;
+
 public class MainMenuController extends Controller<Menu> {
     public MainMenuController(Menu model) {
         super(model);
     }
 
-    void executeOption(StateChanger stateChanger) {
+    void executeOption(StateChanger stateChanger) throws IOException {
         switch (MainMenu.MainMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case New_Game -> stateChanger.setState(new MenuState(new NewGameMenu()));
             case Load_Game -> stateChanger.setState(new MenuState(new LoadGameMenu()));
@@ -27,12 +29,12 @@ public class MainMenuController extends Controller<Menu> {
         }
     }
 
-    void quit(StateChanger stateChanger) {
+    void quit(StateChanger stateChanger) throws IOException {
         stateChanger.setState(null);
     }
 
     @Override
-    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) {
+    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (action) {
             case LOOK_UP -> this.getModel().moveUp();
             case LOOK_DOWN -> this.getModel().moveDown();

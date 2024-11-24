@@ -9,23 +9,25 @@ import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
+import java.io.IOException;
+
 public class HowToPlayMenuController extends Controller<Menu> {
 
     public HowToPlayMenuController(Menu model) {
         super(model);
     }
 
-    private void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) {
+    private void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         if (HowToPlayMenu.HowToPlayMenuOptions.Back.name().equals(this.getModel().getOptions().get(this.getModel().getSelectedOption())))
             stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
     }
 
-    private void quit(StateChanger stateChanger) {
+    private void quit(StateChanger stateChanger) throws IOException {
         stateChanger.setState(null);
     }
 
     @Override
-    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) {
+    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (action) {
             case LOOK_UP -> this.getModel().moveUp();
             case LOOK_DOWN -> this.getModel().moveDown();

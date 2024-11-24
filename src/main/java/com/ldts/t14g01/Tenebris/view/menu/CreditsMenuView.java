@@ -16,8 +16,6 @@ public class CreditsMenuView extends View<Menu> {
 
     @Override
     protected void drawElements(GUI gui) throws IOException {
-        gui.setType(GUI.Type.MENU);
-
         // Get center position
         int centerX = gui.getWindowSize().x() / 2;
         int centerY = gui.getWindowSize().y() / 2;

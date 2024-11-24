@@ -4,6 +4,8 @@ import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
+import java.io.IOException;
+
 public abstract class Controller<T> {
     private final T model;
 
@@ -15,5 +17,5 @@ public abstract class Controller<T> {
         return model;
     }
 
-    public abstract void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider);
+    public abstract void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException;
 }

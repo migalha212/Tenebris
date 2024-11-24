@@ -8,21 +8,23 @@ import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
+import java.io.IOException;
+
 public class CreditsMenuController extends Controller<Menu> {
     public CreditsMenuController(Menu model) {
         super(model);
     }
 
-    void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) {
+    void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
     }
 
-    void quit(StateChanger stateChanger) {
+    void quit(StateChanger stateChanger) throws IOException {
         stateChanger.setState(null);
     }
 
     @Override
-    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) {
+    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (action) {
             case ESC, EXEC -> this.executeOption(stateChanger, saveDataProvider);
             case QUIT -> this.quit(stateChanger);

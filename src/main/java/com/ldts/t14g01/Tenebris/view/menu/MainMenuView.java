@@ -15,7 +15,6 @@ public class MainMenuView extends View<Menu> {
 
     @Override
     protected void drawElements(GUI gui) throws IOException {
-        gui.setType(GUI.Type.MENU);
         // ToDo : Draw Background
 
         // Get center x and center y position
