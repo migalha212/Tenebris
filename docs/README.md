@@ -2,9 +2,7 @@
 
 ## **Game Description**
 
-A character named Dylan Macron finds himself jumping from arena to arena fighting for his life. Each arena is full of monsters of various types and all of them want to kill him.
-Starting out relatively powerless, his experience allows him to get stronger with each fight. He can find weapons spread around the arena. There are 3 types of weapons: Simple shot, Explosion shot, and Death Ray.
-These weapons can level up. Dylan has a limited life per level or per game in the case of the hardest difficulty. Each shot costs an amount of energy which slowly regenerates and can be dropped by the monsters.
+A character named Dylan Macron finds himself jumping from arena to arena, fighting for his life. Each arena is filled with monsters of various types, all determined to kill him. Starting out relatively powerless, Dylan grows stronger with each fight as he gains experience. He can find weapons scattered around the arenas, and there are three types: Simple Shot, Explosion Shot, and Death Ray. Each shot consumes energy, which regenerates slowly and can also be dropped by defeated monsters. Dylan has only one life per level. If he dies, he will respawn at the beginning of the level and can continue fighting. However, if he dies on the hardest difficulty level, it’s game over.
 
 > This project was developed by [Cláudio Meireles](https://github.com/Atum555) (up202306618),[Dinis Silva](https://github.com/DinisBSilva) (up202306207) and [Miguel Pereira](https://github.com/migalha212) (up202304387).
 
