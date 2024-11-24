@@ -2,7 +2,7 @@
 
 ## Game Description
 
-> A character named Dylan Macron finds himself jumping from arena to arena fighting for its life. Each arena is full of monsters of various types and all of them want to kill him.
+> A character named Dylan Macron finds himself jumping from arena to arena fighting for his life. Each arena is full of monsters of various types and all of them want to kill him.
 > Starting out relatively powerless, his experience allows him to get stronger with each fight. He can find weapons spread around the arena. There are 3 types of weapons: Simple shot, Explosion shot, and Death Ray.
 > These weapons can level up. Dylan has a limited life per level or per game in the case of the hardest difficulty. Each shot costs an amount of energy which slowly regenerates and can be dropped by the monsters.
 
@@ -45,7 +45,45 @@ Although it is not yet fully apparent in gameplay due to ongoing feature develop
 
 ## Game Screenshots and Mockups
 
+[comment]: <> (Main Menu Design)
 
+<h4 align="center">
+  Main Menu Design
+</h4>
+
+<p align="center">
+<img src="docs/resources/screenshots/MainMenu.png">
+</p>
+
+[comment]: <> (New Game Menu Design)
+
+<h4 align="center">
+  New Game Menu Design
+</h4>
+
+<p align="center">
+<img src="docs/resources/screenshots/NewGameMenu.png">
+</p>
+
+[comment]: <> (How to Play Menu Design)
+
+<h4 align="center">
+  How to Play Menu Design
+</h4>
+
+<p align="center">
+<img src="docs/resources/screenshots/HowToPlayMenu.png">
+</p>
+
+[comment]: <> (Credits Menu Design)
+
+<h4 align="center">
+  Credits Menu Design
+</h4>
+
+<p align="center">
+<img src="docs/resources/screenshots/CreditsMenu.png">
+</p>
 
 ## UML Class Structures and Overview
 
