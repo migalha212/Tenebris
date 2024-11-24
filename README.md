@@ -47,9 +47,9 @@ Although it is not yet fully apparent in gameplay due to ongoing feature develop
 
 [comment]: <> (Main Menu Design)
 
-<h4 align="center">
+<h3 align="center">
   Main Menu Design
-</h4>
+</h3>
 
 <p align="center">
 <img src="docs/resources/screenshots/MainMenu.png">
@@ -57,9 +57,9 @@ Although it is not yet fully apparent in gameplay due to ongoing feature develop
 
 [comment]: <> (New Game Menu Design)
 
-<h4 align="center">
+<h3 align="center">
   New Game Menu Design
-</h4>
+</h3>
 
 <p align="center">
 <img src="docs/resources/screenshots/NewGameMenu.png">
@@ -67,9 +67,9 @@ Although it is not yet fully apparent in gameplay due to ongoing feature develop
 
 [comment]: <> (How to Play Menu Design)
 
-<h4 align="center">
+<h3 align="center">
   How to Play Menu Design
-</h4>
+</h3>
 
 <p align="center">
 <img src="docs/resources/screenshots/HowToPlayMenu.png">
@@ -77,12 +77,22 @@ Although it is not yet fully apparent in gameplay due to ongoing feature develop
 
 [comment]: <> (Credits Menu Design)
 
-<h4 align="center">
+<h3 align="center">
   Credits Menu Design
-</h4>
+</h3>
 
 <p align="center">
 <img src="docs/resources/screenshots/CreditsMenu.png">
+</p>
+
+[comment]: <> (Arena Design)
+
+<h3 align="center">
+  Arena Design
+</h3>
+
+<p align="center">
+<img src="docs/resources/mockups/in-game.png">
 </p>
 
 ## UML Class Structures and Overview
