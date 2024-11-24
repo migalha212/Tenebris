@@ -1,38 +1,17 @@
 package com.ldts.t14g01.Tenebris.model.arena.entity;
 
-public class Dylan extends Entity {
-    private int points;
-    private int deathCount;
-    private int selectedWeapon;
+import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
+import com.ldts.t14g01.Tenebris.utils.Position;
 
-    public Dylan(int x, int y, int maxHp, double maxEnergy) {
-        super(x, y, maxHp, maxEnergy);
-        this.points = 0;
-        this.selectedWeapon = 0;
-        this.deathCount = 0;
+public class Dylan extends Entity implements TakesDamage {
+    public Dylan(Position position, int size, int hp, int maxVelocity) {
+        super(position, size, hp, maxVelocity);
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public int getDeathCount() {
-        return deathCount;
-    }
-
-    public int getSelectedWeapon() {
-        return selectedWeapon;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public void setDeathCount(int deathCount) {
-        this.deathCount = deathCount;
-    }
-
-    public void setSelectedWeapon(int selectedWeapon) {
-        this.selectedWeapon = selectedWeapon;
+    @Override
+    public void interact(GameElement other) {
+        super.interact(other);
+        // ToDo: Implement Interactions with DamagesPlayer Objects
     }
 }
