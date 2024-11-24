@@ -22,10 +22,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
 
     // Sets target window size and aspect ratio
     private static final double SCREEN_OCCUPANCY = 0.7;
-    private static final int BASE_WIDTH = 16;
-    private static final int BASE_HEIGHT = 5;
-    private static final int MENU_SCALE = 4;
-    private static final int ARENA_SCALE = 20;
+    private static final int MENU_WIDTH = 64;
+    private static final int MENU_HEIGHT = 20;
+    private static final int ARENA_WIDTH = 1600;
+    private static final int ARENA_HEIGHT = 1000;
 
     // Instance Variables
     private Screen screen;
@@ -62,14 +62,19 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         this.close();
 
         // Calculate Terminal Cell Count
-        int scale = 0;
+        int numberCols = 0;
+        int numberRows = 0;
         switch (this.type) {
-            case MENU -> scale = LanternaGUI.MENU_SCALE;
-            case ARENA -> scale = LanternaGUI.ARENA_SCALE;
-            case null, default -> scale = LanternaGUI.MENU_SCALE;
+            case MENU -> {
+                numberCols = LanternaGUI.MENU_WIDTH;
+                numberRows = LanternaGUI.MENU_HEIGHT;
+            }
+            case ARENA -> {
+                numberCols = LanternaGUI.ARENA_WIDTH;
+                numberRows = LanternaGUI.ARENA_HEIGHT;
+            }
+            case null, default -> {}
         }
-        final int numberCols = BASE_WIDTH * scale;
-        final int numberRows = BASE_HEIGHT * scale;
 
         // Create TerminalSize
         TerminalSize terminalSize = new TerminalSize(numberCols, numberRows);
