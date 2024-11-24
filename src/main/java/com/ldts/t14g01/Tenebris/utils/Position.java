@@ -1,41 +1,20 @@
 package com.ldts.t14g01.Tenebris.utils;
 
-import java.util.Objects;
+public record Position(int x, int y) {
 
-public class Position {
-    private int x;
-    private int y;
-
-    public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Position add(Vector velocity) {
+        Position v = velocity.toXY();
+        return new Position(
+                this.x + v.x,
+                this.y + v.y
+        );
     }
 
-    public int x() {
-        return this.x;
-    }
-
-    public int y() {
-        return this.y;
-    }
-
-    public void set(Position p) {
-        this.x = p.x;
-        this.y = p.y;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return x == position.x && y == position.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
+    public static boolean inRange(Position p1, Position p2, int range) {
+        int distance = (int) Math.sqrt(
+                (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)
+        );
+        return distance <= range;
     }
 
     @Override
