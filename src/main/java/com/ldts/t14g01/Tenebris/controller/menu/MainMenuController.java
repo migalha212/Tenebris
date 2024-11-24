@@ -15,6 +15,7 @@ public class MainMenuController extends Controller<Menu> {
     void executeOption(StateChanger stateChanger) {
         switch (MainMenu.MainMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case New_Game -> stateChanger.setState(new MenuState(new NewGameMenu()));
+            case Load_Game -> stateChanger.setState(new MenuState(new LoadGameMenu()));
             case How_to_Play -> stateChanger.setState(new MenuState(new HowToPlayMenu()));
             case Credits -> stateChanger.setState(new MenuState(new CreditsMenu()));
             case Exit -> this.quit(stateChanger);
