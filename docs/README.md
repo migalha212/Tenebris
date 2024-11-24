@@ -57,6 +57,12 @@ At the game's launch, the code dynamically detects the user's screen resolution 
 ### Screen Size Locker
 This feature prevents the user from resizing the game window, ensuring the game’s layout and functionality remain intact. If the user attempts to adjust the window size, the code detects this action, closes the current window, and reopens a new one with the predefined dimensions. The new window restores the exact state of the previous one, preserving all content and progress seamlessly.
 
+### Collision Detection
+Although it is not yet fully apparent in gameplay due to ongoing feature development, the game already incorporates a collision detection mechanism. This system will be a crucial part of the game, determining whether entities can move to specific positions and if monsters successfully deal damage to Dylan.
+
+## **Features In Development**
+This section highlights the features that are currently being worked on but are not yet fully implemented. While these functionalities are in progress, they may not be fully functional or may be subject to changes before completion. Check back later for updates as we continue to improve and expand the game!
+
 ### Difficulty Levels
 - **Easy**:
   - The player’s HP resets at the beginning of every arena; 
@@ -74,13 +80,7 @@ This feature prevents the user from resizing the game window, ensuring the game�
 - **Heartless**:
   - Champion difficulty level;
   - If you die, game over!
-
-### Collision Detection
-Although it is not yet fully apparent in gameplay due to ongoing feature development, the game already incorporates a collision detection mechanism. This system will be a crucial part of the game, determining whether entities can move to specific positions and if monsters successfully deal damage to Dylan.
-
-## **Features In Development**
-This section highlights the features that are currently being worked on but are not yet fully implemented. While these functionalities are in progress, they may not be fully functional or may be subject to changes before completion. Check back later for updates as we continue to improve and expand the game!
-
+  
 ### **Game Elements**
 All Game Elements (entities, projectiles and static elements, like walls) are defined by their position and size.
 
@@ -237,5 +237,61 @@ Monsters will have the ability to "see" the player within a certain range, provi
 
 ## Design Patterns
 
+### Code Structure
 
-##  Unit tests
+#### Problem in Context
+When developing software that involves a user interface, it is essential to establish an appropriate structural pattern. The code must be well-organized and modular to uphold the Single Responsibility Principle.
+
+To achieve this, we need to implement a system that separates the various components of our game, such as processing inputs, rendering images to the screen, and managing game logic. This separation ensures maintainability, scalability, and clarity in the codebase.
+
+#### The Pattern
+To address the need for a well-structured and modular design, we decided to adopt the Model/View/Controller (MVC) Pattern, a common choice for Graphical User Interfaces (GUI). This pattern divides the application into three distinct sections:
+
+- Model: Represents the data, rules, and game logic.
+- View: Displays the model and sends user actions to the controller.
+- Controller: Acts as an intermediary, providing the model to the view and interpreting user actions.
+
+With this pattern in mind, we brainstormed ideas and began implementing initial classes and methods for each section. Once these were completed, we merged the code, resolved conflicts, and established the game's main components.  
+
+Since the initial implementation, we have made several adjustments and improvements. However, applying the MVC pattern has greatly increased the independence of components, enabling changes to one part without significantly impacting the others. This modularity has proven invaluable for maintaining and expanding the game.
+
+#### Implementation
+
+We decided to include direct links to our implementation of this method in the following section, using the Main Menu as a specific example:
+- [Model](/src/main/java/com/ldts/t14g01/Tenebris/model/menu/MainMenu.java)
+- [View](/src/main/java/com/ldts/t14g01/Tenebris/view/menu/MainMenuView.java)
+- [Controller](/src/main/java/com/ldts/t14g01/Tenebris/controller/menu/MainMenuController.java)
+
+Throughout the project, the implementation of the MVC model adheres to the following diagram:
+<p align="center">
+  <img src="resources/uml/mvc.png">
+</p>
+
+#### Consequences
+Adopting the Model/View/Controller (MVC) pattern brings several key benefits, such as:
+- **Improved Maintainability**: Clear separation between Model, View, and Controller makes it easier to maintain the code. Changes to one part of the system are less likely to impact others.
+- **Easier Testing**: The modular structure allows for isolated testing of each component, making bug detection more efficient.
+- **Scalability**: New features and expansions can be added without major changes to other parts of the system. The modular design makes the game easier to grow and adapt.
+- **Decoupling**: The MVC pattern promotes a high level of decoupling, which simplifies development and reduces the impact of changes on other layers of the system.
+- **Interface Maintenance**: UI changes can be made in the View without affecting game logic, allowing for faster updates and fewer errors.
+
+### Managing a Single Instance of the Game Loop
+
+#### Problem in Context
+
+In a game, it's essential to control the execution flow, ensuring that certain components, like the game loop, run in a controlled, consistent manner. As the game grows in complexity, there might be multiple components that need to interact with the game loop (such as updating entities, handling inputs, or rendering graphics). However, it's important that only one game loop exists at any given time to prevent issues like performance inconsistencies, redundant processing, or synchronization problems across different parts of the game. The challenge lies in ensuring that the game loop is centralized and accessed globally without being instantiated multiple times, especially as the game scales.
+
+#### The Pattern
+The Singleton Pattern is a design pattern used to ensure that a class has only one instance throughout the lifetime of the application and provides a global point of access to that instance. This pattern is particularly useful when a single, centralized object is needed to control or manage a resource, ensuring that it is not accidentally duplicated or instantiated multiple times.
+
+Key characteristics of the Singleton pattern:
+- **Single Instance**: The class can have only one instance, which is shared across the entire application.
+- **Global Access**: The instance is globally accessible, usually through a static method.
+- **Lazy Initialization**: The instance is created only when it is first needed, which optimizes memory usage.
+
+#### Implementation
+In the case of the Game Loop, we can apply the Singleton pattern to ensure that only one game loop exists during the entire game session. The loop would control the execution flow, managing the game’s updates, rendering, and logic processing.
+The full implementation is provided on the run() method [here](src/main/java/com/ldts/t14g01/Tenebris/Tenebris.java).
+
+
+  
