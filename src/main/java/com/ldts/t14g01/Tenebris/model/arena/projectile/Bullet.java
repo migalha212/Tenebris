@@ -2,17 +2,18 @@ package com.ldts.t14g01.Tenebris.model.arena.projectile;
 
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.utils.Position;
 import com.ldts.t14g01.Tenebris.utils.Vector;
 
-public class ExplosiveBullet extends GameElement implements Moves {
+public class Bullet extends GameElement implements Moves, DamagesEntities {
     private final Vector velocity;
     private final int damage;
     private boolean hit;
 
-    public ExplosiveBullet(Position position, int size, int damage, Vector velocity) {
+    public Bullet(Position position, int size, int damage, Vector velocity) {
         super(position, size);
         this.velocity = velocity;
         this.damage = damage;
@@ -23,6 +24,11 @@ public class ExplosiveBullet extends GameElement implements Moves {
     public void interact(GameElement other) {
         if (other instanceof AbsorbsProjectiles) this.hit = true;
         if (other instanceof TakesDamage) this.hit = true;
+    }
+
+    @Override
+    public int getEntityDamage() {
+        return damage;
     }
 
     @Override
