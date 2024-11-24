@@ -147,8 +147,9 @@ The player will be able to move (using the arrow keys), shoot (Space bar). Also,
 ### Monsters Movement
 Monsters will have the ability to "see" the player within a certain range, provided there are no walls obstructing their line of sight. Once they detect the player, they will move in his direction.
 
-### Predefine the values of Dylan attributes
+### Predefine the values of Entity attributes
 
+### Dylan
 - **Starting Health Pool** :
   - 150 hp for easy difficulty;
   - 100 hp for all others.
@@ -160,25 +161,6 @@ Monsters will have the ability to "see" the player within a certain range, provi
   - 1 en per second for Easy;
   - 0,5 en per second for Medium;
   - 0,1 en per second for Champion. 
-
-### Weapons Available
-- **Simple Weapon** :
-  - Fire Rate - 2 bullets per second;
-  - Energy Cost to Shot - 10 en per bullet;
-  - Damage - 5 hp.
-
-- **Explosion Weapon** :
-  - Fire Rate - 0,25 bullets per second;
-  - Energy Cost to shot - 25 en per bullet;
-  - Ability - when reaches a wall or a Monster it deals damage to all enemies in a radius of 4 tiles;
-  - Damage - (15 - 3,75 * radius) hp.
-
-- **Death Ray (Laser)** :
-  - Energy Cost to shot - 20en per second active;
-  - Ability - gives damage to all enemies in that direction;
-  - Max Laser duration - 5 seconds;
-  - Cooldown - 1 minute;
-  - Damage - 20 hp / sec.
 
 ### Monsters
 - **Tenebris Peon**:
@@ -210,6 +192,26 @@ Monsters will have the ability to "see" the player within a certain range, provi
   - Speed : Normal;
   - Damage : 45 hp;
   - Range : 1 tile.
+ 
+### Weapons Available
+- **Simple Weapon** :
+  - Fire Rate - 2 bullets per second;
+  - Energy Cost to Shot - 10 en per bullet;
+  - Damage - 5 hp.
+
+- **Explosion Weapon** :
+  - Fire Rate - 0,25 bullets per second;
+  - Energy Cost to shot - 25 en per bullet;
+  - Ability - when reaches a wall or a Monster it deals damage to all enemies in a radius of 4 tiles;
+  - Damage - (15 - 3,75 * radius) hp.
+
+- **Death Ray (Laser)** :
+  - Energy Cost to shot - 20en per second active;
+  - Ability - gives damage to all enemies in that direction;
+  - Max Laser duration - 5 seconds;
+  - Cooldown - 1 minute;
+  - Damage - 20 hp / sec.
+
 
 > All of these predefined values are provisional and subject to change as we conduct further in-game testing.
 
