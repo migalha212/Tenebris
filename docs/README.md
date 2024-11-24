@@ -7,6 +7,28 @@
 > These weapons can level up. Dylan has a limited life per level or per game in the case of the hardest difficulty. Each shot costs an amount of energy which slowly regenerates and can be dropped by the monsters.
 This project was developed by Cláudio Meireles (up202306618@up.pt), Dinis Silva (up202306207@up.pt) and Miguel Pereira (up202304387@up.pt).
 
+## Controls
+```↑```: Moves Player up.  
+
+```↓```: Moves Player down.  
+
+```←```: Moves Player left.  
+
+```→```: Moves Player right.  
+
+> Arrow Keys are also used to navigate throw the Menus.
+
+```Space```: Shoots.
+
+```ESC```: Return to the previous menu (or quit game if you are in Main Menu).  
+
+```Q```: Quits Game.
+
+```ENTER```: Select the desired options in the menu.  
+
+
+
+
 ## **Features**
 
 ### Already Implemented
