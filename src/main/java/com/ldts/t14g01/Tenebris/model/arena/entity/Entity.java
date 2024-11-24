@@ -3,20 +3,19 @@ package com.ldts.t14g01.Tenebris.model.arena.entity;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
-import com.ldts.t14g01.Tenebris.utils.Position;
-import com.ldts.t14g01.Tenebris.utils.Vector;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 public class Entity extends GameElement implements Moves, TakesDamage {
-    private Vector velocity, acceleration;
+    public Vector2D velocity, acceleration;
     private final int maxVelocity;
     private int hp;
 
 
-    public Entity(Position position, int size, int hp, int maxVelocity) {
+    public Entity(Vector2D position, int size, int hp, int maxVelocity) {
         super(position, size);
         this.hp = hp;
         this.maxVelocity = maxVelocity;
-        this.acceleration = this.velocity = new Vector(null, 0);
+        this.acceleration = this.velocity = new Vector2D(0, 0);
     }
 
     @Override
@@ -31,13 +30,13 @@ public class Entity extends GameElement implements Moves, TakesDamage {
 
     @Override
     public void accelerate() {
-        this.velocity = this.velocity.add(this.acceleration).limit(this.maxVelocity);
+        this.velocity = this.velocity.add(this.acceleration).multiply(0.8).limit(this.maxVelocity);
     }
 
     @Override
-    public void bounce(Vector.Direction direction) {
-        double vy = this.velocity.toXY().y();
-        double vx = this.velocity.toXY().x();
+    public void bounce(Vector2D.Direction direction) {
+        double vx = this.velocity.x();
+        double vy = this.velocity.y();
 
         // This logic assures the velocity gets the right direction no mather the case
         switch (direction) {
@@ -47,7 +46,7 @@ public class Entity extends GameElement implements Moves, TakesDamage {
             case RIGHT -> vx = Math.min(vx, vx * -1);
         }
 
-        this.velocity = new Vector(new Position((int) vx, (int) vy)).limit(this.maxVelocity);
+        this.velocity = new Vector2D((int) vx, (int) vy).limit(this.maxVelocity);
     }
 
     @Override

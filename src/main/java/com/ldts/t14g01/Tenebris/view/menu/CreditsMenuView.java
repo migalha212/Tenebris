@@ -2,7 +2,7 @@ package com.ldts.t14g01.Tenebris.view.menu;
 
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
-import com.ldts.t14g01.Tenebris.utils.Position;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.View;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class CreditsMenuView extends View<Menu> {
         for (int i = 0; i < titleLines.size(); i++) {
             gui.drawText(
                     titleLines.get(i),
-                    new Position(offsetX, centerY - 8 + i),
+                    new Vector2D(offsetX, centerY - 8 + i),
                     GUI.Colors.BRIGHT_YELLOW,
                     GUI.Colors.BLACK
             );
@@ -45,7 +45,7 @@ public class CreditsMenuView extends View<Menu> {
         for (int i = 0; i < titleLines.size(); i++) {
             gui.drawText(
                     ucInfoLines.get(i),
-                    new Position(
+                    new Vector2D(
                             gui.getWindowSize().x() - offsetX - ucInfoLines.get(i).length(),
                             centerY - 8 + i
                     ),
@@ -64,7 +64,7 @@ public class CreditsMenuView extends View<Menu> {
         // Authors title
         gui.drawText(
                 authorsLines.getFirst(),
-                new Position(offsetX + 3, centerY - 3),
+                new Vector2D(offsetX + 3, centerY - 3),
                 GUI.Colors.CYAN,
                 GUI.Colors.BLACK
         );
@@ -73,7 +73,7 @@ public class CreditsMenuView extends View<Menu> {
         for (int i = 1; i < authorsLines.size(); i++) {
             gui.drawText(
                     authorsLines.get(i),
-                    new Position(offsetX + 3, centerY - 2 + i),
+                    new Vector2D(offsetX + 3, centerY - 2 + i),
                     GUI.Colors.WHITE,
                     GUI.Colors.BLACK
             );
@@ -87,7 +87,7 @@ public class CreditsMenuView extends View<Menu> {
         for (int i = 0; i < professorsLines.size(); i++) {
             gui.drawText(
                     professorsLines.get(i),
-                    new Position(
+                    new Vector2D(
                             gui.getWindowSize().x() - offsetX - professorsLines.get(i).length(),
                             centerY - 1 + i
                     ),
@@ -100,7 +100,7 @@ public class CreditsMenuView extends View<Menu> {
         String backText = "Back";
         gui.drawText(
                 "Back",
-                new Position(
+                new Vector2D(
                         centerX - backText.length() / 2,
                         gui.getWindowSize().y() - 3
                 ),

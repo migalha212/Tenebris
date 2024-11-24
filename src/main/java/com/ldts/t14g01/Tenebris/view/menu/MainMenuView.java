@@ -2,7 +2,7 @@ package com.ldts.t14g01.Tenebris.view.menu;
 
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
-import com.ldts.t14g01.Tenebris.utils.Position;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.View;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class MainMenuView extends View<Menu> {
         String title = "Main Menu";
         gui.drawText(
                 title,
-                new Position(
+                new Vector2D(
                         centerX - title.length() / 2,
                         centerY - 4
                 ),
@@ -47,7 +47,7 @@ public class MainMenuView extends View<Menu> {
             // Draw option
             gui.drawText(
                     this.getModel().getOptions().get(i).replace('_', ' '),
-                    new Position(leftX, centerY + i),
+                    new Vector2D(leftX, centerY + i),
                     foreGroundColor,
                     GUI.Colors.BLACK
             );

@@ -3,7 +3,7 @@ package com.ldts.t14g01.Tenebris.view.menu;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.HowToPlayMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
-import com.ldts.t14g01.Tenebris.utils.Position;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.View;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class HowToPlayMenuView extends View<Menu> {
         for (int i = 0; i < titleLines.size(); i++)
             gui.drawText(
                     titleLines.get(i),
-                    new Position(offsetX, centerY - 8 + i),
+                    new Vector2D(offsetX, centerY - 8 + i),
                     GUI.Colors.BRIGHT_YELLOW,
                     GUI.Colors.BLACK
             );
@@ -47,7 +47,7 @@ public class HowToPlayMenuView extends View<Menu> {
             if (i == this.getModel().getOptions().size() - 1) {
                 gui.drawText(
                         this.getModel().getOptions().get(i).replace('_', ' '),
-                        new Position(
+                        new Vector2D(
                                 centerX - this.getModel().getOptions().get(i).length() / 2,
                                 gui.getWindowSize().y() - 2
                         ),
@@ -60,7 +60,7 @@ public class HowToPlayMenuView extends View<Menu> {
             else
                 gui.drawText(
                         this.getModel().getOptions().get(i).replace('_', ' '),
-                        new Position(offsetX, 6 + i),
+                        new Vector2D(offsetX, 6 + i),
                         foreGroundColor,
                         GUI.Colors.BLACK
                 );
@@ -97,13 +97,13 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Navigation Controls Explanation
             gui.drawText(
                     navigationKeys.get(i),
-                    new Position(23, 6 + i),
+                    new Vector2D(23, 6 + i),
                     GUI.Colors.CYAN,
                     GUI.Colors.BLACK
             );
             gui.drawText(
                     navigationOptions.get(i),
-                    new Position(
+                    new Vector2D(
                             23 + navigationKeys.get(i).length(),
                             6 + i
                     ),
@@ -116,7 +116,7 @@ public class HowToPlayMenuView extends View<Menu> {
     private void drawDefaultControls(GUI gui) {
         gui.drawText(
                 "Move Character:",
-                new Position(25, 6),
+                new Vector2D(25, 6),
                 GUI.Colors.WHITE,
                 GUI.Colors.BLACK
         );
@@ -137,14 +137,14 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Movement Controls Explanation
             gui.drawText(
                     defaultMovementDescription.get(i),
-                    new Position(29, 7 + i),
+                    new Vector2D(29, 7 + i),
                     GUI.Colors.WHITE,
                     GUI.Colors.BLACK
             );
 
             gui.drawText(
                     defaultMovementKeys.get(i),
-                    new Position(25, 7 + i),
+                    new Vector2D(25, 7 + i),
                     GUI.Colors.CYAN,
                     GUI.Colors.BLACK
             );
@@ -152,7 +152,7 @@ public class HowToPlayMenuView extends View<Menu> {
 
         gui.drawText(
                 "Aim Controls:",
-                new Position(43, 6),
+                new Vector2D(43, 6),
                 GUI.Colors.WHITE,
                 GUI.Colors.BLACK
         );
@@ -175,14 +175,14 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Aim Controls Explanation
             gui.drawText(
                     defaultAimKeys.get(i),
-                    new Position(43, 7 + i),
+                    new Vector2D(43, 7 + i),
                     GUI.Colors.CYAN,
                     GUI.Colors.BLACK
             );
 
             gui.drawText(
                     defaultAimDescription.get(i),
-                    new Position(48, 7 + i),
+                    new Vector2D(48, 7 + i),
                     GUI.Colors.WHITE,
                     GUI.Colors.BLACK
             );
@@ -210,7 +210,7 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Game Objective Explanation
             gui.drawText(
                     lines.get(i),
-                    new Position(
+                    new Vector2D(
                             23,
                             6 + i + space
                     ),
@@ -247,7 +247,7 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Game Basics Explanation
             gui.drawText(
                     gameBasics.get(i),
-                    new Position(23, 5 + i + space),
+                    new Vector2D(23, 5 + i + space),
                     color,
                     GUI.Colors.BLACK
             );
@@ -286,7 +286,7 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Weapon Stats
             gui.drawText(
                     weaponsStats.get(i),
-                    new Position(23, 1 + i + space),
+                    new Vector2D(23, 1 + i + space),
                     color,
                     GUI.Colors.BLACK
             );
@@ -321,7 +321,7 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Monster Info
             gui.drawText(
                     monsterInfo.get(i),
-                    new Position(23, 2 + i + space),
+                    new Vector2D(23, 2 + i + space),
                     color,
                     GUI.Colors.BLACK
             );
@@ -337,7 +337,7 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Intro
             gui.drawText(
                     bossesIntro.get(i),
-                    new Position(23, 1 + i),
+                    new Vector2D(23, 1 + i),
                     GUI.Colors.BRIGHT_GREEN,
                     GUI.Colors.BLACK
             );
@@ -370,7 +370,7 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Bosses Info
             gui.drawText(
                     bossesInfo.get(i),
-                    new Position(23, 5 + i + space),
+                    new Vector2D(23, 5 + i + space),
                     color,
                     GUI.Colors.BLACK
             );
@@ -407,7 +407,7 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Difficulty Levels Information
             gui.drawText(
                     difficultyLevelExplain.get(i),
-                    new Position(23, 1 + i + space),
+                    new Vector2D(23, 1 + i + space),
                     color,
                     GUI.Colors.BLACK
             );
@@ -440,7 +440,7 @@ public class HowToPlayMenuView extends View<Menu> {
             // Draw Map Elements Info
             gui.drawText(
                     mapElementsInfo.get(i),
-                    new Position(23, 4 + i + space),
+                    new Vector2D(23, 4 + i + space),
                     color,
                     GUI.Colors.BLACK
             );

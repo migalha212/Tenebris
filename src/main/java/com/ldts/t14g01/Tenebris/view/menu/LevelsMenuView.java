@@ -2,7 +2,7 @@ package com.ldts.t14g01.Tenebris.view.menu;
 
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
-import com.ldts.t14g01.Tenebris.utils.Position;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.View;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class LevelsMenuView extends View<Menu> {
 
         gui.drawText(
                 message,
-                new Position(
+                new Vector2D(
                         centerX - message.length() / 2,
                         centerY
                 ),

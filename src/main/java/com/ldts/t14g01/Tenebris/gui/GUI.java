@@ -1,6 +1,6 @@
 package com.ldts.t14g01.Tenebris.gui;
 
-import com.ldts.t14g01.Tenebris.utils.Position;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.io.IOException;
 
@@ -31,9 +31,9 @@ public interface GUI {
     Action getAction() throws IOException, InterruptedException;
 
     // Drawing
-    void drawText(String text, Position position, Colors foreGround, Colors backGround);
+    void drawText(String text, Vector2D position, Colors foreGround, Colors backGround);
 
-    void drawRectangle(Position topLeft, Position size, Colors color);
+    void drawRectangle(Vector2D topLeft, Vector2D size, Colors color);
 
     // Screen Management
     void refresh() throws IOException;
@@ -45,5 +45,5 @@ public interface GUI {
     // Utils
     boolean stable();
 
-    Position getWindowSize();
+    Vector2D getWindowSize();
 }

@@ -12,7 +12,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalResizeListener;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
-import com.ldts.t14g01.Tenebris.utils.Position;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.awt.*;
 import java.io.File;
@@ -74,7 +74,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     private Type type;
     private TerminalSize terminalSize;
     private boolean quitted = false;
-
 
     private LanternaGUI() throws IOException, FontFormatException, URISyntaxException {
     }
@@ -213,7 +212,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
 
     // Drawing
     @Override
-    public void drawText(String text, Position position, Colors foreGround, Colors backGround) {
+    public void drawText(String text, Vector2D position, Colors foreGround, Colors backGround) {
         TextGraphics tg = this.screen.newTextGraphics();
         tg.setForegroundColor(LanternaGUI.mapTextColor(foreGround));
         tg.setBackgroundColor(LanternaGUI.mapTextColor(backGround));
@@ -221,7 +220,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     }
 
     @Override
-    public void drawRectangle(Position topLeft, Position size, Colors color) {
+    public void drawRectangle(Vector2D topLeft, Vector2D size, Colors color) {
         TextGraphics tg = this.screen.newTextGraphics();
         tg.setBackgroundColor(LanternaGUI.mapTextColor(color));
         tg.drawRectangle(
@@ -263,12 +262,12 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     }
 
     @Override
-    public Position getWindowSize() {
+    public Vector2D getWindowSize() {
         TerminalSize ts = null;
         if (this.stable()) ts = this.screen.getTerminalSize();
 
-        Position size = new Position(0, 0);
-        if (ts != null) size = new Position(ts.getColumns(), ts.getRows());
+        Vector2D size = new Vector2D(0, 0);
+        if (ts != null) size = new Vector2D(ts.getColumns(), ts.getRows());
 
         return size;
     }

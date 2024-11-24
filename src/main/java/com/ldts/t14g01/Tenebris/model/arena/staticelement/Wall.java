@@ -1,11 +1,11 @@
 package com.ldts.t14g01.Tenebris.model.arena.staticelement;
 
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
-import com.ldts.t14g01.Tenebris.utils.Position;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 public class Wall extends GameElement implements AbsorbsProjectiles {
-    public Wall(Position position, int size) {
+    public Wall(Vector2D position, int size) {
         super(position, size);
     }
 

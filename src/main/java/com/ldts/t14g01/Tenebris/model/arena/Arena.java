@@ -3,7 +3,7 @@ package com.ldts.t14g01.Tenebris.model.arena;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
 import com.ldts.t14g01.Tenebris.utils.Pair;
-import com.ldts.t14g01.Tenebris.utils.Position;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Arena {
         this.monsters = new ArrayList<>();
 
         addElement(new Dylan(
-                new Position(4, 4),
+                new Vector2D(4, 4),
                 2,
                 10,
                 4
@@ -37,7 +37,7 @@ public class Arena {
         for (GameElement e1 : elements)
             for (GameElement e2 : elements)
                 if (e1 != e2)
-                    if (Position.inRange(e1.position, e2.position, e1.size + e2.size))
+                    if (e1.position.inRange(e2.position, e1.size + e2.size))
                         collisions.add(new Pair<>(e1, e2));
 
         for (Pair<GameElement> p : collisions) {
