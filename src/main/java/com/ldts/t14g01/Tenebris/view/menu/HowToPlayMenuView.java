@@ -86,12 +86,14 @@ public class HowToPlayMenuView extends View<Menu> {
         navigationOptions.add(" - Move Down");
         navigationOptions.add(" - Select Option");
         navigationOptions.add(" - Go to Previous Menu");
+        navigationOptions.add(" - Quit the Game");
 
         List<String> navigationKeys = new ArrayList<>();
         navigationKeys.add("      ↑");
         navigationKeys.add("      ↓");
         navigationKeys.add("  Enter");
-        navigationKeys.add("Q / ESC");
+        navigationKeys.add("    ESC");
+        navigationKeys.add("      Q");
 
         for (int i = 0; i < navigationOptions.size(); i++) {
             // Draw Navigation Controls Explanation
@@ -226,7 +228,7 @@ public class HowToPlayMenuView extends View<Menu> {
         gameBasics.add("Represents the damage that an Entity");
         gameBasics.add("can take before dying.");
         gameBasics.add("Energy (EN)");
-        gameBasics.add("Required to fire weapons;");
+        gameBasics.add("Required to fire weapons.");
         gameBasics.add("Regenerates over time.");
         gameBasics.add("Damage (DMG)");
         gameBasics.add("Indicates how much HP is lost when an");
