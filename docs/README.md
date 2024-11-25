@@ -318,3 +318,35 @@ Key Components of the State Pattern
 #### Implementation
 
 We created, as per the design, a generic `State<T>` Class and the necessary more specific implementations in junction with the MVC Design Pattern. This Classes can be found [here](/src/main/java/com/ldts/t14g01/Tenebris/state).
+
+## Class Hierarchies
+
+[comment]: <> (View Tree)
+
+<h3 align="center">
+  View Tree
+</h3>
+
+<p align="center">
+<img src="/docs/resources/uml/view.png">
+</p>
+
+[comment]: <> (Controller Tree)
+
+<h3 align="center">
+  Controller Tree
+</h3>
+
+<p align="center">
+<img src="/docs/resources/uml/controllers.png">
+</p>
+
+[comment]: <> (Game Element Tree)
+
+<h3 align="center">
+  Game Element Tree
+</h3>
+
+<p align="center">
+<img src="/docs/resources/uml/gameElements.png">
+</p>
