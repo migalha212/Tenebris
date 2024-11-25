@@ -311,4 +311,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     public void setScreen(Screen screen) {
         this.screen = screen;
     }
+
+    public Screen getScreen(){
+        return this.screen;
+    }
 }

@@ -1,5 +1,7 @@
 package com.ldts.t14g01.Tenebris.gui;
 
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
@@ -18,7 +20,7 @@ public class GUITest {
     private LanternaGUI gui;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         screen = Mockito.mock(Screen.class);
         textGraphics = Mockito.mock(TextGraphics.class);
 
@@ -34,13 +36,36 @@ public class GUITest {
     }
 
     @Test
-    void drawTextTest(){
-        gui.drawText("This is a Test!",new Vector2D(1,1), GUI.Colors.WHITE, GUI.Colors.BLACK);
+    void drawTextTest() {
+        gui.drawText("This is a Test!", new Vector2D(1, 1), GUI.Colors.WHITE, GUI.Colors.BLACK);
 
         Mockito.verify(textGraphics).setForegroundColor(TextColor.ANSI.WHITE);
         Mockito.verify(textGraphics).setBackgroundColor(TextColor.ANSI.BLACK);
-        Mockito.verify(textGraphics).putString(1,1,"This is a Test!");
+        Mockito.verify(textGraphics).putString(1, 1, "This is a Test!");
     }
 
+    @Test
+    void drawRectangleTest() {
+        Vector2D topLeft = new Vector2D(1, 1);
+        Vector2D size = new Vector2D(2, 2);
+        gui.drawRectangle(topLeft, size, GUI.Colors.BRIGHT_GREEN);
+
+        Mockito.verify(textGraphics).setBackgroundColor(TextColor.ANSI.GREEN_BRIGHT);
+        Mockito.verify(textGraphics).drawRectangle(
+                new TerminalPosition(topLeft.x(), topLeft.y()),
+                new TerminalSize(size.x(), size.y()),
+                ' ');
+    }
+
+    @Test
+    void clearTest() {
+        gui.clear();
+        Mockito.verify(textGraphics).setBackgroundColor(TextColor.ANSI.BLACK);
+        Mockito.verify(textGraphics).fillRectangle(
+                new TerminalPosition(0, 0),
+                gui.getScreen().getTerminalSize(),
+                ' '
+        );
+    }
 
 }
