@@ -22,23 +22,25 @@ import java.net.URL;
 
 public class LanternaGUI implements GUI, TerminalResizeListener {
     // Singleton
-    private static final GUI guiInstance;
+    private static GUI guiInstance;
 
-    static {
-        try {
-            guiInstance = new LanternaGUI();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (FontFormatException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    private static final Font ARENA_BASE_FONT;
+    // Sets target window size and aspect ratio
+    private static final double MENU_SCREEN_OCCUPANCY = 0.65;
+    private static final double ARENA_SCREEN_OCCUPANCY = 0.8;
+    private static final int MENU_WIDTH = 64;
+    private static final int MENU_HEIGHT = 20;
+    private static final int ARENA_WIDTH = 480;
+    private static final int ARENA_HEIGHT = 300;
 
-    static {
+    // Instance Variables
+    private final Font ARENA_BASE_FONT;
+    private Screen screen;
+    private Type type;
+    private TerminalSize terminalSize;
+    private boolean quitted = false;
+
+    private LanternaGUI() {
         // Load Square Font for the Arena
         URL resource = LanternaGUI.class.getClassLoader().getResource("fonts/square.ttf");
         File fontFile = null;
@@ -58,27 +60,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
-        ARENA_BASE_FONT = font;
-    }
-
-    // Sets target window size and aspect ratio
-    private static final double MENU_SCREEN_OCCUPANCY = 0.65;
-    private static final double ARENA_SCREEN_OCCUPANCY = 0.8;
-    private static final int MENU_WIDTH = 64;
-    private static final int MENU_HEIGHT = 20;
-    private static final int ARENA_WIDTH = 480;
-    private static final int ARENA_HEIGHT = 300;
-
-    // Instance Variables
-    private Screen screen;
-    private Type type;
-    private TerminalSize terminalSize;
-    private boolean quitted = false;
-
-    private LanternaGUI() throws IOException, FontFormatException, URISyntaxException {
+        this.ARENA_BASE_FONT = font;
     }
 
     public static GUI getGUI() {
+        if (LanternaGUI.guiInstance == null) LanternaGUI.guiInstance = new LanternaGUI();
         return LanternaGUI.guiInstance;
     }
 
@@ -149,7 +135,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
             );
             case ARENA -> dtf.setTerminalEmulatorFontConfiguration(
                     SwingTerminalFontConfiguration.newInstance(
-                            LanternaGUI.ARENA_BASE_FONT.deriveFont(Font.PLAIN, fontSize)
+                            this.ARENA_BASE_FONT.deriveFont(Font.PLAIN, fontSize)
                     )
             );
         }
@@ -312,7 +298,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         this.screen = screen;
     }
 
-    public Screen getScreen(){
+    public Screen getScreen() {
         return this.screen;
     }
 }

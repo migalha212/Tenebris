@@ -11,15 +11,7 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import java.io.IOException;
 
 public class Tenebris implements StateChanger, SaveDataProvider {
-    private static final Tenebris instance;
-
-    static {
-        try {
-            instance = new Tenebris();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private static Tenebris instance;
 
     private final GUI gui;
     private State state;
@@ -37,7 +29,8 @@ public class Tenebris implements StateChanger, SaveDataProvider {
         this.setState(new MenuState(new MainMenu(this)));
     }
 
-    public static Tenebris getInstance() {
+    public static Tenebris getInstance() throws IOException {
+        if (Tenebris.instance == null) Tenebris.instance = new Tenebris();
         return Tenebris.instance;
     }
 
