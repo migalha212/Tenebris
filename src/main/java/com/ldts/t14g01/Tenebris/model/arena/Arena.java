@@ -37,7 +37,7 @@ public class Arena {
         for (GameElement e1 : elements)
             for (GameElement e2 : elements)
                 if (e1 != e2)
-                    if (e1.position.inRange(e2.position, e1.size + e2.size))
+                    if (e1.getPosition().inRange(e2.getPosition(), e1.getSize() + e2.getSize()))
                         collisions.add(new Pair<>(e1, e2));
 
         for (Pair<GameElement> p : collisions) {
