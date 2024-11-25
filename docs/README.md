@@ -300,6 +300,10 @@ The full implementation is provided on the Tenebris class [here](/src/main/java/
 About the GUI this pattern helps centralize all of it's logic, assuring that the GUI is always in a consistent state, and that no two GUIs can coexist, as that would break the game.
 The Full implementation of the pattern is available in the LanternaGUI class [here](/src/main/java/com/ldts/t14g01/Tenebris/gui/LanternaGUI.java).
 
+#### Consequences
+
+Adopting the Singleton Pattern offers several advantages when managing critical systems like the Game Loop and GUI. It ensures centralized control by guaranteeing that only one instance of each system exists, preventing duplication and maintaining consistency throughout the application's lifecycle. This pattern provides a global access point, simplifying interactions and making it easier to manage dependencies without explicit passing of instances. Lazy initialization optimizes resource usage by creating the instance only when it is first needed, avoiding unnecessary memory consumption. Additionally, the Singleton ensures consistent state management, keeping shared systems stable and predictable, which is crucial for avoiding conflicts or synchronization issues. Debugging is also simplified, as there is only one instance to monitor, making it easier to diagnose and resolve problems. Overall, the Singleton Pattern enhances the stability, efficiency, and maintainability of complex systems.
+
 ### Managing the State of the Game
 
 #### Problem in Context
@@ -318,6 +322,10 @@ Key Components of the State Pattern
 #### Implementation
 
 We created, as per the design, a generic `State<T>` Class and the necessary more specific implementations in junction with the MVC Design Pattern. This Classes can be found [here](/src/main/java/com/ldts/t14g01/Tenebris/state).
+
+#### Consequences
+
+The State Pattern improves code organization and maintainability by encapsulating each state's behavior into distinct classes, ensuring modularity and clarity. It simplifies adding or modifying states, enabling scalability without impacting existing ones. By centralizing transition logic, it eliminates redundancy and ensures consistent, predictable flows. Delegating behavior to state classes removes complex conditional structures and enhances dynamic control over application behavior. This approach reinforces the single responsibility principle, resulting in a more robust, flexible, and clean system.
 
 ## Class Hierarchies
 
