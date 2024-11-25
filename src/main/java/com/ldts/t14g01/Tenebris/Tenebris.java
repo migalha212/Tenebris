@@ -11,20 +11,34 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import java.io.IOException;
 
 public class Tenebris implements StateChanger, SaveDataProvider {
+    private static final Tenebris instance;
+
+    static {
+        try {
+            instance = new Tenebris();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private final GUI gui;
     private State state;
     private SaveData saveData;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        Tenebris tenebris = new Tenebris();
+        Tenebris tenebris = Tenebris.getInstance();
         tenebris.run();
     }
 
-    Tenebris() throws IOException {
+    private Tenebris() throws IOException {
         // Init game state
         this.gui = GUI.getGUI();
         this.saveData = null;
         this.setState(new MenuState(new MainMenu(this)));
+    }
+
+    public static Tenebris getInstance() {
+        return Tenebris.instance;
     }
 
     public void run() throws IOException, InterruptedException {
