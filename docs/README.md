@@ -280,11 +280,11 @@ Adopting the Model/View/Controller (MVC) pattern brings several key benefits, su
 - **Decoupling**: The MVC pattern promotes a high level of decoupling, which simplifies development and reduces the impact of changes on other layers of the system.
 - **Interface Maintenance**: UI changes can be made in the View without affecting game logic, allowing for faster updates and fewer errors.
 
-### Managing a Single Instance of the Game Loop
+### Managing a Single Instance of the Game Loop and GUI
 
 #### Problem in Context
 
-In a game, it's essential to control the execution flow, ensuring that certain components, like the game loop, run in a controlled, consistent manner. As the game grows in complexity, there might be multiple components that need to interact with the game loop (such as updating entities, handling inputs, or rendering graphics). However, it's important that only one game loop exists at any given time to prevent issues like performance inconsistencies, redundant processing, or synchronization problems across different parts of the game. The challenge lies in ensuring that the game loop is centralized and accessed globally without being instantiated multiple times, especially as the game scales.
+In a game, it's essential to control the execution flow, ensuring that certain components, like the game loop and the GUI, run in a controlled and consistent manner. As the game grows in complexity, there might be multiple components that need to interact with the game loop (such as updating entities, handling inputs, or rendering graphics) and with the GUI (such as changing it's type, drawing to it or even reopening). So, it's important that only one game loop and GUI exist at any given time to prevent issues like performance inconsistencies, redundant processing, or synchronization problems across different parts of the game. The challenge lies in ensuring that the management of the Game and GUI is centralized and accessed globally without being instantiated multiple times, especially as the game scales.
 
 #### The Pattern
 The Singleton Pattern is a design pattern used to ensure that a class has only one instance throughout the lifetime of the application and provides a global point of access to that instance. This pattern is particularly useful when a single, centralized object is needed to control or manage a resource, ensuring that it is not accidentally duplicated or instantiated multiple times.
@@ -296,7 +296,9 @@ Key characteristics of the Singleton pattern:
 
 #### Implementation
 In the case of the Game Loop, we can apply the Singleton pattern to ensure that only one game loop exists during the entire game session. The loop would control the execution flow, managing the game’s updates, rendering, and logic processing.
-The full implementation is provided on the run() method [here](src/main/java/com/ldts/t14g01/Tenebris/Tenebris.java).
+The full implementation is provided on the Tenebris class [here](/src/main/java/com/ldts/t14g01/Tenebris/Tenebris.java).
+About the GUI this pattern helps centralize all of it's logic, assuring that the GUI is always in a consistent state, and that no two GUIs can coexist, as that would break the game.
+The Full implementation of the pattern is available in the LanternaGUI class [here](/src/main/java/com/ldts/t14g01/Tenebris/gui/LanternaGUI.java).
 
 
   
