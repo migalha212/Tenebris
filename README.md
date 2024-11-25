@@ -114,7 +114,7 @@ Although it is not yet fully apparent in gameplay due to ongoing feature develop
 <img src="docs/resources/mockups/in-game.png">
 </p>
 
-## UML Class Structures and Overview
+## Classes Structure Overview UML
 
 <p align="center">
 <img src="docs/resources/uml/overview.png">
