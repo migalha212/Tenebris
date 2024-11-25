@@ -34,11 +34,13 @@ public class Arena {
 
     public void checkCollisions() {
         List<Pair<GameElement>> collisions = new ArrayList<>();
-        for (GameElement e1 : elements)
-            for (GameElement e2 : elements)
-                if (e1 != e2)
-                    if (e1.getPosition().inRange(e2.getPosition(), e1.getSize() + e2.getSize()))
-                        collisions.add(new Pair<>(e1, e2));
+        for (int i = 0; i < elements.size(); i++)
+            for (int j = i+1; j < elements.size(); j++)
+                if (elements.get(i) != elements.get(j))
+                    if (elements.get(i).getPosition().inRange(
+                            elements.get(j).getPosition(),
+                            elements.get(i).getSize() + elements.get(j).getSize()))
+                        collisions.add(new Pair<>(elements.get(i), elements.get(j)));
 
         for (Pair<GameElement> p : collisions) {
             p.first.interact(p.second);
