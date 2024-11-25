@@ -300,5 +300,21 @@ The full implementation is provided on the Tenebris class [here](/src/main/java/
 About the GUI this pattern helps centralize all of it's logic, assuring that the GUI is always in a consistent state, and that no two GUIs can coexist, as that would break the game.
 The Full implementation of the pattern is available in the LanternaGUI class [here](/src/main/java/com/ldts/t14g01/Tenebris/gui/LanternaGUI.java).
 
+### Managing the State of the Game
 
-  
+#### Problem in Context
+
+As in any graphical application, changing contexts from one window to another or one menu to another is a big part of the whole graphical context. Specially in a game where there are multiple menus and even the game window itself, coordinating this switching can become confusing and scattered around the code base. This should be avoided, and a clear and centralized way of switching from one state to another should be implemented.
+
+#### The Pattern
+
+The state pattern is a behavioral design pattern used in software development to allow an object to alter its behavior when its internal state changes. This pattern is particularly useful for scenarios where an object's behavior is influenced by its state, and it helps organize code to make it more maintainable and scalable.
+
+Key Components of the State Pattern
+- **Context**: The main object that operates with different states. It maintains a reference to the current state object and delegates behavior to it.
+- **State Interface**: Defines the common interface for all concrete states. This ensures the Context can interact with different states in a uniform manner.
+- **Concrete States**: Implement the state interface and encapsulate specific behavior for a particular state. Each concrete state represents a unique behavior and transitions to other states as necessary.
+
+#### Implementation
+
+We created, as per the design, a generic `State<T>` Class and the necessary more specific implementations in junction with the MVC Design Pattern. This Classes can be found [here](/src/main/java/com/ldts/t14g01/Tenebris/state).
