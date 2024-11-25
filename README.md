@@ -116,3 +116,7 @@ Although it is not yet fully apparent in gameplay due to ongoing feature develop
 
 ## UML Class Structures and Overview
 
+<p align="center">
+<img src="docs/resources/uml/overview.png">
+</p>
+

@@ -235,6 +235,11 @@ Monsters will have the ability to "see" the player within a certain range, provi
   - **Attack Patterns**: Each room will mean different attacks, only when face to face with the boss is a pattern defined, though the rooms and teleporting is also an atack from the boss.
   - **How to damage**: beat the challenge room the boss teleports you into, or when face to face with it, attacking it directly.
 
+## General Structure
+<p align="center">
+<img src="/docs/resources/uml/overview.png">
+</p>
+
 ## Design Patterns
 
 ### Code Structure
