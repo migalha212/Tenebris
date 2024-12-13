@@ -10,9 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class GUITest {
     private Screen screen;
@@ -45,27 +43,10 @@ public class GUITest {
     }
 
     @Test
-    void drawRectangleTest() {
-        Vector2D topLeft = new Vector2D(1, 1);
-        Vector2D size = new Vector2D(2, 2);
-        gui.drawRectangle(topLeft, size, GUI.Colors.BRIGHT_GREEN);
-
-        Mockito.verify(textGraphics).setBackgroundColor(TextColor.ANSI.GREEN_BRIGHT);
-        Mockito.verify(textGraphics).drawRectangle(
-                new TerminalPosition(topLeft.x(), topLeft.y()),
-                new TerminalSize(size.x(), size.y()),
-                ' ');
-    }
-
-    @Test
     void clearTest() {
         gui.clear();
         Mockito.verify(textGraphics).setBackgroundColor(TextColor.ANSI.BLACK);
-        Mockito.verify(textGraphics).fillRectangle(
-                new TerminalPosition(0, 0),
-                gui.getScreen().getTerminalSize(),
-                ' '
-        );
+        Mockito.verify(textGraphics).fillRectangle(new TerminalPosition(0, 0), gui.getScreen().getTerminalSize(), ' ');
     }
 
 }

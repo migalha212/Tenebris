@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.TreeSet;
 
-
 public class ArenaController extends Controller<Arena> {
     public ArenaController(Arena model) {
         super(model);
@@ -44,5 +43,8 @@ public class ArenaController extends Controller<Arena> {
         }));
         dylanController.setMoving(dylan_moves);
         dylanController.move();
+
+        // Update Monsters with Dylan position
+        this.getModel().getMonsters().forEach(monster -> monster.getController().update(this.getModel().getDylan().getPosition()));
     }
 }

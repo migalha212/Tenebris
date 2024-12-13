@@ -20,6 +20,9 @@ public class ArenaView extends View<Arena> {
         // Draw StaticElements
         arena.getElements().forEach(element -> element.getView().draw(gui));
 
+        // Draw Monsters
+        arena.getMonsters().forEach(monster -> monster.getView().draw(gui));
+
         // Draw Dylan
         arena.getDylan().getView().draw(gui);
     }

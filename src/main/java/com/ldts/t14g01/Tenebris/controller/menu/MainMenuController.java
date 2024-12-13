@@ -24,7 +24,7 @@ public class MainMenuController extends Controller<Menu> {
             case Credits -> stateChanger.setState(new MenuState(new CreditsMenu()));
             case Exit -> this.quit(stateChanger);
             // ToDo: Add Other Menus when they are available
-            case null, default -> {
+            default -> {
             }
         }
     }

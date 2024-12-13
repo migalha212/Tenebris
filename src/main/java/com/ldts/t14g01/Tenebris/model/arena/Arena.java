@@ -2,6 +2,7 @@ package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
+import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisPeon;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.SandBag;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Spike;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Wall;
@@ -22,15 +23,14 @@ public class Arena {
         this.monsters = new ArrayList<>();
 
         // TODO Implement Arena Builder
-        addElement(new Dylan(
-                new Vector2D(100, 100),
-                10,
-                2
-        ));
+        addElement(new Dylan(new Vector2D(100, 100), 10, 2));
 
         addElement(new Wall(new Vector2D(150, 150)));
         addElement(new SandBag(new Vector2D(190, 150)));
         addElement(new Spike(new Vector2D(170, 170)));
+
+        addElement(new TenebrisPeon(new Vector2D(250, 150), 2, 1, 10));
+        addElement(new TenebrisPeon(new Vector2D(10, 10), 2, 1, 10));
     }
 
     public void addElement(GameElement element) {

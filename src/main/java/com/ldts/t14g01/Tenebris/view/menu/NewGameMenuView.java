@@ -18,12 +18,7 @@ public class NewGameMenuView extends View<Menu> {
         // ToDo : Draw BackGround
 
         // Place Menu Tittle
-        gui.drawText(
-                "Select Difficulty",
-                new Vector2D(4, 6),
-                GUI.Colors.WHITE,
-                GUI.Colors.BLACK
-        );
+        gui.drawText("Select Difficulty", new Vector2D(4, 6), GUI.Colors.WHITE, GUI.Colors.BLACK);
 
         // Draw Options
         for (String name : this.getModel().getOptions()) {
@@ -35,12 +30,7 @@ public class NewGameMenuView extends View<Menu> {
                 foreGroundColor = GUI.Colors.YELLOW;
 
             // Draw Option
-            gui.drawText(
-                    difficulty.name(),
-                    new Vector2D(4, 10 + difficulty.ordinal()),
-                    foreGroundColor,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(difficulty.name(), new Vector2D(4, 10 + difficulty.ordinal()), foreGroundColor, GUI.Colors.BLACK);
         }
 
         // ToDo: Improve messages
@@ -53,11 +43,6 @@ public class NewGameMenuView extends View<Menu> {
         }
 
         // Draw option description
-        gui.drawText(
-                description,
-                new Vector2D(25, 10 + this.getModel().getSelectedOption()),
-                GUI.Colors.WHITE,
-                GUI.Colors.BLACK
-        );
+        gui.drawText(description, new Vector2D(25, 10 + this.getModel().getSelectedOption()), GUI.Colors.WHITE, GUI.Colors.BLACK);
     }
 }

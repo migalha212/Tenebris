@@ -48,26 +48,27 @@ public class Vector2DTest {
     @Test
     void smallerLimitTest() {
         double magnitude = vector2D.magnitude() - 4;
-        Assertions.assertEquals(new Vector2D((int) (vector2D.x() / 5.0),(int) (vector2D.y() / 5.0)), vector2D.limit(magnitude));
+        Assertions.assertEquals(new Vector2D((int) (vector2D.x() / 5.0), (int) (vector2D.y() / 5.0)), vector2D.limit(magnitude));
     }
 
     @Test
-    void notInRangeTest(){
+    void notInRangeTest() {
         int range = 2;
         Vector2D vector2D1 = new Vector2D(7, 3);
-        Assertions.assertFalse(vector2D.inRange(vector2D1,range));
-        vector2D1 = new Vector2D(4,6);
-        Assertions.assertFalse(vector2D.inRange(vector2D1,range));
+        Assertions.assertFalse(vector2D.inRange(vector2D1, range));
+        vector2D1 = new Vector2D(4, 6);
+        Assertions.assertFalse(vector2D.inRange(vector2D1, range));
     }
+
     @Test
-    void inRangeTest(){
+    void inRangeTest() {
         int range = 2;
         Vector2D vector2D1 = new Vector2D(2, 3);
-        Assertions.assertTrue(vector2D.inRange(vector2D1,range));
-        vector2D1 = new Vector2D(2,2);
-        Assertions.assertTrue(vector2D.inRange(vector2D1,range));
-        vector2D1 = new Vector2D(4,3);
-        Assertions.assertTrue(vector2D.inRange(vector2D1,range));
+        Assertions.assertTrue(vector2D.inRange(vector2D1, range));
+        vector2D1 = new Vector2D(2, 2);
+        Assertions.assertTrue(vector2D.inRange(vector2D1, range));
+        vector2D1 = new Vector2D(4, 3);
+        Assertions.assertTrue(vector2D.inRange(vector2D1, range));
     }
 
     @Test
@@ -84,28 +85,16 @@ public class Vector2DTest {
 
         magnitude = 10;
         direction = Vector2D.Direction.UP_RIGHT;
-        Assertions.assertEquals(
-                new Vector2D((int) (((Math.sqrt(2) * magnitude) / 2)),
-                        (int) ((-Math.sqrt(2) * magnitude) / 2)),
-                Vector2D.fromDirection(direction, magnitude));
+        Assertions.assertEquals(new Vector2D((int) (((Math.sqrt(2) * magnitude) / 2)), (int) ((-Math.sqrt(2) * magnitude) / 2)), Vector2D.fromDirection(direction, magnitude));
 
         direction = Vector2D.Direction.UP_LEFT;
-        Assertions.assertEquals(
-                new Vector2D((int) ((-(Math.sqrt(2) * magnitude) / 2)),
-                        (int) ((-Math.sqrt(2) * magnitude) / 2)),
-                Vector2D.fromDirection(direction, magnitude));
+        Assertions.assertEquals(new Vector2D((int) ((-(Math.sqrt(2) * magnitude) / 2)), (int) ((-Math.sqrt(2) * magnitude) / 2)), Vector2D.fromDirection(direction, magnitude));
 
         direction = Vector2D.Direction.DOWN_RIGHT;
-        Assertions.assertEquals(
-                new Vector2D((int) (((Math.sqrt(2) * magnitude) / 2)),
-                        (int) ((Math.sqrt(2) * magnitude) / 2)),
-                Vector2D.fromDirection(direction, magnitude));
+        Assertions.assertEquals(new Vector2D((int) (((Math.sqrt(2) * magnitude) / 2)), (int) ((Math.sqrt(2) * magnitude) / 2)), Vector2D.fromDirection(direction, magnitude));
 
         direction = Vector2D.Direction.DOWN_LEFT;
-        Assertions.assertEquals(
-                new Vector2D((int) (((-Math.sqrt(2) * magnitude) / 2)),
-                        (int) ((Math.sqrt(2) * magnitude) / 2)),
-                Vector2D.fromDirection(direction, magnitude));
+        Assertions.assertEquals(new Vector2D((int) (((-Math.sqrt(2) * magnitude) / 2)), (int) ((Math.sqrt(2) * magnitude) / 2)), Vector2D.fromDirection(direction, magnitude));
 
         direction = null;
         Assertions.assertEquals(new Vector2D((int) (magnitude), 0), Vector2D.fromDirection(direction, magnitude));

@@ -26,31 +26,17 @@ public class MainMenuView extends View<Menu> {
 
         // Draw Title
         String title = "Main Menu";
-        gui.drawText(
-                title,
-                new Vector2D(
-                        centerX - title.length() / 2,
-                        centerY - 4
-                ),
-                GUI.Colors.WHITE,
-                GUI.Colors.BLACK
-        );
+        gui.drawText(title, new Vector2D(centerX - title.length() / 2, centerY - 4), GUI.Colors.WHITE, GUI.Colors.BLACK);
 
         // Draw options (left-aligned)
         for (int i = 0; i < this.getModel().getOptions().size(); i++) {
             GUI.Colors foreGroundColor = GUI.Colors.WHITE;
 
             // Add markers for the selected option
-            if (i == this.getModel().getSelectedOption())
-                foreGroundColor = GUI.Colors.YELLOW;
+            if (i == this.getModel().getSelectedOption()) foreGroundColor = GUI.Colors.YELLOW;
 
             // Draw option
-            gui.drawText(
-                    this.getModel().getOptions().get(i).replace('_', ' '),
-                    new Vector2D(leftX, centerY + i),
-                    foreGroundColor,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(this.getModel().getOptions().get(i).replace('_', ' '), new Vector2D(leftX, centerY + i), foreGroundColor, GUI.Colors.BLACK);
         }
     }
 }

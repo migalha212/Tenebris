@@ -8,32 +8,22 @@ import java.util.Set;
 public interface GUI {
     // Screen Types
     enum Type {
-        ARENA,
-        MENU
+        ARENA, MENU
     }
 
     // Colors
     enum Colors {
-        WHITE,
-        BLACK,
-        YELLOW,
-        BRIGHT_YELLOW,
-        BRIGHT_GREEN,
-        CYAN
+        WHITE, BLACK, YELLOW, BRIGHT_YELLOW, BRIGHT_GREEN, CYAN
     }
 
     // Dylan States
-    enum Dylan {
-        IDLE_1,
-        IDLE_2,
-        FRONT_1,
-        FRONT_2,
-        BACK_1,
-        BACK_2,
-        LEFT_1,
-        LEFT_2,
-        RIGHT_1,
-        RIGHT_2
+    enum AnimationState {
+        IDLE_1, IDLE_2, FRONT_1, FRONT_2, BACK_1, BACK_2, LEFT_1, LEFT_2, RIGHT_1, RIGHT_2
+    }
+
+    // Monsters
+    enum Monster {
+        TENEBRIS_PEON
     }
 
     static GUI getGUI() {
@@ -50,13 +40,15 @@ public interface GUI {
 
     void drawArenaBackGround();
 
-    void drawDylan(Vector2D position, GUI.Dylan state);
+    void drawDylan(Vector2D position, AnimationState state);
 
     void drawWall(Vector2D position);
 
     void drawSandbag(Vector2D position);
 
     void drawSpikes(Vector2D position);
+
+    void drawMonster(Vector2D position, Monster monster, AnimationState state);
 
     // Screen Management
     void setType(Type type) throws IOException;

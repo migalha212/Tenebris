@@ -41,24 +41,35 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private Screen screen;
     private Type type;
     private TerminalSize terminalSize;
-    private boolean quitted = false;
-    private Set<Action> activeActions;
+    private boolean quited = false;
+    private final Set<Action> activeActions;
 
     // Sprites
-    private BufferedImage sprite_dylan_idle_1;
-    private BufferedImage sprite_dylan_idle_2;
-    private BufferedImage sprite_dylan_back_1;
-    private BufferedImage sprite_dylan_back_2;
-    private BufferedImage sprite_dylan_front_1;
-    private BufferedImage sprite_dylan_front_2;
-    private BufferedImage sprite_dylan_left_1;
-    private BufferedImage sprite_dylan_left_2;
-    private BufferedImage sprite_dylan_right_1;
-    private BufferedImage sprite_dylan_right_2;
+    private final BufferedImage sprite_dylan_idle_1;
+    private final BufferedImage sprite_dylan_idle_2;
+    private final BufferedImage sprite_dylan_back_1;
+    private final BufferedImage sprite_dylan_back_2;
+    private final BufferedImage sprite_dylan_front_1;
+    private final BufferedImage sprite_dylan_front_2;
+    private final BufferedImage sprite_dylan_left_1;
+    private final BufferedImage sprite_dylan_left_2;
+    private final BufferedImage sprite_dylan_right_1;
+    private final BufferedImage sprite_dylan_right_2;
 
-    private BufferedImage sprite_wall;
-    private BufferedImage sprite_sandbag;
-    private BufferedImage sprite_spikes;
+    private final BufferedImage sprite_wall;
+    private final BufferedImage sprite_sandbag;
+    private final BufferedImage sprite_spikes;
+
+    private final BufferedImage sprite_tenebris_peon_idle_1;
+    private final BufferedImage sprite_tenebris_peon_idle_2;
+    private final BufferedImage sprite_tenebris_peon_front_1;
+    private final BufferedImage sprite_tenebris_peon_front_2;
+    private final BufferedImage sprite_tenebris_peon_back_1;
+    private final BufferedImage sprite_tenebris_peon_back_2;
+    private final BufferedImage sprite_tenebris_peon_right_1;
+    private final BufferedImage sprite_tenebris_peon_right_2;
+    private final BufferedImage sprite_tenebris_peon_left_1;
+    private final BufferedImage sprite_tenebris_peon_left_2;
 
     // Singleton
     private static GUI guiInstance;
@@ -76,10 +87,9 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
         try {
             URL resource = LanternaGUI.class.getClassLoader().getResource("fonts/square.ttf");
-            File fontFile = null;
+            File fontFile;
             assert resource != null;
             fontFile = new File(resource.toURI());
-            font = null;
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
         } catch (URISyntaxException | FontFormatException | IOException e) {
             throw new RuntimeException(e);
@@ -105,6 +115,19 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_wall = ImageIO.read(new File("src/main/resources/sprites/elements/wall.png"));
             this.sprite_sandbag = ImageIO.read(new File("src/main/resources/sprites/elements/sandbag.png"));
             this.sprite_spikes = ImageIO.read(new File("src/main/resources/sprites/elements/spikes.png"));
+
+            this.sprite_tenebris_peon_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/idle/1.png"));
+            // TODO Add actual idle 2
+            this.sprite_tenebris_peon_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/idle/1.png"));
+            this.sprite_tenebris_peon_front_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-front/1.png"));
+            this.sprite_tenebris_peon_front_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-front/2.png"));
+            this.sprite_tenebris_peon_back_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-back/1.png"));
+            this.sprite_tenebris_peon_back_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-back/2.png"));
+            this.sprite_tenebris_peon_right_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-right/1.png"));
+            this.sprite_tenebris_peon_right_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-right/2.png"));
+            this.sprite_tenebris_peon_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-left/1.png"));
+            this.sprite_tenebris_peon_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-left/2.png"));
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -126,8 +149,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case ARENA -> {
                 numberCols = LanternaGUI.ARENA_WIDTH;
                 numberRows = LanternaGUI.ARENA_HEIGHT;
-            }
-            case null, default -> {
             }
         }
 
@@ -152,16 +173,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
         // Set Font Configuration
         switch (this.type) {
-            case MENU -> dtf.setTerminalEmulatorFontConfiguration(
-                    SwingTerminalFontConfiguration.newInstance(
-                            new Font("Monospaced", Font.BOLD, fontSize)
-                    )
-            );
-            case ARENA -> dtf.setTerminalEmulatorFontConfiguration(
-                    SwingTerminalFontConfiguration.newInstance(
-                            this.ARENA_BASE_FONT.deriveFont(Font.PLAIN, fontSize)
-                    )
-            );
+            case MENU ->
+                    dtf.setTerminalEmulatorFontConfiguration(SwingTerminalFontConfiguration.newInstance(new Font("Monospaced", Font.BOLD, fontSize)));
+            case ARENA ->
+                    dtf.setTerminalEmulatorFontConfiguration(SwingTerminalFontConfiguration.newInstance(this.ARENA_BASE_FONT.deriveFont(Font.PLAIN, fontSize)));
         }
 
         // Create Terminal Emulator
@@ -189,7 +204,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     // Actions
     @Override
     public Action getAction() throws IOException, InterruptedException {
-        if (this.quitted) return Action.QUIT;
+        if (this.quited) return Action.QUIT;
 
         // Return null if no screen
         if (!this.stable()) return null;
@@ -197,6 +212,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         // Set Panel as Focus
         // This is needed because if the screen gains focus the underPanel
         // where the key-listeners are placed stop receiving input
+        // This is here simply because this is a very frequent function to be called
         ((SwingTerminalFrame) ((TerminalScreen) this.screen).getTerminal()).requestFocus();
 
         // Read keystroke
@@ -214,15 +230,14 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                 case Enter -> action = Action.EXEC;
                 case EOF -> this.handleEOF();
             }
-            if (keyStroke.getCharacter() != null)
-                switch (keyStroke.getCharacter()) {
-                    case 'E', 'e', ' ' -> action = Action.EXEC;
-                    case 'Q', 'q' -> action = Action.QUIT;
-                    case 'W', 'w' -> action = Action.MOVE_UP;
-                    case 'S', 's' -> action = Action.MOVE_DOWN;
-                    case 'A', 'a' -> action = Action.MOVE_LEFT;
-                    case 'D', 'd' -> action = Action.MOVE_RIGHT;
-                }
+            if (keyStroke.getCharacter() != null) switch (keyStroke.getCharacter()) {
+                case 'E', 'e', ' ' -> action = Action.EXEC;
+                case 'Q', 'q' -> action = Action.QUIT;
+                case 'W', 'w' -> action = Action.MOVE_UP;
+                case 'S', 's' -> action = Action.MOVE_DOWN;
+                case 'A', 'a' -> action = Action.MOVE_LEFT;
+                case 'D', 'd' -> action = Action.MOVE_RIGHT;
+            }
         }
 
         return action;
@@ -233,17 +248,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         return new TreeSet<>(this.activeActions);
     }
 
-    private void addActiveAction(Action action) {
-        this.activeActions.add(action);
-    }
-
-    private void removeActiveAction(Action action) {
-        this.activeActions.remove(action);
-    }
-
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -280,7 +286,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case 'd' -> action = Action.MOVE_RIGHT;
             default -> action = null;
         }
-        if (action != null) this.addActiveAction(action);
+        if (action != null) this.activeActions.add(action);
     }
 
     @Override
@@ -294,7 +300,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case 'd' -> action = Action.MOVE_RIGHT;
             default -> action = null;
         }
-        if (action != null) this.removeActiveAction(action);
+        if (action != null) this.activeActions.remove(action);
     }
 
     // Drawing
@@ -312,15 +318,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
         TextGraphics tg = this.screen.newTextGraphics();
         tg.setBackgroundColor(new TextColor.RGB(159, 153, 116));
-        tg.fillRectangle(
-                new TerminalPosition(0, 0),
-                this.screen.getTerminalSize(),
-                ' '
-        );
+        tg.fillRectangle(new TerminalPosition(0, 0), this.screen.getTerminalSize(), ' ');
     }
 
     @Override
-    public void drawDylan(Vector2D position, GUI.Dylan state) {
+    public void drawDylan(Vector2D position, AnimationState state) {
         switch (state) {
             case IDLE_1 -> this.drawImage(position, this.sprite_dylan_idle_1);
             case IDLE_2 -> this.drawImage(position, this.sprite_dylan_idle_2);
@@ -351,6 +353,29 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         this.drawImage(position, this.sprite_spikes);
     }
 
+    @Override
+    public void drawMonster(Vector2D position, Monster monster, AnimationState state) {
+        switch (monster) {
+            case TENEBRIS_PEON -> {
+                switch (state) {
+                    case IDLE_1 -> this.drawImage(position, sprite_tenebris_peon_idle_1);
+                    case IDLE_2 -> this.drawImage(position, sprite_tenebris_peon_idle_2);
+                    case FRONT_1 -> this.drawImage(position, sprite_tenebris_peon_front_1);
+                    case FRONT_2 -> this.drawImage(position, sprite_tenebris_peon_front_2);
+                    case BACK_1 -> this.drawImage(position, sprite_tenebris_peon_back_1);
+                    case BACK_2 -> this.drawImage(position, sprite_tenebris_peon_back_2);
+                    case LEFT_1 -> this.drawImage(position, sprite_tenebris_peon_left_1);
+                    case LEFT_2 -> this.drawImage(position, sprite_tenebris_peon_left_2);
+                    case RIGHT_1 -> this.drawImage(position, sprite_tenebris_peon_right_1);
+                    case RIGHT_2 -> this.drawImage(position, sprite_tenebris_peon_right_2);
+                    case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawMonster");
+                }
+            }
+            case null, default -> {
+            }
+        }
+    }
+
     private void drawImage(Vector2D position, BufferedImage sprite) {
         if (!this.stable()) return;
 
@@ -366,13 +391,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                 if (alpha != 0) {
                     tg.setForegroundColor(new TextColor.RGB(red, green, blue));
                     tg.setBackgroundColor(new TextColor.RGB(red, green, blue));
-                    tg.setCharacter(
-                            new TerminalPosition(
-                                    position.x() + x,
-                                    position.y() + y
-                            ),
-                            ' '
-                    );
+                    tg.setCharacter(new TerminalPosition(position.x() + x, position.y() + y), ' ');
                 }
             }
         }
@@ -407,11 +426,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         if (this.stable()) {
             TextGraphics tg = this.screen.newTextGraphics();
             tg.setBackgroundColor(TextColor.ANSI.BLACK);
-            tg.fillRectangle(
-                    new TerminalPosition(0, 0),
-                    this.screen.getTerminalSize(),
-                    ' '
-            );
+            tg.fillRectangle(new TerminalPosition(0, 0), this.screen.getTerminalSize(), ' ');
         }
     }
 
@@ -441,8 +456,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         Thread.sleep(250);
 
         KeyStroke keyStroke = this.screen.pollInput();
-        if (keyStroke != null)
-            if (keyStroke.getKeyType() == KeyType.EOF) this.quitted = true;
+        if (keyStroke != null) if (keyStroke.getKeyType() == KeyType.EOF) this.quited = true;
     }
 
     private static TextColor mapTextColor(GUI.Colors color) {

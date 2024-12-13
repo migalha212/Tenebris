@@ -14,6 +14,7 @@ public class DylanController {
     }
 
     public void setMoving(Set<Action> actions) {
+        // Translate from Actions into States
         Set<Dylan.State> moving = new TreeSet<>();
         actions.forEach(action -> {
             switch (action) {

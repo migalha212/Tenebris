@@ -10,5 +10,4 @@ public abstract class ElementView<T> {
     }
 
     public abstract void draw(GUI gui);
-
 }

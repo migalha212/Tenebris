@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SaveData {
-    private Difficulty difficulty;
+    private final Difficulty difficulty;
     private int level;
 
     public SaveData(Difficulty difficulty) {

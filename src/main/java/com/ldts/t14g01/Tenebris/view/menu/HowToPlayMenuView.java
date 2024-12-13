@@ -29,12 +29,7 @@ public class HowToPlayMenuView extends View<Menu> {
         titleLines.add("───────────────");
 
         for (int i = 0; i < titleLines.size(); i++)
-            gui.drawText(
-                    titleLines.get(i),
-                    new Vector2D(offsetX, centerY - 8 + i),
-                    GUI.Colors.BRIGHT_YELLOW,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(titleLines.get(i), new Vector2D(offsetX, centerY - 8 + i), GUI.Colors.BRIGHT_YELLOW, GUI.Colors.BLACK);
 
         // Draw Options
         for (int i = 0; i < this.getModel().getOptions().size(); i++) {
@@ -45,25 +40,12 @@ public class HowToPlayMenuView extends View<Menu> {
 
             // Draw Back Button (special case)
             if (i == this.getModel().getOptions().size() - 1) {
-                gui.drawText(
-                        this.getModel().getOptions().get(i).replace('_', ' '),
-                        new Vector2D(
-                                centerX - this.getModel().getOptions().get(i).length() / 2,
-                                gui.getWindowSize().y() - 2
-                        ),
-                        foreGroundColor,
-                        GUI.Colors.BLACK
-                );
+                gui.drawText(this.getModel().getOptions().get(i).replace('_', ' '), new Vector2D(centerX - this.getModel().getOptions().get(i).length() / 2, gui.getWindowSize().y() - 2), foreGroundColor, GUI.Colors.BLACK);
 
             }
             // Draw other Option
             else
-                gui.drawText(
-                        this.getModel().getOptions().get(i).replace('_', ' '),
-                        new Vector2D(offsetX, 6 + i),
-                        foreGroundColor,
-                        GUI.Colors.BLACK
-                );
+                gui.drawText(this.getModel().getOptions().get(i).replace('_', ' '), new Vector2D(offsetX, 6 + i), foreGroundColor, GUI.Colors.BLACK);
 
             // Draw Information of the selected option
             switch (HowToPlayMenu.HowToPlayMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
@@ -97,31 +79,13 @@ public class HowToPlayMenuView extends View<Menu> {
 
         for (int i = 0; i < navigationOptions.size(); i++) {
             // Draw Navigation Controls Explanation
-            gui.drawText(
-                    navigationKeys.get(i),
-                    new Vector2D(23, 6 + i),
-                    GUI.Colors.CYAN,
-                    GUI.Colors.BLACK
-            );
-            gui.drawText(
-                    navigationOptions.get(i),
-                    new Vector2D(
-                            23 + navigationKeys.get(i).length(),
-                            6 + i
-                    ),
-                    GUI.Colors.WHITE,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(navigationKeys.get(i), new Vector2D(23, 6 + i), GUI.Colors.CYAN, GUI.Colors.BLACK);
+            gui.drawText(navigationOptions.get(i), new Vector2D(23 + navigationKeys.get(i).length(), 6 + i), GUI.Colors.WHITE, GUI.Colors.BLACK);
         }
     }
 
     private void drawDefaultControls(GUI gui) {
-        gui.drawText(
-                "Move Character:",
-                new Vector2D(25, 6),
-                GUI.Colors.WHITE,
-                GUI.Colors.BLACK
-        );
+        gui.drawText("Move Character:", new Vector2D(25, 6), GUI.Colors.WHITE, GUI.Colors.BLACK);
 
         List<String> defaultMovementDescription = new ArrayList<>();
         defaultMovementDescription.add(" - Up");
@@ -137,27 +101,12 @@ public class HowToPlayMenuView extends View<Menu> {
 
         for (int i = 0; i < defaultMovementDescription.size(); i++) {
             // Draw Movement Controls Explanation
-            gui.drawText(
-                    defaultMovementDescription.get(i),
-                    new Vector2D(29, 7 + i),
-                    GUI.Colors.WHITE,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(defaultMovementDescription.get(i), new Vector2D(29, 7 + i), GUI.Colors.WHITE, GUI.Colors.BLACK);
 
-            gui.drawText(
-                    defaultMovementKeys.get(i),
-                    new Vector2D(25, 7 + i),
-                    GUI.Colors.CYAN,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(defaultMovementKeys.get(i), new Vector2D(25, 7 + i), GUI.Colors.CYAN, GUI.Colors.BLACK);
         }
 
-        gui.drawText(
-                "Aim Controls:",
-                new Vector2D(43, 6),
-                GUI.Colors.WHITE,
-                GUI.Colors.BLACK
-        );
+        gui.drawText("Aim Controls:", new Vector2D(43, 6), GUI.Colors.WHITE, GUI.Colors.BLACK);
 
         List<String> defaultAimDescription = new ArrayList<>();
         defaultAimDescription.add(" - Up");
@@ -175,19 +124,9 @@ public class HowToPlayMenuView extends View<Menu> {
 
         for (int i = 0; i < defaultAimDescription.size(); i++) {
             // Draw Aim Controls Explanation
-            gui.drawText(
-                    defaultAimKeys.get(i),
-                    new Vector2D(43, 7 + i),
-                    GUI.Colors.CYAN,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(defaultAimKeys.get(i), new Vector2D(43, 7 + i), GUI.Colors.CYAN, GUI.Colors.BLACK);
 
-            gui.drawText(
-                    defaultAimDescription.get(i),
-                    new Vector2D(48, 7 + i),
-                    GUI.Colors.WHITE,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(defaultAimDescription.get(i), new Vector2D(48, 7 + i), GUI.Colors.WHITE, GUI.Colors.BLACK);
         }
     }
 
@@ -210,15 +149,7 @@ public class HowToPlayMenuView extends View<Menu> {
             }
 
             // Draw Game Objective Explanation
-            gui.drawText(
-                    lines.get(i),
-                    new Vector2D(
-                            23,
-                            6 + i + space
-                    ),
-                    GUI.Colors.WHITE,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(lines.get(i), new Vector2D(23, 6 + i + space), GUI.Colors.WHITE, GUI.Colors.BLACK);
         }
     }
 
@@ -247,12 +178,7 @@ public class HowToPlayMenuView extends View<Menu> {
             }
 
             // Draw Game Basics Explanation
-            gui.drawText(
-                    gameBasics.get(i),
-                    new Vector2D(23, 5 + i + space),
-                    color,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(gameBasics.get(i), new Vector2D(23, 5 + i + space), color, GUI.Colors.BLACK);
         }
     }
 
@@ -286,12 +212,7 @@ public class HowToPlayMenuView extends View<Menu> {
             }
 
             // Draw Weapon Stats
-            gui.drawText(
-                    weaponsStats.get(i),
-                    new Vector2D(23, 1 + i + space),
-                    color,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(weaponsStats.get(i), new Vector2D(23, 1 + i + space), color, GUI.Colors.BLACK);
         }
     }
 
@@ -321,12 +242,7 @@ public class HowToPlayMenuView extends View<Menu> {
             }
 
             // Draw Monster Info
-            gui.drawText(
-                    monsterInfo.get(i),
-                    new Vector2D(23, 2 + i + space),
-                    color,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(monsterInfo.get(i), new Vector2D(23, 2 + i + space), color, GUI.Colors.BLACK);
         }
     }
 
@@ -337,12 +253,7 @@ public class HowToPlayMenuView extends View<Menu> {
         bossesIntro.add("weak points to defeat them!");
         for (int i = 0; i < bossesIntro.size(); i++) {
             // Draw Intro
-            gui.drawText(
-                    bossesIntro.get(i),
-                    new Vector2D(23, 1 + i),
-                    GUI.Colors.BRIGHT_GREEN,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(bossesIntro.get(i), new Vector2D(23, 1 + i), GUI.Colors.BRIGHT_GREEN, GUI.Colors.BLACK);
         }
 
         List<String> bossesInfo = new ArrayList<>();
@@ -370,12 +281,7 @@ public class HowToPlayMenuView extends View<Menu> {
             }
 
             // Draw Bosses Info
-            gui.drawText(
-                    bossesInfo.get(i),
-                    new Vector2D(23, 5 + i + space),
-                    color,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(bossesInfo.get(i), new Vector2D(23, 5 + i + space), color, GUI.Colors.BLACK);
         }
     }
 
@@ -407,12 +313,7 @@ public class HowToPlayMenuView extends View<Menu> {
             }
 
             // Draw Difficulty Levels Information
-            gui.drawText(
-                    difficultyLevelExplain.get(i),
-                    new Vector2D(23, 1 + i + space),
-                    color,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(difficultyLevelExplain.get(i), new Vector2D(23, 1 + i + space), color, GUI.Colors.BLACK);
         }
     }
 
@@ -440,12 +341,7 @@ public class HowToPlayMenuView extends View<Menu> {
             }
 
             // Draw Map Elements Info
-            gui.drawText(
-                    mapElementsInfo.get(i),
-                    new Vector2D(23, 4 + i + space),
-                    color,
-                    GUI.Colors.BLACK
-            );
+            gui.drawText(mapElementsInfo.get(i), new Vector2D(23, 4 + i + space), color, GUI.Colors.BLACK);
         }
     }
 }

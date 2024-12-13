@@ -19,14 +19,6 @@ public class LoadGameMenuView extends View<Menu> {
         int centerX = gui.getWindowSize().x() / 2;
         int centerY = gui.getWindowSize().y() / 2;
 
-        gui.drawText(
-                message,
-                new Vector2D(
-                        centerX - message.length() / 2,
-                        centerY
-                ),
-                GUI.Colors.YELLOW,
-                GUI.Colors.BLACK
-        );
+        gui.drawText(message, new Vector2D(centerX - message.length() / 2, centerY), GUI.Colors.YELLOW, GUI.Colors.BLACK);
     }
 }
