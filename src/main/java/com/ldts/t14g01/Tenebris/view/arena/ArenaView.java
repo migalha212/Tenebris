@@ -14,6 +14,10 @@ public class ArenaView extends View<Arena> {
 
     @Override
     protected void drawElements(GUI gui) throws IOException {
-        this.getModel().getDylan().getView().drawElements(gui);
+        Arena arena = this.getModel();
+        gui.drawArenaBackGround();
+
+        // Draw Dylan
+        arena.getDylan().getView().draw(gui);
     }
 }

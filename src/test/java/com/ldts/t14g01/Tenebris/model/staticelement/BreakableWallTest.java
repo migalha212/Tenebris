@@ -10,22 +10,24 @@ public class BreakableWallTest {
     private BreakableWall breakableWall;
 
     @BeforeEach
-    void setUp(){
-        Vector2D position = new Vector2D(1,1);
-        breakableWall = new BreakableWall(position,1,10);
+    void setUp() {
+        Vector2D position = new Vector2D(1, 1);
+        breakableWall = new BreakableWall(position, 10);
     }
 
     @Test
-    void isAliveTest(){
+    void isAliveTest() {
         Assertions.assertTrue(breakableWall.isAlive());
     }
+
     @Test
-    void isAliveTest2(){
+    void isAliveTest2() {
         breakableWall.takeDamage(9);
         Assertions.assertTrue(breakableWall.isAlive());
     }
+
     @Test
-    void isNotAliveTest(){
+    void isNotAliveTest() {
         breakableWall.takeDamage(20);
         Assertions.assertFalse(breakableWall.isAlive());
     }

@@ -12,8 +12,8 @@ public class Bullet extends GameElement implements Moves, DamagesEntities {
     private final int damage;
     private boolean hit;
 
-    public Bullet(Vector2D position, int size, int damage, Vector2D velocity) {
-        super(position, size);
+    public Bullet(Vector2D position, int damage, Vector2D velocity) {
+        super(position);
         this.velocity = velocity;
         this.damage = damage;
         this.hit = false;
@@ -33,11 +33,6 @@ public class Bullet extends GameElement implements Moves, DamagesEntities {
     @Override
     public void move() {
         this.position = this.position.add(this.velocity);
-    }
-
-    @Override
-    public void accelerate() {
-        // This element doesn't accelerate
     }
 
     @Override

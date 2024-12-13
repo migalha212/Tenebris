@@ -8,8 +8,8 @@ import com.ldts.t14g01.Tenebris.utils.Vector2D;
 public class BreakableWall extends GameElement implements TakesDamage {
     private int hp;
 
-    public BreakableWall(Vector2D position, int size, int hp) {
-        super(position, size);
+    public BreakableWall(Vector2D position, int hp) {
+        super(position);
         this.hp = hp;
     }
 

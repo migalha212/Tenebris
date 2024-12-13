@@ -9,6 +9,8 @@ import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
 import java.io.IOException;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 public class ArenaController extends Controller<Arena> {
@@ -21,12 +23,26 @@ public class ArenaController extends Controller<Arena> {
         switch (action) {
             case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             case QUIT -> stateChanger.setState(null);
-            case MOVE_UP, MOVE_DOWN, MOVE_RIGHT, MOVE_LEFT ->
-                    this.getModel().getDylan().getController().tick(action, stateChanger, saveDataProvider);
             case null, default -> {
             }
         }
+    }
 
-        this.getModel().getDylan().getController().update();
+    @Override
+    public void tickWithList(Set<Action> actions) {
+        // Update Dylan
+        DylanController dylanController = this.getModel().getDylan().getController();
+        dylanController.setLooking(null);
+        Set<Action> dylan_moves = new TreeSet<>();
+        actions.forEach((action -> {
+            switch (action) {
+                case MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT -> dylan_moves.add(action);
+                case LOOK_UP, LOOK_DOWN, LOOK_LEFT, LOOK_RIGHT -> dylanController.setLooking(action);
+                case null, default -> {
+                }
+            }
+        }));
+        dylanController.setMoving(dylan_moves);
+        dylanController.move();
     }
 }

@@ -15,8 +15,8 @@ public abstract class State<T> {
 
     public State(T model) {
         this.model = model;
-        this.view = getView();
-        this.controller = getController();
+        this.view = this.getView();
+        this.controller = this.getController();
     }
 
     public T getModel() {
@@ -31,7 +31,8 @@ public abstract class State<T> {
 
     public void tick(GUI gui, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
         Action action = gui.getAction();
-        controller.tick(action, stateChanger, saveDataProvider);
-        view.draw(gui);
+        this.controller.tick(action, stateChanger, saveDataProvider);
+        this.controller.tickWithList(gui.getActiveActions());
+        this.view.draw(gui);
     }
 }

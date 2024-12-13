@@ -12,19 +12,22 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalResizeListener;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
+import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Set;
+import java.util.TreeSet;
 
-public class LanternaGUI implements GUI, TerminalResizeListener {
-    // Singleton
-    private static GUI guiInstance;
-
-
+public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     // Sets target window size and aspect ratio
     private static final double MENU_SCREEN_OCCUPANCY = 0.65;
     private static final double ARENA_SCREEN_OCCUPANCY = 0.8;
@@ -39,50 +42,64 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     private Type type;
     private TerminalSize terminalSize;
     private boolean quitted = false;
+    private Set<Action> activeActions;
 
-    private LanternaGUI() {
-        // Load Square Font for the Arena
-        URL resource = LanternaGUI.class.getClassLoader().getResource("fonts/square.ttf");
-        File fontFile = null;
-        Font font;
+    // Sprites
+    private BufferedImage sprite_dylan_idle_1;
+    private BufferedImage sprite_dylan_idle_2;
+    private BufferedImage sprite_dylan_back_1;
+    private BufferedImage sprite_dylan_back_2;
+    private BufferedImage sprite_dylan_front_1;
+    private BufferedImage sprite_dylan_front_2;
+    private BufferedImage sprite_dylan_left_1;
+    private BufferedImage sprite_dylan_left_2;
+    private BufferedImage sprite_dylan_right_1;
+    private BufferedImage sprite_dylan_right_2;
 
-        try {
-            fontFile = new File(resource.toURI());
-            font = null;
-            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (FontFormatException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        ge.registerFont(font);
-        this.ARENA_BASE_FONT = font;
-    }
+    // Singleton
+    private static GUI guiInstance;
 
     public static GUI getGUI() {
         if (LanternaGUI.guiInstance == null) LanternaGUI.guiInstance = new LanternaGUI();
         return LanternaGUI.guiInstance;
     }
 
-    @Override
-    public void setType(Type type) throws IOException {
-        // In case it's null close the screen
-        if (type == null) {
-            this.type = null;
-            this.close();
-            return;
+    private LanternaGUI() {
+        this.activeActions = new TreeSet<>();
+
+        // Load Square Font for the Arena
+        Font font;
+
+        try {
+            URL resource = LanternaGUI.class.getClassLoader().getResource("fonts/square.ttf");
+            File fontFile = null;
+            assert resource != null;
+            fontFile = new File(resource.toURI());
+            font = null;
+            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+        } catch (URISyntaxException | FontFormatException | IOException e) {
+            throw new RuntimeException(e);
         }
 
-        // Return if nothing changed
-        if (type.equals(this.type)) return;
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(font);
+        this.ARENA_BASE_FONT = font;
 
-        // Switch type
-        this.type = type;
-        this.createScreen();
+        // Load Sprites
+        try {
+            this.sprite_dylan_idle_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/idle/1.png"));
+            this.sprite_dylan_idle_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/idle/2.png"));
+            this.sprite_dylan_front_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-front/1.png"));
+            this.sprite_dylan_front_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-front/2.png"));
+            this.sprite_dylan_back_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-back/1.png"));
+            this.sprite_dylan_back_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-back/2.png"));
+            this.sprite_dylan_left_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-left/1.png"));
+            this.sprite_dylan_left_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-left/2.png"));
+            this.sprite_dylan_right_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/1.png"));
+            this.sprite_dylan_right_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/2.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void createScreen() throws IOException {
@@ -90,6 +107,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         this.close();
 
         // Calculate Terminal Cell Count
+        if (this.type == null) throw new RuntimeException("Trying to create screen without specifying a type");
         int numberCols = 0;
         int numberRows = 0;
         switch (this.type) {
@@ -120,10 +138,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         // Calculate font size and height
         int fontSize = windowHeight / numberRows;
 
-        // Set up Lanterna terminal with calculated font size
-        DefaultTerminalFactory dtf = new DefaultTerminalFactory();
-
         // Set Terminal Size
+        DefaultTerminalFactory dtf = new DefaultTerminalFactory();
         dtf.setInitialTerminalSize(terminalSize);
 
         // Set Font Configuration
@@ -141,7 +157,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         }
 
         // Create Terminal Emulator
-        Terminal terminal = dtf.createTerminalEmulator();
+        SwingTerminalFrame terminal = (SwingTerminalFrame) dtf.createTerminal();
+
+        // Add key listeners
+        terminal.addKeyListener(this);
 
         // Create Screen
         Screen screen = new TerminalScreen(terminal);
@@ -165,7 +184,12 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         if (this.quitted) return Action.QUIT;
 
         // Return null if no screen
-        if (this.screen == null) return null;
+        if (!this.stable()) return null;
+
+        // Set Panel as Focus
+        // This is needed because if the screen gains focus the underPanel
+        // where the key-listeners are placed stop receiving input
+        ((SwingTerminalFrame) ((TerminalScreen) this.screen).getTerminal()).requestFocus();
 
         // Read keystroke
         KeyStroke keyStroke = this.screen.pollInput();
@@ -196,6 +220,75 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         return action;
     }
 
+    @Override
+    public Set<Action> getActiveActions() {
+        return new TreeSet<>(this.activeActions);
+    }
+
+    private void addActiveAction(Action action) {
+        this.activeActions.add(action);
+    }
+
+    private void removeActiveAction(Action action) {
+        this.activeActions.remove(action);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // Dispatch Keys to Terminal
+        SwingTerminalFrame STF = ((SwingTerminalFrame) ((TerminalScreen) this.screen).getTerminal());
+        switch (e.getKeyCode()) {
+            case 37 -> STF.addInput(new KeyStroke(KeyType.ArrowLeft));
+            case 38 -> STF.addInput(new KeyStroke(KeyType.ArrowUp));
+            case 39 -> STF.addInput(new KeyStroke(KeyType.ArrowRight));
+            case 40 -> STF.addInput(new KeyStroke(KeyType.ArrowDown));
+            case 27 -> STF.addInput(new KeyStroke(KeyType.Escape));
+            case 10 -> STF.addInput(new KeyStroke(KeyType.Enter));
+            case 32 -> STF.addInput(new KeyStroke(' ', false, false));
+            case 69 -> STF.addInput(new KeyStroke('e', false, false));
+            case 81 -> STF.addInput(new KeyStroke('q', false, false));
+            case 87 -> STF.addInput(new KeyStroke('w', false, false));
+            case 83 -> STF.addInput(new KeyStroke('s', false, false));
+            case 65 -> STF.addInput(new KeyStroke('a', false, false));
+            case 68 -> STF.addInput(new KeyStroke('d', false, false));
+            case 49 -> STF.addInput(new KeyStroke('1', false, false));
+            case 50 -> STF.addInput(new KeyStroke('2', false, false));
+            case 51 -> STF.addInput(new KeyStroke('3', false, false));
+            default -> {
+            }
+        }
+
+        // Add to Action List
+        Action action;
+        switch (e.getKeyChar()) {
+            case 'w' -> action = Action.MOVE_UP;
+            case 's' -> action = Action.MOVE_DOWN;
+            case 'a' -> action = Action.MOVE_LEFT;
+            case 'd' -> action = Action.MOVE_RIGHT;
+            default -> action = null;
+        }
+        if (action != null) this.addActiveAction(action);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // Remove from action list
+        Action action;
+        switch (e.getKeyChar()) {
+            case 'w' -> action = Action.MOVE_UP;
+            case 's' -> action = Action.MOVE_DOWN;
+            case 'a' -> action = Action.MOVE_LEFT;
+            case 'd' -> action = Action.MOVE_RIGHT;
+            default -> action = null;
+        }
+        if (action != null) this.removeActiveAction(action);
+    }
+
     // Drawing
     @Override
     public void drawText(String text, Vector2D position, Colors foreGround, Colors backGround) {
@@ -206,17 +299,81 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     }
 
     @Override
-    public void drawRectangle(Vector2D topLeft, Vector2D size, Colors color) {
+    public void drawArenaBackGround() {
+        if (!this.stable()) return;
+
         TextGraphics tg = this.screen.newTextGraphics();
-        tg.setBackgroundColor(LanternaGUI.mapTextColor(color));
-        tg.drawRectangle(
-                new TerminalPosition(topLeft.x(), topLeft.y()),
-                new TerminalSize(size.x(), size.y()),
+        tg.setBackgroundColor(new TextColor.RGB(159, 153, 116));
+        tg.fillRectangle(
+                new TerminalPosition(0, 0),
+                this.screen.getTerminalSize(),
                 ' '
         );
     }
 
+    @Override
+    public void drawDylan(Vector2D position, GUI.Dylan state) {
+        switch (state) {
+            case IDLE_1 -> this.drawImage(position, this.sprite_dylan_idle_1);
+            case IDLE_2 -> this.drawImage(position, this.sprite_dylan_idle_2);
+            case FRONT_1 -> this.drawImage(position, this.sprite_dylan_front_1);
+            case FRONT_2 -> this.drawImage(position, this.sprite_dylan_front_2);
+            case BACK_1 -> this.drawImage(position, this.sprite_dylan_back_1);
+            case BACK_2 -> this.drawImage(position, this.sprite_dylan_back_2);
+            case LEFT_1 -> this.drawImage(position, this.sprite_dylan_left_1);
+            case LEFT_2 -> this.drawImage(position, this.sprite_dylan_left_2);
+            case RIGHT_1 -> this.drawImage(position, this.sprite_dylan_right_1);
+            case RIGHT_2 -> this.drawImage(position, this.sprite_dylan_right_2);
+            case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawDylan");
+        }
+    }
+
+    private void drawImage(Vector2D position, BufferedImage sprite) {
+        if (!this.stable()) return;
+
+        TextGraphics tg = this.screen.newTextGraphics();
+        for (int x = 0; x < sprite.getWidth(); x++) {
+            for (int y = 0; y < sprite.getHeight(); y++) {
+                int a = sprite.getRGB(x, y);
+                int alpha = (a >> 24) & 0xff;
+                int red = (a >> 16) & 255;
+                int green = (a >> 8) & 255;
+                int blue = a & 255;
+
+                if (alpha != 0) {
+                    tg.setForegroundColor(new TextColor.RGB(red, green, blue));
+                    tg.setBackgroundColor(new TextColor.RGB(red, green, blue));
+                    tg.setCharacter(
+                            new TerminalPosition(
+                                    position.x() + x,
+                                    position.y() + y
+                            ),
+                            ' '
+                    );
+                }
+            }
+        }
+
+    }
+
     // Screen Management
+    @Override
+    public void setType(Type type) throws IOException {
+        // In case it's null close the screen
+        if (type == null) {
+            this.type = null;
+            this.close();
+            return;
+        }
+
+        // Return if nothing changed
+        if (type.equals(this.type)) return;
+
+        // Switch type
+        this.type = type;
+        this.createScreen();
+    }
+
     @Override
     public void refresh() throws IOException {
         if (this.stable()) this.screen.refresh();
@@ -233,7 +390,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
                     ' '
             );
         }
-
     }
 
     @Override
@@ -242,8 +398,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
     }
 
     // Utils
-    @Override
-    public boolean stable() {
+    private boolean stable() {
         return this.screen != null;
     }
 
@@ -298,6 +453,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener {
         this.screen = screen;
     }
 
+    // This function is only used for tests and should not be used in any other way
     public Screen getScreen() {
         return this.screen;
     }

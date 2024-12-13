@@ -5,8 +5,8 @@ import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 public class SandBag extends GameElement {
 
-    public SandBag(Vector2D position, int size) {
-        super(position, size);
+    public SandBag(Vector2D position) {
+        super(position);
     }
 
     @Override

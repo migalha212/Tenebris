@@ -10,11 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.io.IOException;
+
 public class ArenaTest {
     Arena arena;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         arena = new Arena();
     }
 

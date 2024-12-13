@@ -5,8 +5,8 @@ import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 public class Wall extends GameElement implements AbsorbsProjectiles {
-    public Wall(Vector2D position, int size) {
-        super(position, size);
+    public Wall(Vector2D position) {
+        super(position);
     }
 
     @Override

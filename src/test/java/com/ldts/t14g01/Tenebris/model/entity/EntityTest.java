@@ -12,10 +12,17 @@ public class EntityTest {
     @BeforeEach
     void setUp() {
         Vector2D position = new Vector2D(1, 1);
-        int size = 1;
         int hp = 10;
         int maxVelocity = 5;
-        entity = new Entity(position, size, hp, maxVelocity);
+        entity = new Entity(position, hp, maxVelocity) {
+            @Override
+            public void move() {
+            }
+
+            @Override
+            public void bounce(Vector2D.Direction direction) {
+            }
+        };
     }
 
     @Test

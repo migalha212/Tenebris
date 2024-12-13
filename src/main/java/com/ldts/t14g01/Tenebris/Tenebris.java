@@ -18,8 +18,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     private SaveData saveData;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        Tenebris tenebris = Tenebris.getInstance();
-        tenebris.run();
+        Tenebris.getInstance().run();
     }
 
     private Tenebris() throws IOException {
