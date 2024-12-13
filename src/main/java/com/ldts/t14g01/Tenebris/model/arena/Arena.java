@@ -1,8 +1,7 @@
 package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
-import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
-import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisPeon;
+import com.ldts.t14g01.Tenebris.model.arena.entity.monster.*;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.SandBag;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Spike;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Wall;
@@ -29,8 +28,11 @@ public class Arena {
         addElement(new SandBag(new Vector2D(190, 150)));
         addElement(new Spike(new Vector2D(170, 170)));
 
-        addElement(new TenebrisPeon(new Vector2D(250, 150), 2, 1, 10));
-        addElement(new TenebrisPeon(new Vector2D(10, 10), 2, 1, 10));
+        addElement(new TenebrisWarden(new Vector2D(250, 150)));
+        addElement(new TenebrisSpikedScout(new Vector2D(20, 20)));
+        addElement(new TenebrisHeavy(new Vector2D(250, 30)));
+        addElement(new TenebrisHarbinger(new Vector2D(250, 50)));
+        addElement(new TenebrisPeon(new Vector2D(10, 10)));
     }
 
     public void addElement(GameElement element) {

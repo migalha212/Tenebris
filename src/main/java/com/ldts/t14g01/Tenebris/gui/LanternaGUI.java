@@ -60,6 +60,28 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_sandbag;
     private final BufferedImage sprite_spikes;
 
+    private final BufferedImage sprite_tenebris_harbinger_idle_1;
+    private final BufferedImage sprite_tenebris_harbinger_idle_2;
+    private final BufferedImage sprite_tenebris_harbinger_front_1;
+    private final BufferedImage sprite_tenebris_harbinger_front_2;
+    private final BufferedImage sprite_tenebris_harbinger_back_1;
+    private final BufferedImage sprite_tenebris_harbinger_back_2;
+    private final BufferedImage sprite_tenebris_harbinger_right_1;
+    private final BufferedImage sprite_tenebris_harbinger_right_2;
+    private final BufferedImage sprite_tenebris_harbinder_left_1;
+    private final BufferedImage sprite_tenebris_harbinger_left_2;
+
+    private final BufferedImage sprite_tenebris_heavy_idle_1;
+    private final BufferedImage sprite_tenebris_heavy_idle_2;
+    private final BufferedImage sprite_tenebris_heavy_front_1;
+    private final BufferedImage sprite_tenebris_heavy_front_2;
+    private final BufferedImage sprite_tenebris_heavy_back_1;
+    private final BufferedImage sprite_tenebris_heavy_back_2;
+    private final BufferedImage sprite_tenebris_heavy_right_1;
+    private final BufferedImage sprite_tenebris_heavy_right_2;
+    private final BufferedImage sprite_tenebris_heavy_left_1;
+    private final BufferedImage sprite_tenebris_heavy_left_2;
+
     private final BufferedImage sprite_tenebris_peon_idle_1;
     private final BufferedImage sprite_tenebris_peon_idle_2;
     private final BufferedImage sprite_tenebris_peon_front_1;
@@ -70,6 +92,28 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_tenebris_peon_right_2;
     private final BufferedImage sprite_tenebris_peon_left_1;
     private final BufferedImage sprite_tenebris_peon_left_2;
+
+    private final BufferedImage sprite_tenebris_spiked_scout_idle_1;
+    private final BufferedImage sprite_tenebris_spiked_scout_idle_2;
+    private final BufferedImage sprite_tenebris_spiked_scout_front_1;
+    private final BufferedImage sprite_tenebris_spiked_scout_front_2;
+    private final BufferedImage sprite_tenebris_spiked_scout_back_1;
+    private final BufferedImage sprite_tenebris_spiked_scout_back_2;
+    private final BufferedImage sprite_tenebris_spiked_scout_right_1;
+    private final BufferedImage sprite_tenebris_spiked_scout_right_2;
+    private final BufferedImage sprite_tenebris_spiked_scout_left_1;
+    private final BufferedImage sprite_tenebris_spiked_scout_left_2;
+
+    private final BufferedImage sprite_tenebris_warden_idle_1;
+    private final BufferedImage sprite_tenebris_warden_idle_2;
+    private final BufferedImage sprite_tenebris_warden_front_1;
+    private final BufferedImage sprite_tenebris_warden_front_2;
+    private final BufferedImage sprite_tenebris_warden_back_1;
+    private final BufferedImage sprite_tenebris_warden_back_2;
+    private final BufferedImage sprite_tenebris_warden_right_1;
+    private final BufferedImage sprite_tenebris_warden_right_2;
+    private final BufferedImage sprite_tenebris_warden_left_1;
+    private final BufferedImage sprite_tenebris_warden_left_2;
 
     // Singleton
     private static GUI guiInstance;
@@ -116,17 +160,61 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_sandbag = ImageIO.read(new File("src/main/resources/sprites/elements/sandbag.png"));
             this.sprite_spikes = ImageIO.read(new File("src/main/resources/sprites/elements/spikes.png"));
 
-            this.sprite_tenebris_peon_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/idle/1.png"));
-            // TODO Add actual idle 2
-            this.sprite_tenebris_peon_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/idle/1.png"));
-            this.sprite_tenebris_peon_front_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-front/1.png"));
-            this.sprite_tenebris_peon_front_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-front/2.png"));
-            this.sprite_tenebris_peon_back_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-back/1.png"));
-            this.sprite_tenebris_peon_back_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-back/2.png"));
-            this.sprite_tenebris_peon_right_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-right/1.png"));
-            this.sprite_tenebris_peon_right_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-right/2.png"));
-            this.sprite_tenebris_peon_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-left/1.png"));
-            this.sprite_tenebris_peon_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebrispeon/walk-left/2.png"));
+            this.sprite_tenebris_harbinger_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/1.png"));
+            this.sprite_tenebris_harbinger_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/2.png"));
+            this.sprite_tenebris_harbinger_front_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-front/1.png"));
+            this.sprite_tenebris_harbinger_front_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-front/2.png"));
+            this.sprite_tenebris_harbinger_back_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-back/1.png"));
+            this.sprite_tenebris_harbinger_back_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-back/2.png"));
+            this.sprite_tenebris_harbinger_right_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-right/1.png"));
+            this.sprite_tenebris_harbinger_right_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-right/2.png"));
+            this.sprite_tenebris_harbinder_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-left/1.png"));
+            this.sprite_tenebris_harbinger_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-left/2.png"));
+
+            this.sprite_tenebris_heavy_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/idle/1.png"));
+            this.sprite_tenebris_heavy_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/idle/2.png"));
+            this.sprite_tenebris_heavy_front_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/walk-front/1.png"));
+            this.sprite_tenebris_heavy_front_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/walk-front/2.png"));
+            this.sprite_tenebris_heavy_back_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/walk-back/1.png"));
+            this.sprite_tenebris_heavy_back_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/walk-back/2.png"));
+            this.sprite_tenebris_heavy_right_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/walk-right/1.png"));
+            this.sprite_tenebris_heavy_right_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/walk-right/2.png"));
+            this.sprite_tenebris_heavy_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/walk-left/1.png"));
+            this.sprite_tenebris_heavy_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/walk-left/2.png"));
+
+            this.sprite_tenebris_peon_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/idle/1.png"));
+            this.sprite_tenebris_peon_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/idle/2.png"));
+            this.sprite_tenebris_peon_front_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/walk-front/1.png"));
+            this.sprite_tenebris_peon_front_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/walk-front/2.png"));
+            this.sprite_tenebris_peon_back_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/walk-back/1.png"));
+            this.sprite_tenebris_peon_back_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/walk-back/2.png"));
+            this.sprite_tenebris_peon_right_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/walk-right/1.png"));
+            this.sprite_tenebris_peon_right_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/walk-right/2.png"));
+            this.sprite_tenebris_peon_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/walk-left/1.png"));
+            this.sprite_tenebris_peon_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-peon/walk-left/2.png"));
+
+            this.sprite_tenebris_spiked_scout_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/idle/1.png"));
+            this.sprite_tenebris_spiked_scout_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/idle/2.png"));
+            this.sprite_tenebris_spiked_scout_front_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/walk-front/1.png"));
+            this.sprite_tenebris_spiked_scout_front_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/walk-front/2.png"));
+            this.sprite_tenebris_spiked_scout_back_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/walk-back/1.png"));
+            this.sprite_tenebris_spiked_scout_back_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/walk-back/2.png"));
+            this.sprite_tenebris_spiked_scout_right_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/walk-right/1.png"));
+            this.sprite_tenebris_spiked_scout_right_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/walk-right/2.png"));
+            this.sprite_tenebris_spiked_scout_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/walk-left/1.png"));
+            this.sprite_tenebris_spiked_scout_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-spiked-scout/walk-left/2.png"));
+
+            this.sprite_tenebris_warden_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/idle/1.png"));
+            this.sprite_tenebris_warden_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/idle/2.png"));
+            this.sprite_tenebris_warden_front_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-front/1.png"));
+            this.sprite_tenebris_warden_front_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-front/2.png"));
+            this.sprite_tenebris_warden_back_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-back/1.png"));
+            this.sprite_tenebris_warden_back_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-back/2.png"));
+            this.sprite_tenebris_warden_right_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-right/1.png"));
+            this.sprite_tenebris_warden_right_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-right/2.png"));
+            this.sprite_tenebris_warden_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-left/1.png"));
+            this.sprite_tenebris_warden_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-left/2.png"));
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -364,6 +452,36 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     @Override
     public void drawMonster(Vector2D position, Monster monster, AnimationState state) {
         switch (monster) {
+            case TENEBRIS_HARBINGER -> {
+                switch (state) {
+                    case IDLE_1 -> this.drawImage(position, sprite_tenebris_harbinger_idle_1);
+                    case IDLE_2 -> this.drawImage(position, sprite_tenebris_harbinger_idle_2);
+                    case FRONT_1 -> this.drawImage(position, sprite_tenebris_harbinger_front_1);
+                    case FRONT_2 -> this.drawImage(position, sprite_tenebris_harbinger_front_2);
+                    case BACK_1 -> this.drawImage(position, sprite_tenebris_harbinger_back_1);
+                    case BACK_2 -> this.drawImage(position, sprite_tenebris_harbinger_back_2);
+                    case LEFT_1 -> this.drawImage(position, sprite_tenebris_harbinder_left_1);
+                    case LEFT_2 -> this.drawImage(position, sprite_tenebris_harbinger_left_2);
+                    case RIGHT_1 -> this.drawImage(position, sprite_tenebris_harbinger_right_1);
+                    case RIGHT_2 -> this.drawImage(position, sprite_tenebris_harbinger_right_2);
+                    case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawMonster");
+                }
+            }
+            case TENEBRIS_HEAVY -> {
+                switch (state) {
+                    case IDLE_1 -> this.drawImage(position, sprite_tenebris_heavy_idle_1);
+                    case IDLE_2 -> this.drawImage(position, sprite_tenebris_heavy_idle_2);
+                    case FRONT_1 -> this.drawImage(position, sprite_tenebris_heavy_front_1);
+                    case FRONT_2 -> this.drawImage(position, sprite_tenebris_heavy_front_2);
+                    case BACK_1 -> this.drawImage(position, sprite_tenebris_heavy_back_1);
+                    case BACK_2 -> this.drawImage(position, sprite_tenebris_heavy_back_2);
+                    case LEFT_1 -> this.drawImage(position, sprite_tenebris_heavy_left_1);
+                    case LEFT_2 -> this.drawImage(position, sprite_tenebris_heavy_left_2);
+                    case RIGHT_1 -> this.drawImage(position, sprite_tenebris_heavy_right_1);
+                    case RIGHT_2 -> this.drawImage(position, sprite_tenebris_heavy_right_2);
+                    case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawMonster");
+                }
+            }
             case TENEBRIS_PEON -> {
                 switch (state) {
                     case IDLE_1 -> this.drawImage(position, sprite_tenebris_peon_idle_1);
@@ -379,8 +497,37 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                     case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawMonster");
                 }
             }
-            case null, default -> {
+            case TENEBRIS_SPIKED_SCOUT -> {
+                switch (state) {
+                    case IDLE_1 -> this.drawImage(position, sprite_tenebris_spiked_scout_idle_1);
+                    case IDLE_2 -> this.drawImage(position, sprite_tenebris_spiked_scout_idle_2);
+                    case FRONT_1 -> this.drawImage(position, sprite_tenebris_spiked_scout_front_1);
+                    case FRONT_2 -> this.drawImage(position, sprite_tenebris_spiked_scout_front_2);
+                    case BACK_1 -> this.drawImage(position, sprite_tenebris_spiked_scout_back_1);
+                    case BACK_2 -> this.drawImage(position, sprite_tenebris_spiked_scout_back_2);
+                    case LEFT_1 -> this.drawImage(position, sprite_tenebris_spiked_scout_left_1);
+                    case LEFT_2 -> this.drawImage(position, sprite_tenebris_spiked_scout_left_2);
+                    case RIGHT_1 -> this.drawImage(position, sprite_tenebris_spiked_scout_right_1);
+                    case RIGHT_2 -> this.drawImage(position, sprite_tenebris_spiked_scout_right_2);
+                    case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawMonster");
+                }
             }
+            case TENEBRIS_WARDEN -> {
+                switch (state) {
+                    case IDLE_1 -> this.drawImage(position, sprite_tenebris_warden_idle_1);
+                    case IDLE_2 -> this.drawImage(position, sprite_tenebris_warden_idle_2);
+                    case FRONT_1 -> this.drawImage(position, sprite_tenebris_warden_front_1);
+                    case FRONT_2 -> this.drawImage(position, sprite_tenebris_warden_front_2);
+                    case BACK_1 -> this.drawImage(position, sprite_tenebris_warden_back_1);
+                    case BACK_2 -> this.drawImage(position, sprite_tenebris_warden_back_2);
+                    case LEFT_1 -> this.drawImage(position, sprite_tenebris_warden_left_1);
+                    case LEFT_2 -> this.drawImage(position, sprite_tenebris_warden_left_2);
+                    case RIGHT_1 -> this.drawImage(position, sprite_tenebris_warden_right_1);
+                    case RIGHT_2 -> this.drawImage(position, sprite_tenebris_warden_right_2);
+                    case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawMonster");
+                }
+            }
+            case null, default -> {}
         }
     }
 

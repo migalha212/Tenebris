@@ -1,6 +1,6 @@
 package com.ldts.t14g01.Tenebris.model.arena.entity.monster;
 
-import com.ldts.t14g01.Tenebris.controller.arena.MonsterController;
+import com.ldts.t14g01.Tenebris.controller.arena.monster.MonsterController;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesPlayer;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;

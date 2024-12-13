@@ -23,7 +23,11 @@ public interface GUI {
 
     // Monsters
     enum Monster {
-        TENEBRIS_PEON
+        TENEBRIS_HARBINGER,
+        TENEBRIS_HEAVY,
+        TENEBRIS_PEON,
+        TENEBRIS_SPIKED_SCOUT,
+        TENEBRIS_WARDEN
     }
 
     static GUI getGUI() {

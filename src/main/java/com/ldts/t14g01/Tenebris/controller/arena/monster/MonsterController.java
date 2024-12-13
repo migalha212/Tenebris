@@ -1,4 +1,4 @@
-package com.ldts.t14g01.Tenebris.controller.arena;
+package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
