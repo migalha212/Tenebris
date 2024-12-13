@@ -2,6 +2,7 @@ package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
+import com.ldts.t14g01.Tenebris.model.arena.staticelement.Wall;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.io.IOException;
@@ -24,6 +25,8 @@ public class Arena {
                 10,
                 2
         ));
+
+        addElement(new Wall(new Vector2D(150, 150)));
     }
 
     public void addElement(GameElement element) {

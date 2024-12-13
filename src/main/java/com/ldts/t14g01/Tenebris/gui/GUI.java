@@ -52,6 +52,8 @@ public interface GUI {
 
     void drawDylan(Vector2D position, GUI.Dylan state);
 
+    void drawWall(Vector2D position);
+
     // Screen Management
     void setType(Type type) throws IOException;
 

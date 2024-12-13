@@ -17,6 +17,9 @@ public class ArenaView extends View<Arena> {
         Arena arena = this.getModel();
         gui.drawArenaBackGround();
 
+        // Draw StaticElements
+        arena.getElements().forEach(element -> element.getView().draw(gui));
+
         // Draw Dylan
         arena.getDylan().getView().draw(gui);
     }

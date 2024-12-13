@@ -56,6 +56,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private BufferedImage sprite_dylan_right_1;
     private BufferedImage sprite_dylan_right_2;
 
+    private BufferedImage sprite_wall;
+
     // Singleton
     private static GUI guiInstance;
 
@@ -97,6 +99,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_dylan_left_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-left/2.png"));
             this.sprite_dylan_right_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/1.png"));
             this.sprite_dylan_right_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/2.png"));
+
+            this.sprite_wall = ImageIO.read(new File("src/main/resources/sprites/elements/wall.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -326,6 +330,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case RIGHT_2 -> this.drawImage(position, this.sprite_dylan_right_2);
             case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawDylan");
         }
+    }
+
+    @Override
+    public void drawWall(Vector2D position) {
+        this.drawImage(position, this.sprite_wall);
     }
 
     private void drawImage(Vector2D position, BufferedImage sprite) {
