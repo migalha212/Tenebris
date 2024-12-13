@@ -279,11 +279,15 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
         // Add to Action List
         Action action;
-        switch (e.getKeyChar()) {
-            case 'w' -> action = Action.MOVE_UP;
-            case 's' -> action = Action.MOVE_DOWN;
-            case 'a' -> action = Action.MOVE_LEFT;
-            case 'd' -> action = Action.MOVE_RIGHT;
+        switch (e.getKeyCode()) {
+            case 37 -> action = Action.LOOK_LEFT;
+            case 38 -> action = Action.LOOK_UP;
+            case 39 -> action = Action.LOOK_RIGHT;
+            case 40 -> action = Action.LOOK_DOWN;
+            case 65 -> action = Action.MOVE_LEFT;
+            case 68 -> action = Action.MOVE_RIGHT;
+            case 83 -> action = Action.MOVE_DOWN;
+            case 87 -> action = Action.MOVE_UP;
             default -> action = null;
         }
         if (action != null) this.activeActions.add(action);
@@ -293,11 +297,15 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     public void keyReleased(KeyEvent e) {
         // Remove from action list
         Action action;
-        switch (e.getKeyChar()) {
-            case 'w' -> action = Action.MOVE_UP;
-            case 's' -> action = Action.MOVE_DOWN;
-            case 'a' -> action = Action.MOVE_LEFT;
-            case 'd' -> action = Action.MOVE_RIGHT;
+        switch (e.getKeyCode()) {
+            case 37 -> action = Action.LOOK_LEFT;
+            case 38 -> action = Action.LOOK_UP;
+            case 39 -> action = Action.LOOK_RIGHT;
+            case 40 -> action = Action.LOOK_DOWN;
+            case 65 -> action = Action.MOVE_LEFT;
+            case 68 -> action = Action.MOVE_RIGHT;
+            case 83 -> action = Action.MOVE_DOWN;
+            case 87 -> action = Action.MOVE_UP;
             default -> action = null;
         }
         if (action != null) this.activeActions.remove(action);
