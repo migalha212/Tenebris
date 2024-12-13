@@ -14,11 +14,19 @@ public class LoadGameMenuView extends View<Menu> {
 
     @Override
     protected void drawElements(GUI gui) throws IOException {
-        String message = "This menu has not been implemented yet -_-";
+        //String message = "This menu has not been implemented yet -_-";
 
         int centerX = gui.getWindowSize().x() / 2;
         int centerY = gui.getWindowSize().y() / 2;
 
-        gui.drawText(message, new Vector2D(centerX - message.length() / 2, centerY), GUI.Colors.YELLOW, GUI.Colors.BLACK);
+        gui.drawText(
+                Integer.toString(this.getModel().getSelectedOption()),
+                new Vector2D(
+                        centerX,
+                        centerY
+                ),
+                GUI.Colors.YELLOW,
+                GUI.Colors.BLACK
+        );
     }
 }
