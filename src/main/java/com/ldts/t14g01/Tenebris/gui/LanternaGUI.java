@@ -57,6 +57,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private BufferedImage sprite_dylan_right_2;
 
     private BufferedImage sprite_wall;
+    private BufferedImage sprite_sandbag;
     private BufferedImage sprite_spikes;
 
     // Singleton
@@ -102,6 +103,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_dylan_right_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/2.png"));
 
             this.sprite_wall = ImageIO.read(new File("src/main/resources/sprites/elements/wall.png"));
+            this.sprite_sandbag = ImageIO.read(new File("src/main/resources/sprites/elements/sandbag.png"));
             this.sprite_spikes = ImageIO.read(new File("src/main/resources/sprites/elements/spikes.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -337,6 +339,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     @Override
     public void drawWall(Vector2D position) {
         this.drawImage(position, this.sprite_wall);
+    }
+
+    @Override
+    public void drawSandbag(Vector2D position) {
+        this.drawImage(position, this.sprite_sandbag);
     }
 
     @Override
