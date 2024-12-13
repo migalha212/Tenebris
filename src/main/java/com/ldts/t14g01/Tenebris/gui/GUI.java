@@ -54,6 +54,8 @@ public interface GUI {
 
     void drawWall(Vector2D position);
 
+    void drawSpikes(Vector2D position);
+
     // Screen Management
     void setType(Type type) throws IOException;
 
