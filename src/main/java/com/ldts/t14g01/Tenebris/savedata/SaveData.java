@@ -28,7 +28,7 @@ public class SaveData {
         this.level = level;
     }
 
-    public  SaveData(Difficulty difficulty, int level, int saveNum){
+    public SaveData(Difficulty difficulty, int level, int saveNum) {
         this.difficulty = difficulty;
         this.level = level;
         this.saveNum = saveNum;
@@ -43,7 +43,7 @@ public class SaveData {
 
         try {
             if (this.saveNum != 0) {
-                updateSave(saveFile, this.saveNum,savePath);
+                updateSave(saveFile, this.saveNum, savePath);
             } else {
                 newSave(saveFile);
             }
@@ -98,18 +98,17 @@ public class SaveData {
         // ToDo : Implement load function
         File saveFile = new File("src/main/resources/saves/save.csv");
         try {
-            if(!saveFile.exists()){
+            if (!saveFile.exists()) {
                 return null;
             }
             int i = 1;
             Scanner x = new Scanner(saveFile);
             x.useDelimiter("[;\\r\\n]");
-            while(x.hasNext()){
+            while (x.hasNext()) {
                 String difficulty1 = x.next();
-                System.out.println(difficulty1);
                 Difficulty diff = Difficulty.valueOf(difficulty1); //Difficulty.valueOf(x.next());
                 int lv = Integer.parseInt(x.next());
-                saves.add(new SaveData(diff,lv,i));
+                saves.add(new SaveData(diff, lv, i));
                 i++;
             }
         } catch (IOException e) {
@@ -131,16 +130,16 @@ public class SaveData {
         this.level++;
     }
 
-    public static boolean hasSaves(){
+    public static boolean hasSaves() {
         File saveFile = new File("src/main/resources/saves/save.csv");
         return saveFile.exists() && SaveData.getSaves() != null;
     }
 
-    public static List<SaveData> getSaves(){
+    public static List<SaveData> getSaves() {
         return saves;
     }
 
-    public static void updateSaves(){
+    public static void updateSaves() {
         SaveData.saves = loadSaves();
     }
 }

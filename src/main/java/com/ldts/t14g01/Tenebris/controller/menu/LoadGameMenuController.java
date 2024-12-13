@@ -22,8 +22,8 @@ public class LoadGameMenuController extends Controller<Menu> {
     @Override
     public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (action) {
-            case LOOK_UP -> this.getModel().moveUp();
-            case LOOK_DOWN -> this.getModel().moveDown();
+            case LOOK_UP -> this.getModel().moveDown();
+            case LOOK_DOWN -> this.getModel().moveUp();
             case EXEC -> this.executeOption(stateChanger, saveDataProvider, this.getModel().getSelectedOption() );
             case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             case QUIT -> stateChanger.setState(null);
