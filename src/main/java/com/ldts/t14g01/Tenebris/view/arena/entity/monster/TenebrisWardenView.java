@@ -13,6 +13,6 @@ public class TenebrisWardenView extends EntityView<TenebrisWarden> {
     public void draw(GUI gui) {
         this.updateState();
         this.tickState();
-        gui.drawMonster(this.model.getPosition(), GUI.Monster.TENEBRIS_PEON, this.state);
+        gui.drawMonster(this.model.getPosition(), GUI.Monster.TENEBRIS_WARDEN, this.state);
     }
 }
