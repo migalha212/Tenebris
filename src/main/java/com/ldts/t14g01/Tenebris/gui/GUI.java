@@ -13,7 +13,7 @@ public interface GUI {
 
     // Colors
     enum Colors {
-        WHITE, BLACK, YELLOW, BRIGHT_YELLOW, BRIGHT_GREEN, CYAN
+        WHITE, BLACK, YELLOW, BRIGHT_YELLOW, BRIGHT_GREEN, GREEN, BLUE, RED, CYAN, ORANGE
     }
 
     // Dylan States
