@@ -18,11 +18,6 @@ public class SaveData {
         this.level = 1;
     }
 
-    //used to make a dummy SaveData that when the game is closed wont be saved
-    public SaveData() {
-        this.level = 0;
-    }
-
     private SaveData(Difficulty difficulty, int level) {
         this.difficulty = difficulty;
         this.level = level;
@@ -35,7 +30,6 @@ public class SaveData {
     }
 
     public void save() {
-        // ToDo : Implement save function
         // if the level is 0, it means this was a dummy savefile and will thus not be saved
         String savePath = "src/main/resources/saves/save.csv";
         if (this.level == 0) return;
@@ -95,7 +89,6 @@ public class SaveData {
     private static List<SaveData> loadSaves() {
         List<SaveData> saves = new ArrayList<>();
 
-        // ToDo : Implement load function
         File saveFile = new File("src/main/resources/saves/save.csv");
         try {
             if (!saveFile.exists()) {
@@ -106,7 +99,7 @@ public class SaveData {
             x.useDelimiter("[;\\r\\n]");
             while (x.hasNext()) {
                 String difficulty1 = x.next();
-                Difficulty diff = Difficulty.valueOf(difficulty1); //Difficulty.valueOf(x.next());
+                Difficulty diff = Difficulty.valueOf(difficulty1);
                 int lv = Integer.parseInt(x.next());
                 saves.add(new SaveData(diff, lv, i));
                 i++;

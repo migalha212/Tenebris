@@ -24,7 +24,7 @@ public class LoadGameMenuController extends Controller<Menu> {
         switch (action) {
             case LOOK_UP -> this.getModel().moveDown();
             case LOOK_DOWN -> this.getModel().moveUp();
-            case EXEC -> this.executeOption(stateChanger, saveDataProvider, this.getModel().getSelectedOption() );
+            case EXEC -> this.executeOption(stateChanger, saveDataProvider);
             case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             case QUIT -> stateChanger.setState(null);
             case null, default -> {
@@ -32,9 +32,9 @@ public class LoadGameMenuController extends Controller<Menu> {
         }
     }
 
-    void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider,int selected) throws IOException {
+    void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         // Load selected Save
-        saveDataProvider.setSaveData(SaveData.getSaves().get(selected));
+        saveDataProvider.setSaveData(SaveData.getSaves().get(this.getModel().getSelectedOption()));
         stateChanger.setState(new ArenaState(new Arena()));
     }
 }

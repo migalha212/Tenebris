@@ -25,7 +25,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     private Tenebris() throws Exception {
         // Init game state
         this.gui = GUI.getGUI();
-        this.saveData = new SaveData();
+        this.saveData = null;
         this.setState(new MenuState(new MainMenu(this)));
 
     }
@@ -53,7 +53,8 @@ public class Tenebris implements StateChanger, SaveDataProvider {
         }
 
         // End of Game so Close Screen
-        this.saveData.save();
+        if (this.saveData != null)
+            this.saveData.save();
         this.gui.close();
     }
 
@@ -76,7 +77,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
 
     @Override
     public void setSaveData(SaveData saveData) {
-        //if (this.saveData != null) this.saveData.save();
+        if (this.saveData != null) this.saveData.save();
         this.saveData = saveData;
     }
 

@@ -12,7 +12,7 @@ public class MainMenu extends Menu {
         New_Game,
         Load_Game,
         Levels,
-        Statistics,
+        Continue,
         How_to_Play,
         Credits,
         Exit
@@ -25,12 +25,13 @@ public class MainMenu extends Menu {
 
     private void createOptions(SaveDataProvider saveDataProvider) {
         this.options.add(MainMenuOptions.New_Game.name());
-
+        if(saveDataProvider.getSaveData() != null){
+            this.options.add(MainMenuOptions.Continue.name());
+        }
         // Levels only visible if a game is loaded
         if (SaveData.hasSaves()) {
             this.options.add(MainMenuOptions.Load_Game.name());
             this.options.add(MainMenuOptions.Levels.name());
-            this.options.add(MainMenuOptions.Statistics.name());
         }
 
         this.options.add(MainMenuOptions.How_to_Play.name());

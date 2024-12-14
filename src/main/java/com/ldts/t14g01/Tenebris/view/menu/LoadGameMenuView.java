@@ -38,7 +38,7 @@ public class LoadGameMenuView extends View<Menu> {
         //show number of available saves
         int available = saves.size();
         gui.drawText(
-                "Available save files:" + Integer.toString(available),
+                "Available save files: " + Integer.toString(available),
                 new Vector2D(4, 9),
                 GUI.Colors.WHITE,
                 GUI.Colors.BLACK
