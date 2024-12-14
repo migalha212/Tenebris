@@ -4,10 +4,15 @@ import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.sound.*;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.State;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
 import java.io.IOException;
 
 public class Tenebris implements StateChanger, SaveDataProvider {
@@ -18,26 +23,26 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     private boolean stateChanged;
     private SaveData saveData;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         Tenebris.getInstance().run();
     }
 
-    private Tenebris() throws IOException {
+    private Tenebris() throws Exception {
         // Init game state
         this.gui = GUI.getGUI();
         this.saveData = null;
         this.stateChanged = false;
         this.setState(new MenuState(new MainMenu(this)));
+
     }
 
-    public static Tenebris getInstance() throws IOException {
+    public static Tenebris getInstance() throws Exception {
         if (Tenebris.instance == null) Tenebris.instance = new Tenebris();
         return Tenebris.instance;
     }
 
     public void run() throws IOException, InterruptedException {
         long frameTime = 1000 / 60;
-
         // While the game is running
         while (this.state != null) {
             // Record start time
@@ -79,4 +84,5 @@ public class Tenebris implements StateChanger, SaveDataProvider {
         if (this.saveData != null) this.saveData.save();
         this.saveData = saveData;
     }
+
 }
