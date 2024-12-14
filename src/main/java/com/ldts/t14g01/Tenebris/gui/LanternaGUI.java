@@ -24,8 +24,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.List;
 
 public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     // Sets target window size and aspect ratio
@@ -59,6 +61,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_wall;
     private final BufferedImage sprite_sandbag;
     private final BufferedImage sprite_spikes;
+
+    private final List<BufferedImage> sprite_death_blood;
 
     private final BufferedImage sprite_tenebris_harbinger_idle_1;
     private final BufferedImage sprite_tenebris_harbinger_idle_2;
@@ -159,6 +163,9 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_wall = ImageIO.read(new File("src/main/resources/sprites/elements/wall.png"));
             this.sprite_sandbag = ImageIO.read(new File("src/main/resources/sprites/elements/sandbag.png"));
             this.sprite_spikes = ImageIO.read(new File("src/main/resources/sprites/elements/spikes.png"));
+
+            this.sprite_death_blood = new ArrayList<>();
+            for (int i = 1; i <= 16; i++) this.sprite_death_blood.add(ImageIO.read(new File("src/main/resources/sprites/particles/death-blood/" + i + ".png")));
 
             this.sprite_tenebris_harbinger_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/1.png"));
             this.sprite_tenebris_harbinger_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/2.png"));
@@ -531,6 +538,15 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         }
     }
 
+    @Override
+    public void drawDeathBlood(Vector2D position, int frameNumber) {
+        if (frameNumber <= 0 || frameNumber > GUI.DEATH_BLOOD_FRAME_COUNT)
+            throw new RuntimeException("Drawing Invalid Death Blood Frame Number");
+
+        Vector2D spritePosition = position.add(new Vector2D(0, -(this.sprite_death_blood.get(0).getHeight() / 4)));
+        this.drawImage(spritePosition, this.sprite_death_blood.get(frameNumber - 1));
+    }
+
     private void drawImage(Vector2D position, BufferedImage sprite) {
         if (!this.stable()) return;
 
@@ -543,10 +559,13 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                 int green = (a >> 8) & 255;
                 int blue = a & 255;
 
+                int pX = position.x() - sprite.getWidth() / 2 + x;
+                int pY = position.y() - sprite.getHeight() / 2 + y;
+
                 if (alpha != 0) {
                     tg.setForegroundColor(new TextColor.RGB(red, green, blue));
                     tg.setBackgroundColor(new TextColor.RGB(red, green, blue));
-                    tg.setCharacter(new TerminalPosition(position.x() + x, position.y() + y), ' ');
+                    tg.setCharacter(new TerminalPosition(pX, pY), ' ');
                 }
             }
         }

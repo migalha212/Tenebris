@@ -2,6 +2,7 @@ package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.*;
+import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.SandBag;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Spike;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Wall;
@@ -14,12 +15,14 @@ import java.util.List;
 public class Arena {
     private final List<GameElement> elements;
     private final List<Monster> monsters;
+    private final List<Particle> particles;
 
     private Dylan dylan;
 
     public Arena() throws IOException {
         this.elements = new ArrayList<>();
         this.monsters = new ArrayList<>();
+        this.particles = new ArrayList<>();
 
         // TODO Implement Arena Builder
         addElement(new Dylan(new Vector2D(100, 100), 10, 2));
@@ -37,6 +40,7 @@ public class Arena {
 
     public void addElement(GameElement element) {
         if (element instanceof Dylan) this.dylan = (Dylan) element;
+        else if (element instanceof Particle) this.particles.add((Particle) element);
         else if (element instanceof Monster) this.monsters.add((Monster) element);
         else this.elements.add(element);
     }
@@ -70,5 +74,13 @@ public class Arena {
 
     public List<GameElement> getElements() {
         return this.elements;
+    }
+
+    public List<Particle> getParticles() {
+        return this.particles;
+    }
+
+    public void removeParticle(Particle particle) {
+        this.particles.remove(particle);
     }
 }

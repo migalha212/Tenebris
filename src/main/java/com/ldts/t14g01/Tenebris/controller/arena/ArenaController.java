@@ -3,12 +3,16 @@ package com.ldts.t14g01.Tenebris.controller.arena;
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
+import com.ldts.t14g01.Tenebris.model.arena.particles.DeathBlood;
+import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -22,8 +26,8 @@ public class ArenaController extends Controller<Arena> {
         switch (action) {
             case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             case QUIT -> stateChanger.setState(null);
-            case null, default -> {
-            }
+            case EXEC -> this.getModel().addElement(new DeathBlood(this.getModel().getDylan().getPosition()));
+            case null, default -> {}
         }
     }
 
@@ -45,6 +49,15 @@ public class ArenaController extends Controller<Arena> {
         dylanController.move();
 
         // Update Monsters with Dylan position
-        this.getModel().getMonsters().forEach(monster -> monster.getController().update(this.getModel().getDylan().getPosition()));
+        this.getModel().getMonsters().forEach(
+                monster -> monster.getController().update(this.getModel().getDylan().getPosition()));
+
+        // Update Particles
+        this.getModel().getParticles().forEach(particles -> particles.getController().update());
+        List<Particle> toDelete = new ArrayList<>();
+        this.getModel().getParticles().forEach(particle -> {
+            if (particle.isOver()) toDelete.add(particle);
+        });
+        toDelete.forEach(particle -> this.getModel().removeParticle(particle));
     }
 }

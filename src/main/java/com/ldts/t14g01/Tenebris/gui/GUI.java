@@ -30,6 +30,9 @@ public interface GUI {
         TENEBRIS_WARDEN
     }
 
+    // Particles
+    static int DEATH_BLOOD_FRAME_COUNT = 16;
+
     static GUI getGUI() {
         return LanternaGUI.getGUI();
     }
@@ -51,6 +54,8 @@ public interface GUI {
     void drawSandbag(Vector2D position);
 
     void drawSpikes(Vector2D position);
+
+    void drawDeathBlood(Vector2D position, int frameNumber);
 
     void drawMonster(Vector2D position, Monster monster, AnimationState state);
 

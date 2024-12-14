@@ -25,5 +25,8 @@ public class ArenaView extends View<Arena> {
 
         // Draw Dylan
         arena.getDylan().getView().draw(gui);
+
+        // Draw Particles
+        arena.getParticles().forEach(particles -> particles.getView().draw(gui));
     }
 }
