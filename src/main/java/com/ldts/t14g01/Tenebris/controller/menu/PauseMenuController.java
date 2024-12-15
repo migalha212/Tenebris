@@ -2,7 +2,6 @@ package com.ldts.t14g01.Tenebris.controller.menu;
 
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
-import com.ldts.t14g01.Tenebris.model.arena.Arena;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
@@ -21,12 +20,16 @@ public class PauseMenuController extends Controller<Menu> {
 
     void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (PauseMenu.PauseMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
-            case Continue -> stateChanger.setState(new ArenaState(new Arena()));
+            case Continue -> this.goBackToArena(stateChanger);
             case Statistics -> stateChanger.setState(new MenuState(new StatisticsMenu()));
             case Back_to_Main_Menu -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             default -> {
             }
         }
+    }
+
+    private void goBackToArena(StateChanger stateChanger) throws IOException {
+        stateChanger.setState(new ArenaState(((PauseMenu) this.getModel()).getArena()));
     }
 
     void quit(StateChanger stateChanger) throws IOException {
@@ -40,7 +43,7 @@ public class PauseMenuController extends Controller<Menu> {
             case LOOK_DOWN -> this.getModel().moveDown();
             case EXEC -> this.executeOption(stateChanger, saveDataProvider);
             case QUIT -> this.quit(stateChanger);
-            case ESC -> stateChanger.setState(new ArenaState(new Arena()));
+            case ESC -> this.goBackToArena(stateChanger);
             case null, default -> {
             }
         }

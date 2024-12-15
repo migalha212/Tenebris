@@ -4,15 +4,10 @@ import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
-import com.ldts.t14g01.Tenebris.sound.*;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.State;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.File;
 import java.io.IOException;
 
 public class Tenebris implements StateChanger, SaveDataProvider {
@@ -53,7 +48,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
             this.state.tick(gui, this, this);
 
             // Wait to limit frame rate
-            long endTime  = System.currentTimeMillis();
+            long endTime = System.currentTimeMillis();
             long waitTime = frameTime - (endTime - startTime);
             if (waitTime > 0) Thread.sleep(waitTime);
         }
