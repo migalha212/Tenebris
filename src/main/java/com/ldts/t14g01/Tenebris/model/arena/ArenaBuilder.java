@@ -6,87 +6,63 @@ import com.ldts.t14g01.Tenebris.model.arena.staticelement.BreakableWall;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.SandBag;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Spike;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Wall;
+import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class ArenaBuilder {
-    private final Arena arena;
 
-    public ArenaBuilder() throws IOException {
-        this.arena = new Arena();
+    private ArenaBuilder() {
     }
 
-    public ArenaBuilder addDylan(Vector2D position, int size, int speed) throws IOException {
-        arena.addElement(new Dylan(position, size, speed));
-        return this;
+    public static Arena build(SaveData saveData) throws IOException {
+        return ArenaBuilder.loadFromFile("src/main/resources/levels/" + saveData.getLevel());
     }
 
-    public ArenaBuilder addWall(Vector2D position) {
-        arena.addElement(new Wall(position));
-        return this;
-    }
+    private static Arena loadFromFile(String filePath) throws IOException {
+        // Create Arena
+        Arena arena = new Arena();
 
-    public ArenaBuilder addBreakableWall(Vector2D position) {
-        arena.addElement(new BreakableWall(position, 20));
-        return this;
-    }
-
-    public ArenaBuilder addSandBag(Vector2D position) {
-        arena.addElement(new SandBag(position));
-        return this;
-    }
-
-    public ArenaBuilder addSpike(Vector2D position) {
-        arena.addElement(new Spike(position));
-        return this;
-    }
-
-    public ArenaBuilder addMonster(Monster monster) {
-        arena.addElement(monster);
-        return this;
-    }
-
-    public ArenaBuilder loadFromFile(String filePath) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                parseLine(line.trim());
-            }
+        // Parse lines
+        String line;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            while ((line = reader.readLine()) != null) ArenaBuilder.parseLine(arena, line.trim());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Trying to load a level that doesn't exist");
         }
-        return this;
+
+        return arena;
     }
 
-    private void parseLine(String line) throws IOException {
+    private static void parseLine(Arena arena, String line) throws IOException {
         if (line.isEmpty() || line.startsWith("#")) return;
-        Vector2D pos = parsePosition(line);
+        Vector2D position = ArenaBuilder.parsePosition(line);
 
         switch (line.split("\\(")[0]) {
-            case "Dylan" -> addDylan(pos, 10, 2);
-            case "Wall" -> addWall(pos);
-            case "SandBag" -> addSandBag(pos);
-            case "Spike" -> addSpike(pos);
-            case "Breakable" -> addBreakableWall(pos);
-            case "T-W" -> addMonster(new TenebrisWarden(pos));
-            case "T-SS" -> addMonster(new TenebrisSpikedScout(pos));
-            case "T-Heavy" -> addMonster(new TenebrisHeavy(pos));
-            case "T-Harbinger" -> addMonster(new TenebrisHarbinger(pos));
-            case "T-P" -> addMonster(new TenebrisPeon(pos));
+            case "Dylan" -> arena.addElement(new Dylan(position, 10, 2));
+            case "Wall" -> arena.addElement(new Wall(position));
+            case "SandBag" -> arena.addElement(new SandBag(position));
+            case "Spike" -> arena.addElement(new Spike(position));
+            case "Breakable" -> arena.addElement(new BreakableWall(position, 20));
+            case "T-W" -> arena.addElement(new TenebrisWarden(position));
+            case "T-SS" -> arena.addElement(new TenebrisSpikedScout(position));
+            case "T-Heavy" -> arena.addElement(new TenebrisHeavy(position));
+            case "T-Harbinger" -> arena.addElement(new TenebrisHarbinger(position));
+            case "T-P" -> arena.addElement(new TenebrisPeon(position));
         }
     }
 
-    private Vector2D parsePosition(String line) {
+    private static Vector2D parsePosition(String line) {
         String coords = line.substring(line.indexOf('(') + 1, line.indexOf(')'));
         String[] parts = coords.split(",");
         int x = Integer.parseInt(parts[0].trim());
         int y = Integer.parseInt(parts[1].trim());
         return new Vector2D(x, y);
-    }
-
-    public Arena build() {
-        return this.arena;
     }
 }
 

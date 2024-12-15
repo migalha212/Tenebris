@@ -1,5 +1,5 @@
 # Configuração da arena
-Dylan(100, 100)
+Dylan(150, 100)
 Wall(150, 150)
 SandBag(190, 150)
 Spike(170, 170)

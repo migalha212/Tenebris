@@ -27,10 +27,13 @@ public class Arena implements ElementProvider {
     }
 
     public void addElement(GameElement element) {
-        if (element instanceof Dylan) this.dylan = (Dylan) element;
-        else if (element instanceof Particle) this.particles.add((Particle) element);
-        else if (element instanceof Monster) this.monsters.add((Monster) element);
-        else this.elements.add(element);
+        switch (element) {
+            case Dylan dylan1 -> this.dylan = dylan1;
+            case Particle particle -> this.particles.add(particle);
+            case Monster monster -> this.monsters.add(monster);
+            case null -> {}
+            default -> this.elements.add(element);
+        }
     }
 
     public void checkCollisions() {
