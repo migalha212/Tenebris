@@ -3,13 +3,14 @@ package com.ldts.t14g01.Tenebris.state;
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
-import com.ldts.t14g01.Tenebris.sound.GlobalMusicManager;
+import com.ldts.t14g01.Tenebris.sound.GlobalSoundManager;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.view.View;
 
 public class MenuState extends State<Menu> {
     public MenuState(Menu model) {
         super(model);
-        GlobalMusicManager.getInstance().playMenuBackground();
+        GlobalSoundManager.getInstance().playMusic(SoundManager.Music.menuBackground);
     }
 
     @Override

@@ -4,14 +4,15 @@ import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.controller.arena.ArenaController;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
-import com.ldts.t14g01.Tenebris.sound.GlobalMusicManager;
+import com.ldts.t14g01.Tenebris.sound.GlobalSoundManager;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.view.View;
 import com.ldts.t14g01.Tenebris.view.arena.ArenaView;
 
 public class ArenaState extends State<Arena> {
     public ArenaState(Arena model) {
         super(model);
-        GlobalMusicManager.getInstance().stopMenuBackground();
+        GlobalSoundManager.getInstance().stopMusic(SoundManager.Music.menuBackground);
     }
 
     @Override
