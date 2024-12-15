@@ -6,6 +6,7 @@ import com.ldts.t14g01.Tenebris.model.arena.ArenaBuilder;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
+import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.ArenaState;
 import com.ldts.t14g01.Tenebris.state.MenuState;
@@ -21,8 +22,12 @@ public class NewGameMenuController extends Controller<Menu> {
 
     void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         // Create new Save Data
-        saveDataProvider.setSaveData(new SaveData(Difficulty.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))));
-        stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));
+        Difficulty newSaveDifficulty = Difficulty.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()));
+        SaveData newSaveData = SaveDataManager.getInstance().createNewSave(newSaveDifficulty);
+        saveDataProvider.setSaveData(newSaveData);
+
+        // Change into Arena
+        stateChanger.setState(new ArenaState(ArenaBuilder.build(newSaveData)));
     }
 
     void quit(StateChanger stateChanger) throws IOException {

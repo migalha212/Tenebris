@@ -52,9 +52,6 @@ public class Tenebris implements StateChanger, SaveDataProvider {
             if (waitTime > 0) Thread.sleep(waitTime);
         }
 
-        // End of Game so Close Screen
-        if (this.saveData != null)
-            this.saveData.save();
         this.gui.close();
     }
 
@@ -77,7 +74,6 @@ public class Tenebris implements StateChanger, SaveDataProvider {
 
     @Override
     public void setSaveData(SaveData saveData) {
-        if (this.saveData != null) this.saveData.save();
         this.saveData = saveData;
     }
 

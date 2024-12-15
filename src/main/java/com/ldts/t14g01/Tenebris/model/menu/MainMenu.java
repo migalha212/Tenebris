@@ -2,7 +2,7 @@ package com.ldts.t14g01.Tenebris.model.menu;
 
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.controller.menu.MainMenuController;
-import com.ldts.t14g01.Tenebris.savedata.SaveData;
+import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.view.View;
 import com.ldts.t14g01.Tenebris.view.menu.MainMenuView;
@@ -25,11 +25,14 @@ public class MainMenu extends Menu {
 
     private void createOptions(SaveDataProvider saveDataProvider) {
         this.options.add(MainMenuOptions.New_Game.name());
-        if(saveDataProvider.getSaveData() != null){
+
+        // Continue Option only Visible if a game save is loaded
+        if (saveDataProvider.getSaveData() != null) {
             this.options.add(MainMenuOptions.Continue.name());
         }
-        // Levels only visible if a game is loaded
-        if (SaveData.hasSaves()) {
+
+        // Load Game Menu and Levels only visible if saved Games exist
+        if (SaveDataManager.getInstance().getSaveCount() != 0) {
             this.options.add(MainMenuOptions.Load_Game.name());
             this.options.add(MainMenuOptions.Levels.name());
         }

@@ -36,7 +36,10 @@ public class Arena implements ElementProvider {
 
     public void addElement(GameElement element) {
         switch (element) {
-            case Dylan dylan1 -> this.dylan = dylan1;
+            case Dylan dylan1 -> {
+                this.dylan = dylan1;
+                System.out.println("Dylan Added");
+            }
             case Particle particle -> this.particles.add(particle);
             case Monster monster -> this.monsters.add(monster);
             case null -> {}

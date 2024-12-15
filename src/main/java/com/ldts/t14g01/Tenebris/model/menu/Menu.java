@@ -17,12 +17,14 @@ public abstract class Menu {
     }
 
     public void moveUp() {
+        if(this.options.isEmpty()) return;
         this.selectedOption += this.options.size() - 1;
         this.selectedOption %= this.options.size();
         SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SWITCH);
     }
 
     public void moveDown() {
+        if(this.options.isEmpty()) return;
         this.selectedOption++;
         this.selectedOption %= this.options.size();
         SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SWITCH);

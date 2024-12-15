@@ -25,7 +25,7 @@ public class ArenaController extends Controller<Arena> {
     @Override
     public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (action) {
-            case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            case ESC -> stateChanger.setState(new MenuState(new PauseMenu(this.getModel())));
             case QUIT -> stateChanger.setState(null);
             case EXEC -> this.getModel().addElement(new DeathBlood(this.getModel().getDylan().getPosition()));
             case null, default -> {
