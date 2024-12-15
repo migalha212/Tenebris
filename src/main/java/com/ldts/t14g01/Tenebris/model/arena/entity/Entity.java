@@ -7,6 +7,7 @@ import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.utils.Bounce;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
@@ -94,6 +95,7 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
     public void takeDamage(int damage) {
         this.hp -= damage;
         if (this.hp < 0) this.hp = 0;
+        SoundManager.getInstance().playSFX(SoundManager.SFX.ENTITY_DAMAGE);
     }
 
     @Override

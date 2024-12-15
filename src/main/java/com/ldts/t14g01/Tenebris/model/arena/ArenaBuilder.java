@@ -44,7 +44,7 @@ public class ArenaBuilder {
         Vector2D position = ArenaBuilder.parsePosition(line);
 
         switch (line.split("\\(")[0]) {
-            case "Dylan" -> arena.addElement(new Dylan(position, 10, 2));
+            case "Dylan" -> arena.addElement(new Dylan(position, 1000, 2));
             case "Wall" -> arena.addElement(new Wall(position));
             case "SandBag" -> arena.addElement(new SandBag(position));
             case "Spike" -> arena.addElement(new Spike(position));

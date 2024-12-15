@@ -4,93 +4,91 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-public class GlobalSoundManager implements SoundManager{
+public class GlobalSoundManager implements SoundManager {
     private static GlobalSoundManager instance;
 
-    private Clip playerDamage;
-    private Clip playerDeath;
-    private Clip shot;
-    private Clip menuBackgroundMusic;
-    private Clip menuSwitch;
+    private final File shot;
+    private final File entityDamage;
+    private final File entityDeath;
+
+    private final File menuSwitch;
+
+    private final Clip menuBackgroundMusic;
+    private final Clip arenaBackgroundMusic;
 
     private GlobalSoundManager() {
-        try {
-            // Player SFX
-            this.playerDamage = open(new File("src/main/resources/sfx/player_damage.wav"));
-            this.playerDeath = open(new File("src/main/resources/sfx/player_death.wav"));
-            this.shot = open(new File("src/main/resources/sfx/shot.wav"));
+        // Entity SFX
+        this.shot = new File("src/main/resources/sfx/shot.wav");
+        this.entityDamage = new File("src/main/resources/sfx/entity_damage.wav");
+        this.entityDeath = new File("src/main/resources/sfx/entity_death.wav");
 
-            // Menu SFX
-            this.menuSwitch = open(new File("src/main/resources/sfx/menu_switch.wav"));
-            this.menuBackgroundMusic = open(new File("src/main/resources/music/menu_music.wav"));
+        // Menu SFX
+        this.menuSwitch = new File("src/main/resources/sfx/menu_switch.wav");
 
-            // Arena SFX
-
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException("Unable to load Sound File Type");
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to open file");
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException("lineUnavailable");
-        }
+        // Music
+        this.arenaBackgroundMusic = this.open(new File("src/main/resources/music/arena_music.wav"));
+        this.menuBackgroundMusic = this.open(new File("src/main/resources/music/menu_music.wav"));
+        ((FloatControl) this.menuBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-30.0f);
+        ((FloatControl) this.arenaBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-20.0f);
     }
 
-    public static GlobalSoundManager getInstance() {
+    protected static GlobalSoundManager getInstance() {
         if (instance == null) instance = new GlobalSoundManager();
         return instance;
     }
 
-    private Clip open(File file) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-        Clip music = AudioSystem.getClip();
-        music.open(AudioSystem.getAudioInputStream(file));
-        return music;
+    private Clip open(File file) {
+        Clip sound;
+        try {
+            sound = AudioSystem.getClip();
+            sound.open(AudioSystem.getAudioInputStream(file));
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        return sound;
     }
 
 
     @Override
-    public void playSFX(SFX sfx){
-        Clip temp = null;
-        switch (sfx){
-            // player SFX
-            case playerDamage -> temp = this.playerDamage;
-            case playerDeath -> temp = this.playerDeath;
-            case shot -> temp = this.shot;
-
-            // menu SFX
-            case menuSwitch -> temp = this.menuSwitch;
+    public void playSFX(SFX sfx) {
+        Clip sfxClip;
+        switch (sfx) {
+            case ENTITY_DAMAGE -> {
+                sfxClip = this.open(this.entityDamage);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+            }
+            case ENTITY_DEATH -> sfxClip = this.open(this.entityDeath);
+            case SHOT -> sfxClip = this.open(this.shot);
+            case MENU_SWITCH -> {
+                sfxClip = this.open(this.menuSwitch);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-18.0f);
+            }
+            case null, default -> throw new RuntimeException("Trying to Play non existent SFX");
         }
 
-        assert temp != null;
-        //reset its placement
-        temp.setFramePosition(0);
-        temp.start();
+        if (sfxClip.isRunning()) sfxClip.stop();
+        sfxClip.setFramePosition(0);
+        sfxClip.start();
     }
 
     @Override
-    public void playMusic(Music music){
-        Clip temp = null;
-        switch (music){
-            case Music.menuBackground -> temp = this.menuBackgroundMusic;
-            case arenaBackground -> temp = null;
+    public void playMusic(Music music) {
+        this.stopMusic(music);
+        Clip musicClip;
+        switch (music) {
+            case MENU_BACKGROUND -> musicClip = this.menuBackgroundMusic;
+            case ARENA_BACKGROUND -> musicClip = this.arenaBackgroundMusic;
+            case null, default -> throw new RuntimeException("Trying to Play non existent Music");
         }
 
-        assert temp != null;
-        if(temp.isRunning()) return;
-        temp.setFramePosition(0);
-        temp.start();
-        temp.loop(Clip.LOOP_CONTINUOUSLY);
+        if (musicClip.isRunning()) return;
+        musicClip.setFramePosition(0);
+        musicClip.start();
+        musicClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    @Override
-    public void stopMusic(Music music){
-        Clip temp = null;
-        switch (music){
-            case Music.menuBackground -> temp = this.menuBackgroundMusic;
-            case arenaBackground -> temp = null;
-        }
-
-        assert temp != null;
-        if(!temp.isRunning()) return;
-        temp.stop();
+    private void stopMusic(Music music) {
+        if (this.arenaBackgroundMusic.isRunning() && music != Music.ARENA_BACKGROUND) this.arenaBackgroundMusic.stop();
+        if (this.menuBackgroundMusic.isRunning() && music != Music.MENU_BACKGROUND) this.menuBackgroundMusic.stop();
     }
 }

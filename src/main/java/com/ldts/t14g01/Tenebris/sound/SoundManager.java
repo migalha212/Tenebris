@@ -2,30 +2,30 @@ package com.ldts.t14g01.Tenebris.sound;
 
 public interface SoundManager {
 
-    public enum SFX{
-        // player
-        playerDamage,
-        playerDeath,
-        shot,
+    enum SFX {
+        // Player
+        ENTITY_DAMAGE,
+        ENTITY_DEATH,
+        SHOT,
 
-        // menu
-        menuSwitch
+        // Menu
+        MENU_SWITCH
 
-        // arena
-
+        // Arena
     }
 
 
-    public enum Music{
-        // menu
-        menuBackground,
+    enum Music {
+        MENU_BACKGROUND,
+        ARENA_BACKGROUND
+    }
 
-        // arena
-        arenaBackground
+    static SoundManager getInstance() {
+        return GlobalSoundManager.getInstance();
     }
 
 
-    public void playSFX(SFX sfx);
-    public void playMusic(Music music);
-    public void stopMusic(Music music);
+    void playSFX(SFX sfx);
+
+    void playMusic(Music music);
 }
