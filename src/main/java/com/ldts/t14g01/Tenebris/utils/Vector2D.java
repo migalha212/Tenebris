@@ -81,6 +81,10 @@ public record Vector2D(int x, int y) {
         return new Vector2D((int) (magnitude * Math.cos(angle)), (int) (magnitude * Math.sin(angle)));
     }
 
+    public double dot(Vector2D other) {
+        return this.x * other.x + this.y * other.y;
+    }
+
     @Override
     public String toString() {
         return "(" + this.x + "," + this.y + ")";

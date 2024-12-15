@@ -1,11 +1,12 @@
 package com.ldts.t14g01.Tenebris.model.arena.staticelement;
 
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
-public class BreakableWall extends GameElement implements TakesDamage {
+public class BreakableWall extends GameElement implements TakesDamage, BlocksVision {
     private int hp;
 
     public BreakableWall(Vector2D position, int hp) {

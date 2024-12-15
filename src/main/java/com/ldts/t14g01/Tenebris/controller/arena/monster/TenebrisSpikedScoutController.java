@@ -2,6 +2,7 @@ package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
 import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisSpikedScout;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.Set;
@@ -13,7 +14,7 @@ public class TenebrisSpikedScoutController extends MonsterController<TenebrisSpi
     }
 
     @Override
-    public void update(Vector2D dylanPosition) {
+    public void update(Vector2D dylanPosition, ElementProvider elementProvider) {
         Vector2D monsterPosition = this.model.getPosition();
         Vector2D direction       = dylanPosition.minus(monsterPosition);
 
@@ -21,26 +22,28 @@ public class TenebrisSpikedScoutController extends MonsterController<TenebrisSpi
         Set<Entity.State> movingState = new TreeSet<>();
 
         // Calculate moving states if not too far to reach
-        if (direction.magnitude() <= this.model.getRange()) switch (direction.majorDirection(10)) {
-            case UP -> movingState.add(Entity.State.BACK);
-            case DOWN -> movingState.add(Entity.State.FRONT);
-            case LEFT -> movingState.add(Entity.State.LEFT);
-            case RIGHT -> movingState.add(Entity.State.RIGHT);
-            case UP_RIGHT -> {
-                movingState.add(Entity.State.BACK);
-                movingState.add(Entity.State.RIGHT);
-            }
-            case UP_LEFT -> {
-                movingState.add(Entity.State.BACK);
-                movingState.add(Entity.State.LEFT);
-            }
-            case DOWN_RIGHT -> {
-                movingState.add(Entity.State.FRONT);
-                movingState.add(Entity.State.RIGHT);
-            }
-            case DOWN_LEFT -> {
-                movingState.add(Entity.State.FRONT);
-                movingState.add(Entity.State.LEFT);
+        if (isDylanVisible(monsterPosition, dylanPosition, elementProvider)) {
+            if (direction.magnitude() <= this.model.getRange()) switch (direction.majorDirection(10)) {
+                case UP -> movingState.add(Entity.State.BACK);
+                case DOWN -> movingState.add(Entity.State.FRONT);
+                case LEFT -> movingState.add(Entity.State.LEFT);
+                case RIGHT -> movingState.add(Entity.State.RIGHT);
+                case UP_RIGHT -> {
+                    movingState.add(Entity.State.BACK);
+                    movingState.add(Entity.State.RIGHT);
+                }
+                case UP_LEFT -> {
+                    movingState.add(Entity.State.BACK);
+                    movingState.add(Entity.State.LEFT);
+                }
+                case DOWN_RIGHT -> {
+                    movingState.add(Entity.State.FRONT);
+                    movingState.add(Entity.State.RIGHT);
+                }
+                case DOWN_LEFT -> {
+                    movingState.add(Entity.State.FRONT);
+                    movingState.add(Entity.State.LEFT);
+                }
             }
         }
 

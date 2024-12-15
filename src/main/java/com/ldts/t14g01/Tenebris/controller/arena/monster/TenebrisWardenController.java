@@ -1,15 +1,15 @@
 package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
 import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
-import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisHarbinger;
+import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisWarden;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-public class TenebrisHarbingerController extends MonsterController<TenebrisHarbinger> {
-    public TenebrisHarbingerController(TenebrisHarbinger model) {
+public class TenebrisWardenController extends MonsterController<TenebrisWarden>{
+    public TenebrisWardenController(TenebrisWarden model) {
         super(model);
     }
 

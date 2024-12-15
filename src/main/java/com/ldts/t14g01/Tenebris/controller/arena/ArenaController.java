@@ -50,7 +50,7 @@ public class ArenaController extends Controller<Arena> {
 
         // Update Monsters with Dylan position
         this.getModel().getMonsters().forEach(
-                monster -> monster.getController().update(this.getModel().getDylan().getPosition()));
+                monster -> monster.getController().update(this.getModel().getDylan().getPosition(), this.getModel()));
 
         // Update Particles
         this.getModel().getParticles().forEach(particles -> particles.getController().update());
