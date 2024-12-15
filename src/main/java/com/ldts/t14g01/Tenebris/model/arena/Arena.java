@@ -24,19 +24,6 @@ public class Arena implements ElementProvider {
         this.elements = new ArrayList<>();
         this.monsters = new ArrayList<>();
         this.particles = new ArrayList<>();
-
-        // TODO Implement Arena Builder
-        addElement(new Dylan(new Vector2D(100, 100), 10, 2));
-
-        addElement(new Wall(new Vector2D(150, 150)));
-        addElement(new SandBag(new Vector2D(190, 150)));
-        addElement(new Spike(new Vector2D(170, 170)));
-
-        addElement(new TenebrisWarden(new Vector2D(250, 150)));
-        addElement(new TenebrisSpikedScout(new Vector2D(20, 20)));
-        addElement(new TenebrisHeavy(new Vector2D(250, 30)));
-        addElement(new TenebrisHarbinger(new Vector2D(250, 50)));
-        addElement(new TenebrisPeon(new Vector2D(10, 10)));
     }
 
     public void addElement(GameElement element) {

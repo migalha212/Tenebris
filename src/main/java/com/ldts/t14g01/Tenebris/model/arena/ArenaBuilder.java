@@ -63,26 +63,17 @@ public class ArenaBuilder {
         if (line.isEmpty() || line.startsWith("#")) return;
         Vector2D pos = parsePosition(line);
 
-        if (line.startsWith("Dylan(")) {
-            addDylan(pos, 10, 2);
-        } else if (line.startsWith("Wall(")) {
-            addWall(pos);
-        } else if (line.startsWith("SandBag(")) {
-            addSandBag(pos);
-        } else if (line.startsWith("Spike(")) {
-            addSpike(pos);
-        } else if (line.startsWith("Breakable(")) {
-            addBreakableWall(pos);
-        } else if (line.startsWith("T-W(")) {
-            addMonster(new TenebrisWarden(pos));
-        } else if (line.startsWith("T-SS(")) {
-            addMonster(new TenebrisSpikedScout(pos));
-        } else if (line.startsWith("T-Heavy(")) {
-            addMonster(new TenebrisHeavy(pos));
-        } else if (line.startsWith("T-Harbinger(")) {
-            addMonster(new TenebrisHarbinger(pos));
-        } else if (line.startsWith("T-P(")) {
-            addMonster(new TenebrisPeon(pos));
+        switch (line.split("\\(")[0]) {
+            case "Dylan" -> addDylan(pos, 10, 2);
+            case "Wall" -> addWall(pos);
+            case "SandBag" -> addSandBag(pos);
+            case "Spike" -> addSpike(pos);
+            case "Breakable" -> addBreakableWall(pos);
+            case "T-W" -> addMonster(new TenebrisWarden(pos));
+            case "T-SS" -> addMonster(new TenebrisSpikedScout(pos));
+            case "T-Heavy" -> addMonster(new TenebrisHeavy(pos));
+            case "T-Harbinger" -> addMonster(new TenebrisHarbinger(pos));
+            case "T-P" -> addMonster(new TenebrisPeon(pos));
         }
     }
 
