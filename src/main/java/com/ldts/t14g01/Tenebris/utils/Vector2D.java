@@ -1,5 +1,7 @@
 package com.ldts.t14g01.Tenebris.utils;
 
+import java.util.Objects;
+
 import static java.lang.Math.abs;
 
 public record Vector2D(int x, int y) {
@@ -40,10 +42,10 @@ public record Vector2D(int x, int y) {
 
     public boolean inRange(Vector2D p2, int range) {
         int distance = (int) Math.sqrt((x - p2.x) * (x - p2.x) + (y - p2.y) * (y - p2.y));
-        return distance <= range;
+        return distance < range;
     }
 
-    public Direction majorDirection(int diagonalThreshold) {
+    public Direction getMajorDirection(int diagonalThreshold) {
         // If distance is almost diagonal
         if (abs(abs(x) - abs(y)) < diagonalThreshold) {
             if (x > 0) {
@@ -88,5 +90,17 @@ public record Vector2D(int x, int y) {
     @Override
     public String toString() {
         return "(" + this.x + "," + this.y + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector2D vector2D = (Vector2D) o;
+        return x == vector2D.x && y == vector2D.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

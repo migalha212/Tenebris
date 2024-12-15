@@ -32,7 +32,7 @@ public class ArenaController extends Controller<Arena> {
     }
 
     @Override
-    public void tickWithList(Set<Action> actions) {
+    public void tickWithList(Set<Action> actions, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         // Update Dylan
         DylanController dylanController = this.getModel().getDylan().getController();
         dylanController.setLooking(null);
@@ -59,5 +59,12 @@ public class ArenaController extends Controller<Arena> {
             if (particle.isOver()) toDelete.add(particle);
         });
         toDelete.forEach(particle -> this.getModel().removeParticle(particle));
+
+        // Check Collisions
+        this.getModel().checkCollisions();
+
+        // TODO Handle Player Death
+        // Dylan is Dead
+        if (this.getModel().getDylan() == null) stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
     }
 }

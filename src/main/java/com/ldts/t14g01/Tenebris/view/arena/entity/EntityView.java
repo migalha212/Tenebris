@@ -46,9 +46,10 @@ public abstract class EntityView<T extends Entity> extends ElementView<T> {
             return;
         }
 
-        // If the player is looking somewhere then face that direction
-        // Otherwise face the direction the player is moving
+        // If the entity is looking somewhere then face that direction
+        // Otherwise face the direction the entity is moving
         switch (this.model.getLooking()) {
+            case IDLE -> this.either(GUI.AnimationState.IDLE_1, GUI.AnimationState.IDLE_2);
             case LEFT -> this.either(GUI.AnimationState.LEFT_1, GUI.AnimationState.LEFT_2);
             case RIGHT -> this.either(GUI.AnimationState.RIGHT_1, GUI.AnimationState.RIGHT_2);
             case FRONT -> this.either(GUI.AnimationState.FRONT_1, GUI.AnimationState.FRONT_2);

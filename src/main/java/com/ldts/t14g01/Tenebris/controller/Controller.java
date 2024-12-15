@@ -18,9 +18,7 @@ public class Controller<T> {
         return model;
     }
 
-    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
-    }
+    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {}
 
-    public void tickWithList(Set<Action> actions) {
-    }
+    public void tickWithList(Set<Action> actions, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {}
 }

@@ -32,7 +32,11 @@ public abstract class State<T> {
     public void tick(GUI gui, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
         Action action = gui.getAction();
         this.controller.tick(action, stateChanger, saveDataProvider);
-        this.controller.tickWithList(gui.getActiveActions());
+        if (stateChanger.stateChanged()) return;
+
+        this.controller.tickWithList(gui.getActiveActions(), stateChanger, saveDataProvider);
+        if (stateChanger.stateChanged()) return;
+
         this.view.draw(gui);
     }
 }

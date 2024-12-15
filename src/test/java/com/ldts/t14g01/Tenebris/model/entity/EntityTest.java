@@ -12,9 +12,10 @@ public class EntityTest {
     @BeforeEach
     void setUp() {
         Vector2D position = new Vector2D(1, 1);
+        int size = 18/2;
         int hp = 10;
         int maxVelocity = 5;
-        entity = new Entity(position, hp, maxVelocity) {
+        entity = new Entity(position, size, hp, maxVelocity) {
             @Override
             public void move() {
             }

@@ -15,6 +15,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
 
     private final GUI gui;
     private State state;
+    private boolean stateChanged;
     private SaveData saveData;
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -25,6 +26,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
         // Init game state
         this.gui = GUI.getGUI();
         this.saveData = null;
+        this.stateChanged = false;
         this.setState(new MenuState(new MainMenu(this)));
     }
 
@@ -42,10 +44,11 @@ public class Tenebris implements StateChanger, SaveDataProvider {
             long startTime = System.currentTimeMillis();
 
             // Tick game
+            this.stateChanged = false;
             this.state.tick(gui, this, this);
 
             // Wait to limit frame rate
-            long endTime = System.currentTimeMillis();
+            long endTime  = System.currentTimeMillis();
             long waitTime = frameTime - (endTime - startTime);
             if (waitTime > 0) Thread.sleep(waitTime);
         }
@@ -56,8 +59,14 @@ public class Tenebris implements StateChanger, SaveDataProvider {
 
     @Override
     public void setState(State state) throws IOException {
+        this.stateChanged = true;
         this.state = state;
         if (this.state != null) this.gui.setType(this.state.getGUIType());
+    }
+
+    @Override
+    public boolean stateChanged() {
+        return this.stateChanged;
     }
 
     @Override

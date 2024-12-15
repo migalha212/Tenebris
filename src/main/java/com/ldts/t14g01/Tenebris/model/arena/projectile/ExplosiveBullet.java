@@ -1,36 +1,21 @@
 package com.ldts.t14g01.Tenebris.model.arena.projectile;
 
-import com.ldts.t14g01.Tenebris.model.arena.GameElement;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
+import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
-public class ExplosiveBullet extends GameElement implements Moves {
+public class ExplosiveBullet extends Projectile {
+    private static final HitBoX hitBoX = new HitBoX(new Vector2D(0, 0), new Vector2D(0, 0));
     private final Vector2D velocity;
     private final int damage;
-    private boolean hit;
 
     public ExplosiveBullet(Vector2D position, int damage, Vector2D velocity) {
-        super(position);
+        super(position, hitBoX);
         this.velocity = velocity;
         this.damage = damage;
-        this.hit = false;
     }
 
     @Override
-    public void interact(GameElement other) {
-        if (other instanceof AbsorbsProjectiles) this.hit = true;
-        if (other instanceof TakesDamage) this.hit = true;
-    }
-
-    @Override
-    public void move() {
-        this.position = this.position.add(this.velocity);
-    }
-
-    @Override
-    public void bounce(Vector2D.Direction direction) {
-        // This element doesn't bouce
+    public int getEntityDamage() {
+        return this.damage;
     }
 }

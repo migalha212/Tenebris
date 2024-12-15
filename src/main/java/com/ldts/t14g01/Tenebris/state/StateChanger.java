@@ -4,4 +4,6 @@ import java.io.IOException;
 
 public interface StateChanger {
     void setState(State state) throws IOException;
+
+    boolean stateChanged();
 }
