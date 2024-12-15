@@ -7,7 +7,7 @@ import com.ldts.t14g01.Tenebris.view.arena.entity.monster.TenebrisSpikedScoutVie
 public class TenebrisSpikedScout extends Monster {
     private static final int RANGE = 45;
     private static final int HP = 15;
-    private static final int VELOCITY = 2;
+    private static final int VELOCITY = 1;
     private static final int DAMAGE = 35;
 
     public TenebrisSpikedScout(Vector2D position) {
