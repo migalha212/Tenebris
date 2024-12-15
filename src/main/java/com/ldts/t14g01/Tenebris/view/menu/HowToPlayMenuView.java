@@ -68,7 +68,7 @@ public class HowToPlayMenuView extends View<Menu> {
         navigationOptions.add(" - Move Down");
         navigationOptions.add(" - Select Option");
         navigationOptions.add(" - Go to Previous Menu");
-        navigationOptions.add(" - Quit the Game");
+        navigationOptions.add(" - Quit Game");
 
         List<String> navigationKeys = new ArrayList<>();
         navigationKeys.add("      ↑");
@@ -221,9 +221,9 @@ public class HowToPlayMenuView extends View<Menu> {
         monsterInfo.add("Tenebris Peon");
         monsterInfo.add("Melee range, low HP, moderate damage");
         monsterInfo.add("Tenebris Heavy");
-        monsterInfo.add("High HP, low damage");
+        monsterInfo.add("High HP, low damage, slow speed");
         monsterInfo.add("Tenebris Spiked Scout");
-        monsterInfo.add("Low HP, high collision damage");
+        monsterInfo.add("Low HP, high collision damage, fast speed");
         monsterInfo.add("Tenebris Harbinger");
         monsterInfo.add("High damage, Range attacker, low HP");
         monsterInfo.add("Tenebris Warden");
@@ -242,7 +242,7 @@ public class HowToPlayMenuView extends View<Menu> {
             }
 
             // Draw Monster Info
-            gui.drawText(monsterInfo.get(i), new Vector2D(23, 2 + i + space), color, GUI.Colors.BLACK);
+            gui.drawText(monsterInfo.get(i), new Vector2D(22, 2 + i + space), color, GUI.Colors.BLACK);
         }
     }
 
