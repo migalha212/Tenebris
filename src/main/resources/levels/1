@@ -1,0 +1,10 @@
+# Configuração da arena
+Dylan(100, 100)
+Wall(150, 150)
+SandBag(190, 150)
+Spike(170, 170)
+T-W(250, 150)
+T-SS(20, 20)
+T-Heavy(250, 30)
+T-Harbinger(250, 50)
+T-P(10,10)
