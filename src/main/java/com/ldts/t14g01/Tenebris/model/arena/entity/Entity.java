@@ -89,7 +89,7 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
 
     @Override
     public void bounce(Vector2D direction) {
-        this.bounce = new Bounce(direction.getMajorDirection(10), 20);
+        this.bounce = new Bounce(direction.getMajorDirection(), 20);
     }
 
     @Override

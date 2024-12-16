@@ -26,7 +26,7 @@ public class TenebrisHarbingerController extends MonsterController<TenebrisHarbi
 
         // Calculate moving states if not too far to reach
         if (isDylanVisible(monsterPosition, dylanPosition, elementProvider)) {
-            if (direction.magnitude() <= this.model.getVisionRange()) switch (direction.getMajorDirection(10)) {
+            if (direction.magnitude() <= this.model.getVisionRange()) switch (direction.getMajorDirection()) {
                 case UP -> movingState.add(Entity.State.BACK);
                 case DOWN -> movingState.add(Entity.State.FRONT);
                 case LEFT -> movingState.add(Entity.State.LEFT);

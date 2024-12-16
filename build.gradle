@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'info.solidsoft.pitest' version '1.15.0'
 }
 
 group = 'com.ldts.t14g01.Tenebris'
@@ -28,6 +29,17 @@ test {
     useJUnitPlatform()
 }
 
+test {
+    useJUnitPlatform {
+        includeEngines('junit-jupiter', 'jqwik')
+    }
+}
+
 application {
     mainClass.set('com.ldts.t14g01.Tenebris.Tenebris')
+}
+
+pitest {
+    junit5PluginVersion = '1.2.1'
+    threads = 8
 }

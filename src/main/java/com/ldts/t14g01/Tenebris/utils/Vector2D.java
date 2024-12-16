@@ -1,10 +1,10 @@
 package com.ldts.t14g01.Tenebris.utils;
 
-import java.util.Objects;
-
 import static java.lang.Math.abs;
 
 public record Vector2D(int x, int y) {
+    private static final double TG_22D = 0.414213562373;
+    private static final double TG_67D = 2.41421356237;
 
     public enum Direction {
         UP, DOWN, LEFT, RIGHT, UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT
@@ -12,11 +12,7 @@ public record Vector2D(int x, int y) {
 
     // Data
     public double magnitude() {
-        return Math.sqrt(x * x + y * y);
-    }
-
-    public double angle() {
-        return Math.atan2(y, x);
+        return Math.sqrt((long) x * x + (long) y * y);
     }
 
     // Math
@@ -25,82 +21,52 @@ public record Vector2D(int x, int y) {
     }
 
     public Vector2D minus(Vector2D other) {
-        return new Vector2D(x - other.x, y - other.y);
+        return new Vector2D(this.x - other.x, this.y - other.y);
     }
 
     public Vector2D multiply(double k) {
         return new Vector2D((int) (x * k), (int) (y * k));
     }
 
+    public long dot(Vector2D other) {
+        return (long) this.x * other.x + (long) this.y * other.y;
+    }
+
     // Util
-    public Vector2D limit(double maxMagnitude) {
-        double magnitude = this.magnitude();
-        if (magnitude > maxMagnitude)
-            return new Vector2D((int) (x / magnitude * maxMagnitude), (int) (y / magnitude * maxMagnitude));
-        return new Vector2D(x, y);
-    }
-
-    public boolean inRange(Vector2D p2, int range) {
-        int distance = (int) Math.sqrt((x - p2.x) * (x - p2.x) + (y - p2.y) * (y - p2.y));
-        return distance < range;
-    }
-
-    public Direction getMajorDirection(int diagonalThreshold) {
-        // If distance is almost diagonal
-        if (abs(abs(x) - abs(y)) < diagonalThreshold) {
-            if (x > 0) {
-                if (y > 0) return Direction.DOWN_RIGHT;
-                else return Direction.UP_RIGHT;
-            } else {
-                if (y > 0) return Direction.DOWN_LEFT;
-                else return Direction.UP_LEFT;
-            }
+    public Direction getMajorDirection() {
+        // By Default the Direction is UP
+        // Vertical Vector
+        if (this.x == 0) {
+            if (this.y > 0) return Direction.DOWN;
+            else return Direction.UP;
         }
 
-        // Mostly Horizontal
-        if (abs(x) > abs(y)) {
-            if (x > 0) return Direction.RIGHT;
+        // Get absolute values
+        long x = abs((long) this.x);
+        long y = abs((long) this.y);
+
+        // Calculate the tangent of the angle
+        double tg = (double) y / (double) x;
+
+        // Horizontal
+        if (tg < TG_22D) {
+            if (this.x > 0) return Direction.RIGHT;
             else return Direction.LEFT;
         }
 
-        // Mostly Vertical
-        if (y > 0) return Direction.DOWN;
-        else return Direction.UP;
-    }
-
-    public static Vector2D fromDirection(Direction direction, double magnitude) {
-        double angle = 0;
-        switch (direction) {
-            case UP -> angle = -Math.PI / 2;
-            case DOWN -> angle = Math.PI / 2;
-            case LEFT -> angle = Math.PI;
-            case UP_RIGHT -> angle = -Math.PI / 4;
-            case UP_LEFT -> angle = -Math.PI * 3 / 4;
-            case DOWN_RIGHT -> angle = Math.PI / 4;
-            case DOWN_LEFT -> angle = Math.PI * 3 / 4;
-            case null, default -> angle = 0;
+        // Vertical
+        if (tg > TG_67D) {
+            if (this.y > 0) return Direction.DOWN;
+            else return Direction.UP;
         }
-        return new Vector2D((int) (magnitude * Math.cos(angle)), (int) (magnitude * Math.sin(angle)));
-    }
 
-    public double dot(Vector2D other) {
-        return this.x * other.x + this.y * other.y;
-    }
-
-    @Override
-    public String toString() {
-        return "(" + this.x + "," + this.y + ")";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Vector2D vector2D = (Vector2D) o;
-        return x == vector2D.x && y == vector2D.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
+        // Diagonal
+        if (this.x > 0) {
+            if (this.y > 0) return Direction.DOWN_RIGHT;
+            else return Direction.UP_RIGHT;
+        } else {
+            if (this.y > 0) return Direction.DOWN_LEFT;
+            else return Direction.UP_LEFT;
+        }
     }
 }
