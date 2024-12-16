@@ -6,6 +6,8 @@ import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.View;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainMenuView extends View<Menu> {
 
@@ -25,8 +27,16 @@ public class MainMenuView extends View<Menu> {
         int leftX = 4;
 
         // Draw Title
-        String title = "Main Menu";
-        gui.drawText(title, new Vector2D(centerX - title.length() / 2, centerY - 4), GUI.Colors.WHITE, GUI.Colors.BLACK);
+        List<String> title = new ArrayList<>();
+        title.add(" _______              _          _");
+        title.add("|__   __|            | |        (_)");
+        title.add("   | | ___ _ __   ___| |__  _ __ _ ___");
+        title.add("   | |/ _ \\ '_ \\ / _ \\ '_ \\| '__| / __|");
+        title.add("   | |  __/ | | |  __/ |_) | |  | \\__ \\");
+        title.add("   |_|\\___|_| |_|\\___|_.__/|_|  |_|___/");
+        for(int i = 0; i < title.size(); i++){
+            gui.drawText(title.get(i),new Vector2D(centerX - 20,2 + i), GUI.Colors.WHITE, GUI.Colors.BLACK);
+        }
 
         // Draw options (left-aligned)
         for (int i = 0; i < this.getModel().getOptions().size(); i++) {

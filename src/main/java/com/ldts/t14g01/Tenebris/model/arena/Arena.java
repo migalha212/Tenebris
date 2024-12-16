@@ -4,6 +4,7 @@ import com.ldts.t14g01.Tenebris.model.arena.Commands.*;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.*;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
+import com.ldts.t14g01.Tenebris.model.arena.particles.DamageBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.DeathBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
@@ -101,6 +102,7 @@ public class Arena implements ElementProvider {
         commands.forEach(command -> {
             // Handle Projectile Creation
             if (command instanceof CreateParticle) switch (((CreateParticle) command).type()) {
+                case DAMAGE_BLOOD -> this.addElement(new DamageBlood(((CreateParticle) command).position()));
                 case DEATH_BLOOD -> this.addElement(new DeathBlood(((CreateParticle) command).position()));
                 case null, default -> throw new RuntimeException("Command tried to create an invalid type of particle");
             }

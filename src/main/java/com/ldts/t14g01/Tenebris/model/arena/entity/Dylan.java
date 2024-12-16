@@ -36,7 +36,7 @@ public class Dylan extends Entity implements TakesDamage {
         // ToDo: Implement Interactions with DamagesPlayer Objects
         if (other instanceof DamagesPlayer) {
             this.takeDamage(((DamagesPlayer) other).getPlayerDamage());
-            commands.add(new CreateParticle(this.position, ParticleType.DEATH_BLOOD));
+            commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
         }
 
         if (!this.isAlive()) commands.add(new KillDylan());

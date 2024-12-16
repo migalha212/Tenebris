@@ -9,6 +9,7 @@ import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
+import com.ldts.t14g01.Tenebris.view.arena.staticelement.BreakableWallView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class BreakableWall extends GameElement implements TakesDamage, BlocksVis
     public BreakableWall(Vector2D position, int hp) {
         super(position, hitBoX);
         this.hp = hp;
+        this.view = new BreakableWallView(this);
     }
 
     @Override

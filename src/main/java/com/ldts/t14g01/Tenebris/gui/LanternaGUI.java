@@ -2,7 +2,6 @@ package com.ldts.t14g01.Tenebris.gui;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
@@ -26,9 +25,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.List;
 
 public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     // Sets target window size and aspect ratio
@@ -60,10 +59,12 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_dylan_right_2;
 
     private final BufferedImage sprite_wall;
+    private final BufferedImage sprite_breakable_wall;
     private final BufferedImage sprite_sandbag;
     private final BufferedImage sprite_spikes;
 
     private final List<BufferedImage> sprite_death_blood;
+    private final List<BufferedImage> sprite_damage_blood;
 
     private final BufferedImage sprite_tenebris_harbinger_idle_1;
     private final BufferedImage sprite_tenebris_harbinger_idle_2;
@@ -162,11 +163,17 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_dylan_right_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/2.png"));
 
             this.sprite_wall = ImageIO.read(new File("src/main/resources/sprites/elements/wall.png"));
+            this.sprite_breakable_wall = ImageIO.read(new File("src/main/resources/sprites/elements/breakablewall.png"));
             this.sprite_sandbag = ImageIO.read(new File("src/main/resources/sprites/elements/sandbag.png"));
             this.sprite_spikes = ImageIO.read(new File("src/main/resources/sprites/elements/spikes.png"));
 
             this.sprite_death_blood = new ArrayList<>();
-            for (int i = 1; i <= 16; i++) this.sprite_death_blood.add(ImageIO.read(new File("src/main/resources/sprites/particles/death-blood/" + i + ".png")));
+            for (int i = 1; i <= 16; i++)
+                this.sprite_death_blood.add(ImageIO.read(new File("src/main/resources/sprites/particles/death-blood/" + i + ".png")));
+
+            this.sprite_damage_blood = new ArrayList<>();
+            for (int i = 1; i <= 5; i++)
+                this.sprite_damage_blood.add(ImageIO.read(new File("src/main/resources/sprites/particles/damage-blood/" + i + ".png")));
 
             this.sprite_tenebris_harbinger_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/1.png"));
             this.sprite_tenebris_harbinger_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/2.png"));
@@ -448,6 +455,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     }
 
     @Override
+    public void drawBreakableWall(Vector2D position) {
+        this.drawImage(position, this.sprite_breakable_wall);
+    }
+
+    @Override
     public void drawSandbag(Vector2D position) {
         this.drawImage(position, this.sprite_sandbag);
     }
@@ -535,7 +547,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                     case null, default -> throw new RuntimeException("Invalid state for LanternaGUI.drawMonster");
                 }
             }
-            case null, default -> {}
+            case null, default -> {
+            }
         }
     }
 
@@ -544,8 +557,16 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         if (frameNumber <= 0 || frameNumber > GUI.DEATH_BLOOD_FRAME_COUNT)
             throw new RuntimeException("Drawing Invalid Death Blood Frame Number");
 
-        Vector2D spritePosition = position.add(new Vector2D(0, -(this.sprite_death_blood.get(0).getHeight() / 4)));
+        Vector2D spritePosition = position.add(new Vector2D(0, -(this.sprite_death_blood.getFirst().getHeight() / 4)));
         this.drawImage(spritePosition, this.sprite_death_blood.get(frameNumber - 1));
+    }
+
+    @Override
+    public void drawDamageBlood(Vector2D position, int frameNumber) {
+        if (frameNumber <= 0 || frameNumber > GUI.DAMAGE_BLOOD_FRAME_COUNT)
+            throw new RuntimeException("Drawing Invalid Damage Blood Frame Number");
+
+        this.drawImage(position, this.sprite_damage_blood.get(frameNumber - 1));
     }
 
     private void drawImage(Vector2D position, BufferedImage sprite) {

@@ -1,8 +1,8 @@
 package com.ldts.t14g01.Tenebris.model.arena.entity;
 
-import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena.Commands.CreateParticle;
+import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
@@ -81,7 +81,8 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
                 case BACK -> this.position = this.position.add(new Vector2D(0, -this.getVelocity()));
                 case LEFT -> this.position = this.position.add(new Vector2D(-this.getVelocity(), 0));
                 case RIGHT -> this.position = this.position.add(new Vector2D(this.getVelocity(), 0));
-                case null, default -> {}
+                case null, default -> {
+                }
             }
         });
     }
@@ -110,10 +111,12 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
         if (other instanceof DamagesEntities) {
             this.takeDamage(((DamagesEntities) other).getEntityDamage());
             this.bounce(this.position.minus(other.getPosition()));
-            commands.add(new CreateParticle(this.position, ParticleType.DEATH_BLOOD));
+            commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
         }
 
         if (other instanceof Moves) this.bounce(this.position.minus(other.getPosition()));
+
+        if (!this.isAlive()) commands.add(new CreateParticle(this.position, ParticleType.DEATH_BLOOD));
 
         return commands;
     }

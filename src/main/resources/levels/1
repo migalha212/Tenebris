@@ -1,6 +1,7 @@
 # Configuração da arena
 Dylan(150, 100)
 Wall(150, 150)
+Breakable(130, 130)
 SandBag(190, 150)
 Spike(170, 170)
 T-W(250, 150)
