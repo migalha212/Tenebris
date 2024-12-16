@@ -35,8 +35,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private static final double ARENA_SCREEN_OCCUPANCY = 0.8;
     private static final int MENU_WIDTH = 64;
     private static final int MENU_HEIGHT = 20;
-    private static final int ARENA_WIDTH = 480;
-    private static final int ARENA_HEIGHT = 300;
+    private static final int ARENA_WIDTH = 486;
+    private static final int ARENA_HEIGHT = 306;
 
     // Instance Variables
     private final Font ARENA_BASE_FONT;
