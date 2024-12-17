@@ -64,6 +64,8 @@ public interface GUI {
 
     void drawBullet(Vector2D position, Vector2D.Direction direction);
 
+    void drawExplosive(Vector2D position);
+
     void drawSpell(Vector2D position);
 
     void drawMonster(Vector2D position, Monster monster, AnimationState state);

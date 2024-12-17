@@ -6,6 +6,7 @@ import com.ldts.t14g01.Tenebris.model.arena.Commands.CreateProjectile;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.Bullet;
+import com.ldts.t14g01.Tenebris.model.arena.projectile.ExplosiveBullet;
 import com.ldts.t14g01.Tenebris.utils.Bounce;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
@@ -14,11 +15,18 @@ import java.util.TreeSet;
 
 public class DylanController {
     private final Dylan model;
-    private int fire_tick;
 
     public DylanController(Dylan model) {
         this.model = model;
-        this.fire_tick = 0;
+    }
+
+    public void setSelectedWeapon(Action action) {
+        switch (action) {
+            case SELECT_1 -> this.model.setSelectedWeapon(1);
+            case SELECT_2 -> this.model.setSelectedWeapon(2);
+            case null, default -> {
+            }
+        }
     }
 
     public void setMoving(Set<Action> actions) {
@@ -104,15 +112,18 @@ public class DylanController {
         }
 
         // If cooldown is over, shoot
-        if (this.fire_tick >= this.model.getFIRE_COOLDOWN()) {
-            this.fire_tick = 0;
-            commandHandler.handleCommand(new CreateProjectile(new Bullet(bulletPosition, direction, 10)));
+        int weapon = this.model.getSelectedWeapon();
+        if (this.model.canShoot(weapon)) {
+            this.model.resetTimer(weapon);
+
+            if (weapon == 1) commandHandler.handleCommand(new CreateProjectile(new Bullet(bulletPosition, direction, 10)));
+            if (weapon == 2) commandHandler.handleCommand(new CreateProjectile(new ExplosiveBullet(bulletPosition, direction, 30)));
         }
     }
 
     public void update() {
         // Tick Fire CoolDown Counter
-        this.fire_tick++;
+        this.model.tickWeaponTimers();
 
         // If Bouncing
         // Tick Bounce

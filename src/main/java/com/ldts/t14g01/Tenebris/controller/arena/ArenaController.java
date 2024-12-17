@@ -119,6 +119,7 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         switch (action) {
             case ESC -> stateChanger.setState(new MenuState(new PauseMenu(this.getModel())));
             case QUIT -> stateChanger.setState(null);
+            case SELECT_1, SELECT_2 -> this.getModel().getDylan().getController().setSelectedWeapon(action);
             case null, default -> {
             }
         }

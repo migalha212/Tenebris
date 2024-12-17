@@ -123,6 +123,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
     private final BufferedImage sprite_bullet_horizontal;
     private final BufferedImage sprite_bullet_vertical;
+    private final BufferedImage sprite_explosive;
     private final BufferedImage sprite_spell;
 
     // Singleton
@@ -236,6 +237,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
             this.sprite_bullet_horizontal = ImageIO.read(new File("src/main/resources/sprites/projectiles/bullet/horizontal.png"));
             this.sprite_bullet_vertical = ImageIO.read(new File("src/main/resources/sprites/projectiles/bullet/vertical.png"));
+            this.sprite_explosive = ImageIO.read(new File("src/main/resources/sprites/projectiles/explosive/explosive.png"));
             this.sprite_spell = ImageIO.read(new File("src/main/resources/sprites/projectiles/spell/spell.png"));
 
         } catch (IOException e) {
@@ -347,6 +349,9 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                 case 'S', 's' -> action = Action.MOVE_DOWN;
                 case 'A', 'a' -> action = Action.MOVE_LEFT;
                 case 'D', 'd' -> action = Action.MOVE_RIGHT;
+                case '1' -> action = Action.SELECT_1;
+                case '2' -> action = Action.SELECT_2;
+                case '3' -> action = Action.SELECT_3;
             }
         }
 
@@ -586,6 +591,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case UP, DOWN -> this.drawImage(position, this.sprite_bullet_vertical);
             case null, default -> throw new RuntimeException("Trying to draw bullet with invalid direction");
         }
+    }
+
+    @Override
+    public void drawExplosive(Vector2D position) {
+        this.drawImage(position, this.sprite_explosive);
     }
 
     @Override

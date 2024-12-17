@@ -2,20 +2,14 @@ package com.ldts.t14g01.Tenebris.model.arena.projectile;
 
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
+import com.ldts.t14g01.Tenebris.view.arena.projectiles.ExplosiveBulletView;
 
 public class ExplosiveBullet extends Projectile {
-    private static final HitBoX hitBoX = new HitBoX(new Vector2D(0, 0), new Vector2D(0, 0));
-    private final Vector2D velocity;
-    private final int damage;
+    private static final HitBoX HIT_BOX = new HitBoX(new Vector2D(-2, -2), new Vector2D(4, 4));
+    private static final int VELOCITY = 3;
 
-    public ExplosiveBullet(Vector2D position, int damage, Vector2D velocity) {
-        super(position, hitBoX, Vector2D.Direction.LEFT, 3, damage);
-        this.velocity = velocity;
-        this.damage = damage;
-    }
-
-    @Override
-    public int getEntityDamage() {
-        return this.damage;
+    public ExplosiveBullet(Vector2D position, Vector2D.Direction direction, int damage) {
+        super(position, HIT_BOX, direction, VELOCITY, damage);
+        this.view = new ExplosiveBulletView(this);
     }
 }
