@@ -1,5 +1,6 @@
 package com.ldts.t14g01.Tenebris.model.arena;
 
+import com.ldts.t14g01.Tenebris.model.arena.effects.Effect;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
@@ -15,6 +16,7 @@ public class Arena implements ElementProvider {
     private final List<Monster> monsters;
     private final List<Particle> particles;
     private final List<Projectile> projectiles;
+    private final List<Effect> effects;
 
     private Dylan dylan;
 
@@ -23,6 +25,7 @@ public class Arena implements ElementProvider {
         this.monsters = new ArrayList<>();
         this.particles = new ArrayList<>();
         this.projectiles = new ArrayList<>();
+        this.effects = new ArrayList<>();
     }
 
     public void addElement(GameElement element) {
@@ -58,5 +61,9 @@ public class Arena implements ElementProvider {
 
     public List<Projectile> getProjectiles() {
         return this.projectiles;
+    }
+
+    public List<Effect> getEffects() {
+        return this.effects;
     }
 }

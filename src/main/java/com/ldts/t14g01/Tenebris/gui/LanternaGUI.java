@@ -63,6 +63,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_sandbag;
     private final BufferedImage sprite_spikes;
 
+    private final List<BufferedImage> sprite_explosion;
     private final List<BufferedImage> sprite_death_blood;
     private final List<BufferedImage> sprite_damage_blood;
 
@@ -172,12 +173,17 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_sandbag = ImageIO.read(new File("src/main/resources/sprites/elements/sandbag.png"));
             this.sprite_spikes = ImageIO.read(new File("src/main/resources/sprites/elements/spikes.png"));
 
+            this.sprite_explosion = new ArrayList<>();
+            for (int i = 1; i <= GUI.EXPLOSION_FRAME_COUNT; i++)
+                this.sprite_explosion.add(ImageIO.read(new File("src/main/resources/sprites/particles/explosion/" + i + ".png")));
+
+
             this.sprite_death_blood = new ArrayList<>();
-            for (int i = 1; i <= 16; i++)
+            for (int i = 1; i <= GUI.DEATH_BLOOD_FRAME_COUNT; i++)
                 this.sprite_death_blood.add(ImageIO.read(new File("src/main/resources/sprites/particles/death-blood/" + i + ".png")));
 
             this.sprite_damage_blood = new ArrayList<>();
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= GUI.DAMAGE_BLOOD_FRAME_COUNT; i++)
                 this.sprite_damage_blood.add(ImageIO.read(new File("src/main/resources/sprites/particles/damage-blood/" + i + ".png")));
 
             this.sprite_tenebris_harbinger_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/1.png"));
@@ -484,6 +490,14 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     }
 
     @Override
+    public void drawExplosion(Vector2D position, int frameNumber) {
+        if (frameNumber <= 0 || frameNumber > GUI.EXPLOSION_FRAME_COUNT)
+            throw new RuntimeException("Drawing Invalid Explosion Frame Number");
+
+        this.drawImage(position, this.sprite_explosion.get(frameNumber - 1));
+    }
+
+    @Override
     public void drawMonster(Vector2D position, Monster monster, AnimationState state) {
         switch (monster) {
             case TENEBRIS_HARBINGER -> {
@@ -661,6 +675,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
     @Override
     public void close() throws IOException {
+        // Clear Active Actions
+        this.activeActions.clear();
         if (this.stable()) this.screen.stopScreen();
     }
 

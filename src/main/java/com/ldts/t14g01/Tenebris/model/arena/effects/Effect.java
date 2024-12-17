@@ -1,6 +1,6 @@
-package com.ldts.t14g01.Tenebris.model.arena.particles;
+package com.ldts.t14g01.Tenebris.model.arena.effects;
 
-import com.ldts.t14g01.Tenebris.controller.arena.ParticleController;
+import com.ldts.t14g01.Tenebris.controller.arena.EffectController;
 import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
@@ -9,30 +9,30 @@ import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Particle extends GameElement {
-    protected ParticleController controller;
+public abstract class Effect extends GameElement {
+    protected EffectController controller;
     private int currentFrame = 1;
 
-    public Particle(Vector2D position) {
-        super(position, new HitBoX(new Vector2D(0, 0), new Vector2D(0, 0)));
-        this.controller = new ParticleController(this);
+    public Effect(Vector2D position, HitBoX hitBox) {
+        super(position, hitBox);
+        this.controller = new EffectController(this);
+    }
+
+    public EffectController getController() {
+        return this.controller;
     }
 
     public int getCurrentFrame() {
         return this.currentFrame;
     }
 
-    public abstract boolean isOver();
-
     public void update() {
         this.currentFrame++;
     }
 
-    public ParticleController getController() {
-        return this.controller;
-    }
+    public abstract boolean isOver();
 
-    // This elements don't interact
+    // This elements don't react
     @Override
     public List<Command> interact(GameElement other) {
         return new ArrayList<>();

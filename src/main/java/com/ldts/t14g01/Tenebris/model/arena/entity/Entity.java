@@ -111,9 +111,12 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
         List<Command> commands = new ArrayList<>();
 
         if (other instanceof DamagesEntities) {
-            this.takeDamage(((DamagesEntities) other).getEntityDamage());
-            this.bounce(this.position.minus(other.getPosition()));
-            commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
+            int damage = ((DamagesEntities) other).getEntityDamage();
+            if (damage != 0) {
+                this.takeDamage(damage);
+                this.bounce(this.position.minus(other.getPosition()));
+                commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
+            }
         }
 
         if (other instanceof Moves) this.bounce(this.position.minus(other.getPosition()));

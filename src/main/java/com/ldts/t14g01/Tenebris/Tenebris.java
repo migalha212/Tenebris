@@ -37,7 +37,8 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     }
 
     public void run() throws IOException, InterruptedException {
-        long frameTime = 1000 / 60;
+        long FPS = 30;
+        long frameTime = 1000 / FPS;
         // While the game is running
         while (this.state != null) {
             // Record start time

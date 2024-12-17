@@ -29,6 +29,9 @@ public class ArenaView extends View<Arena> {
         // Draw Particles
         arena.getParticles().forEach(particles -> particles.getView().draw(gui));
 
+        // Draw Effects
+        arena.getEffects().forEach(effect -> effect.getView().draw(gui));
+
         // Draw Projectiles
         arena.getProjectiles().forEach(projectile -> projectile.getView().draw(gui));
     }

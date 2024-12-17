@@ -5,6 +5,7 @@ import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
 import com.ldts.t14g01.Tenebris.model.arena.Commands.*;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena.effects.Effect;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.particles.DamageBlood;
@@ -39,15 +40,13 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         List<GameElement> elements = this.getModel().getElements();
         List<Monster> monsters = this.getModel().getMonsters();
         List<Projectile> projectiles = this.getModel().getProjectiles();
+        List<Effect> effects = this.getModel().getEffects();
 
-
+        // Check Collisions between Entities and Static Elements
         for (GameElement element : elements) {
-            // Check Collisions between Monsters and Static Elements
             for (Monster monster : monsters)
                 if (HitBoX.collide(element.getPosition(), element.getHitBox(), monster.getPosition(), monster.getHitBox()))
                     collisions.add(new Pair<>(element, monster));
-
-            // Check Collision between Dylan and Static Elements
             if (HitBoX.collide(element.getPosition(), element.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
                 collisions.add(new Pair<>(dylan, element));
         }
@@ -59,6 +58,15 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
                     collisions.add(new Pair<>(projectile, monster));
             if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
                 collisions.add(new Pair<>(projectile, dylan));
+        }
+
+        // Check Collisions between Effects and Entities
+        for (Effect effect : effects) {
+            for (Monster monster : monsters)
+                if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), monster.getPosition(), monster.getHitBox()))
+                    collisions.add(new Pair<>(effect, monster));
+            if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                collisions.add(new Pair<>(effect, dylan));
         }
 
         // Check Collisions between Monsters
@@ -86,6 +94,7 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         List<Monster> monsters = this.getModel().getMonsters();
         List<Projectile> projectiles = this.getModel().getProjectiles();
         List<Particle> particles = this.getModel().getParticles();
+        List<Effect> effects = this.getModel().getEffects();
 
         this.commands.forEach(command -> {
             switch (command) {
@@ -104,6 +113,10 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
                 // Projectiles
                 case CreateProjectile c -> projectiles.add(((CreateProjectile) command).projectile());
                 case DeleteProjectile c -> projectiles.remove(((DeleteProjectile) command).projectile());
+
+                // Effects
+                case CreateEffect c -> effects.add(((CreateEffect) command).effect());
+                case DeleteEffect c -> effects.remove(((DeleteEffect) command).effect());
 
                 // Kills
                 case DeleteMonster c -> monsters.remove(((DeleteMonster) command).monster());
@@ -150,6 +163,9 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
         // Update Projectiles
         this.getModel().getProjectiles().forEach(projectile -> projectile.getController().update());
+
+        // Update Effects
+        this.getModel().getEffects().forEach(effect -> effect.getController().update(this));
 
         // Update Particles
         List<Particle> particles = this.getModel().getParticles();

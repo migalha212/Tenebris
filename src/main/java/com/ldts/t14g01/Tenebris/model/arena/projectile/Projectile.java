@@ -59,7 +59,7 @@ public abstract class Projectile extends GameElement implements DamagesEntities 
         List<Command> commands = new ArrayList<>();
 
         if (other instanceof AbsorbsProjectiles) commands.add(new DeleteProjectile(this));
-        if (other instanceof TakesDamage) commands.add(new DeleteProjectile(this));
+        else if (other instanceof TakesDamage) commands.add(new DeleteProjectile(this));
 
         return commands;
     }
