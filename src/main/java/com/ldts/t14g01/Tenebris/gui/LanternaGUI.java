@@ -64,6 +64,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_spikes;
 
     private final List<BufferedImage> sprite_explosion;
+    private final List<BufferedImage> sprite_spell_explostion;
     private final List<BufferedImage> sprite_death_blood;
     private final List<BufferedImage> sprite_damage_blood;
 
@@ -176,6 +177,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_explosion = new ArrayList<>();
             for (int i = 1; i <= GUI.EXPLOSION_FRAME_COUNT; i++)
                 this.sprite_explosion.add(ImageIO.read(new File("src/main/resources/sprites/particles/explosion/" + i + ".png")));
+
+            this.sprite_spell_explostion = new ArrayList<>();
+            for (int i = 1; i <= GUI.SPELL_EXPLOSION_FRAME_COUNT; i++)
+                this.sprite_spell_explostion.add(ImageIO.read(new File("src/main/resources/sprites/particles/spell-explosion/" + i + ".png")));
 
 
             this.sprite_death_blood = new ArrayList<>();
@@ -495,6 +500,14 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             throw new RuntimeException("Drawing Invalid Explosion Frame Number");
 
         this.drawImage(position, this.sprite_explosion.get(frameNumber - 1));
+    }
+
+    @Override
+    public void drawSellExplosion(Vector2D position, int frameNumber) {
+        if (frameNumber <= 0 || frameNumber > GUI.SPELL_EXPLOSION_FRAME_COUNT)
+            throw new RuntimeException("Drawing Invalid Explosion Frame Number");
+
+        this.drawImage(position, this.sprite_spell_explostion.get(frameNumber - 1));
     }
 
     @Override

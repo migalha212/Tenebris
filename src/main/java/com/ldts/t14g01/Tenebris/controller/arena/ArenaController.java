@@ -11,6 +11,7 @@ import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.particles.DamageBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.DeathBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
+import com.ldts.t14g01.Tenebris.model.arena.particles.SpellExplosion;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
@@ -103,6 +104,8 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
                     switch (((CreateParticle) command).type()) {
                         case DAMAGE_BLOOD -> arena.addElement(new DamageBlood(((CreateParticle) command).position()));
                         case DEATH_BLOOD -> arena.addElement(new DeathBlood(((CreateParticle) command).position()));
+                        case SPELL_EXPLOSION ->
+                                arena.addElement(new SpellExplosion(((CreateParticle) command).position()));
                         case null, default ->
                                 throw new RuntimeException("Command tried to create an invalid type of particle");
                     }

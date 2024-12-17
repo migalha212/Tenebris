@@ -32,6 +32,7 @@ public interface GUI {
 
     // Particles
     int EXPLOSION_FRAME_COUNT = 16;
+    int SPELL_EXPLOSION_FRAME_COUNT = 4;
     int DEATH_BLOOD_FRAME_COUNT = 16;
     int DAMAGE_BLOOD_FRAME_COUNT = 5;
 
@@ -60,6 +61,8 @@ public interface GUI {
     void drawSpikes(Vector2D position);
 
     void drawExplosion(Vector2D position, int frameNumber);
+
+    void drawSellExplosion(Vector2D position, int frameNumber);
 
     void drawDeathBlood(Vector2D position, int frameNumber);
 
