@@ -32,6 +32,7 @@ public class LoadGameMenuController extends Controller<Menu> {
             case LOOK_DOWN -> this.getModel().moveUp();
             case EXEC -> this.executeOption(stateChanger, saveDataProvider);
             case MOVE_RIGHT -> {
+                if (SaveDataManager.getInstance().getSaveCount() == 0) return;
                 SaveData saveToDelete = SaveDataManager.getInstance().getSave(this.getModel().getSelectedOption() + 1);
                 if (saveToDelete.equals(saveDataProvider.getSaveData())) saveDataProvider.setSaveData(null);
                 SaveDataManager.getInstance().deleteSave(saveToDelete);
