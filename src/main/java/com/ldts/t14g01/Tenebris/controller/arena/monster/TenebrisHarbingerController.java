@@ -35,7 +35,7 @@ public class TenebrisHarbingerController extends MonsterController<TenebrisHarbi
         // If Monster can see Dylan
         if (isDylanVisible(monsterPosition, dylanPosition, elementProvider)) {
             // If close enough to shoot
-            if (direction.magnitude() <= TenebrisHarbinger.SHOOTING_RANGE) {
+            if (direction.magnitude() <= this.model.getShootingRange()) {
                 Vector2D position = this.model.getPosition();
 
                 switch (direction.getMajorDirection()) {

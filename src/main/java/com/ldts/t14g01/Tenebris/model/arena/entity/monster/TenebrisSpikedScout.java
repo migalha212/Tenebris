@@ -7,13 +7,9 @@ import com.ldts.t14g01.Tenebris.view.arena.entity.monster.TenebrisSpikedScoutVie
 
 public class TenebrisSpikedScout extends Monster {
     private static final HitBoX hitBoX = new HitBoX(new Vector2D(-5,-5), new Vector2D(8,12));
-    private static final int HP = 15;
-    private static final int VELOCITY = 1;
-    private static final int DAMAGE = 35;
-    private static final int VISION_RANGE = 45;
 
-    public TenebrisSpikedScout(Vector2D position) {
-        super(position, hitBoX, HP, VELOCITY, DAMAGE, VISION_RANGE);
+    public TenebrisSpikedScout(Vector2D position, int hp, int velocity, int damage, int visionRange) {
+        super(position, hitBoX, hp, velocity, damage, visionRange);
         this.view = new TenebrisSpikedScoutView(this);
         this.controller = new TenebrisSpikedScoutController(this);
     }

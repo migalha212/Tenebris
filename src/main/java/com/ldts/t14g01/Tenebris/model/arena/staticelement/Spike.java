@@ -12,10 +12,11 @@ import java.util.List;
 
 public class Spike extends GameElement implements DamagesEntities {
     private static final HitBoX hitBoX = new HitBoX(new Vector2D(-8, -7), new Vector2D(15, 13));
-    private static final int damage = 10;
+    private int damage;
 
-    public Spike(Vector2D position) {
+    public Spike(Vector2D position, int damage) {
         super(position, hitBoX);
+        this.damage = damage;
         this.view = new SpikeView(this);
     }
 
@@ -27,6 +28,6 @@ public class Spike extends GameElement implements DamagesEntities {
 
     @Override
     public int getEntityDamage() {
-        return Spike.damage;
+        return damage;
     }
 }

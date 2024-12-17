@@ -7,13 +7,9 @@ import com.ldts.t14g01.Tenebris.view.arena.entity.monster.TenebrisHeavyView;
 
 public class TenebrisHeavy extends Monster {
     private static final HitBoX hitBoX = new HitBoX(new Vector2D(-6, -6), new Vector2D(10, 13));
-    private static final int HP = 50;
-    private static final int VELOCITY = 1;
-    private static final int DAMAGE = 10;
-    private static final int VISION_RANGE = 50;
 
-    public TenebrisHeavy(Vector2D position) {
-        super(position, hitBoX, HP, VELOCITY, DAMAGE, VISION_RANGE);
+    public TenebrisHeavy(Vector2D position, int hp, int velocity, int damage, int visionRange) {
+        super(position, hitBoX, hp, velocity, damage, visionRange);
         this.view = new TenebrisHeavyView(this);
         this.controller = new TenebrisHeavyController(this);
     }

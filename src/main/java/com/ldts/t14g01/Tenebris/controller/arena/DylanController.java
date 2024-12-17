@@ -117,7 +117,7 @@ public class DylanController {
             this.model.resetTimer(weapon);
 
             if (weapon == 1) commandHandler.handleCommand(new CreateProjectile(new Bullet(bulletPosition, direction, 10)));
-            if (weapon == 2) commandHandler.handleCommand(new CreateProjectile(new ExplosiveBullet(bulletPosition, direction, 30)));
+            if (weapon == 2) commandHandler.handleCommand(new CreateProjectile(new ExplosiveBullet(bulletPosition, direction, 20)));
         }
     }
 
