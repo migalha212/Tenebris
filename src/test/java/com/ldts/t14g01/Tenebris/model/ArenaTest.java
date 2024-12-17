@@ -31,7 +31,6 @@ public class ArenaTest {
         arena.addElement(gameElement1);
         arena.addElement(gameElement2);
         arena.addElement(gameElement3);
-        arena.checkCollisions();
 
         Mockito.verify(gameElement1, Mockito.times(1)).interact(gameElement2);
         Mockito.verify(gameElement2, Mockito.times(1)).interact(gameElement1);

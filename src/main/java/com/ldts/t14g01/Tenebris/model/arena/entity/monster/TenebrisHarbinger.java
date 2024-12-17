@@ -10,11 +10,19 @@ public class TenebrisHarbinger extends Monster {
     private static final int HP = 20;
     private static final int VELOCITY = 1;
     private static final int DAMAGE = 35;
-    private static final int VISION_RANGE = 70;
+    private static final int VISION_RANGE = 250;
+    public static final int SHOOTING_RANGE = 100;
+
+    private final int shootingCoolDown;
 
     public TenebrisHarbinger(Vector2D position) {
         super(position, hitBoX, HP, VELOCITY, DAMAGE, VISION_RANGE);
         this.view = new TenebrisHarbingerView(this);
         this.controller = new TenebrisHarbingerController(this);
+        this.shootingCoolDown = 30;
+    }
+
+    public int getShootingCoolDown() {
+        return this.shootingCoolDown;
     }
 }

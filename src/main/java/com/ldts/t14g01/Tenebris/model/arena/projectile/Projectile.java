@@ -1,6 +1,6 @@
 package com.ldts.t14g01.Tenebris.model.arena.projectile;
 
-import com.ldts.t14g01.Tenebris.controller.arena.projectiles.ProjectileController;
+import com.ldts.t14g01.Tenebris.controller.arena.ProjectileController;
 import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena.Commands.DeleteProjectile;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
@@ -41,6 +41,11 @@ public abstract class Projectile extends GameElement implements DamagesEntities 
             case LEFT -> this.position = this.position.add(new Vector2D(-this.velocity, 0));
             case DOWN -> this.position = this.position.add(new Vector2D(0, this.velocity));
             case UP -> this.position = this.position.add(new Vector2D(0, -this.velocity));
+
+            case UP_RIGHT -> this.position = this.position.add(new Vector2D(this.velocity, -this.velocity));
+            case UP_LEFT -> this.position = this.position.add(new Vector2D(-this.velocity, -this.velocity));
+            case DOWN_RIGHT -> this.position = this.position.add(new Vector2D(this.velocity, this.velocity));
+            case DOWN_LEFT -> this.position = this.position.add(new Vector2D(-this.velocity, this.velocity));
         }
     }
 

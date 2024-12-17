@@ -123,6 +123,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
     private final BufferedImage sprite_bullet_horizontal;
     private final BufferedImage sprite_bullet_vertical;
+    private final BufferedImage sprite_spell;
 
     // Singleton
     private static GUI guiInstance;
@@ -235,6 +236,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
             this.sprite_bullet_horizontal = ImageIO.read(new File("src/main/resources/sprites/projectiles/bullet/horizontal.png"));
             this.sprite_bullet_vertical = ImageIO.read(new File("src/main/resources/sprites/projectiles/bullet/vertical.png"));
+            this.sprite_spell = ImageIO.read(new File("src/main/resources/sprites/projectiles/spell/spell.png"));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -396,6 +398,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case 68 -> action = Action.MOVE_RIGHT;
             case 83 -> action = Action.MOVE_DOWN;
             case 87 -> action = Action.MOVE_UP;
+            case 10, 32, 69 -> action = Action.EXEC;
             default -> action = null;
         }
         if (action != null) this.activeActions.add(action);
@@ -414,6 +417,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case 68 -> action = Action.MOVE_RIGHT;
             case 83 -> action = Action.MOVE_DOWN;
             case 87 -> action = Action.MOVE_UP;
+            case 10, 32, 69 -> action = Action.EXEC;
             default -> action = null;
         }
         if (action != null) this.activeActions.remove(action);
@@ -577,10 +581,16 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     @Override
     public void drawBullet(Vector2D position, Vector2D.Direction direction) {
         switch (direction) {
-            case RIGHT, DOWN_RIGHT, UP_RIGHT, LEFT, DOWN_LEFT, UP_LEFT -> this.drawImage(position, this.sprite_bullet_horizontal );
+            case RIGHT, DOWN_RIGHT, UP_RIGHT, LEFT, DOWN_LEFT, UP_LEFT ->
+                    this.drawImage(position, this.sprite_bullet_horizontal);
             case UP, DOWN -> this.drawImage(position, this.sprite_bullet_vertical);
             case null, default -> throw new RuntimeException("Trying to draw bullet with invalid direction");
         }
+    }
+
+    @Override
+    public void drawSpell(Vector2D position) {
+        this.drawImage(position, this.sprite_spell);
     }
 
     private void drawImage(Vector2D position, BufferedImage sprite) {

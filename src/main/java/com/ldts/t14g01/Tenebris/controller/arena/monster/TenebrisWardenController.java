@@ -1,5 +1,6 @@
 package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
+import com.ldts.t14g01.Tenebris.model.arena.Commands.CommandHandler;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisWarden;
@@ -16,13 +17,13 @@ public class TenebrisWardenController extends MonsterController<TenebrisWarden> 
     }
 
     @Override
-    public void update(Vector2D dylanPosition, ElementProvider elementProvider) {
+    public void update(Vector2D dylanPosition, ElementProvider elementProvider, CommandHandler commandHandler) {
         Set<Entity.State> movingState = new TreeSet<>();
         this.model.setLooking(null);
 
         // Calculate where to move to
         Vector2D monsterPosition = this.model.getPosition();
-        Vector2D direction       = dylanPosition.minus(monsterPosition);
+        Vector2D direction = dylanPosition.minus(monsterPosition);
 
         // Calculate moving states if not too far to reach
         if (isDylanVisible(monsterPosition, dylanPosition, elementProvider)) {
@@ -79,7 +80,8 @@ public class TenebrisWardenController extends MonsterController<TenebrisWarden> 
                         movingState.add(Dylan.State.FRONT);
                         movingState.add(Dylan.State.LEFT);
                     }
-                    case null, default -> {}
+                    case null, default -> {
+                    }
                 }
                 this.model.setMoving(movingState);
             }

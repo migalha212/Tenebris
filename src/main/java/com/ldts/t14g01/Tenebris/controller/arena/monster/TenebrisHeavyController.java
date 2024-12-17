@@ -1,5 +1,6 @@
 package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
+import com.ldts.t14g01.Tenebris.model.arena.Commands.CommandHandler;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisHeavy;
@@ -16,7 +17,7 @@ public class TenebrisHeavyController extends MonsterController<TenebrisHeavy> {
     }
 
     @Override
-    public void update(Vector2D dylanPosition, ElementProvider elementProvider) {
+    public void update(Vector2D dylanPosition, ElementProvider elementProvider, CommandHandler commandHandler) {
         Set<Entity.State> movingState = new TreeSet<>();
         this.model.setLooking(null);
 

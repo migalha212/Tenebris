@@ -15,6 +15,7 @@ import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 public abstract class Entity extends GameElement implements TakesDamage, Moves {
     private final int velocity;
@@ -37,6 +38,7 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
         this.velocity = velocity;
         this.hp = hp;
         this.bounce = null;
+        this.moving = new TreeSet<>();
     }
 
     protected int getVelocity() {

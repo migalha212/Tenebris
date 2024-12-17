@@ -16,12 +16,18 @@ import java.util.List;
 
 public class Dylan extends Entity implements TakesDamage {
     private static final HitBoX hitBoX = new HitBoX(new Vector2D(-5, -6), new Vector2D(8, 13));
+    private final int FIRE_COOLDOWN;
     private final DylanController controller;
 
     public Dylan(Vector2D position, int hp, int velocity) {
         super(position, hitBoX, hp, velocity);
         this.view = new DylanView(this);
         this.controller = new DylanController(this);
+        this.FIRE_COOLDOWN = 10;
+    }
+
+    public int getFIRE_COOLDOWN() {
+        return this.FIRE_COOLDOWN;
     }
 
     public DylanController getController() {

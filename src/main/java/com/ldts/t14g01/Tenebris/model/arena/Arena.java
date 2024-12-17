@@ -1,15 +1,10 @@
 package com.ldts.t14g01.Tenebris.model.arena;
 
-import com.ldts.t14g01.Tenebris.model.arena.Commands.*;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
-import com.ldts.t14g01.Tenebris.model.arena.particles.DamageBlood;
-import com.ldts.t14g01.Tenebris.model.arena.particles.DeathBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
-import com.ldts.t14g01.Tenebris.utils.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +40,10 @@ public class Arena implements ElementProvider {
         return this.dylan;
     }
 
+    public void setDylan(Dylan dylan) {
+        this.dylan = dylan;
+    }
+
     public List<Monster> getMonsters() {
         return this.monsters;
     }
@@ -57,74 +56,7 @@ public class Arena implements ElementProvider {
         return this.particles;
     }
 
-    public void removeParticle(Particle particle) {
-        this.particles.remove(particle);
-    }
-
     public List<Projectile> getProjectiles() {
         return this.projectiles;
-    }
-
-    public void checkCollisions() {
-        List<Pair<GameElement>> collisions = new ArrayList<>();
-
-        for (GameElement element : this.elements) {
-            // Check Collisions between Monsters and Static Elements
-            for (Monster monster : this.monsters)
-                if (HitBoX.collide(element.position, element.hitBox, monster.position, monster.hitBox)) collisions.add(
-                        new Pair<>(element, monster));
-
-            // Check Collision between Dylan and Static Elements
-            if (HitBoX.collide(element.position, element.hitBox, this.dylan.position, this.dylan.hitBox))
-                collisions.add(new Pair<>(this.dylan, element));
-        }
-
-        // Check Collision between Projectiles and Entities
-        for (Projectile projectile : this.projectiles) {
-            for (Monster monster : this.monsters)
-                if (HitBoX.collide(projectile.position, projectile.hitBox, monster.position, monster.hitBox))
-                    collisions.add(new Pair<>(projectile, monster));
-            if (HitBoX.collide(projectile.position, projectile.hitBox, dylan.position, dylan.hitBox))
-                collisions.add(new Pair<>(projectile, dylan));
-        }
-
-        // Check Collisions between Monsters
-        for (int i = 0; i < this.monsters.size(); i++)
-            for (int j = i + 1; j < this.monsters.size(); j++) {
-                Monster monster1 = this.monsters.get(i);
-                Monster monster2 = this.monsters.get(j);
-                if (HitBoX.collide(monster1.position, monster1.hitBox, monster2.position, monster2.hitBox))
-                    collisions.add(new Pair<>(monster1, monster2));
-            }
-
-        // Check Collisions between Dylan and Monsters
-        for (Monster monster : this.monsters)
-            if (HitBoX.collide(monster.position, monster.hitBox, this.dylan.position, this.dylan.hitBox))
-                collisions.add(new Pair<>(this.dylan, monster));
-
-        for (Pair<GameElement> p : collisions) {
-            this.handleCommands(p.first.interact(p.second));
-            this.handleCommands(p.second.interact(p.first));
-        }
-    }
-
-    private void handleCommands(List<Command> commands) {
-        commands.forEach(command -> {
-            // Handle Projectile Creation
-            if (command instanceof CreateParticle) switch (((CreateParticle) command).type()) {
-                case DAMAGE_BLOOD -> this.addElement(new DamageBlood(((CreateParticle) command).position()));
-                case DEATH_BLOOD -> this.addElement(new DeathBlood(((CreateParticle) command).position()));
-                case null, default -> throw new RuntimeException("Command tried to create an invalid type of particle");
-            }
-
-            // Handle Projectile Deletion
-            if (command instanceof DeleteProjectile) this.projectiles.remove(((DeleteProjectile) command).projectile());
-
-            // Handle Monster Deletion
-            if (command instanceof DeleteMonster) this.monsters.remove(((DeleteMonster) command).monster());
-
-            // Handle Dylan Death
-            if (command instanceof KillDylan) this.dylan = null;
-        });
     }
 }

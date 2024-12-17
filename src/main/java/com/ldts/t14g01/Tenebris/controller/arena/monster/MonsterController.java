@@ -1,6 +1,7 @@
 package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena.Commands.CommandHandler;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
@@ -13,7 +14,7 @@ public abstract class MonsterController<T extends Monster> {
         this.model = model;
     }
 
-    public abstract void update(Vector2D dylanPosition, ElementProvider elementProvider);
+    public abstract void update(Vector2D dylanPosition, ElementProvider elementProvider, CommandHandler commandHandler);
 
     protected boolean isDylanVisible(Vector2D monsterPosition, Vector2D dylanPosition, ElementProvider elementProvider) {
         Vector2D direction = dylanPosition.minus(monsterPosition);

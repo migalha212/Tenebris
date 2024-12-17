@@ -1,8 +1,11 @@
 package com.ldts.t14g01.Tenebris.controller.arena;
 
 import com.ldts.t14g01.Tenebris.gui.Action;
+import com.ldts.t14g01.Tenebris.model.arena.Commands.CommandHandler;
+import com.ldts.t14g01.Tenebris.model.arena.Commands.CreateProjectile;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
+import com.ldts.t14g01.Tenebris.model.arena.projectile.Bullet;
 import com.ldts.t14g01.Tenebris.utils.Bounce;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
@@ -11,9 +14,11 @@ import java.util.TreeSet;
 
 public class DylanController {
     private final Dylan model;
+    private int fire_tick;
 
     public DylanController(Dylan model) {
         this.model = model;
+        this.fire_tick = 0;
     }
 
     public void setMoving(Set<Action> actions) {
@@ -66,12 +71,49 @@ public class DylanController {
                 moving.add(Dylan.State.FRONT);
                 moving.add(Dylan.State.LEFT);
             }
-            case null, default -> {}
+            case null, default -> {
+            }
         }
         this.model.setMoving(moving);
     }
 
-    public void move() {
+    public void shoot(CommandHandler commandHandler) {
+        Vector2D bulletPosition = this.model.getPosition();
+
+        Entity.State aimState = this.model.getLooking();
+        if (aimState == null || aimState == Entity.State.IDLE) aimState = this.model.getMoving();
+
+        Vector2D.Direction direction;
+        switch (aimState) {
+            case FRONT -> {
+                direction = Vector2D.Direction.DOWN;
+                bulletPosition = bulletPosition.add(new Vector2D(0, 10));
+            }
+            case BACK -> {
+                direction = Vector2D.Direction.UP;
+                bulletPosition = bulletPosition.add(new Vector2D(0, -10));
+            }
+            case LEFT -> {
+                direction = Vector2D.Direction.LEFT;
+                bulletPosition = bulletPosition.add(new Vector2D(-10, 0));
+            }
+            case null, default -> {
+                direction = Vector2D.Direction.RIGHT;
+                bulletPosition = bulletPosition.add(new Vector2D(10, 0));
+            }
+        }
+
+        // If cooldown is over, shoot
+        if (this.fire_tick >= this.model.getFIRE_COOLDOWN()) {
+            this.fire_tick = 0;
+            commandHandler.handleCommand(new CreateProjectile(new Bullet(bulletPosition, direction, 10)));
+        }
+    }
+
+    public void update() {
+        // Tick Fire CoolDown Counter
+        this.fire_tick++;
+
         // If Bouncing
         // Tick Bounce
         // Overwrite moving and looking

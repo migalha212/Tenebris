@@ -1,5 +1,7 @@
 package com.ldts.t14g01.Tenebris.controller.arena;
 
+import com.ldts.t14g01.Tenebris.model.arena.Commands.CommandHandler;
+import com.ldts.t14g01.Tenebris.model.arena.Commands.DeleteParticle;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 
 public class ParticleController {
@@ -9,7 +11,9 @@ public class ParticleController {
         this.model = model;
     }
 
-    public void update() {
+    public void update(CommandHandler commandHandler) {
         this.model.update();
+
+        if (this.model.isOver()) commandHandler.handleCommand(new DeleteParticle(this.model));
     }
 }

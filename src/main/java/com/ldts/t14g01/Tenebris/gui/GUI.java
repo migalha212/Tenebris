@@ -31,8 +31,8 @@ public interface GUI {
     }
 
     // Particles
-    static int DEATH_BLOOD_FRAME_COUNT = 16;
-    static int DAMAGE_BLOOD_FRAME_COUNT = 5;
+    int DEATH_BLOOD_FRAME_COUNT = 16;
+    int DAMAGE_BLOOD_FRAME_COUNT = 5;
 
     static GUI getGUI() {
         return LanternaGUI.getGUI();
@@ -63,6 +63,8 @@ public interface GUI {
     void drawDamageBlood(Vector2D position, int frameNumber);
 
     void drawBullet(Vector2D position, Vector2D.Direction direction);
+
+    void drawSpell(Vector2D position);
 
     void drawMonster(Vector2D position, Monster monster, AnimationState state);
 
