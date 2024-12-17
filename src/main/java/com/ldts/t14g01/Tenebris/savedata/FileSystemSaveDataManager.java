@@ -57,6 +57,14 @@ public class FileSystemSaveDataManager implements SaveDataManager {
     }
 
     @Override
+    public SaveData createNewSave(Difficulty difficulty, int startLevel) {
+        SaveData newSave = new SaveData(difficulty, startLevel, false);
+        this.saves.add(newSave);
+        this.triggerUpdate();
+        return newSave;
+    }
+
+    @Override
     public void triggerUpdate() {
         // Save new Save List
         try (FileOutputStream fos = new FileOutputStream(SAVE_FILE, false)) {

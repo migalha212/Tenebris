@@ -21,7 +21,7 @@ public class MainMenuController extends Controller<Menu> {
             case New_Game -> stateChanger.setState(new MenuState(new NewGameMenu()));
             case Continue -> stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));
             case Load_Game -> stateChanger.setState(new MenuState(new LoadGameMenu()));
-            case Levels -> stateChanger.setState(new MenuState(new LevelsMenu()));
+            case Levels -> stateChanger.setState(new MenuState(new LevelsMenu(saveDataProvider)));
             case How_to_Play -> stateChanger.setState(new MenuState(new HowToPlayMenu()));
             case Credits -> stateChanger.setState(new MenuState(new CreditsMenu()));
             case Exit -> this.quit(stateChanger);

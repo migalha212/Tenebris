@@ -9,6 +9,8 @@ public interface SaveDataManager {
 
     SaveData createNewSave(Difficulty difficulty);
 
+    SaveData createNewSave(Difficulty difficulty, int startLevel);
+
     void triggerUpdate();
 
     int getSaveCount();
