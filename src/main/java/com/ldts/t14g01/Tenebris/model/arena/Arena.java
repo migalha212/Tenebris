@@ -35,8 +35,8 @@ public class Arena implements ElementProvider {
             case Dylan dylan1 -> this.dylan = dylan1;
             case Particle particle -> this.particles.add(particle);
             case Monster monster -> this.monsters.add(monster);
-            case null -> {
-            }
+            case Projectile projectile -> this.projectiles.add(projectile);
+            case null -> throw new RuntimeException("Trying to add null Element to Arena");
             default -> this.elements.add(element);
         }
     }
@@ -61,6 +61,10 @@ public class Arena implements ElementProvider {
         this.particles.remove(particle);
     }
 
+    public List<Projectile> getProjectiles() {
+        return this.projectiles;
+    }
+
     public void checkCollisions() {
         List<Pair<GameElement>> collisions = new ArrayList<>();
 
@@ -73,6 +77,15 @@ public class Arena implements ElementProvider {
             // Check Collision between Dylan and Static Elements
             if (HitBoX.collide(element.position, element.hitBox, this.dylan.position, this.dylan.hitBox))
                 collisions.add(new Pair<>(this.dylan, element));
+        }
+
+        // Check Collision between Projectiles and Entities
+        for (Projectile projectile : this.projectiles) {
+            for (Monster monster : this.monsters)
+                if (HitBoX.collide(projectile.position, projectile.hitBox, monster.position, monster.hitBox))
+                    collisions.add(new Pair<>(projectile, monster));
+            if (HitBoX.collide(projectile.position, projectile.hitBox, dylan.position, dylan.hitBox))
+                collisions.add(new Pair<>(projectile, dylan));
         }
 
         // Check Collisions between Monsters

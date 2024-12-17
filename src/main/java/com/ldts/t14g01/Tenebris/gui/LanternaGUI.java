@@ -121,6 +121,9 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_tenebris_warden_left_1;
     private final BufferedImage sprite_tenebris_warden_left_2;
 
+    private final BufferedImage sprite_bullet_horizontal;
+    private final BufferedImage sprite_bullet_vertical;
+
     // Singleton
     private static GUI guiInstance;
 
@@ -230,6 +233,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_tenebris_warden_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-left/1.png"));
             this.sprite_tenebris_warden_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-warden/walk-left/2.png"));
 
+            this.sprite_bullet_horizontal = ImageIO.read(new File("src/main/resources/sprites/projectiles/bullet/horizontal.png"));
+            this.sprite_bullet_vertical = ImageIO.read(new File("src/main/resources/sprites/projectiles/bullet/vertical.png"));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -567,6 +572,15 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             throw new RuntimeException("Drawing Invalid Damage Blood Frame Number");
 
         this.drawImage(position, this.sprite_damage_blood.get(frameNumber - 1));
+    }
+
+    @Override
+    public void drawBullet(Vector2D position, Vector2D.Direction direction) {
+        switch (direction) {
+            case RIGHT, DOWN_RIGHT, UP_RIGHT, LEFT, DOWN_LEFT, UP_LEFT -> this.drawImage(position, this.sprite_bullet_horizontal );
+            case UP, DOWN -> this.drawImage(position, this.sprite_bullet_vertical);
+            case null, default -> throw new RuntimeException("Trying to draw bullet with invalid direction");
+        }
     }
 
     private void drawImage(Vector2D position, BufferedImage sprite) {

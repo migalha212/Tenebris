@@ -9,7 +9,7 @@ public class ExplosiveBullet extends Projectile {
     private final int damage;
 
     public ExplosiveBullet(Vector2D position, int damage, Vector2D velocity) {
-        super(position, hitBoX);
+        super(position, hitBoX, Vector2D.Direction.LEFT, 3, damage);
         this.velocity = velocity;
         this.damage = damage;
     }

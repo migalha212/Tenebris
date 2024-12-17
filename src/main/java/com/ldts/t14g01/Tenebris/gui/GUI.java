@@ -62,6 +62,8 @@ public interface GUI {
 
     void drawDamageBlood(Vector2D position, int frameNumber);
 
+    void drawBullet(Vector2D position, Vector2D.Direction direction);
+
     void drawMonster(Vector2D position, Monster monster, AnimationState state);
 
     // Screen Management
