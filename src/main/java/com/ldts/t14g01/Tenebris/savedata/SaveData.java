@@ -7,10 +7,12 @@ import java.util.Objects;
 public class SaveData {
     private final Difficulty difficulty;
     private int level;
+    private boolean lastOpened;
 
-    protected SaveData(Difficulty difficulty, int level) {
+    protected SaveData(Difficulty difficulty, int level, boolean lastOpened) {
         this.difficulty = difficulty;
         this.level = level;
+        this.lastOpened = lastOpened;
     }
 
     public Difficulty getDifficulty() {
@@ -19,6 +21,18 @@ public class SaveData {
 
     public int getLevel() {
         return level;
+    }
+
+    public boolean isLastOpened() {
+        return this.lastOpened;
+    }
+
+    public void setLastOpened() {
+        this.lastOpened = true;
+    }
+
+    public void removeLastOpened() {
+        this.lastOpened = false;
     }
 
     public void increaseLevel() {

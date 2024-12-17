@@ -3,6 +3,7 @@ package com.ldts.t14g01.Tenebris;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
+import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.State;
@@ -25,7 +26,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     private Tenebris() throws Exception {
         // Init game state
         this.gui = GUI.getGUI();
-        this.saveData = null;
+        this.saveData = SaveDataManager.getInstance().getLastOpen();
         this.setState(new MenuState(new MainMenu(this)));
 
     }

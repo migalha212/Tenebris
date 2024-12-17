@@ -39,8 +39,9 @@ public class FileSystemSaveDataManager implements SaveDataManager {
 
                 Difficulty difficulty = Difficulty.valueOf(difficulty1);
                 int level = Integer.parseInt(x.next());
+                boolean lastOpen = "Y".equals(x.next());
 
-                saves.add(new SaveData(difficulty, level));
+                saves.add(new SaveData(difficulty, level, lastOpen));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -49,7 +50,7 @@ public class FileSystemSaveDataManager implements SaveDataManager {
 
     @Override
     public SaveData createNewSave(Difficulty difficulty) {
-        SaveData newSave = new SaveData(difficulty, 1);
+        SaveData newSave = new SaveData(difficulty, 1, false);
         this.saves.add(newSave);
         this.triggerUpdate();
         return newSave;
@@ -66,6 +67,8 @@ public class FileSystemSaveDataManager implements SaveDataManager {
                 content.append(save.getDifficulty().name())
                         .append(";")
                         .append(save.getLevel())
+                        .append(";")
+                        .append(save.isLastOpened() ? "Y" : "N")
                         .append("\n");
             }
 
@@ -86,6 +89,19 @@ public class FileSystemSaveDataManager implements SaveDataManager {
         if (number < 1 || number > this.getSaveCount())
             throw new RuntimeException("Trying to get a Save that doesn't exist");
         return this.saves.get(number - 1);
+    }
+
+    @Override
+    public void markAsLastOpen(SaveData saveData) {
+        this.saves.forEach(SaveData::removeLastOpened);
+        saveData.setLastOpened();
+        this.triggerUpdate();
+    }
+
+    @Override
+    public SaveData getLastOpen() {
+        for (SaveData saveData : this.saves) if (saveData.isLastOpened()) return saveData;
+        return null;
     }
 
     @Override

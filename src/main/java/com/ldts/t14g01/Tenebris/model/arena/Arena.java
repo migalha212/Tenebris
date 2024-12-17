@@ -2,18 +2,14 @@ package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.model.arena.Commands.*;
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
-import com.ldts.t14g01.Tenebris.model.arena.entity.monster.*;
+import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.model.arena.particles.DamageBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.DeathBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
-import com.ldts.t14g01.Tenebris.model.arena.staticelement.SandBag;
-import com.ldts.t14g01.Tenebris.model.arena.staticelement.Spike;
-import com.ldts.t14g01.Tenebris.model.arena.staticelement.Wall;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Pair;
-import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,13 +32,11 @@ public class Arena implements ElementProvider {
 
     public void addElement(GameElement element) {
         switch (element) {
-            case Dylan dylan1 -> {
-                this.dylan = dylan1;
-                System.out.println("Dylan Added");
-            }
+            case Dylan dylan1 -> this.dylan = dylan1;
             case Particle particle -> this.particles.add(particle);
             case Monster monster -> this.monsters.add(monster);
-            case null -> {}
+            case null -> {
+            }
             default -> this.elements.add(element);
         }
     }

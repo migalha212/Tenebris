@@ -7,6 +7,7 @@ import com.ldts.t14g01.Tenebris.model.arena.staticelement.SandBag;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Spike;
 import com.ldts.t14g01.Tenebris.model.arena.staticelement.Wall;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
+import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.io.BufferedReader;
@@ -20,6 +21,7 @@ public class ArenaBuilder {
     }
 
     public static Arena build(SaveData saveData) throws IOException {
+        SaveDataManager.getInstance().markAsLastOpen(saveData);
         return ArenaBuilder.loadFromFile("src/main/resources/levels/" + saveData.getLevel());
     }
 

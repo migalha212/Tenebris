@@ -15,5 +15,9 @@ public interface SaveDataManager {
 
     SaveData getSave(int number);
 
+    void markAsLastOpen(SaveData saveData);
+
+    SaveData getLastOpen();
+
     void deleteSave(SaveData saveData);
 }
