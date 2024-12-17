@@ -34,9 +34,9 @@ public class MainMenuView extends View<Menu> {
         title.add("   | |/ _ \\ '_ \\ / _ \\ '_ \\| '__| / __|");
         title.add("   | |  __/ | | |  __/ |_) | |  | \\__ \\");
         title.add("   |_|\\___|_| |_|\\___|_.__/|_|  |_|___/");
-        for(int i = 0; i < title.size(); i++){
-            gui.drawText(title.get(i),new Vector2D(centerX - 20,2 + i), GUI.Colors.WHITE, GUI.Colors.BLACK);
-        }
+        for (int i = 0; i < title.size(); i++)
+            gui.drawText(title.get(i), new Vector2D(centerX - 20, 2 + i), GUI.Colors.WHITE, GUI.Colors.BLACK);
+
 
         // Draw options (left-aligned)
         for (int i = 0; i < this.getModel().getOptions().size(); i++) {

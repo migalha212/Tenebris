@@ -1,6 +1,6 @@
 package com.ldts.t14g01.Tenebris.model.staticelement;
 
-import com.ldts.t14g01.Tenebris.model.arena.staticelement.BreakableWall;
+import com.ldts.t14g01.Tenebris.model.arena.static_elements.BreakableWall;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

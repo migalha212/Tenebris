@@ -7,7 +7,7 @@ import com.ldts.t14g01.Tenebris.view.View;
 import com.ldts.t14g01.Tenebris.view.menu.PauseMenuView;
 
 public class PauseMenu extends Menu {
-    private Arena arena;
+    private final Arena arena;
 
     public enum PauseMenuOptions {
         Continue,

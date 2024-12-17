@@ -21,8 +21,6 @@ public class HitBoX extends Pair<Vector2D> {
         if (a2x < b1x) return false;
         if (a1x > b2x) return false;
         if (a2y < b1y) return false;
-        if (a1y > b2y) return false;
-
-        return true;
+        return a1y <= b2y;
     }
 }

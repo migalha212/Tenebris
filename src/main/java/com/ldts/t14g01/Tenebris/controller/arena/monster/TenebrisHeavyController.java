@@ -23,7 +23,7 @@ public class TenebrisHeavyController extends MonsterController<TenebrisHeavy> {
 
         // Calculate where to move to
         Vector2D monsterPosition = this.model.getPosition();
-        Vector2D direction       = dylanPosition.minus(monsterPosition);
+        Vector2D direction = dylanPosition.minus(monsterPosition);
 
         // Calculate moving states if not too far to reach
         if (isDylanVisible(monsterPosition, dylanPosition, elementProvider)) {
@@ -80,7 +80,8 @@ public class TenebrisHeavyController extends MonsterController<TenebrisHeavy> {
                         movingState.add(Dylan.State.FRONT);
                         movingState.add(Dylan.State.LEFT);
                     }
-                    case null, default -> {}
+                    case null, default -> {
+                    }
                 }
                 this.model.setMoving(movingState);
             }

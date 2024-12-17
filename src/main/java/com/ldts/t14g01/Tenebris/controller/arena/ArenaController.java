@@ -14,12 +14,14 @@ import com.ldts.t14g01.Tenebris.model.arena.particles.DeathBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 import com.ldts.t14g01.Tenebris.model.arena.particles.SpellExplosion;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
-import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
+import com.ldts.t14g01.Tenebris.model.menu.DeathMenu;
+import com.ldts.t14g01.Tenebris.model.menu.GameOverMenu;
 import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.ArenaState;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
+import com.ldts.t14g01.Tenebris.utils.Difficulty;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Pair;
 
@@ -186,15 +188,18 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         // Check Collisions
         this.checkCollisions();
 
-        // TODO Handle Player Death, for now return to MAIN Menu
-        // Dylan is Dead
-        if (this.getModel().getDylan() == null) stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
-
         // Trigger Tick Commands
         // This is Stored and Only Handled here
         // because executing commands in the middle of the tick would break the tick logic
         this.triggerCommands();
         this.commands.clear();
+
+        // Dylan is Dead
+        if (this.getModel().getDylan() == null) {
+            if (saveDataProvider.getSaveData().getDifficulty() == Difficulty.Heartless)
+                stateChanger.setState(new MenuState(new GameOverMenu()));
+            else stateChanger.setState(new MenuState(new DeathMenu()));
+        }
     }
 
     @Override

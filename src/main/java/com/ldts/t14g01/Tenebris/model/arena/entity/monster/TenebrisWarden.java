@@ -7,7 +7,6 @@ import com.ldts.t14g01.Tenebris.view.arena.entity.monster.TenebrisWardenView;
 
 public class TenebrisWarden extends Monster {
     private static final HitBoX hitBoX = new HitBoX(new Vector2D(-12, -11), new Vector2D(22, 25));
-    ;
 
     public TenebrisWarden(Vector2D position, int hp, int velocity, int damage, int visionRange) {
         super(position, hitBoX, hp, velocity, damage, visionRange);

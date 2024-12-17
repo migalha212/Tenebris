@@ -2,10 +2,10 @@ package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entity.monster.*;
-import com.ldts.t14g01.Tenebris.model.arena.staticelement.BreakableWall;
-import com.ldts.t14g01.Tenebris.model.arena.staticelement.SandBag;
-import com.ldts.t14g01.Tenebris.model.arena.staticelement.Spike;
-import com.ldts.t14g01.Tenebris.model.arena.staticelement.Wall;
+import com.ldts.t14g01.Tenebris.model.arena.static_elements.BreakableWall;
+import com.ldts.t14g01.Tenebris.model.arena.static_elements.SandBag;
+import com.ldts.t14g01.Tenebris.model.arena.static_elements.Spike;
+import com.ldts.t14g01.Tenebris.model.arena.static_elements.Wall;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;

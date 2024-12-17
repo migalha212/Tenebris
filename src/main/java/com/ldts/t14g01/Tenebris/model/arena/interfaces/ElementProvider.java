@@ -5,5 +5,5 @@ import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import java.util.List;
 
 public interface ElementProvider {
-    public List<GameElement> getElements();
+    List<GameElement> getElements();
 }

@@ -6,7 +6,7 @@ import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.entity.monster.TenebrisPeonView;
 
 public class TenebrisPeon extends Monster {
-    private static final HitBoX hitBoX = new HitBoX(new Vector2D(-5,-5), new Vector2D(8,13));
+    private static final HitBoX hitBoX = new HitBoX(new Vector2D(-5, -5), new Vector2D(8, 13));
 
     public TenebrisPeon(Vector2D position, int hp, int velocity, int damage, int visionRange) {
         super(position, hitBoX, hp, velocity, damage, visionRange);
