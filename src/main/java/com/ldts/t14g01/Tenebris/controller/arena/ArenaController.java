@@ -17,6 +17,7 @@ import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
 import com.ldts.t14g01.Tenebris.model.menu.DeathMenu;
 import com.ldts.t14g01.Tenebris.model.menu.GameOverMenu;
 import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
+import com.ldts.t14g01.Tenebris.model.menu.VictoryMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.ArenaState;
 import com.ldts.t14g01.Tenebris.state.MenuState;
@@ -148,10 +149,12 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
     @Override
     public void tickWithList(Set<Action> actions, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         // If no monsters alive then player wins
-        if (this.getModel().getMonsters().isEmpty()) {
+        if (this.getModel().getMonsters().isEmpty() && saveDataProvider.getSaveData().getLevel() != 5) {
             saveDataProvider.getSaveData().increaseLevel();
             stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));
             return;
+        } else if (this.getModel().getMonsters().isEmpty() && saveDataProvider.getSaveData().getLevel() == 5) {
+            stateChanger.setState(new MenuState(new VictoryMenu()));
         }
 
         // Update Dylan
