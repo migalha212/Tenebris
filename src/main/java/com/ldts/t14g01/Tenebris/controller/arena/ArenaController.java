@@ -3,7 +3,6 @@ package com.ldts.t14g01.Tenebris.controller.arena;
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
-import com.ldts.t14g01.Tenebris.model.arena.ArenaBuilder;
 import com.ldts.t14g01.Tenebris.model.arena.Commands.*;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena.effects.Effect;
@@ -16,10 +15,9 @@ import com.ldts.t14g01.Tenebris.model.arena.particles.SpellExplosion;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
 import com.ldts.t14g01.Tenebris.model.menu.DeathMenu;
 import com.ldts.t14g01.Tenebris.model.menu.GameOverMenu;
+import com.ldts.t14g01.Tenebris.model.menu.LevelCompletedMenu;
 import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
-import com.ldts.t14g01.Tenebris.model.menu.VictoryMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
-import com.ldts.t14g01.Tenebris.state.ArenaState;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
@@ -148,15 +146,6 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
     @Override
     public void tickWithList(Set<Action> actions, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
-        // If no monsters alive then player wins
-        if (this.getModel().getMonsters().isEmpty() && saveDataProvider.getSaveData().getLevel() != 5) {
-            saveDataProvider.getSaveData().increaseLevel();
-            stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));
-            return;
-        } else if (this.getModel().getMonsters().isEmpty() && saveDataProvider.getSaveData().getLevel() == 5) {
-            stateChanger.setState(new MenuState(new VictoryMenu()));
-        }
-
         // Update Dylan
         Dylan dylan = this.getModel().getDylan();
         DylanController dylanController = this.getModel().getDylan().getController();
@@ -196,6 +185,13 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         // because executing commands in the middle of the tick would break the tick logic
         this.triggerCommands();
         this.commands.clear();
+
+        // If no monsters alive then player wins
+        if (this.getModel().getMonsters().isEmpty()) {
+            saveDataProvider.getSaveData().increaseLevel();
+            stateChanger.setState(new MenuState(new LevelCompletedMenu()));
+            return;
+        }
 
         // Dylan is Dead
         if (this.getModel().getDylan() == null) {
