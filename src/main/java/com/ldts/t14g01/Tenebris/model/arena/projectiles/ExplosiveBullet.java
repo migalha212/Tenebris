@@ -3,6 +3,7 @@ package com.ldts.t14g01.Tenebris.model.arena.projectiles;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CreateEffect;
+import com.ldts.t14g01.Tenebris.model.arena._commands.ShakeCamera;
 import com.ldts.t14g01.Tenebris.model.arena.effects.Explosion;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
@@ -26,8 +27,10 @@ public class ExplosiveBullet extends Projectile {
     public List<Command> interact(GameElement other) {
         List<Command> commands = super.interact(other);
 
-        if (other instanceof AbsorbsProjectiles)
+        if (other instanceof AbsorbsProjectiles) {
             commands.add(new CreateEffect(new Explosion(this.position, this.explosionDamage)));
+            commands.add(new ShakeCamera());
+        }
 
         return commands;
     }

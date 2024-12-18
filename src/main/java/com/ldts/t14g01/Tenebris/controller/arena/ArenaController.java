@@ -4,8 +4,10 @@ import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
+import com.ldts.t14g01.Tenebris.model.arena.Camera;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.*;
+import com.ldts.t14g01.Tenebris.model.arena.animation.CameraShake;
 import com.ldts.t14g01.Tenebris.model.arena.effects.Effect;
 import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entities.monster.Monster;
@@ -103,6 +105,7 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
     private void triggerCommands() {
         Arena arena = this.getModel();
+        Camera camera = this.getModel().getCamera();
         List<GameElement> elements = this.getModel().getElements();
         List<Monster> monsters = this.getModel().getMonsters();
         List<Projectile> projectiles = this.getModel().getProjectiles();
@@ -141,6 +144,9 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
                 // Kills
                 case DeleteMonster c -> monsters.remove(((DeleteMonster) command).monster());
                 case KillDylan c -> this.getModel().setDylan(null);
+
+                // Camera Shake
+                case ShakeCamera c -> camera.setAnimation(new CameraShake(camera));
                 case null, default -> {
                 }
             }
