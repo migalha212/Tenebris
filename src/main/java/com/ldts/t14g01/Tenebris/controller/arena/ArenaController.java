@@ -183,7 +183,12 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         monsters.forEach(monster -> monster.getController().update(dylan.getPosition(), this.getModel(), this));
 
         // Update Effects
-        this.getModel().getEffects().forEach(effect -> effect.getController().update(this));
+        List<Effect> effects = this.getModel().getEffects();
+        effects.forEach(effect -> effect.getController().update(this));
+
+        // Update Projectiles
+        List<Projectile> projectiles = this.getModel().getProjectiles();
+        projectiles.forEach(projectile -> projectile.getController().update());
 
         // Update Particles
         List<Particle> particles = this.getModel().getParticles();
@@ -191,13 +196,6 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
         // Check Collisions
         this.checkCollisions();
-
-        // Update Projectiles
-        // This is Done after the Collisions
-        // because if done before when the monster
-        // is very close to the player
-        // the bullet would go through and not collides
-        this.getModel().getProjectiles().forEach(projectile -> projectile.getController().update());
 
         // Trigger Tick Commands
         // This is Stored and Only Handled here
@@ -211,7 +209,8 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
             stateChanger.setState(new MenuState(new LevelCompletedMenu()));
             return;
         }
-        // If last menu show Victory screen
+
+        // If last level show Victory screen
         else if (this.getModel().getMonsters().isEmpty()) {
             stateChanger.setState(new MenuState(new VictoryMenu()));
             return;

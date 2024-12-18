@@ -95,15 +95,15 @@ public class DylanController {
         switch (aimState) {
             case FRONT -> {
                 direction = Vector2D.Direction.DOWN;
-                bulletPosition = bulletPosition.add(new Vector2D(0, 10));
+                bulletPosition = bulletPosition.add(new Vector2D(0, 13));
             }
             case BACK -> {
                 direction = Vector2D.Direction.UP;
-                bulletPosition = bulletPosition.add(new Vector2D(0, -10));
+                bulletPosition = bulletPosition.add(new Vector2D(0, -15));
             }
             case LEFT -> {
                 direction = Vector2D.Direction.LEFT;
-                bulletPosition = bulletPosition.add(new Vector2D(-10, 0));
+                bulletPosition = bulletPosition.add(new Vector2D(-14, 0));
             }
             case null, default -> {
                 direction = Vector2D.Direction.RIGHT;

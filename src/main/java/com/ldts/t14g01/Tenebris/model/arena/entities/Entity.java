@@ -111,17 +111,17 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
         Vector2D.Direction direction = other.getPosition().minus(this.getPosition()).multiply(-1).getMajorDirection();
 
         // Move in that direction until collision is no longer happening
-        while (HitBoX.collide(this.position, this.hitBox, other.getPosition(), other.getHitBox())){
-            switch (direction){
-                case UP -> this.position = this.position.add(new Vector2D(0,-1));
-                case DOWN -> this.position = this.position.add(new Vector2D(0,1));
-                case RIGHT -> this.position = this.position.add(new Vector2D(1,0));
-                case LEFT -> this.position = this.position.add(new Vector2D(-1,0));
+        while (HitBoX.collide(this.position, this.hitBox, other.getPosition(), other.getHitBox())) {
+            switch (direction) {
+                case UP -> this.position = this.position.add(new Vector2D(0, -1));
+                case DOWN -> this.position = this.position.add(new Vector2D(0, 1));
+                case RIGHT -> this.position = this.position.add(new Vector2D(1, 0));
+                case LEFT -> this.position = this.position.add(new Vector2D(-1, 0));
 
-                case UP_LEFT -> this.position = this.position.add(new Vector2D(-1,-1));
-                case UP_RIGHT -> this.position = this.position.add(new Vector2D(1,-1));
-                case DOWN_LEFT -> this.position = this.position.add(new Vector2D(-1,1));
-                case DOWN_RIGHT -> this.position = this.position.add(new Vector2D(1,1));
+                case UP_LEFT -> this.position = this.position.add(new Vector2D(-1, -1));
+                case UP_RIGHT -> this.position = this.position.add(new Vector2D(1, -1));
+                case DOWN_LEFT -> this.position = this.position.add(new Vector2D(-1, 1));
+                case DOWN_RIGHT -> this.position = this.position.add(new Vector2D(1, 1));
             }
         }
     }
@@ -138,6 +138,8 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
                 commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
             }
         }
+
+        if (other instanceof Moves) this.bounce(this.position.minus(other.getPosition()).getMajorDirection());
 
         if (other instanceof BlocksMovement) this.collide(other);
 

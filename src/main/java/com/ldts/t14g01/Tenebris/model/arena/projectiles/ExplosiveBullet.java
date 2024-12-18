@@ -12,18 +12,14 @@ import com.ldts.t14g01.Tenebris.view.arena.projectiles.ExplosiveBulletView;
 import java.util.List;
 
 public class ExplosiveBullet extends Projectile {
-    private static final HitBoX HIT_BOX = new HitBoX(new Vector2D(-2, -2), new Vector2D(4, 4));
-    private static final int VELOCITY = 3;
+    private static final HitBoX HIT_BOX = new HitBoX(new Vector2D(-3, -3), new Vector2D(9, 9));
+    private static final int VELOCITY = 4;
     private final int explosionDamage;
 
     public ExplosiveBullet(Vector2D position, Vector2D.Direction direction, int explosionDamage) {
         super(position, HIT_BOX, direction, VELOCITY, 0);
         this.view = new ExplosiveBulletView(this);
         this.explosionDamage = explosionDamage;
-    }
-
-    public int getExplosionDamage() {
-        return this.explosionDamage;
     }
 
     @Override
