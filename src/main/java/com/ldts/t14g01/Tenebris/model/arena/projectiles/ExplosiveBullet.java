@@ -6,6 +6,7 @@ import com.ldts.t14g01.Tenebris.model.arena._commands.CreateEffect;
 import com.ldts.t14g01.Tenebris.model.arena._commands.ShakeCamera;
 import com.ldts.t14g01.Tenebris.model.arena.effects.Explosion;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.projectiles.ExplosiveBulletView;
@@ -30,6 +31,7 @@ public class ExplosiveBullet extends Projectile {
         if (other instanceof AbsorbsProjectiles) {
             commands.add(new CreateEffect(new Explosion(this.position, this.explosionDamage)));
             commands.add(new ShakeCamera());
+            SoundManager.getInstance().playSFX(SoundManager.SFX.EXPLOSION);
         }
 
         return commands;

@@ -7,6 +7,13 @@ public interface SoundManager {
         ENTITY_DAMAGE,
         DYLAN_DEATH,
 
+        // Projectiles
+        EXPLOSION,
+        SHOOT,
+        GRENADE,
+        SPELL_FIRE,
+        SPELL_COLLISION,
+
         // Menu
         MENU_SWITCH
     }

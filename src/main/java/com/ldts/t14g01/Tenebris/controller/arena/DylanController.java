@@ -8,6 +8,7 @@ import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.projectiles.Bullet;
 import com.ldts.t14g01.Tenebris.model.arena.projectiles.ExplosiveBullet;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.Set;
@@ -86,10 +87,14 @@ public class DylanController {
         if (this.model.canShoot(weapon)) {
             this.model.resetTimer(weapon);
 
-            if (weapon == 1)
+            if (weapon == 1) {
                 commandHandler.handleCommand(new CreateProjectile(new Bullet(bulletPosition, direction, 10)));
-            if (weapon == 2)
+                SoundManager.getInstance().playSFX(SoundManager.SFX.SHOOT);
+            }
+            if (weapon == 2) {
                 commandHandler.handleCommand(new CreateProjectile(new ExplosiveBullet(bulletPosition, direction, 20)));
+                SoundManager.getInstance().playSFX(SoundManager.SFX.GRENADE);
+            }
         }
     }
 

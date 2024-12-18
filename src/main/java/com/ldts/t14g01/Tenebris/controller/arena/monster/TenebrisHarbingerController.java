@@ -7,6 +7,7 @@ import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.entities.monster.TenebrisHarbinger;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.model.arena.projectiles.Spell;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.Set;
@@ -61,6 +62,7 @@ public class TenebrisHarbingerController extends MonsterController<TenebrisHarbi
 
                 if (this.shootingTick >= this.model.getShootingCoolDown()) {
                     commandHandler.handleCommand(new CreateProjectile(new Spell(position, direction.getMajorDirection(), 10)));
+                    SoundManager.getInstance().playSFX(SoundManager.SFX.SPELL_FIRE);
                     this.shootingTick = 0;
                 }
             }
