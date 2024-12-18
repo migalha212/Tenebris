@@ -3,13 +3,14 @@ package com.ldts.t14g01.Tenebris.model.arena.entities;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
+import com.ldts.t14g01.Tenebris.model.arena.animation.Bounce;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksMovement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
+import com.ldts.t14g01.Tenebris.model.arena.projectiles.Projectile;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
-import com.ldts.t14g01.Tenebris.utils.Bounce;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
@@ -21,7 +22,6 @@ import java.util.TreeSet;
 public abstract class Entity extends GameElement implements Moves, AbsorbsProjectiles, BlocksMovement {
     private final int velocity;
     private int hp;
-    private Bounce bounce;
 
     protected Set<State> moving;
     protected State looking;
@@ -38,8 +38,11 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
         super(position, hitBoX);
         this.velocity = velocity;
         this.hp = hp;
-        this.bounce = null;
         this.moving = new TreeSet<>();
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position = position;
     }
 
     public int getVelocity() {
@@ -48,14 +51,6 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
 
     public int getHp() {
         return this.hp;
-    }
-
-    public Bounce getBounce() {
-        return bounce;
-    }
-
-    public void setBounce(Bounce bounce) {
-        this.bounce = bounce;
     }
 
     public State getLooking() {
@@ -105,11 +100,6 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
     }
 
     @Override
-    public void bounce(Vector2D.Direction direction) {
-        this.bounce = new Bounce(direction);
-    }
-
-    @Override
     public void collide(GameElement other) {
         // Calculate direction to move in to resolve conflict
         Vector2D.Direction direction = other.getPosition().minus(this.getPosition()).multiply(-1).getMajorDirection();
@@ -137,16 +127,34 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
         if (other instanceof DamagesEntities) {
             int damage = ((DamagesEntities) other).getEntityDamage();
             if (damage != 0) {
+                // Take Damage
                 this.takeDamage(damage);
-                this.bounce(this.position.minus(other.getPosition()).getMajorDirection());
+
+                // Create Blood Particles
                 commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
+
+                // Bounce in the opposite way
+                this.animation = new Bounce(
+                        this,
+                        this.getPosition().minus(other.getPosition()).getMajorDirection()
+                );
             }
         }
 
-        if (other instanceof Moves) this.bounce(this.position.minus(other.getPosition()).getMajorDirection());
+        // If it is a projectile bounce in the direction the projectile was going
+        if (other instanceof Projectile) this.animation = new Bounce(this, ((Projectile) other).getDirection());
 
+        // If it is an Entity bounce in the opposite way
+        if (other instanceof Entity)
+            this.animation = new Bounce(
+                    this,
+                    this.getPosition().minus(other.getPosition()).getMajorDirection()
+            );
+
+        // If it blocks movement collide
         if (other instanceof BlocksMovement) this.collide(other);
 
+        // If died create death blood
         if (!this.isAlive()) commands.add(new CreateParticle(this.position, ParticleType.DEATH_BLOOD));
 
         return commands;

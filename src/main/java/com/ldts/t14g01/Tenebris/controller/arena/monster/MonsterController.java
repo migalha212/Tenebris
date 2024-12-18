@@ -2,11 +2,16 @@ package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CommandHandler;
+import com.ldts.t14g01.Tenebris.model.arena.animation.Animation;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.entities.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 public abstract class MonsterController<T extends Monster> {
     T model;
@@ -15,7 +20,54 @@ public abstract class MonsterController<T extends Monster> {
         this.model = model;
     }
 
-    public abstract void update(Vector2D dylanPosition, ElementProvider elementProvider, CommandHandler commandHandler);
+    public void update(Vector2D dylanPosition, ElementProvider elementProvider, CommandHandler commandHandler) {
+        // If in animation execute
+        Animation animation = this.model.getAnimation();
+        if (animation != null) {
+            if (animation.isOver()) this.model.setAnimation(null);
+            else {
+                animation.execute();
+                return;
+            }
+        }
+
+        Set<Entity.State> movingState = new TreeSet<>();
+        this.model.setLooking(null);
+
+        // Calculate where to move to
+        Vector2D monsterPosition = this.model.getPosition();
+        Vector2D direction = dylanPosition.minus(monsterPosition);
+
+        // Calculate moving states if not too far to reach
+        if (this.isDylanVisible(monsterPosition, dylanPosition, elementProvider))
+            if (this.isPathClear(monsterPosition, dylanPosition, elementProvider))
+                if (direction.magnitude() <= this.model.getVisionRange()) switch (direction.getMajorDirection()) {
+                    case UP -> movingState.add(Entity.State.BACK);
+                    case DOWN -> movingState.add(Entity.State.FRONT);
+                    case LEFT -> movingState.add(Entity.State.LEFT);
+                    case RIGHT -> movingState.add(Entity.State.RIGHT);
+                    case UP_RIGHT -> {
+                        movingState.add(Entity.State.BACK);
+                        movingState.add(Entity.State.RIGHT);
+                    }
+                    case UP_LEFT -> {
+                        movingState.add(Entity.State.BACK);
+                        movingState.add(Entity.State.LEFT);
+                    }
+                    case DOWN_RIGHT -> {
+                        movingState.add(Entity.State.FRONT);
+                        movingState.add(Entity.State.RIGHT);
+                    }
+                    case DOWN_LEFT -> {
+                        movingState.add(Entity.State.FRONT);
+                        movingState.add(Entity.State.LEFT);
+                    }
+                }
+
+        // Update state and move
+        this.model.setMoving(movingState);
+        this.model.move();
+    }
 
     protected boolean isDylanVisible(Vector2D monsterPosition, Vector2D dylanPosition, ElementProvider elementProvider) {
         Vector2D direction = dylanPosition.minus(monsterPosition);

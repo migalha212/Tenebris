@@ -5,6 +5,7 @@ import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
 import com.ldts.t14g01.Tenebris.model.arena._commands.KillDylan;
+import com.ldts.t14g01.Tenebris.model.arena.animation.Bounce;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesPlayer;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
@@ -74,15 +75,25 @@ public class Dylan extends Entity {
         // Call Entity interaction handler
         List<Command> commands = super.interact(other);
 
+        // Handle things that Damage only the Player
         if (other instanceof DamagesPlayer) {
             int damage = ((DamagesPlayer) other).getPlayerDamage();
             if (damage != 0) {
+                // Take Damage
                 this.takeDamage(damage);
-                this.bounce(this.position.minus(other.getPosition()).getMajorDirection());
+
+                // Create Blood Particles
                 commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
+
+                // Bounce in the opposite way
+                this.animation = new Bounce(
+                        this,
+                        this.getPosition().minus(other.getPosition()).getMajorDirection()
+                );
             }
         }
 
+        // If died play sound and create death blood
         if (!this.isAlive()) {
             SoundManager.getInstance().playSFX(SoundManager.SFX.DYLAN_DEATH);
             commands.add(new KillDylan());

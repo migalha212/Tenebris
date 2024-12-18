@@ -2,12 +2,11 @@ package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
 import com.ldts.t14g01.Tenebris.model.arena._commands.CommandHandler;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CreateProjectile;
-import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
+import com.ldts.t14g01.Tenebris.model.arena.animation.Animation;
 import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.entities.monster.TenebrisHarbinger;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.model.arena.projectiles.Spell;
-import com.ldts.t14g01.Tenebris.utils.Bounce;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.Set;
@@ -24,6 +23,16 @@ public class TenebrisHarbingerController extends MonsterController<TenebrisHarbi
     @Override
     public void update(Vector2D dylanPosition, ElementProvider elementProvider, CommandHandler commandHandler) {
         this.shootingTick++;
+
+        // If in animation execute
+        Animation animation = this.model.getAnimation();
+        if (animation != null) {
+            if (animation.isOver()) this.model.setAnimation(null);
+            else {
+                animation.execute();
+                return;
+            }
+        }
 
         Set<Entity.State> movingState = new TreeSet<>();
         this.model.setLooking(null);
@@ -81,42 +90,6 @@ public class TenebrisHarbingerController extends MonsterController<TenebrisHarbi
                             movingState.add(Entity.State.LEFT);
                         }
                     }
-        }
-
-        // If bouncing overwrite movement
-        Bounce bounce = this.model.getBounce();
-        if (bounce != null) {
-            bounce.tick();
-            if (bounce.isOver()) this.model.setBounce(null);
-            else {
-                movingState = new TreeSet<>();
-                this.model.setLooking(Entity.State.IDLE);
-                switch (bounce.getDirection()) {
-                    case UP -> movingState.add(Dylan.State.BACK);
-                    case DOWN -> movingState.add(Dylan.State.FRONT);
-                    case LEFT -> movingState.add(Dylan.State.LEFT);
-                    case RIGHT -> movingState.add(Dylan.State.RIGHT);
-                    case UP_RIGHT -> {
-                        movingState.add(Dylan.State.BACK);
-                        movingState.add(Dylan.State.RIGHT);
-                    }
-                    case UP_LEFT -> {
-                        movingState.add(Dylan.State.BACK);
-                        movingState.add(Dylan.State.LEFT);
-                    }
-                    case DOWN_RIGHT -> {
-                        movingState.add(Dylan.State.FRONT);
-                        movingState.add(Dylan.State.RIGHT);
-                    }
-                    case DOWN_LEFT -> {
-                        movingState.add(Dylan.State.FRONT);
-                        movingState.add(Dylan.State.LEFT);
-                    }
-                    case null, default -> {
-                    }
-                }
-                this.model.setMoving(movingState);
-            }
         }
 
         // Update state and move

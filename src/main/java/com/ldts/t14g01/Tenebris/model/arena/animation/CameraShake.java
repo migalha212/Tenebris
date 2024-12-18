@@ -19,8 +19,8 @@ public class CameraShake extends Animation<Camera> {
 
     public CameraShake(Camera model) {
         super(model);
-        this.initialPosition = model.getPosition();
         this.movements = new ArrayList<>();
+        this.initialPosition = model.getPosition();
         Random random = new Random();
 
         for (int i = 0; i < NUMBER_OF_MOVEMENTS; i++) {
