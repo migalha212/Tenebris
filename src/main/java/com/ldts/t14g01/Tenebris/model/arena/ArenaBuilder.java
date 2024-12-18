@@ -2,10 +2,7 @@ package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entities.monster.*;
-import com.ldts.t14g01.Tenebris.model.arena.static_elements.BreakableWall;
-import com.ldts.t14g01.Tenebris.model.arena.static_elements.SandBag;
-import com.ldts.t14g01.Tenebris.model.arena.static_elements.Spike;
-import com.ldts.t14g01.Tenebris.model.arena.static_elements.Wall;
+import com.ldts.t14g01.Tenebris.model.arena.static_elements.*;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
@@ -54,6 +51,7 @@ public class ArenaBuilder {
             case "SandBag" -> arena.addElement(new SandBag(position));
             case "Spike" -> arena.addElement(createSpike(position, difficulty));
             case "Breakable" -> arena.addElement(createBreakableWall(position, difficulty));
+            case "V-B" -> arena.addElement(new VisionBlocker(position));
             case "T-W" -> arena.addElement(createTenebrisWarden(position, difficulty));
             case "T-SS" -> arena.addElement(createTenebrisSpikedScout(position, difficulty));
             case "T-Heavy" -> arena.addElement(createTenebrisHeavy(position, difficulty));
