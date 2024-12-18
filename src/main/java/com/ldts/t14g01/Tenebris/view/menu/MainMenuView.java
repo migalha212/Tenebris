@@ -38,7 +38,7 @@ public class MainMenuView extends View<Menu> {
         for (int i = 0; i < title.size(); i++)
             gui.drawText(
                     title.get(i),
-                    new Vector2D(centerX - title.get(0).length()/2, 2 + i),
+                    new Vector2D(centerX - title.get(0).length() / 2, 2 + i),
                     GUI.Colors.WHITE,
                     GUI.Colors.BLACK
             );

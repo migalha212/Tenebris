@@ -15,7 +15,7 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import java.io.IOException;
 
 public class LevelCompletedMenuController extends Controller<Menu> {
-    private static final int DELAY = 60;
+    private static final int DELAY = 30;
     private int frameCount;
 
     public LevelCompletedMenuController(Menu model) {

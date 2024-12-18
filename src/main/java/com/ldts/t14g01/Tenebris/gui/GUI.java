@@ -73,6 +73,7 @@ public interface GUI {
     void drawText(String text, Vector2D position, Colors foreGround, Colors backGround);
 
     void drawArenaBackGround();
+
     void drawArenaUI(int maxHP, int hp, int selectedWeapon);
 
     void drawDylan(Vector2D position, AnimationState state);

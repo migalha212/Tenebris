@@ -15,7 +15,7 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import java.io.IOException;
 
 public class DeathMenuController extends Controller<Menu> {
-    private static final int DELAY = 60;
+    private static final int DELAY = 30;
     private int frameCount;
 
     public DeathMenuController(Menu model) {

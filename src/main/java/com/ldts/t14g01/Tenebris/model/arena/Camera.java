@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Camera extends GameElement {
-    private CameraController controller;
+    private final CameraController controller;
 
     public Camera(Vector2D position) {
         super(position, new HitBoX(new Vector2D(0, 0), new Vector2D(0, 0)));

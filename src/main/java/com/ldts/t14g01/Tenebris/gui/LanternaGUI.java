@@ -204,7 +204,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                 this.sprite_damage_blood.add(ImageIO.read(new File("src/main/resources/sprites/particles/damage-blood/" + i + ".png")));
 
             this.sprite_breakable_wall_damage = new ArrayList<>();
-            for (int i = 1; i <= GUI.BREAKABLE_WALL_DAMAGE_FRAME_COUNT;i++){
+            for (int i = 1; i <= GUI.BREAKABLE_WALL_DAMAGE_FRAME_COUNT; i++) {
                 this.sprite_breakable_wall_damage.add(ImageIO.read(new File("src/main/resources/sprites/particles/breakable-wall-damage/" + i + ".png")));
             }
             this.sprite_tenebris_harbinger_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/1.png"));
@@ -641,7 +641,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                 if (frameNumber <= 0 || frameNumber > GUI.BREAKABLE_WALL_DAMAGE_FRAME_COUNT)
                     throw new RuntimeException("Drawing Invalid Breakable Wall Damage Frame Number");
 
-                this.drawImage(position,this.sprite_breakable_wall_damage.get(frameNumber - 1));
+                this.drawImage(position, this.sprite_breakable_wall_damage.get(frameNumber - 1));
             }
 
             case null, default -> throw new RuntimeException("Invalid particle effect.");
