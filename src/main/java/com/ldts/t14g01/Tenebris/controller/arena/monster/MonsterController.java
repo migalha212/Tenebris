@@ -5,6 +5,7 @@ import com.ldts.t14g01.Tenebris.model.arena._commands.CommandHandler;
 import com.ldts.t14g01.Tenebris.model.arena.entities.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
+import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 public abstract class MonsterController<T extends Monster> {
@@ -31,6 +32,31 @@ public abstract class MonsterController<T extends Monster> {
             }
             currentPoint = currentPoint.add(unitStep);
         }
+
+        return true;
+    }
+
+    protected boolean isPathClear(Vector2D monsterPosition, Vector2D dylanPosition, ElementProvider elementProvider) {
+        Vector2D.Direction direction = dylanPosition.minus(monsterPosition).getMajorDirection();
+
+        Vector2D newPosition;
+
+        switch (direction) {
+            case DOWN -> newPosition = this.model.getPosition().add(new Vector2D(0, this.model.getVelocity()));
+            case UP -> newPosition = this.model.getPosition().add(new Vector2D(0, -this.model.getVelocity()));
+            case LEFT -> newPosition = this.model.getPosition().add(new Vector2D(-this.model.getVelocity(), 0));
+            case RIGHT -> newPosition = this.model.getPosition().add(new Vector2D(this.model.getVelocity(), 0));
+            case DOWN_RIGHT -> newPosition = this.model.getPosition().add(new Vector2D(this.model.getVelocity(), 0));
+            case UP_RIGHT -> newPosition = this.model.getPosition().add(new Vector2D(this.model.getVelocity(), 0));
+            case UP_LEFT -> newPosition = this.model.getPosition().add(new Vector2D(this.model.getVelocity(), 0));
+            case DOWN_LEFT -> newPosition = this.model.getPosition().add(new Vector2D(this.model.getVelocity(), 0));
+            case null, default -> throw new RuntimeException("Invalid Direction");
+        }
+
+        // Check if moving will cause damage
+        for (GameElement element : elementProvider.getElements())
+            if (HitBoX.collide(element.getPosition(), element.getHitBox(), newPosition, this.model.getHitBox()))
+                return false;
 
         return true;
     }

@@ -54,6 +54,12 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
                 collisions.add(new Pair<>(dylan, element));
         }
 
+        // Check Collisions between Projectiles and Static Elements
+        for (Projectile projectile : projectiles)
+            for (GameElement element : elements)
+                if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), element.getPosition(), element.getHitBox()))
+                    collisions.add(new Pair<>(projectile, element));
+
         // Check Collision between Projectiles and Entities
         for (Projectile projectile : projectiles) {
             for (Monster monster : monsters)
@@ -62,6 +68,12 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
             if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
                 collisions.add(new Pair<>(projectile, dylan));
         }
+
+        // Check Collisions between Effects and Static Elements
+        for (Effect effect : effects)
+            for (GameElement element : elements)
+                if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), element.getPosition(), element.getHitBox()))
+                    collisions.add(new Pair<>(effect, element));
 
         // Check Collisions between Effects and Entities
         for (Effect effect : effects) {
@@ -94,6 +106,7 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
     private void triggerCommands() {
         Arena arena = this.getModel();
+        List<GameElement> elements = this.getModel().getElements();
         List<Monster> monsters = this.getModel().getMonsters();
         List<Projectile> projectiles = this.getModel().getProjectiles();
         List<Particle> particles = this.getModel().getParticles();
@@ -101,6 +114,9 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
         this.commands.forEach(command -> {
             switch (command) {
+                // Wall
+                case DeleteBreakableWall c -> elements.remove(((DeleteBreakableWall) command).breakableWall());
+
                 // Particles
                 case CreateParticle c -> {
                     switch (((CreateParticle) command).type()) {
@@ -166,9 +182,6 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         List<Monster> monsters = this.getModel().getMonsters();
         monsters.forEach(monster -> monster.getController().update(dylan.getPosition(), this.getModel(), this));
 
-        // Update Projectiles
-        this.getModel().getProjectiles().forEach(projectile -> projectile.getController().update());
-
         // Update Effects
         this.getModel().getEffects().forEach(effect -> effect.getController().update(this));
 
@@ -178,6 +191,13 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
         // Check Collisions
         this.checkCollisions();
+
+        // Update Projectiles
+        // This is Done after the Collisions
+        // because if done before when the monster
+        // is very close to the player
+        // the bullet would go through and not collides
+        this.getModel().getProjectiles().forEach(projectile -> projectile.getController().update());
 
         // Trigger Tick Commands
         // This is Stored and Only Handled here

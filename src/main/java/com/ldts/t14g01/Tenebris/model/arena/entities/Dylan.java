@@ -5,16 +5,17 @@ import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
 import com.ldts.t14g01.Tenebris.model.arena._commands.KillDylan;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesPlayer;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.entity.DylanView;
 
 import java.util.List;
 
-public class Dylan extends Entity implements TakesDamage {
+public class Dylan extends Entity {
     private static final HitBoX hitBoX = new HitBoX(new Vector2D(-5, -6), new Vector2D(8, 13));
     private final DylanController controller;
     private final int WEAPON_1_COOLDOWN;
@@ -68,13 +69,19 @@ public class Dylan extends Entity implements TakesDamage {
         // Call Entity interaction handler
         List<Command> commands = super.interact(other);
 
-        // ToDo: Implement Interactions with DamagesPlayer Objects
         if (other instanceof DamagesPlayer) {
-            this.takeDamage(((DamagesPlayer) other).getPlayerDamage());
-            commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
+            int damage = ((DamagesPlayer) other).getPlayerDamage();
+            if (damage != 0) {
+                this.takeDamage(damage);
+                this.bounce(this.position.minus(other.getPosition()).getMajorDirection());
+                commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
+            }
         }
 
-        if (!this.isAlive()) commands.add(new KillDylan());
+        if (!this.isAlive()) {
+            SoundManager.getInstance().playSFX(SoundManager.SFX.DYLAN_DEATH);
+            commands.add(new KillDylan());
+        }
 
         return commands;
     }

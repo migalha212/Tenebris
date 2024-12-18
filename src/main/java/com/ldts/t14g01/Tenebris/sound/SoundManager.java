@@ -5,7 +5,7 @@ public interface SoundManager {
     enum SFX {
         // Player
         ENTITY_DAMAGE,
-        ENTITY_DEATH,
+        DYLAN_DEATH,
 
         // Menu
         MENU_SWITCH

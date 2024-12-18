@@ -56,7 +56,7 @@ public class GlobalSoundManager implements SoundManager {
                 sfxClip = this.open(this.entityDamage);
                 ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
             }
-            case ENTITY_DEATH -> sfxClip = this.open(this.dylanDeath);
+            case DYLAN_DEATH -> sfxClip = this.open(this.dylanDeath);
             case MENU_SWITCH -> {
                 sfxClip = this.open(this.menuSwitch);
                 ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);

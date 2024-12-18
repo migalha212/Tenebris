@@ -33,7 +33,7 @@ public class TenebrisHarbingerController extends MonsterController<TenebrisHarbi
         Vector2D direction = dylanPosition.minus(monsterPosition);
 
         // If Monster can see Dylan
-        if (isDylanVisible(monsterPosition, dylanPosition, elementProvider)) {
+        if (this.isDylanVisible(monsterPosition, dylanPosition, elementProvider)) {
             // If close enough to shoot
             if (direction.magnitude() <= this.model.getShootingRange()) {
                 Vector2D position = this.model.getPosition();
@@ -57,28 +57,30 @@ public class TenebrisHarbingerController extends MonsterController<TenebrisHarbi
             }
 
             // If Close Enough to see move towards him
-            else if (direction.magnitude() <= this.model.getVisionRange()) switch (direction.getMajorDirection()) {
-                case UP -> movingState.add(Entity.State.BACK);
-                case DOWN -> movingState.add(Entity.State.FRONT);
-                case LEFT -> movingState.add(Entity.State.LEFT);
-                case RIGHT -> movingState.add(Entity.State.RIGHT);
-                case UP_RIGHT -> {
-                    movingState.add(Entity.State.BACK);
-                    movingState.add(Entity.State.RIGHT);
-                }
-                case UP_LEFT -> {
-                    movingState.add(Entity.State.BACK);
-                    movingState.add(Entity.State.LEFT);
-                }
-                case DOWN_RIGHT -> {
-                    movingState.add(Entity.State.FRONT);
-                    movingState.add(Entity.State.RIGHT);
-                }
-                case DOWN_LEFT -> {
-                    movingState.add(Entity.State.FRONT);
-                    movingState.add(Entity.State.LEFT);
-                }
-            }
+            else if (direction.magnitude() <= this.model.getVisionRange())
+                if (this.isPathClear(monsterPosition, dylanPosition, elementProvider))
+                    switch (direction.getMajorDirection()) {
+                        case UP -> movingState.add(Entity.State.BACK);
+                        case DOWN -> movingState.add(Entity.State.FRONT);
+                        case LEFT -> movingState.add(Entity.State.LEFT);
+                        case RIGHT -> movingState.add(Entity.State.RIGHT);
+                        case UP_RIGHT -> {
+                            movingState.add(Entity.State.BACK);
+                            movingState.add(Entity.State.RIGHT);
+                        }
+                        case UP_LEFT -> {
+                            movingState.add(Entity.State.BACK);
+                            movingState.add(Entity.State.LEFT);
+                        }
+                        case DOWN_RIGHT -> {
+                            movingState.add(Entity.State.FRONT);
+                            movingState.add(Entity.State.RIGHT);
+                        }
+                        case DOWN_LEFT -> {
+                            movingState.add(Entity.State.FRONT);
+                            movingState.add(Entity.State.LEFT);
+                        }
+                    }
         }
 
         // If bouncing overwrite movement

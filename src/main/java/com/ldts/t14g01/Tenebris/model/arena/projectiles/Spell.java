@@ -4,7 +4,6 @@ import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
@@ -26,8 +25,6 @@ public class Spell extends Projectile {
         List<Command> commands = super.interact(other);
 
         if (other instanceof AbsorbsProjectiles)
-            commands.add(new CreateParticle(this.position, ParticleType.SPELL_EXPLOSION));
-        else if (other instanceof TakesDamage)
             commands.add(new CreateParticle(this.position, ParticleType.SPELL_EXPLOSION));
 
         return commands;

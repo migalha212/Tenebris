@@ -3,9 +3,10 @@ package com.ldts.t14g01.Tenebris.model.arena.entities;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksMovement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.utils.Bounce;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class Entity extends GameElement implements TakesDamage, Moves {
+public abstract class Entity extends GameElement implements Moves, AbsorbsProjectiles, BlocksMovement {
     private final int velocity;
     private int hp;
     private Bounce bounce;
@@ -41,7 +42,7 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
         this.moving = new TreeSet<>();
     }
 
-    protected int getVelocity() {
+    public int getVelocity() {
         return this.velocity;
     }
 
@@ -75,6 +76,16 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
         this.bounce = bounce;
     }
 
+    public void takeDamage(int damage) {
+        this.hp -= damage;
+        if (this.hp < 0) this.hp = 0;
+        SoundManager.getInstance().playSFX(SoundManager.SFX.ENTITY_DAMAGE);
+    }
+
+    public boolean isAlive() {
+        return this.hp > 0;
+    }
+
     @Override
     public void move() {
         this.moving.forEach(moveState -> {
@@ -90,20 +101,29 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
     }
 
     @Override
-    public void bounce(Vector2D direction) {
-        this.bounce = new Bounce(direction.getMajorDirection(), 20);
+    public void bounce(Vector2D.Direction direction) {
+        this.bounce = new Bounce(direction);
     }
 
     @Override
-    public void takeDamage(int damage) {
-        this.hp -= damage;
-        if (this.hp < 0) this.hp = 0;
-        SoundManager.getInstance().playSFX(SoundManager.SFX.ENTITY_DAMAGE);
-    }
+    public void collide(GameElement other) {
+        // Calculate direction to move in to resolve conflict
+        Vector2D.Direction direction = other.getPosition().minus(this.getPosition()).multiply(-1).getMajorDirection();
 
-    @Override
-    public boolean isAlive() {
-        return this.hp > 0;
+        // Move in that direction until collision is no longer happening
+        while (HitBoX.collide(this.position, this.hitBox, other.getPosition(), other.getHitBox())){
+            switch (direction){
+                case UP -> this.position = this.position.add(new Vector2D(0,-1));
+                case DOWN -> this.position = this.position.add(new Vector2D(0,1));
+                case RIGHT -> this.position = this.position.add(new Vector2D(1,0));
+                case LEFT -> this.position = this.position.add(new Vector2D(-1,0));
+
+                case UP_LEFT -> this.position = this.position.add(new Vector2D(-1,-1));
+                case UP_RIGHT -> this.position = this.position.add(new Vector2D(1,-1));
+                case DOWN_LEFT -> this.position = this.position.add(new Vector2D(-1,1));
+                case DOWN_RIGHT -> this.position = this.position.add(new Vector2D(1,1));
+            }
+        }
     }
 
     @Override
@@ -114,12 +134,12 @@ public abstract class Entity extends GameElement implements TakesDamage, Moves {
             int damage = ((DamagesEntities) other).getEntityDamage();
             if (damage != 0) {
                 this.takeDamage(damage);
-                this.bounce(this.position.minus(other.getPosition()));
+                this.bounce(this.position.minus(other.getPosition()).getMajorDirection());
                 commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
             }
         }
 
-        if (other instanceof Moves) this.bounce(this.position.minus(other.getPosition()));
+        if (other instanceof BlocksMovement) this.collide(other);
 
         if (!this.isAlive()) commands.add(new CreateParticle(this.position, ParticleType.DEATH_BLOOD));
 

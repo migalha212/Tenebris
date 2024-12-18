@@ -6,7 +6,6 @@ import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.DeleteProjectile;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
@@ -59,7 +58,6 @@ public abstract class Projectile extends GameElement implements DamagesEntities 
         List<Command> commands = new ArrayList<>();
 
         if (other instanceof AbsorbsProjectiles) commands.add(new DeleteProjectile(this));
-        else if (other instanceof TakesDamage) commands.add(new DeleteProjectile(this));
 
         return commands;
     }

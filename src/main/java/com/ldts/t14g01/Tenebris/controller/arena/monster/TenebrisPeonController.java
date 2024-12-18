@@ -26,30 +26,30 @@ public class TenebrisPeonController extends MonsterController<TenebrisPeon> {
         Vector2D direction = dylanPosition.minus(monsterPosition);
 
         // Calculate moving states if not too far to reach
-        if (isDylanVisible(monsterPosition, dylanPosition, elementProvider)) {
-            if (direction.magnitude() <= this.model.getVisionRange()) switch (direction.getMajorDirection()) {
-                case UP -> movingState.add(Entity.State.BACK);
-                case DOWN -> movingState.add(Entity.State.FRONT);
-                case LEFT -> movingState.add(Entity.State.LEFT);
-                case RIGHT -> movingState.add(Entity.State.RIGHT);
-                case UP_RIGHT -> {
-                    movingState.add(Entity.State.BACK);
-                    movingState.add(Entity.State.RIGHT);
+        if (this.isDylanVisible(monsterPosition, dylanPosition, elementProvider))
+            if (this.isPathClear(monsterPosition, dylanPosition, elementProvider))
+                if (direction.magnitude() <= this.model.getVisionRange()) switch (direction.getMajorDirection()) {
+                    case UP -> movingState.add(Entity.State.BACK);
+                    case DOWN -> movingState.add(Entity.State.FRONT);
+                    case LEFT -> movingState.add(Entity.State.LEFT);
+                    case RIGHT -> movingState.add(Entity.State.RIGHT);
+                    case UP_RIGHT -> {
+                        movingState.add(Entity.State.BACK);
+                        movingState.add(Entity.State.RIGHT);
+                    }
+                    case UP_LEFT -> {
+                        movingState.add(Entity.State.BACK);
+                        movingState.add(Entity.State.LEFT);
+                    }
+                    case DOWN_RIGHT -> {
+                        movingState.add(Entity.State.FRONT);
+                        movingState.add(Entity.State.RIGHT);
+                    }
+                    case DOWN_LEFT -> {
+                        movingState.add(Entity.State.FRONT);
+                        movingState.add(Entity.State.LEFT);
+                    }
                 }
-                case UP_LEFT -> {
-                    movingState.add(Entity.State.BACK);
-                    movingState.add(Entity.State.LEFT);
-                }
-                case DOWN_RIGHT -> {
-                    movingState.add(Entity.State.FRONT);
-                    movingState.add(Entity.State.RIGHT);
-                }
-                case DOWN_LEFT -> {
-                    movingState.add(Entity.State.FRONT);
-                    movingState.add(Entity.State.LEFT);
-                }
-            }
-        }
 
         // If bouncing overwrite
         Bounce bounce = this.model.getBounce();

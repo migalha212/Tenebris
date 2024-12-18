@@ -2,11 +2,11 @@ package com.ldts.t14g01.Tenebris.model.arena.static_elements;
 
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
-import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
+import com.ldts.t14g01.Tenebris.model.arena._commands.DeleteBreakableWall;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
+import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksMovement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
-import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.staticelement.BreakableWallView;
@@ -14,7 +14,7 @@ import com.ldts.t14g01.Tenebris.view.arena.staticelement.BreakableWallView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BreakableWall extends GameElement implements TakesDamage, BlocksVision {
+public class BreakableWall extends GameElement implements BlocksVision, AbsorbsProjectiles, BlocksMovement {
     private static final HitBoX hitBoX = new HitBoX(new Vector2D(-9, -9), new Vector2D(17, 17));
     private int hp;
 
@@ -24,26 +24,30 @@ public class BreakableWall extends GameElement implements TakesDamage, BlocksVis
         this.view = new BreakableWallView(this);
     }
 
-    @Override
-    public List<Command> interact(GameElement other) {
-        List<Command> commands = new ArrayList<>();
-
-        if (other instanceof DamagesEntities) {
-            this.takeDamage(((DamagesEntities) other).getEntityDamage());
-            commands.add(new CreateParticle(this.position, ParticleType.DEATH_BLOOD));
-        }
-
-        return commands;
-    }
-
-    @Override
     public void takeDamage(int damage) {
         this.hp -= damage;
         if (this.hp < 0) this.hp = 0;
     }
 
-    @Override
     public boolean isAlive() {
         return hp > 0;
+    }
+
+    @Override
+    public List<Command> interact(GameElement other) {
+        List<Command> commands = new ArrayList<>();
+
+        if (other instanceof DamagesEntities) {
+            int damage = ((DamagesEntities) other).getEntityDamage();
+            if (damage != 0) {
+                this.takeDamage(damage);
+                // TODO Create particle for wall damage
+                // commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
+            }
+        }
+
+        if (!this.isAlive()) commands.add(new DeleteBreakableWall(this));
+
+        return commands;
     }
 }
