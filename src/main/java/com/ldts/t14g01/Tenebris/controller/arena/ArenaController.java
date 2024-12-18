@@ -15,6 +15,7 @@ import com.ldts.t14g01.Tenebris.model.arena.particles.*;
 import com.ldts.t14g01.Tenebris.model.arena.projectiles.Projectile;
 import com.ldts.t14g01.Tenebris.model.menu.*;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
+import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
@@ -226,8 +227,11 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
         // Dylan is Dead
         if (this.getModel().getDylan() == null) {
-            if (saveDataProvider.getSaveData().getDifficulty() == Difficulty.Heartless)
+            if (saveDataProvider.getSaveData().getDifficulty() == Difficulty.Heartless) {
                 stateChanger.setState(new MenuState(new GameOverMenu()));
+                SaveDataManager.getInstance().deleteSave(saveDataProvider.getSaveData());
+                saveDataProvider.setSaveData(null);
+            }
             else stateChanger.setState(new MenuState(new DeathMenu()));
         }
     }
