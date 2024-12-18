@@ -1,7 +1,7 @@
 package com.ldts.t14g01.Tenebris.model.arena.static_elements;
 
-import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;

@@ -1,8 +1,8 @@
-package com.ldts.t14g01.Tenebris.model.arena.entity;
+package com.ldts.t14g01.Tenebris.model.arena.entities;
 
-import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.CreateParticle;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
+import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;

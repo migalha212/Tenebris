@@ -1,9 +1,9 @@
 package com.ldts.t14g01.Tenebris.controller.arena.monster;
 
-import com.ldts.t14g01.Tenebris.model.arena.Commands.CommandHandler;
-import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
-import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
-import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisHeavy;
+import com.ldts.t14g01.Tenebris.model.arena._commands.CommandHandler;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
+import com.ldts.t14g01.Tenebris.model.arena.entities.monster.TenebrisHeavy;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.utils.Bounce;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;

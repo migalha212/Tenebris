@@ -1,7 +1,7 @@
 package com.ldts.t14g01.Tenebris.model.arena;
 
-import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
-import com.ldts.t14g01.Tenebris.model.arena.entity.monster.*;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
+import com.ldts.t14g01.Tenebris.model.arena.entities.monster.*;
 import com.ldts.t14g01.Tenebris.model.arena.static_elements.BreakableWall;
 import com.ldts.t14g01.Tenebris.model.arena.static_elements.SandBag;
 import com.ldts.t14g01.Tenebris.model.arena.static_elements.Spike;

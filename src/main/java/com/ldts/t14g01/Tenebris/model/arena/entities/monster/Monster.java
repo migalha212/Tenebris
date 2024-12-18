@@ -1,10 +1,10 @@
-package com.ldts.t14g01.Tenebris.model.arena.entity.monster;
+package com.ldts.t14g01.Tenebris.model.arena.entities.monster;
 
 import com.ldts.t14g01.Tenebris.controller.arena.monster.MonsterController;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.DeleteMonster;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
-import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
+import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
+import com.ldts.t14g01.Tenebris.model.arena._commands.DeleteMonster;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesPlayer;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;

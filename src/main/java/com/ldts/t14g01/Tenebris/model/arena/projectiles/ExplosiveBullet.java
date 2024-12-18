@@ -1,8 +1,8 @@
-package com.ldts.t14g01.Tenebris.model.arena.projectile;
+package com.ldts.t14g01.Tenebris.model.arena.projectiles;
 
-import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.CreateEffect;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
+import com.ldts.t14g01.Tenebris.model.arena._commands.CreateEffect;
 import com.ldts.t14g01.Tenebris.model.arena.effects.Explosion;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;

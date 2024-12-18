@@ -1,10 +1,10 @@
-package com.ldts.t14g01.Tenebris.model.arena.entity;
+package com.ldts.t14g01.Tenebris.model.arena.entities;
 
 import com.ldts.t14g01.Tenebris.controller.arena.DylanController;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.CreateParticle;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.KillDylan;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
+import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
+import com.ldts.t14g01.Tenebris.model.arena._commands.KillDylan;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesPlayer;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;

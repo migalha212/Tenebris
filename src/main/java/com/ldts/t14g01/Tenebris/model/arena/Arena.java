@@ -1,11 +1,11 @@
 package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.model.arena.effects.Effect;
-import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
-import com.ldts.t14g01.Tenebris.model.arena.entity.monster.Monster;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
+import com.ldts.t14g01.Tenebris.model.arena.entities.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
-import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
+import com.ldts.t14g01.Tenebris.model.arena.projectiles.Projectile;
 
 import java.io.IOException;
 import java.util.ArrayList;

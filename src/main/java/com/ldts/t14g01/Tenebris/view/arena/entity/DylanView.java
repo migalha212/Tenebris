@@ -1,7 +1,7 @@
 package com.ldts.t14g01.Tenebris.view.arena.entity;
 
 import com.ldts.t14g01.Tenebris.gui.GUI;
-import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
 
 public class DylanView extends EntityView<Dylan> {
     public DylanView(Dylan model) {

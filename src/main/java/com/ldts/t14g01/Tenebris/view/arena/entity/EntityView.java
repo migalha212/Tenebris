@@ -2,8 +2,8 @@ package com.ldts.t14g01.Tenebris.view.arena.entity;
 
 import com.ldts.t14g01.Tenebris.Tenebris;
 import com.ldts.t14g01.Tenebris.gui.GUI;
-import com.ldts.t14g01.Tenebris.model.arena.entity.Dylan;
-import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.view.arena.ElementView;
 
 public abstract class EntityView<T extends Entity> extends ElementView<T> {

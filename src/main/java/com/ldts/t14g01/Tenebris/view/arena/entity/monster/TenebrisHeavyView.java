@@ -1,7 +1,7 @@
 package com.ldts.t14g01.Tenebris.view.arena.entity.monster;
 
 import com.ldts.t14g01.Tenebris.gui.GUI;
-import com.ldts.t14g01.Tenebris.model.arena.entity.monster.TenebrisHeavy;
+import com.ldts.t14g01.Tenebris.model.arena.entities.monster.TenebrisHeavy;
 import com.ldts.t14g01.Tenebris.view.arena.entity.EntityView;
 
 public class TenebrisHeavyView extends EntityView<TenebrisHeavy> {

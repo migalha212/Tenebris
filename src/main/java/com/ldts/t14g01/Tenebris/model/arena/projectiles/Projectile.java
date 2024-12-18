@@ -1,9 +1,9 @@
-package com.ldts.t14g01.Tenebris.model.arena.projectile;
+package com.ldts.t14g01.Tenebris.model.arena.projectiles;
 
 import com.ldts.t14g01.Tenebris.controller.arena.ProjectileController;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.DeleteProjectile;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
+import com.ldts.t14g01.Tenebris.model.arena._commands.DeleteProjectile;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.TakesDamage;

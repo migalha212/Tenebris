@@ -1,4 +1,4 @@
-package com.ldts.t14g01.Tenebris.model.arena.entity.monster;
+package com.ldts.t14g01.Tenebris.model.arena.entities.monster;
 
 import com.ldts.t14g01.Tenebris.controller.arena.monster.TenebrisHarbingerController;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;

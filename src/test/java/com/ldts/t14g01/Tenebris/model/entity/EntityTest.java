@@ -1,6 +1,6 @@
 package com.ldts.t14g01.Tenebris.model.entity;
 
-import com.ldts.t14g01.Tenebris.model.arena.entity.Entity;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import org.junit.jupiter.api.Assertions;

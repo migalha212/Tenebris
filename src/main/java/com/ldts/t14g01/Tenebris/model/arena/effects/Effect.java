@@ -1,8 +1,8 @@
 package com.ldts.t14g01.Tenebris.model.arena.effects;
 
 import com.ldts.t14g01.Tenebris.controller.arena.EffectController;
-import com.ldts.t14g01.Tenebris.model.arena.Commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
+import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
