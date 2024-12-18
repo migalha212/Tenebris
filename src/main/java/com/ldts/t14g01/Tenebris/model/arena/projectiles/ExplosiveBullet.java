@@ -12,7 +12,7 @@ import com.ldts.t14g01.Tenebris.view.arena.projectiles.ExplosiveBulletView;
 import java.util.List;
 
 public class ExplosiveBullet extends Projectile {
-    private static final HitBoX HIT_BOX = new HitBoX(new Vector2D(-3, -3), new Vector2D(9, 9));
+    private static final HitBoX HIT_BOX = new HitBoX(new Vector2D(-4, -4), new Vector2D(6, 6));
     private static final int VELOCITY = 4;
     private final int explosionDamage;
 
