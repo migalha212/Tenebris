@@ -10,8 +10,11 @@ public class SpellExplosionView extends ElementView<SpellExplosion> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        System.out.println("Drawing frame: " + this.model.getCurrentFrame());
-        gui.drawSellExplosion(this.model.getPosition(), this.model.getCurrentFrame());
+    public void draw() {
+        GUI.getGUI().drawParticleEffect(
+                this.model.getPosition(),
+                GUI.ParticleEffect.SPELL_EXPLOSION,
+                this.model.getCurrentFrame()
+        );
     }
 }

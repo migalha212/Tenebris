@@ -15,35 +15,52 @@ public class DeathMenuView extends View<Menu> {
     }
 
     @Override
-    protected void drawElements(GUI gui) throws IOException {
+    protected void drawElements() throws IOException {
+        GUI gui = GUI.getGUI();
+
+        // Get center position
         int centerX = gui.getWindowSize().x() / 2;
         int centerY = gui.getWindowSize().y() / 2;
 
+        // Lines of the Title
         List<String> title = new ArrayList<>();
         title.add("▗▖  ▗▖ ▗▄▖ ▗▖ ▗▖    ▗▄▄▄ ▗▄▄▄▖▗▄▄▄▖▗▄▄▄ ");
         title.add(" ▝▚▞▘ ▐▌ ▐▌▐▌ ▐▌    ▐▌  █  █  ▐▌   ▐▌  █");
         title.add("  ▐▌  ▐▌ ▐▌▐▌ ▐▌    ▐▌  █  █  ▐▛▀▀▘▐▌  █");
         title.add("  ▐▌  ▝▚▄▞▘▝▚▄▞▘    ▐▙▄▄▀▗▄█▄▖▐▙▄▄▖▐▙▄▄▀");
 
+        // Draw Title
         for (int i = 0; i < title.size(); i++)
-            gui.drawText(title.get(i), new Vector2D(centerX - title.getFirst().length() / 2, 3 + i), GUI.Colors.RED, GUI.Colors.BLACK);
+            gui.drawText(
+                    title.get(i),
+                    new Vector2D(centerX - title.getFirst().length() / 2, 3 + i),
+                    GUI.Colors.RED,
+                    GUI.Colors.BLACK
+            );
 
 
+        // Draw Options
         for (int i = 0; i < this.getModel().getOptions().size(); i++) {
-            GUI.Colors foreGroundColor = GUI.Colors.WHITE;
+            GUI.Colors foreGroundColor;
 
             // Add markers for the selected option
-            if (i == this.getModel().getSelectedOption()) foreGroundColor = GUI.Colors.YELLOW;
+            int selectedOption = this.getModel().getSelectedOption();
+            if (selectedOption == i) foreGroundColor = GUI.Colors.YELLOW;
+            else foreGroundColor = GUI.Colors.WHITE;
 
-            int spaceX = 0;
-
+            // Calculate X position
+            int spaceX;
             if (i == 0) spaceX = 18;
             else if (i == 1) spaceX = gui.getWindowSize().x() - 30;
+            else spaceX = 0;
 
             // Draw option
-            gui.drawText(this.getModel().getOptions().get(i).replace('_', ' '), new Vector2D(spaceX, centerY + 4), foreGroundColor, GUI.Colors.BLACK);
+            gui.drawText(
+                    this.getModel().getOptions().get(i).replace('_', ' '),
+                    new Vector2D(spaceX, centerY + 4),
+                    foreGroundColor,
+                    GUI.Colors.BLACK
+            );
         }
-
     }
-
 }

@@ -2,6 +2,7 @@ package com.ldts.t14g01.Tenebris.controller.menu;
 
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
+import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.ArenaBuilder;
 import com.ldts.t14g01.Tenebris.model.menu.LoadGameMenu;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
@@ -21,7 +22,9 @@ public class LoadGameMenuController extends Controller<Menu> {
     }
 
     @Override
-    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
+    public void tick(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
+        Action action = GUI.getGUI().getAction();
+
         // Update Option Count
         ((LoadGameMenu) this.getModel()).updateOptions();
 

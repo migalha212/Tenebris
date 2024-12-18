@@ -10,7 +10,11 @@ public class DeathBloodView extends ElementView<DeathBlood> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        gui.drawDeathBlood(this.model.getPosition(), this.model.getCurrentFrame());
+    public void draw() {
+        GUI.getGUI().drawParticleEffect(
+                this.model.getPosition(),
+                GUI.ParticleEffect.DEATH_BLOOD,
+                this.model.getCurrentFrame()
+        );
     }
 }

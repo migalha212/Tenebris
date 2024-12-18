@@ -38,7 +38,7 @@ public abstract class MonsterController<T extends Monster> {
     private boolean isCircleIntersectingLine(Vector2D p1, Vector2D p2, Vector2D circleCenter, double radius) {
         Vector2D lineVector = p2.minus(p1);
         Vector2D pointToCircle = circleCenter.minus(p1);
-        double t = pointToCircle.dot(lineVector) / lineVector.dot(lineVector);
+        double t = (double) pointToCircle.dot(lineVector) / lineVector.dot(lineVector);
         t = Math.max(0, Math.min(1, t));
         Vector2D closestPoint = p1.add(lineVector.multiply(t));
         double distance = closestPoint.minus(circleCenter).magnitude();

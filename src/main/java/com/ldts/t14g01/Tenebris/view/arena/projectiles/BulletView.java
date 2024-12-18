@@ -10,7 +10,11 @@ public class BulletView extends ElementView<Bullet> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        gui.drawBullet(this.model.getPosition(), this.model.getDirection());
+    public void draw() {
+        GUI.getGUI().drawProjectile(
+                this.model.getPosition(),
+                GUI.Projectile.BULLET,
+                this.model.getDirection()
+        );
     }
 }

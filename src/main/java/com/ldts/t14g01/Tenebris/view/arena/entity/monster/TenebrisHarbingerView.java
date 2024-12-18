@@ -10,9 +10,13 @@ public class TenebrisHarbingerView extends EntityView<TenebrisHarbinger> {
     }
 
     @Override
-    public void draw(GUI gui) {
+    public void draw() {
         this.updateState();
         this.tickState();
-        gui.drawMonster(this.model.getPosition(), GUI.Monster.TENEBRIS_HARBINGER, this.state);
+        GUI.getGUI().drawMonster(
+                this.model.getPosition(),
+                GUI.Monster.TENEBRIS_HARBINGER,
+                this.state
+        );
     }
 }

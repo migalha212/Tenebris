@@ -2,6 +2,7 @@ package com.ldts.t14g01.Tenebris.view.arena.projectiles;
 
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.ExplosiveBullet;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.ElementView;
 
 public class ExplosiveBulletView extends ElementView<ExplosiveBullet> {
@@ -10,7 +11,11 @@ public class ExplosiveBulletView extends ElementView<ExplosiveBullet> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        gui.drawExplosive(this.model.getPosition());
+    public void draw() {
+        GUI.getGUI().drawProjectile(
+                this.model.getPosition(),
+                GUI.Projectile.EXPLOSIVE,
+                Vector2D.Direction.RIGHT
+        );
     }
 }

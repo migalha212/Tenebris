@@ -16,8 +16,8 @@ public class MainMenuView extends View<Menu> {
     }
 
     @Override
-    protected void drawElements(GUI gui) throws IOException {
-        // ToDo : Draw Background
+    protected void drawElements() throws IOException {
+        GUI gui = GUI.getGUI();
 
         // Get center x and center y position
         int centerX = gui.getWindowSize().x() / 2;
@@ -34,19 +34,31 @@ public class MainMenuView extends View<Menu> {
         title.add("   | |/ _ \\ '_ \\ / _ \\ '_ \\| '__| / __|");
         title.add("   | |  __/ | | |  __/ |_) | |  | \\__ \\");
         title.add("   |_|\\___|_| |_|\\___|_.__/|_|  |_|___/");
+
         for (int i = 0; i < title.size(); i++)
-            gui.drawText(title.get(i), new Vector2D(centerX - 20, 2 + i), GUI.Colors.WHITE, GUI.Colors.BLACK);
+            gui.drawText(
+                    title.get(i),
+                    new Vector2D(centerX - 20, 2 + i),
+                    GUI.Colors.WHITE,
+                    GUI.Colors.BLACK
+            );
 
 
         // Draw options (left-aligned)
         for (int i = 0; i < this.getModel().getOptions().size(); i++) {
-            GUI.Colors foreGroundColor = GUI.Colors.WHITE;
+            GUI.Colors foreGroundColor;
 
             // Add markers for the selected option
             if (i == this.getModel().getSelectedOption()) foreGroundColor = GUI.Colors.YELLOW;
+            else foreGroundColor = GUI.Colors.WHITE;
 
             // Draw option
-            gui.drawText(this.getModel().getOptions().get(i).replace('_', ' '), new Vector2D(leftX, centerY + i), foreGroundColor, GUI.Colors.BLACK);
+            gui.drawText(
+                    this.getModel().getOptions().get(i).replace('_', ' '),
+                    new Vector2D(leftX, centerY + i),
+                    foreGroundColor,
+                    GUI.Colors.BLACK
+            );
         }
     }
 }

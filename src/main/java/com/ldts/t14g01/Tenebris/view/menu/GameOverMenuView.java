@@ -15,20 +15,35 @@ public class GameOverMenuView extends View<Menu> {
     }
 
     @Override
-    protected void drawElements(GUI gui) throws IOException {
+    protected void drawElements() throws IOException {
+        GUI gui = GUI.getGUI();
+
+        // Get center position
         int centerX = gui.getWindowSize().x() / 2;
         int centerY = gui.getWindowSize().y() / 2;
 
+        // Title Lines
         List<String> title = new ArrayList<>();
         title.add(" ▗▄▄▖ ▗▄▖ ▗▖  ▗▖▗▄▄▄▖     ▗▄▖ ▗▖  ▗▖▗▄▄▄▖▗▄▄▖");
         title.add("▐▌   ▐▌ ▐▌▐▛▚▞▜▌▐▌       ▐▌ ▐▌▐▌  ▐▌▐▌   ▐▌ ▐▌");
         title.add("▐▌▝▜▌▐▛▀▜▌▐▌  ▐▌▐▛▀▀▘    ▐▌ ▐▌▐▌  ▐▌▐▛▀▀▘▐▛▀▚▖");
         title.add("▝▚▄▞▘▐▌ ▐▌▐▌  ▐▌▐▙▄▄▖    ▝▚▄▞▘ ▝▚▞▘ ▐▙▄▄▖▐▌ ▐▌");
 
+        // Draw Title
         for (int i = 0; i < title.size(); i++)
-            gui.drawText(title.get(i), new Vector2D(centerX - title.getFirst().length() / 2, 3 + i), GUI.Colors.RED, GUI.Colors.BLACK);
+            gui.drawText(
+                    title.get(i),
+                    new Vector2D(centerX - title.getFirst().length() / 2, 3 + i),
+                    GUI.Colors.RED,
+                    GUI.Colors.BLACK
+            );
 
-        gui.drawText("Back To Main Menu", new Vector2D(centerX - 8, centerY + 4), GUI.Colors.YELLOW, GUI.Colors.BLACK);
+        // Draw Option
+        gui.drawText(
+                "Back To Main Menu",
+                new Vector2D(centerX - 8, centerY + 4),
+                GUI.Colors.YELLOW,
+                GUI.Colors.BLACK
+        );
     }
-
 }

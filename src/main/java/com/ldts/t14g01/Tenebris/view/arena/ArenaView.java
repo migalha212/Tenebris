@@ -13,26 +13,26 @@ public class ArenaView extends View<Arena> {
     }
 
     @Override
-    protected void drawElements(GUI gui) throws IOException {
+    protected void drawElements() throws IOException {
         Arena arena = this.getModel();
-        gui.drawArenaBackGround();
+        GUI.getGUI().drawArenaBackGround();
 
         // Draw StaticElements
-        arena.getElements().forEach(element -> element.getView().draw(gui));
+        arena.getElements().forEach(element -> element.getView().draw());
 
         // Draw Monsters
-        arena.getMonsters().forEach(monster -> monster.getView().draw(gui));
+        arena.getMonsters().forEach(monster -> monster.getView().draw());
 
         // Draw Dylan
-        arena.getDylan().getView().draw(gui);
+        arena.getDylan().getView().draw();
 
         // Draw Particles
-        arena.getParticles().forEach(particles -> particles.getView().draw(gui));
+        arena.getParticles().forEach(particles -> particles.getView().draw());
 
         // Draw Effects
-        arena.getEffects().forEach(effect -> effect.getView().draw(gui));
+        arena.getEffects().forEach(effect -> effect.getView().draw());
 
         // Draw Projectiles
-        arena.getProjectiles().forEach(projectile -> projectile.getView().draw(gui));
+        arena.getProjectiles().forEach(projectile -> projectile.getView().draw());
     }
 }

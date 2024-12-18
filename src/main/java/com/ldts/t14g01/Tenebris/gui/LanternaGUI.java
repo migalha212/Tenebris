@@ -475,42 +475,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     }
 
     @Override
-    public void drawWall(Vector2D position) {
-        this.drawImage(position, this.sprite_wall);
-    }
-
-    @Override
-    public void drawBreakableWall(Vector2D position) {
-        this.drawImage(position, this.sprite_breakable_wall);
-    }
-
-    @Override
-    public void drawSandbag(Vector2D position) {
-        this.drawImage(position, this.sprite_sandbag);
-    }
-
-    @Override
-    public void drawSpikes(Vector2D position) {
-        this.drawImage(position, this.sprite_spikes);
-    }
-
-    @Override
-    public void drawExplosion(Vector2D position, int frameNumber) {
-        if (frameNumber <= 0 || frameNumber > GUI.EXPLOSION_FRAME_COUNT)
-            throw new RuntimeException("Drawing Invalid Explosion Frame Number");
-
-        this.drawImage(position, this.sprite_explosion.get(frameNumber - 1));
-    }
-
-    @Override
-    public void drawSellExplosion(Vector2D position, int frameNumber) {
-        if (frameNumber <= 0 || frameNumber > GUI.SPELL_EXPLOSION_FRAME_COUNT)
-            throw new RuntimeException("Drawing Invalid Explosion Frame Number");
-
-        this.drawImage(position, this.sprite_spell_explostion.get(frameNumber - 1));
-    }
-
-    @Override
     public void drawMonster(Vector2D position, Monster monster, AnimationState state) {
         switch (monster) {
             case TENEBRIS_HARBINGER -> {
@@ -594,40 +558,67 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     }
 
     @Override
-    public void drawDeathBlood(Vector2D position, int frameNumber) {
-        if (frameNumber <= 0 || frameNumber > GUI.DEATH_BLOOD_FRAME_COUNT)
-            throw new RuntimeException("Drawing Invalid Death Blood Frame Number");
-
-        Vector2D spritePosition = position.add(new Vector2D(0, -(this.sprite_death_blood.getFirst().getHeight() / 4)));
-        this.drawImage(spritePosition, this.sprite_death_blood.get(frameNumber - 1));
-    }
-
-    @Override
-    public void drawDamageBlood(Vector2D position, int frameNumber) {
-        if (frameNumber <= 0 || frameNumber > GUI.DAMAGE_BLOOD_FRAME_COUNT)
-            throw new RuntimeException("Drawing Invalid Damage Blood Frame Number");
-
-        this.drawImage(position, this.sprite_damage_blood.get(frameNumber - 1));
-    }
-
-    @Override
-    public void drawBullet(Vector2D position, Vector2D.Direction direction) {
-        switch (direction) {
-            case RIGHT, DOWN_RIGHT, UP_RIGHT, LEFT, DOWN_LEFT, UP_LEFT ->
-                    this.drawImage(position, this.sprite_bullet_horizontal);
-            case UP, DOWN -> this.drawImage(position, this.sprite_bullet_vertical);
-            case null, default -> throw new RuntimeException("Trying to draw bullet with invalid direction");
+    public void drawStaticElement(Vector2D position, StaticElement staticElement) {
+        switch (staticElement) {
+            case WALL -> this.drawImage(position, this.sprite_wall);
+            case BREAKABLE_WALL -> this.drawImage(position, this.sprite_breakable_wall);
+            case SANDBAG -> this.drawImage(position, this.sprite_sandbag);
+            case SPIKE -> this.drawImage(position, this.sprite_spikes);
+            case null, default -> throw new RuntimeException("Invalid Static Element");
         }
     }
 
     @Override
-    public void drawExplosive(Vector2D position) {
-        this.drawImage(position, this.sprite_explosive);
+    public void drawParticleEffect(Vector2D position, ParticleEffect particleEffect, int frameNumber) {
+        switch (particleEffect) {
+            case SPELL_EXPLOSION -> {
+                if (frameNumber <= 0 || frameNumber > GUI.SPELL_EXPLOSION_FRAME_COUNT)
+                    throw new RuntimeException("Drawing Invalid Explosion Frame Number");
+
+                this.drawImage(position, this.sprite_spell_explostion.get(frameNumber - 1));
+            }
+
+            case DEATH_BLOOD -> {
+                if (frameNumber <= 0 || frameNumber > GUI.DEATH_BLOOD_FRAME_COUNT)
+                    throw new RuntimeException("Drawing Invalid Death Blood Frame Number");
+
+                Vector2D spritePosition = position.add(new Vector2D(0, -(this.sprite_death_blood.getFirst().getHeight() / 4)));
+                this.drawImage(spritePosition, this.sprite_death_blood.get(frameNumber - 1));
+            }
+
+            case DAMAGE_BLOOD -> {
+                if (frameNumber <= 0 || frameNumber > GUI.DAMAGE_BLOOD_FRAME_COUNT)
+                    throw new RuntimeException("Drawing Invalid Damage Blood Frame Number");
+
+                this.drawImage(position, this.sprite_damage_blood.get(frameNumber - 1));
+            }
+
+            case EXPLOSION -> {
+                if (frameNumber <= 0 || frameNumber > GUI.EXPLOSION_FRAME_COUNT)
+                    throw new RuntimeException("Drawing Invalid Explosion Frame Number");
+
+                this.drawImage(position, this.sprite_explosion.get(frameNumber - 1));
+            }
+
+            case null, default -> throw new RuntimeException("Invalid particle effect.");
+        }
     }
 
     @Override
-    public void drawSpell(Vector2D position) {
-        this.drawImage(position, this.sprite_spell);
+    public void drawProjectile(Vector2D position, Projectile projectile, Vector2D.Direction direction) {
+        switch (projectile) {
+            case BULLET -> {
+                switch (direction) {
+                    case RIGHT, DOWN_RIGHT, UP_RIGHT, LEFT, DOWN_LEFT, UP_LEFT ->
+                            this.drawImage(position, this.sprite_bullet_horizontal);
+                    case UP, DOWN -> this.drawImage(position, this.sprite_bullet_vertical);
+                    case null, default -> throw new RuntimeException("Trying to draw bullet with invalid direction");
+                }
+            }
+            case EXPLOSIVE -> this.drawImage(position, this.sprite_explosive);
+            case SPELL -> this.drawImage(position, this.sprite_spell);
+            case null, default -> throw new RuntimeException("Invalid Projectile");
+        }
     }
 
     private void drawImage(Vector2D position, BufferedImage sprite) {

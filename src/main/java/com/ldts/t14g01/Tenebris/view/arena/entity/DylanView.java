@@ -9,9 +9,9 @@ public class DylanView extends EntityView<Dylan> {
     }
 
     @Override
-    public void draw(GUI gui) {
+    public void draw() {
         this.updateState(); // Select correct animation type
         this.tickState(); // Cycle animation frames
-        gui.drawDylan(this.model.getPosition(), this.state);
+        GUI.getGUI().drawDylan(this.model.getPosition(), this.state);
     }
 }

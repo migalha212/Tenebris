@@ -2,6 +2,7 @@ package com.ldts.t14g01.Tenebris.controller.arena;
 
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
+import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
 import com.ldts.t14g01.Tenebris.model.arena.Commands.*;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
@@ -134,7 +135,8 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
     }
 
     @Override
-    public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
+    public void tick(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
+        Action action = GUI.getGUI().getAction();
         switch (action) {
             case ESC -> stateChanger.setState(new MenuState(new PauseMenu(this.getModel())));
             case QUIT -> stateChanger.setState(null);
@@ -142,19 +144,18 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
             case null, default -> {
             }
         }
-    }
 
-    @Override
-    public void tickWithList(Set<Action> actions, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
+        Set<Action> activeActions = GUI.getGUI().getActiveActions();
+
         // Update Dylan
         Dylan dylan = this.getModel().getDylan();
         DylanController dylanController = this.getModel().getDylan().getController();
         dylanController.setLooking(null);
         Set<Action> dylan_moves = new TreeSet<>();
-        actions.forEach((action -> {
-            switch (action) {
-                case MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT -> dylan_moves.add(action);
-                case LOOK_UP, LOOK_DOWN, LOOK_LEFT, LOOK_RIGHT -> dylanController.setLooking(action);
+        activeActions.forEach((activeAction -> {
+            switch (activeAction) {
+                case MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT -> dylan_moves.add(activeAction);
+                case LOOK_UP, LOOK_DOWN, LOOK_LEFT, LOOK_RIGHT -> dylanController.setLooking(activeAction);
                 case EXEC -> dylanController.shoot(this);
                 case null, default -> {
                 }

@@ -11,7 +11,7 @@ public class SpikeView extends ElementView<Spike> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        gui.drawSpikes(this.model.getPosition());
+    public void draw() {
+        GUI.getGUI().drawStaticElement(this.model.getPosition(), GUI.StaticElement.SPIKE);
     }
 }

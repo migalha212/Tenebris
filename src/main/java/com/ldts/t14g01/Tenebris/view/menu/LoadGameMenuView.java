@@ -18,26 +18,40 @@ public class LoadGameMenuView extends View<Menu> {
     }
 
     @Override
-    protected void drawElements(GUI gui) throws IOException {
+    protected void drawElements() throws IOException {
+        GUI gui = GUI.getGUI();
+
+        // Get center position
         int centerX = gui.getWindowSize().x() / 2;
         int centerY = gui.getWindowSize().y() / 2;
 
         // X axis Offset
         int offsetX = 4;
 
-        // Draw title
+        // Title Lines
         List<String> titleLines = new ArrayList<>();
         titleLines.add("Load Game");
         titleLines.add("───────────────");
 
+        // Draw Title
         for (int i = 0; i < titleLines.size(); i++)
-            gui.drawText(titleLines.get(i), new Vector2D(offsetX, centerY - 8 + i), GUI.Colors.BRIGHT_YELLOW, GUI.Colors.BLACK);
+            gui.drawText(
+                    titleLines.get(i),
+                    new Vector2D(offsetX, centerY - 8 + i),
+                    GUI.Colors.BRIGHT_YELLOW,
+                    GUI.Colors.BLACK
+            );
 
         // Draw menu UI
         if (SaveDataManager.getInstance().getSaveCount() != 0) {
             // Show number of available saves
             int numberOfSaves = SaveDataManager.getInstance().getSaveCount();
-            gui.drawText("Available Saves: " + numberOfSaves, new Vector2D(centerX + 8, centerY - 7), GUI.Colors.WHITE, GUI.Colors.BLACK);
+            gui.drawText(
+                    "Available Saves: " + numberOfSaves,
+                    new Vector2D(centerX + 8, centerY - 7),
+                    GUI.Colors.WHITE,
+                    GUI.Colors.BLACK
+            );
 
             // Show which save is selected, and it's respective info
             SaveData selectedSave = SaveDataManager.getInstance().getSave(this.getModel().getSelectedOption() + 1);
@@ -68,41 +82,91 @@ public class LoadGameMenuView extends View<Menu> {
             int messageLength = 0;
 
             for (int i = 0; i < saveInfo.size(); i++) {
-                GUI.Colors foreGroundColor = GUI.Colors.WHITE;
-                if (i == 1) {
-                    foreGroundColor = GUI.Colors.YELLOW;
-                } else if (i == 3) {
+                GUI.Colors foreGroundColor;
+                if (i == 1) foreGroundColor = GUI.Colors.YELLOW;
+                else if (i == 3) {
                     switch (Difficulty.valueOf(difficulty)) {
                         case Easy -> foreGroundColor = GUI.Colors.BRIGHT_GREEN;
                         case Normal -> foreGroundColor = GUI.Colors.BRIGHT_YELLOW;
                         case Champion -> foreGroundColor = GUI.Colors.ORANGE;
                         case Heartless -> foreGroundColor = GUI.Colors.RED;
+                        default -> throw new RuntimeException("Invalid Difficulty");
                     }
+                } else foreGroundColor = GUI.Colors.WHITE;
 
-                }
-                gui.drawText(saveInfo.get(i), new Vector2D(centerX - 27 + messageLength, centerY - 1), foreGroundColor, GUI.Colors.BLACK);
+                gui.drawText(
+                        saveInfo.get(i),
+                        new Vector2D(centerX - 27 + messageLength, centerY - 1),
+                        foreGroundColor,
+                        GUI.Colors.BLACK
+                );
 
                 messageLength += saveInfo.get(i).length();
             }
 
             // Draw commands
-            gui.drawText("Enter ", new Vector2D(centerX + 4, centerY + 4), GUI.Colors.CYAN, GUI.Colors.BLACK);
-            gui.drawText("to Select", new Vector2D(centerX + 10, centerY + 4), GUI.Colors.WHITE, GUI.Colors.BLACK);
+            gui.drawText(
+                    "Enter ",
+                    new Vector2D(centerX + 4, centerY + 4),
+                    GUI.Colors.CYAN,
+                    GUI.Colors.BLACK
+            );
+            gui.drawText(
+                    "to Select",
+                    new Vector2D(centerX + 10, centerY + 4),
+                    GUI.Colors.WHITE,
+                    GUI.Colors.BLACK
+            );
 
-            gui.drawText("D ", new Vector2D(centerX + 4, centerY + 6), GUI.Colors.CYAN, GUI.Colors.BLACK);
-            gui.drawText("to Delete Save", new Vector2D(centerX + 6, centerY + 6), GUI.Colors.WHITE, GUI.Colors.BLACK);
+            gui.drawText(
+                    "D ",
+                    new Vector2D(centerX + 4, centerY + 6),
+                    GUI.Colors.CYAN,
+                    GUI.Colors.BLACK
+            );
+            gui.drawText(
+                    "to Delete Save",
+                    new Vector2D(centerX + 6, centerY + 6),
+                    GUI.Colors.WHITE,
+                    GUI.Colors.BLACK
+            );
 
-            gui.drawText("↑ ", new Vector2D(centerX - 17, centerY + 4), GUI.Colors.CYAN, GUI.Colors.BLACK);
-            gui.drawText("- Next Save", new Vector2D(centerX - 15, centerY + 4), GUI.Colors.WHITE, GUI.Colors.BLACK);
+            gui.drawText(
+                    "↑ ",
+                    new Vector2D(centerX - 17, centerY + 4),
+                    GUI.Colors.CYAN,
+                    GUI.Colors.BLACK
+            );
+            gui.drawText(
+                    "- Next Save",
+                    new Vector2D(centerX - 15, centerY + 4),
+                    GUI.Colors.WHITE,
+                    GUI.Colors.BLACK
+            );
 
-            gui.drawText("↓ ", new Vector2D(centerX - 21, centerY + 6), GUI.Colors.CYAN, GUI.Colors.BLACK);
-            gui.drawText("- Previous Save", new Vector2D(centerX - 19, centerY + 6), GUI.Colors.WHITE, GUI.Colors.BLACK);
+            gui.drawText(
+                    "↓ ",
+                    new Vector2D(centerX - 21, centerY + 6),
+                    GUI.Colors.CYAN,
+                    GUI.Colors.BLACK
+            );
+            gui.drawText(
+                    "- Previous Save",
+                    new Vector2D(centerX - 19, centerY + 6),
+                    GUI.Colors.WHITE,
+                    GUI.Colors.BLACK
+            );
         }
 
         // If no Saves exist
         else {
             String message = "No Saves Stored";
-            gui.drawText(message, new Vector2D(centerX - message.length() / 2, centerY), GUI.Colors.ORANGE, GUI.Colors.BLACK);
+            gui.drawText(
+                    message,
+                    new Vector2D(centerX - message.length() / 2, centerY),
+                    GUI.Colors.ORANGE,
+                    GUI.Colors.BLACK
+            );
         }
     }
 }

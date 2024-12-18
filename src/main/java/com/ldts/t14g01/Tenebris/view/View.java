@@ -15,11 +15,11 @@ public abstract class View<T> {
         return model;
     }
 
-    public void draw(GUI gui) throws IOException {
-        gui.clear();
-        this.drawElements(gui);
-        gui.refresh();
+    public void draw() throws IOException {
+        GUI.getGUI().clear();
+        this.drawElements();
+        GUI.getGUI().refresh();
     }
 
-    protected abstract void drawElements(GUI gui) throws IOException;
+    protected abstract void drawElements() throws IOException;
 }

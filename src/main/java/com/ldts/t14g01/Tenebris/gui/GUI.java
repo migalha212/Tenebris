@@ -30,11 +30,33 @@ public interface GUI {
         TENEBRIS_WARDEN
     }
 
-    // Particles
+    // Static Elements
+    enum StaticElement {
+        WALL,
+        BREAKABLE_WALL,
+        SANDBAG,
+        SPIKE
+    }
+
+    // Particles && Effects
+    enum ParticleEffect {
+        DAMAGE_BLOOD,
+        DEATH_BLOOD,
+        SPELL_EXPLOSION,
+        EXPLOSION
+    }
+
     int EXPLOSION_FRAME_COUNT = 16;
     int SPELL_EXPLOSION_FRAME_COUNT = 4;
     int DEATH_BLOOD_FRAME_COUNT = 16;
     int DAMAGE_BLOOD_FRAME_COUNT = 5;
+
+    // Projectiles
+    enum Projectile {
+        BULLET,
+        EXPLOSIVE,
+        SPELL
+    }
 
     static GUI getGUI() {
         return LanternaGUI.getGUI();
@@ -52,29 +74,13 @@ public interface GUI {
 
     void drawDylan(Vector2D position, AnimationState state);
 
-    void drawWall(Vector2D position);
-
-    void drawBreakableWall(Vector2D position);
-
-    void drawSandbag(Vector2D position);
-
-    void drawSpikes(Vector2D position);
-
-    void drawExplosion(Vector2D position, int frameNumber);
-
-    void drawSellExplosion(Vector2D position, int frameNumber);
-
-    void drawDeathBlood(Vector2D position, int frameNumber);
-
-    void drawDamageBlood(Vector2D position, int frameNumber);
-
-    void drawBullet(Vector2D position, Vector2D.Direction direction);
-
-    void drawExplosive(Vector2D position);
-
-    void drawSpell(Vector2D position);
-
     void drawMonster(Vector2D position, Monster monster, AnimationState state);
+
+    void drawStaticElement(Vector2D position, StaticElement staticElement);
+
+    void drawParticleEffect(Vector2D position, ParticleEffect particleEffect, int frameNumber);
+
+    void drawProjectile(Vector2D position, Projectile projectile, Vector2D.Direction direction);
 
     // Screen Management
     void setType(Type type) throws IOException;

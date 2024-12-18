@@ -10,7 +10,7 @@ public class SandbagView extends ElementView<SandBag> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        gui.drawSandbag(this.model.getPosition());
+    public void draw() {
+        GUI.getGUI().drawStaticElement(this.model.getPosition(), GUI.StaticElement.SANDBAG);
     }
 }

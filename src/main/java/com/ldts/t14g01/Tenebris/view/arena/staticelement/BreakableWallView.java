@@ -10,7 +10,7 @@ public class BreakableWallView extends ElementView<BreakableWall> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        gui.drawBreakableWall(this.model.getPosition());
+    public void draw() {
+        GUI.getGUI().drawStaticElement(this.model.getPosition(), GUI.StaticElement.BREAKABLE_WALL);
     }
 }

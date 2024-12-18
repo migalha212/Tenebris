@@ -10,7 +10,11 @@ public class DamageBloodView extends ElementView<DamageBlood> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        gui.drawDamageBlood(this.model.getPosition(), this.model.getCurrentFrame());
+    public void draw() {
+        GUI.getGUI().drawParticleEffect(
+                this.model.getPosition(),
+                GUI.ParticleEffect.DAMAGE_BLOOD,
+                this.model.getCurrentFrame()
+        );
     }
 }

@@ -15,7 +15,9 @@ public class VictoryMenuView extends View<Menu> {
     }
 
     @Override
-    protected void drawElements(GUI gui) throws IOException {
+    protected void drawElements() throws IOException {
+        GUI gui = GUI.getGUI();
+
         int centerX = gui.getWindowSize().x() / 2;
         int centerY = gui.getWindowSize().y() / 2;
 
@@ -26,8 +28,18 @@ public class VictoryMenuView extends View<Menu> {
         title.add("  ▐▌  ▝▚▄▞▘▝▚▄▞▘    ▐▙█▟▌▝▚▄▞▘▐▌  ▐▌");
 
         for (int i = 0; i < title.size(); i++)
-            gui.drawText(title.get(i), new Vector2D(centerX - title.getFirst().length() / 2, 3 + i), GUI.Colors.GREEN, GUI.Colors.BLACK);
+            gui.drawText(
+                    title.get(i),
+                    new Vector2D(centerX - title.getFirst().length() / 2, 3 + i),
+                    GUI.Colors.GREEN,
+                    GUI.Colors.BLACK
+            );
 
-        gui.drawText("Back To Main Menu", new Vector2D(centerX - 8, centerY + 4), GUI.Colors.YELLOW, GUI.Colors.BLACK);
+        gui.drawText(
+                "Back To Main Menu",
+                new Vector2D(centerX - 8, centerY + 4),
+                GUI.Colors.YELLOW,
+                GUI.Colors.BLACK
+        );
     }
 }

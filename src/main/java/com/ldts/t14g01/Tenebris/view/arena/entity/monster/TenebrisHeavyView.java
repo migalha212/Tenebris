@@ -10,9 +10,13 @@ public class TenebrisHeavyView extends EntityView<TenebrisHeavy> {
     }
 
     @Override
-    public void draw(GUI gui) {
+    public void draw() {
         this.updateState();
         this.tickState();
-        gui.drawMonster(this.model.getPosition(), GUI.Monster.TENEBRIS_HEAVY, this.state);
+        GUI.getGUI().drawMonster(
+                this.model.getPosition(),
+                GUI.Monster.TENEBRIS_HEAVY,
+                this.state
+        );
     }
 }

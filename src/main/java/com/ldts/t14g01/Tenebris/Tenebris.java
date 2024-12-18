@@ -12,9 +12,9 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import java.io.IOException;
 
 public class Tenebris implements StateChanger, SaveDataProvider {
+    public static final int FPS = 30;
     private static Tenebris instance;
 
-    private final GUI gui;
     private State state;
     private boolean stateChanged;
     private SaveData saveData;
@@ -25,10 +25,8 @@ public class Tenebris implements StateChanger, SaveDataProvider {
 
     private Tenebris() throws Exception {
         // Init game state
-        this.gui = GUI.getGUI();
         this.saveData = SaveDataManager.getInstance().getLastOpen();
         this.setState(new MenuState(new MainMenu(this)));
-
     }
 
     public static Tenebris getInstance() throws Exception {
@@ -37,7 +35,6 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     }
 
     public void run() throws IOException, InterruptedException {
-        long FPS = 30;
         long frameTime = 1000 / FPS;
         // While the game is running
         while (this.state != null) {
@@ -46,7 +43,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
 
             // Tick game
             this.stateChanged = false;
-            this.state.tick(gui, this, this);
+            this.state.tick(this, this);
 
             // Wait to limit frame rate
             long endTime = System.currentTimeMillis();
@@ -54,14 +51,14 @@ public class Tenebris implements StateChanger, SaveDataProvider {
             if (waitTime > 0) Thread.sleep(waitTime);
         }
 
-        this.gui.close();
+        GUI.getGUI().close();
     }
 
     @Override
     public void setState(State state) throws IOException {
         this.stateChanged = true;
         this.state = state;
-        if (this.state != null) this.gui.setType(this.state.getGUIType());
+        if (this.state != null) GUI.getGUI().setType(this.state.getGUIType());
     }
 
     @Override
@@ -78,5 +75,4 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     public void setSaveData(SaveData saveData) {
         this.saveData = saveData;
     }
-
 }

@@ -10,7 +10,11 @@ public class ExplosionView extends ElementView<Explosion> {
     }
 
     @Override
-    public void draw(GUI gui) {
-        gui.drawExplosion(this.model.getPosition(), this.model.getCurrentFrame());
+    public void draw() {
+        GUI.getGUI().drawParticleEffect(
+                this.model.getPosition(),
+                GUI.ParticleEffect.EXPLOSION,
+                this.model.getCurrentFrame()
+        );
     }
 }
