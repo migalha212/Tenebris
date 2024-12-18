@@ -3,7 +3,6 @@ package com.ldts.t14g01.Tenebris.model.menu;
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.controller.menu.LevelsMenuController;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
-import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.view.View;
 import com.ldts.t14g01.Tenebris.view.menu.LevelsMenuView;
@@ -18,7 +17,10 @@ public class LevelsMenu extends Menu {
         SaveData saveData = saveDataProvider.getSaveData();
 
         // The menu should not work with no saveData Selected
-        if (saveData == null) this.options = null;
+        if (saveData == null) {
+            this.options = null;
+            return;
+        }
 
         // Add Empty Strings to represent each save
         // The index of the String will represent the selected Number

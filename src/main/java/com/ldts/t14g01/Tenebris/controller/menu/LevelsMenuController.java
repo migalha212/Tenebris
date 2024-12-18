@@ -2,7 +2,6 @@ package com.ldts.t14g01.Tenebris.controller.menu;
 
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
-import com.ldts.t14g01.Tenebris.model.arena.Arena;
 import com.ldts.t14g01.Tenebris.model.arena.ArenaBuilder;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
