@@ -11,9 +11,9 @@ public class ExplosiveBulletView extends ElementView<ExplosiveBullet> {
     }
 
     @Override
-    public void draw() {
+    public void draw(Vector2D cameraOffset) {
         GUI.getGUI().drawProjectile(
-                this.model.getPosition(),
+                this.model.getPosition().minus(cameraOffset),
                 GUI.Projectile.EXPLOSIVE,
                 Vector2D.Direction.RIGHT
         );

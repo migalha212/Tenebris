@@ -6,6 +6,7 @@ import com.ldts.t14g01.Tenebris.model.arena.entities.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 import com.ldts.t14g01.Tenebris.model.arena.projectiles.Projectile;
+import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ public class Arena implements ElementProvider {
     private final List<Projectile> projectiles;
     private final List<Effect> effects;
 
+    private Camera camera;
     private Dylan dylan;
 
     public Arena() throws IOException {
+        this.camera = new Camera(new Vector2D(0, 0));
         this.elements = new ArrayList<>();
         this.monsters = new ArrayList<>();
         this.particles = new ArrayList<>();
@@ -30,6 +33,7 @@ public class Arena implements ElementProvider {
 
     public void addElement(GameElement element) {
         switch (element) {
+            case Camera camera1 -> this.camera = camera1;
             case Dylan dylan1 -> this.dylan = dylan1;
             case Particle particle -> this.particles.add(particle);
             case Monster monster -> this.monsters.add(monster);
@@ -37,6 +41,10 @@ public class Arena implements ElementProvider {
             case null -> throw new RuntimeException("Trying to add null Element to Arena");
             default -> this.elements.add(element);
         }
+    }
+
+    public Camera getCamera() {
+        return this.camera;
     }
 
     public Dylan getDylan() {

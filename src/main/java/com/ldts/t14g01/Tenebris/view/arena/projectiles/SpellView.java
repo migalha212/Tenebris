@@ -11,9 +11,9 @@ public class SpellView extends ElementView<Spell> {
     }
 
     @Override
-    public void draw() {
+    public void draw(Vector2D cameraOffset) {
         GUI.getGUI().drawProjectile(
-                this.model.getPosition(),
+                this.model.getPosition().minus(cameraOffset),
                 GUI.Projectile.SPELL,
                 Vector2D.Direction.RIGHT
         );

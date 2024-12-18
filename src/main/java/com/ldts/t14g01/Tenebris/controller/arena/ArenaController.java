@@ -177,6 +177,9 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         dylanController.setMoving(dylan_moves);
         dylanController.update();
 
+        // Update Camera
+        this.getModel().getCamera().getController().update(dylan.getPosition());
+
         // Update Monsters with Dylan position
         List<Monster> monsters = this.getModel().getMonsters();
         monsters.forEach(monster -> monster.getController().update(dylan.getPosition(), this.getModel(), this));
