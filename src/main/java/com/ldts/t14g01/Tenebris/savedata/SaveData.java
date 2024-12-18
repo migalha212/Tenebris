@@ -5,7 +5,7 @@ import com.ldts.t14g01.Tenebris.utils.Difficulty;
 import java.util.Objects;
 
 public class SaveData {
-    private static final int MAX_LEVEL = 5;
+    public static final int MAX_LEVEL = 5;
 
     private final Difficulty difficulty;
     private int level;

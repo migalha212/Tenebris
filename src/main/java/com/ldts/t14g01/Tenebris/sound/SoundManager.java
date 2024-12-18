@@ -6,12 +6,9 @@ public interface SoundManager {
         // Player
         ENTITY_DAMAGE,
         ENTITY_DEATH,
-        SHOT,
 
         // Menu
         MENU_SWITCH
-
-        // Arena
     }
 
 

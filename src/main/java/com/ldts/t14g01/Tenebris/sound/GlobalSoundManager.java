@@ -9,7 +9,7 @@ public class GlobalSoundManager implements SoundManager {
 
     private final File shot;
     private final File entityDamage;
-    private final File entityDeath;
+    private final File dylanDeath;
 
     private final File menuSwitch;
 
@@ -20,7 +20,7 @@ public class GlobalSoundManager implements SoundManager {
         // Entity SFX
         this.shot = new File("src/main/resources/sfx/shot.wav");
         this.entityDamage = new File("src/main/resources/sfx/entity_damage.wav");
-        this.entityDeath = new File("src/main/resources/sfx/entity_death.wav");
+        this.dylanDeath = new File("src/main/resources/sfx/dylan_death.wav");
 
         // Menu SFX
         this.menuSwitch = new File("src/main/resources/sfx/menu_switch.wav");
@@ -28,8 +28,8 @@ public class GlobalSoundManager implements SoundManager {
         // Music
         this.arenaBackgroundMusic = this.open(new File("src/main/resources/music/arena_music.wav"));
         this.menuBackgroundMusic = this.open(new File("src/main/resources/music/menu_music.wav"));
-        ((FloatControl) this.menuBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-30.0f);
-        ((FloatControl) this.arenaBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-20.0f);
+        ((FloatControl) this.menuBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-15.0f);
+        ((FloatControl) this.arenaBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
     }
 
     protected static GlobalSoundManager getInstance() {
@@ -48,7 +48,6 @@ public class GlobalSoundManager implements SoundManager {
         return sound;
     }
 
-
     @Override
     public void playSFX(SFX sfx) {
         Clip sfxClip;
@@ -57,11 +56,10 @@ public class GlobalSoundManager implements SoundManager {
                 sfxClip = this.open(this.entityDamage);
                 ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
             }
-            case ENTITY_DEATH -> sfxClip = this.open(this.entityDeath);
-            case SHOT -> sfxClip = this.open(this.shot);
+            case ENTITY_DEATH -> sfxClip = this.open(this.dylanDeath);
             case MENU_SWITCH -> {
                 sfxClip = this.open(this.menuSwitch);
-                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-18.0f);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
             }
             case null, default -> throw new RuntimeException("Trying to Play non existent SFX");
         }

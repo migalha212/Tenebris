@@ -14,10 +14,8 @@ import com.ldts.t14g01.Tenebris.model.arena.particles.DeathBlood;
 import com.ldts.t14g01.Tenebris.model.arena.particles.Particle;
 import com.ldts.t14g01.Tenebris.model.arena.particles.SpellExplosion;
 import com.ldts.t14g01.Tenebris.model.arena.projectile.Projectile;
-import com.ldts.t14g01.Tenebris.model.menu.DeathMenu;
-import com.ldts.t14g01.Tenebris.model.menu.GameOverMenu;
-import com.ldts.t14g01.Tenebris.model.menu.LevelCompletedMenu;
-import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
+import com.ldts.t14g01.Tenebris.model.menu.*;
+import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
@@ -188,9 +186,14 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         this.commands.clear();
 
         // If no monsters alive then player wins
-        if (this.getModel().getMonsters().isEmpty()) {
+        if (this.getModel().getMonsters().isEmpty() && saveDataProvider.getSaveData().getLevel() != SaveData.MAX_LEVEL) {
             saveDataProvider.getSaveData().increaseLevel();
             stateChanger.setState(new MenuState(new LevelCompletedMenu()));
+            return;
+        }
+        // If last menu show Victory screen
+        else if (this.getModel().getMonsters().isEmpty()) {
+            stateChanger.setState(new MenuState(new VictoryMenu()));
             return;
         }
 
