@@ -2,13 +2,9 @@ package com.ldts.t14g01.Tenebris.controller.arena;
 
 import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CommandHandler;
-import com.ldts.t14g01.Tenebris.model.arena._commands.CreateProjectile;
 import com.ldts.t14g01.Tenebris.model.arena.animation.Animation;
 import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
-import com.ldts.t14g01.Tenebris.model.arena.projectiles.Bullet;
-import com.ldts.t14g01.Tenebris.model.arena.projectiles.ExplosiveBullet;
-import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.Set;
@@ -23,8 +19,8 @@ public class DylanController {
 
     public void setSelectedWeapon(Action action) {
         switch (action) {
-            case SELECT_1 -> this.model.setSelectedWeapon(1);
-            case SELECT_2 -> this.model.setSelectedWeapon(2);
+            case SELECT_1 -> this.model.setSelectedWeapon(0);
+            case SELECT_2 -> this.model.setSelectedWeapon(1);
             case null, default -> {
             }
         }
@@ -82,25 +78,16 @@ public class DylanController {
             }
         }
 
-        // If cooldown is over, shoot
-        int weapon = this.model.getSelectedWeapon();
-        if (this.model.canShoot(weapon)) {
-            this.model.resetTimer(weapon);
+        this.model.getEquipedWeapon().getWeaponController().shoot(commandHandler, bulletPosition, direction);
+    }
 
-            if (weapon == 1) {
-                commandHandler.handleCommand(new CreateProjectile(new Bullet(bulletPosition, direction, 10)));
-                SoundManager.getInstance().playSFX(SoundManager.SFX.SHOOT);
-            }
-            if (weapon == 2) {
-                commandHandler.handleCommand(new CreateProjectile(new ExplosiveBullet(bulletPosition, direction, 20)));
-                SoundManager.getInstance().playSFX(SoundManager.SFX.GRENADE);
-            }
-        }
+    public void reload() {
+        this.model.getEquipedWeapon().getWeaponController().reload();
     }
 
     public void update() {
         // Tick Fire CoolDown Counter
-        this.model.tickWeaponTimers();
+        this.model.getEquipedWeapon().getWeaponController().update();
 
         // If in animation execute
         Animation animation = this.model.getAnimation();

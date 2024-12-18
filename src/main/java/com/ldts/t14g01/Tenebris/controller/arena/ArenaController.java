@@ -177,6 +177,7 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
                 case MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT -> dylan_moves.add(activeAction);
                 case LOOK_UP, LOOK_DOWN, LOOK_LEFT, LOOK_RIGHT -> dylanController.setLooking(activeAction);
                 case EXEC -> dylanController.shoot(this);
+                case SELECT_3 -> dylanController.reload();
                 case null, default -> {
                 }
             }

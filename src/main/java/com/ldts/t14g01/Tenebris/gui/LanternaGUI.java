@@ -490,8 +490,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
         // Draw the current equipped weapon
         Vector2D weaponPos = new Vector2D(position.x() + 100, position.y());
-        if (selectedWeapon == 1) drawImage(weaponPos, this.sprite_weapon1);
-        else if (selectedWeapon == 2) drawImage(weaponPos, this.sprite_weapon2);
+        if (selectedWeapon == 0) drawImage(weaponPos, this.sprite_weapon1);
+        else if (selectedWeapon == 1) drawImage(weaponPos, this.sprite_weapon2);
     }
 
     @Override
