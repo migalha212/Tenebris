@@ -15,6 +15,9 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import java.io.IOException;
 
 public class DeathMenuController extends Controller<Menu> {
+    private static final int DELAY = 60;
+    private int frameCount;
+
     public DeathMenuController(Menu model) {
         super(model);
     }
@@ -30,6 +33,9 @@ public class DeathMenuController extends Controller<Menu> {
 
     @Override
     public void tick(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
+        frameCount++;
+        if (frameCount < DELAY) return;
+
         Action action = GUI.getGUI().getAction();
 
         switch (action) {

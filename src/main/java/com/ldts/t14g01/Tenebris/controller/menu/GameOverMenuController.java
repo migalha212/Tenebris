@@ -12,12 +12,18 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import java.io.IOException;
 
 public class GameOverMenuController extends Controller<Menu> {
+    private static final int DELAY = 60;
+    private int frameCount;
+
     public GameOverMenuController(Menu model) {
         super(model);
     }
 
     @Override
     public void tick(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
+        frameCount++;
+        if (frameCount < DELAY) return;
+
         Action action = GUI.getGUI().getAction();
 
         switch (action) {
