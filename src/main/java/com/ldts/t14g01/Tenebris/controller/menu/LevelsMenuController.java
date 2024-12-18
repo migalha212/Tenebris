@@ -23,8 +23,8 @@ public class LevelsMenuController extends Controller<Menu> {
     public void tick(Action action, StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (action) {
             case EXEC -> this.executeOption(stateChanger, saveDataProvider);
-            case LOOK_UP -> this.getModel().moveDown();
-            case LOOK_DOWN -> this.getModel().moveUp();
+            case LOOK_UP -> this.getModel().moveUp();
+            case LOOK_DOWN -> this.getModel().moveDown();
             case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             case QUIT -> stateChanger.setState(null);
             case null, default -> {
