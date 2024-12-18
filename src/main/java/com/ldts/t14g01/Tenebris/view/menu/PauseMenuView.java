@@ -25,8 +25,8 @@ public class PauseMenuView extends View<Menu> {
         String title = "Pause Menu";
         gui.drawText(
                 title,
-                new Vector2D(centerX - title.length() / 2, centerY - 4),
-                GUI.Colors.WHITE,
+                new Vector2D(centerX - title.length() / 2, centerY - 3),
+                GUI.Colors.BRIGHT_YELLOW,
                 GUI.Colors.BLACK
         );
 
@@ -41,7 +41,7 @@ public class PauseMenuView extends View<Menu> {
             // Draw option
             gui.drawText(
                     this.getModel().getOptions().get(i).replace('_', ' '),
-                    new Vector2D(leftX, centerY + i),
+                    new Vector2D(centerX - this.getModel().getOptions().get(i).length() / 2, centerY + i),
                     foreGroundColor,
                     GUI.Colors.BLACK
             );

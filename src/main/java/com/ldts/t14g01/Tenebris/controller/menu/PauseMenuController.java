@@ -3,6 +3,7 @@ package com.ldts.t14g01.Tenebris.controller.menu;
 import com.ldts.t14g01.Tenebris.controller.Controller;
 import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.gui.GUI;
+import com.ldts.t14g01.Tenebris.model.arena.ArenaBuilder;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
@@ -22,6 +23,7 @@ public class PauseMenuController extends Controller<Menu> {
     void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
         switch (PauseMenu.PauseMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case Continue -> this.goBackToArena(stateChanger);
+            case Restart_Level -> stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));
             case Statistics -> stateChanger.setState(new MenuState(new StatisticsMenu()));
             case Back_to_Main_Menu -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             default -> {

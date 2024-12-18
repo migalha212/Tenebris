@@ -11,6 +11,7 @@ public class PauseMenu extends Menu {
 
     public enum PauseMenuOptions {
         Continue,
+        Restart_Level,
         Statistics,
         Back_to_Main_Menu
     }
@@ -19,6 +20,7 @@ public class PauseMenu extends Menu {
         super();
         this.arena = arena;
         this.options.add(PauseMenuOptions.Continue.name());
+        this.options.add(PauseMenuOptions.Restart_Level.name());
         this.options.add(PauseMenuOptions.Statistics.name());
         this.options.add(PauseMenuOptions.Back_to_Main_Menu.name());
     }
