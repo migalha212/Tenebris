@@ -58,6 +58,12 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_dylan_right_1;
     private final BufferedImage sprite_dylan_right_2;
 
+    private final BufferedImage sprite_emptybar;
+    private final BufferedImage sprite_healthpart;
+    private final int HEALTHBAR_PARTS = 8;
+    private final BufferedImage sprite_weapon1;
+    private final BufferedImage sprite_weapon2;
+
     private final BufferedImage sprite_wall;
     private final BufferedImage sprite_breakable_wall;
     private final BufferedImage sprite_sandbag;
@@ -76,7 +82,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_tenebris_harbinger_back_2;
     private final BufferedImage sprite_tenebris_harbinger_right_1;
     private final BufferedImage sprite_tenebris_harbinger_right_2;
-    private final BufferedImage sprite_tenebris_harbinder_left_1;
+    private final BufferedImage sprite_tenebris_harbinger_left_1;
     private final BufferedImage sprite_tenebris_harbinger_left_2;
 
     private final BufferedImage sprite_tenebris_heavy_idle_1;
@@ -169,6 +175,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_dylan_right_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/1.png"));
             this.sprite_dylan_right_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/2.png"));
 
+            this.sprite_emptybar = ImageIO.read(new File("src/main/resources/sprites/dylan/hp/emptybar.png"));
+            this.sprite_healthpart = ImageIO.read(new File("src/main/resources/sprites/dylan/hp/healthpart.png"));
+            this.sprite_weapon1 = ImageIO.read(new File("src/main/resources/sprites/dylan/weapons/pistol.png"));
+            this.sprite_weapon2 = ImageIO.read(new File("src/main/resources/sprites/dylan/weapons/grenade-launcher.png"));
+
             this.sprite_wall = ImageIO.read(new File("src/main/resources/sprites/elements/wall.png"));
             this.sprite_breakable_wall = ImageIO.read(new File("src/main/resources/sprites/elements/breakablewall.png"));
             this.sprite_sandbag = ImageIO.read(new File("src/main/resources/sprites/elements/sandbag.png"));
@@ -199,7 +210,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_tenebris_harbinger_back_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-back/2.png"));
             this.sprite_tenebris_harbinger_right_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-right/1.png"));
             this.sprite_tenebris_harbinger_right_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-right/2.png"));
-            this.sprite_tenebris_harbinder_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-left/1.png"));
+            this.sprite_tenebris_harbinger_left_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-left/1.png"));
             this.sprite_tenebris_harbinger_left_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-left/2.png"));
 
             this.sprite_tenebris_heavy_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-heavy/idle/1.png"));
@@ -458,6 +469,27 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     }
 
     @Override
+    public void drawArenaUI(int maxHP, int hp, int selectedWeapon) {
+        Vector2D position = new Vector2D(92, 297);
+        int portion = maxHP / HEALTHBAR_PARTS;
+        // Determine how many health parts the player still has, ceiling division
+        int current = (hp + portion - 1) / portion;
+
+        // Draw the bottom layer of the health bar
+        this.drawImage(position, this.sprite_emptybar);
+
+        // Draw the dynamic part of the health bar
+        for (int i = 0; i < current; i++)
+            this.drawImage(new Vector2D(position.x() - 64 + i * 18, position.y()), this.sprite_healthpart);
+
+
+        // Draw the current equipped weapon
+        Vector2D weaponPos = new Vector2D(position.x() + 100, position.y());
+        if (selectedWeapon == 1) drawImage(weaponPos, this.sprite_weapon1);
+        else if (selectedWeapon == 2) drawImage(weaponPos, this.sprite_weapon2);
+    }
+
+    @Override
     public void drawDylan(Vector2D position, AnimationState state) {
         switch (state) {
             case IDLE_1 -> this.drawImage(position, this.sprite_dylan_idle_1);
@@ -485,7 +517,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                     case FRONT_2 -> this.drawImage(position, sprite_tenebris_harbinger_front_2);
                     case BACK_1 -> this.drawImage(position, sprite_tenebris_harbinger_back_1);
                     case BACK_2 -> this.drawImage(position, sprite_tenebris_harbinger_back_2);
-                    case LEFT_1 -> this.drawImage(position, sprite_tenebris_harbinder_left_1);
+                    case LEFT_1 -> this.drawImage(position, sprite_tenebris_harbinger_left_1);
                     case LEFT_2 -> this.drawImage(position, sprite_tenebris_harbinger_left_2);
                     case RIGHT_1 -> this.drawImage(position, sprite_tenebris_harbinger_right_1);
                     case RIGHT_2 -> this.drawImage(position, sprite_tenebris_harbinger_right_2);

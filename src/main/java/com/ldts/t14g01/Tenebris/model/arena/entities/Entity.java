@@ -46,6 +46,18 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
         return this.velocity;
     }
 
+    public int getHp() {
+        return this.hp;
+    }
+
+    public Bounce getBounce() {
+        return bounce;
+    }
+
+    public void setBounce(Bounce bounce) {
+        this.bounce = bounce;
+    }
+
     public State getLooking() {
         return looking;
     }
@@ -66,14 +78,6 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
 
     public void setMoving(Set<State> moving) {
         this.moving = moving;
-    }
-
-    public Bounce getBounce() {
-        return bounce;
-    }
-
-    public void setBounce(Bounce bounce) {
-        this.bounce = bounce;
     }
 
     public void takeDamage(int damage) {

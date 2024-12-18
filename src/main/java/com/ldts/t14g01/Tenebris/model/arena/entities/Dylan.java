@@ -5,7 +5,6 @@ import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
 import com.ldts.t14g01.Tenebris.model.arena._commands.KillDylan;
-import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesPlayer;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
@@ -23,6 +22,7 @@ public class Dylan extends Entity {
     private int weapon1Timer;
     private int weapon2Timer;
     private int selectedWeapon;
+    private final int maxHP;
 
     public Dylan(Vector2D position, int hp, int velocity) {
         super(position, hitBoX, hp, velocity);
@@ -33,6 +33,11 @@ public class Dylan extends Entity {
         this.weapon1Timer = 0;
         this.weapon2Timer = 0;
         this.selectedWeapon = 1;
+        this.maxHP = hp;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
     }
 
     public boolean canShoot(int weapon) {

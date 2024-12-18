@@ -34,5 +34,12 @@ public class ArenaView extends View<Arena> {
 
         // Draw Projectiles
         arena.getProjectiles().forEach(projectile -> projectile.getView().draw());
+
+        // Draw UI
+        GUI.getGUI().drawArenaUI(
+                this.getModel().getDylan().getMaxHP(),
+                this.getModel().getDylan().getHp(),
+                this.getModel().getDylan().getSelectedWeapon()
+        );
     }
 }
