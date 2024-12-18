@@ -2,11 +2,13 @@ package com.ldts.t14g01.Tenebris.model.arena.static_elements;
 
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
+import com.ldts.t14g01.Tenebris.model.arena._commands.CreateParticle;
 import com.ldts.t14g01.Tenebris.model.arena._commands.DeleteBreakableWall;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksMovement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
+import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.staticelement.BreakableWallView;
@@ -41,8 +43,7 @@ public class BreakableWall extends GameElement implements BlocksVision, AbsorbsP
             int damage = ((DamagesEntities) other).getEntityDamage();
             if (damage != 0) {
                 this.takeDamage(damage);
-                // TODO Create particle for wall damage
-                // commands.add(new CreateParticle(this.position, ParticleType.DAMAGE_BLOOD));
+                commands.add(new CreateParticle(this.position, ParticleType.BREAKABLE_WALL_DAMAGE));
             }
         }
 

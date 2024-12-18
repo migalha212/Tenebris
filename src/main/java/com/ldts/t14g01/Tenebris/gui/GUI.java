@@ -43,13 +43,15 @@ public interface GUI {
         DAMAGE_BLOOD,
         DEATH_BLOOD,
         SPELL_EXPLOSION,
-        EXPLOSION
+        EXPLOSION,
+        BREAKABLE_WALL_DAMAGE
     }
 
     int EXPLOSION_FRAME_COUNT = 16;
     int SPELL_EXPLOSION_FRAME_COUNT = 4;
     int DEATH_BLOOD_FRAME_COUNT = 16;
     int DAMAGE_BLOOD_FRAME_COUNT = 5;
+    int BREAKABLE_WALL_DAMAGE_FRAME_COUNT = 4;
 
     // Projectiles
     enum Projectile {

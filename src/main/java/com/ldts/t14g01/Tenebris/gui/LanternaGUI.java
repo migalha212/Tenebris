@@ -73,6 +73,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final List<BufferedImage> sprite_spell_explostion;
     private final List<BufferedImage> sprite_death_blood;
     private final List<BufferedImage> sprite_damage_blood;
+    private final List<BufferedImage> sprite_breakable_wall_damage;
 
     private final BufferedImage sprite_tenebris_harbinger_idle_1;
     private final BufferedImage sprite_tenebris_harbinger_idle_2;
@@ -202,6 +203,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             for (int i = 1; i <= GUI.DAMAGE_BLOOD_FRAME_COUNT; i++)
                 this.sprite_damage_blood.add(ImageIO.read(new File("src/main/resources/sprites/particles/damage-blood/" + i + ".png")));
 
+            this.sprite_breakable_wall_damage = new ArrayList<>();
+            for (int i = 1; i <= GUI.BREAKABLE_WALL_DAMAGE_FRAME_COUNT;i++){
+                this.sprite_breakable_wall_damage.add(ImageIO.read(new File("src/main/resources/sprites/particles/breakable-wall-damage/" + i + ".png")));
+            }
             this.sprite_tenebris_harbinger_idle_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/1.png"));
             this.sprite_tenebris_harbinger_idle_2 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/idle/2.png"));
             this.sprite_tenebris_harbinger_front_1 = ImageIO.read(new File("src/main/resources/sprites/monsters/tenebris-harbinder/walk-front/1.png"));
@@ -630,6 +635,13 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                     throw new RuntimeException("Drawing Invalid Explosion Frame Number");
 
                 this.drawImage(position, this.sprite_explosion.get(frameNumber - 1));
+            }
+
+            case BREAKABLE_WALL_DAMAGE -> {
+                if (frameNumber <= 0 || frameNumber > GUI.BREAKABLE_WALL_DAMAGE_FRAME_COUNT)
+                    throw new RuntimeException("Drawing Invalid Breakable Wall Damage Frame Number");
+
+                this.drawImage(position,this.sprite_breakable_wall_damage.get(frameNumber - 1));
             }
 
             case null, default -> throw new RuntimeException("Invalid particle effect.");
