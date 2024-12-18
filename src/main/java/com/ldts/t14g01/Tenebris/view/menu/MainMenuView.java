@@ -28,17 +28,17 @@ public class MainMenuView extends View<Menu> {
 
         // Draw Title
         List<String> title = new ArrayList<>();
-        title.add(" _______              _          _");
-        title.add("|__   __|            | |        (_)");
-        title.add("   | | ___ _ __   ___| |__  _ __ _ ___");
+        title.add(" _______              _          _         ");
+        title.add("|__   __|            | |        (_)        ");
+        title.add("   | | ___ _ __   ___| |__  _ __ _ ___     ");
         title.add("   | |/ _ \\ '_ \\ / _ \\ '_ \\| '__| / __|");
-        title.add("   | |  __/ | | |  __/ |_) | |  | \\__ \\");
-        title.add("   |_|\\___|_| |_|\\___|_.__/|_|  |_|___/");
+        title.add("   | |  __/ | | |  __/ |_) | |  | \\__ \\  ");
+        title.add("   |_|\\___|_| |_|\\___|_.__/|_|  |_|___/  ");
 
         for (int i = 0; i < title.size(); i++)
             gui.drawText(
                     title.get(i),
-                    new Vector2D(centerX - 20, 2 + i),
+                    new Vector2D(centerX - title.get(0).length()/2, 2 + i),
                     GUI.Colors.WHITE,
                     GUI.Colors.BLACK
             );
