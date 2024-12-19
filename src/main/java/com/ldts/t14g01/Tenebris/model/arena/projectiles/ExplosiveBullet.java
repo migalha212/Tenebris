@@ -16,7 +16,7 @@ import java.util.List;
 public class ExplosiveBullet extends Projectile {
     private static final HitBoX HIT_BOX = new HitBoX(new Vector2D(-4, -4), new Vector2D(6, 6));
     private static final int VELOCITY = 4;
-    private static final int EXPLOSION_DAMAGE = 30;
+    private static final int EXPLOSION_DAMAGE = 15;
 
     public ExplosiveBullet(Vector2D position, Vector2D.Direction direction) {
         super(position, HIT_BOX, direction, VELOCITY, 0);

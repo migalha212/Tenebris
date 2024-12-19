@@ -10,7 +10,7 @@ public class Explosion extends Effect implements DamagesEntities {
     private int damage;
 
     public Explosion(Vector2D position, int damage) {
-        super(position, new HitBoX(new Vector2D(-10, -10), new Vector2D(20, 20)));
+        super(position, new HitBoX(new Vector2D(-35, -35), new Vector2D(70, 70)));
         this.view = new ExplosionView(this);
         this.damage = damage * 2; // It will be cut in half before the first interaction
     }
@@ -21,7 +21,7 @@ public class Explosion extends Effect implements DamagesEntities {
 
         // Reduce Damage so it hurts entities closer more
         // They collide more times when they are bouncing away
-        this.damage /= 2;
+        this.damage = (int) (Math.pow(this.damage, 0.8));
     }
 
     @Override
