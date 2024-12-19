@@ -377,6 +377,25 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        // Add to Action List
+        Action action;
+        switch (e.getKeyCode()) {
+            case 37 -> action = Action.LOOK_LEFT;
+            case 38 -> action = Action.LOOK_UP;
+            case 39 -> action = Action.LOOK_RIGHT;
+            case 40 -> action = Action.LOOK_DOWN;
+            case 65 -> action = Action.MOVE_LEFT;
+            case 68 -> action = Action.MOVE_RIGHT;
+            case 83 -> action = Action.MOVE_DOWN;
+            case 87 -> action = Action.MOVE_UP;
+            case 10, 32, 69 -> action = Action.EXEC;
+            default -> action = null;
+        }
+        if (action != null) this.activeActions.add(action);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
         // Dispatch Keys to Terminal
         SwingTerminalFrame STF = ((SwingTerminalFrame) ((TerminalScreen) this.screen).getTerminal());
         switch (e.getKeyCode()) {
@@ -400,25 +419,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             }
         }
 
-        // Add to Action List
-        Action action;
-        switch (e.getKeyCode()) {
-            case 37 -> action = Action.LOOK_LEFT;
-            case 38 -> action = Action.LOOK_UP;
-            case 39 -> action = Action.LOOK_RIGHT;
-            case 40 -> action = Action.LOOK_DOWN;
-            case 65 -> action = Action.MOVE_LEFT;
-            case 68 -> action = Action.MOVE_RIGHT;
-            case 83 -> action = Action.MOVE_DOWN;
-            case 87 -> action = Action.MOVE_UP;
-            case 10, 32, 69 -> action = Action.EXEC;
-            default -> action = null;
-        }
-        if (action != null) this.activeActions.add(action);
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
         // Remove from action list
         Action action;
         switch (e.getKeyCode()) {
