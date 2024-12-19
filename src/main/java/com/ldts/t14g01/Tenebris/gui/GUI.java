@@ -3,6 +3,7 @@ package com.ldts.t14g01.Tenebris.gui;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public interface GUI {
@@ -26,11 +27,19 @@ public interface GUI {
     }
 
     // Menu Titles
-    enum Menus  {
+    enum Menus {
+        MAIN_MENU
     }
 
     // Menu Options
     enum Menu_Options {
+        MAIN_MENU_NEW_GAME,
+        MAIN_MENU_CONTINUE,
+        MAIN_MENU_LOAD_GAME,
+        MAIN_MENU_LEVELS,
+        MAIN_MENU_HOW_TO_PLAY,
+        MAIN_MENU_CREDITS,
+        MAIN_MENU_EXIT
     }
 
     // Entity States
@@ -103,6 +112,8 @@ public interface GUI {
 
     // Drawing
     void drawText(String text, Vector2D position, Colors foreGround, Colors backGround);
+
+    void drawMainMenu(List<Menu_Options> options, int selectedOption);
 
     void drawArenaBackGround();
 

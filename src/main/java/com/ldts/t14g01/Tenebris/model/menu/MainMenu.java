@@ -10,9 +10,9 @@ import com.ldts.t14g01.Tenebris.view.menu.MainMenuView;
 public class MainMenu extends Menu {
     public enum MainMenuOptions {
         New_Game,
+        Continue,
         Load_Game,
         Levels,
-        Continue,
         How_to_Play,
         Credits,
         Exit
@@ -27,9 +27,8 @@ public class MainMenu extends Menu {
         this.options.add(MainMenuOptions.New_Game.name());
 
         // Continue Option only Visible if a game save is loaded
-        if (saveDataProvider.getSaveData() != null) {
-            this.options.add(MainMenuOptions.Continue.name());
-        }
+        if (saveDataProvider.getSaveData() != null) this.options.add(MainMenuOptions.Continue.name());
+
 
         // Load Game Menu and Levels only visible if saved Games exist
         if (SaveDataManager.getInstance().getSaveCount() != 0) {
