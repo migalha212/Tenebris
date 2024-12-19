@@ -58,11 +58,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final BufferedImage sprite_dylan_right_1;
     private final BufferedImage sprite_dylan_right_2;
 
-    private final BufferedImage sprite_emptybar;
-    private final BufferedImage sprite_healthpart;
-    private final int HEALTHBAR_PARTS = 8;
-    private final BufferedImage sprite_weapon1;
-    private final BufferedImage sprite_weapon2;
+    private final BufferedImage sprite_empty_health_bar;
+    private final BufferedImage sprite_green_health_part;
+    private final BufferedImage sprite_pistol;
+    private final BufferedImage sprite_grenade_launcher;
 
     private final BufferedImage sprite_wall;
     private final BufferedImage sprite_breakable_wall;
@@ -176,10 +175,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_dylan_right_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/1.png"));
             this.sprite_dylan_right_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-right/2.png"));
 
-            this.sprite_emptybar = ImageIO.read(new File("src/main/resources/sprites/dylan/hp/emptybar.png"));
-            this.sprite_healthpart = ImageIO.read(new File("src/main/resources/sprites/dylan/hp/healthpart.png"));
-            this.sprite_weapon1 = ImageIO.read(new File("src/main/resources/sprites/dylan/weapons/pistol.png"));
-            this.sprite_weapon2 = ImageIO.read(new File("src/main/resources/sprites/dylan/weapons/grenade-launcher.png"));
+            this.sprite_empty_health_bar = ImageIO.read(new File("src/main/resources/sprites/dylan/hp/emptybar.png"));
+            this.sprite_green_health_part = ImageIO.read(new File("src/main/resources/sprites/dylan/hp/healthpart.png"));
+            this.sprite_pistol = ImageIO.read(new File("src/main/resources/sprites/dylan/weapons/pistol.png"));
+            this.sprite_grenade_launcher = ImageIO.read(new File("src/main/resources/sprites/dylan/weapons/grenade-launcher.png"));
 
             this.sprite_wall = ImageIO.read(new File("src/main/resources/sprites/elements/wall.png"));
             this.sprite_breakable_wall = ImageIO.read(new File("src/main/resources/sprites/elements/breakablewall.png"));
@@ -376,9 +375,9 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                 case 'S', 's' -> action = Action.MOVE_DOWN;
                 case 'A', 'a' -> action = Action.MOVE_LEFT;
                 case 'D', 'd' -> action = Action.MOVE_RIGHT;
+                case 'R', 'r' -> action = Action.RELOAD;
                 case '1' -> action = Action.SELECT_1;
                 case '2' -> action = Action.SELECT_2;
-                case '3' -> action = Action.SELECT_3;
             }
         }
 
@@ -414,7 +413,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case 68 -> STF.addInput(new KeyStroke('d', false, false));
             case 49 -> STF.addInput(new KeyStroke('1', false, false));
             case 50 -> STF.addInput(new KeyStroke('2', false, false));
-            case 51 -> STF.addInput(new KeyStroke('3', false, false));
+            case 82 -> STF.addInput(new KeyStroke('r', false, false));
             default -> {
             }
         }
@@ -474,24 +473,46 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     }
 
     @Override
-    public void drawArenaUI(int maxHP, int hp, int selectedWeapon) {
+    public void drawArenaUI(int maxHP, int hp) {
         Vector2D position = new Vector2D(92, 297);
-        int portion = maxHP / HEALTHBAR_PARTS;
+
         // Determine how many health parts the player still has, ceiling division
+        int HEALTHBAR_PARTS = 7;
+        int portion = maxHP / HEALTHBAR_PARTS;
         int current = (hp + portion - 1) / portion;
 
         // Draw the bottom layer of the health bar
-        this.drawImage(position, this.sprite_emptybar);
+        this.drawImage(position, this.sprite_empty_health_bar);
 
         // Draw the dynamic part of the health bar
         for (int i = 0; i < current; i++)
-            this.drawImage(new Vector2D(position.x() - 64 + i * 18, position.y()), this.sprite_healthpart);
+            this.drawImage(new Vector2D(position.x() - 64 + i * 18, position.y()), this.sprite_green_health_part);
+    }
 
+    @Override
+    public void drawWeapon(Weapon weapon, int numberOfBullets) {
+        Vector2D weaponPos = new Vector2D(174, 297);
+        Vector2D bulletPos = new Vector2D(192, 297);
+        BufferedImage ammoImage;
 
-        // Draw the current equipped weapon
-        Vector2D weaponPos = new Vector2D(position.x() + 100, position.y());
-        if (selectedWeapon == 0) drawImage(weaponPos, this.sprite_weapon1);
-        else if (selectedWeapon == 1) drawImage(weaponPos, this.sprite_weapon2);
+        // Draw gun
+        switch (weapon) {
+            case PISTOL -> {
+                this.drawImage(weaponPos, this.sprite_pistol);
+                ammoImage = this.sprite_bullet_vertical;
+            }
+            case GRENADE_LAUNCHER -> {
+                this.drawImage(weaponPos, this.sprite_grenade_launcher);
+                ammoImage = this.sprite_explosive;
+            }
+            case null, default -> throw new RuntimeException("Trying to draw gun that doesn't exist.");
+        }
+
+        // Draw ammo
+        for (int i = 0; i < numberOfBullets; i++) {
+            this.drawImage(bulletPos, ammoImage);
+            bulletPos = bulletPos.add(new Vector2D(ammoImage.getWidth() / 2, 0));
+        }
     }
 
     @Override

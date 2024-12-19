@@ -16,12 +16,11 @@ import java.util.List;
 public class ExplosiveBullet extends Projectile {
     private static final HitBoX HIT_BOX = new HitBoX(new Vector2D(-4, -4), new Vector2D(6, 6));
     private static final int VELOCITY = 4;
-    private final int explosionDamage;
+    private static final int EXPLOSION_DAMAGE = 30;
 
-    public ExplosiveBullet(Vector2D position, Vector2D.Direction direction, int explosionDamage) {
+    public ExplosiveBullet(Vector2D position, Vector2D.Direction direction) {
         super(position, HIT_BOX, direction, VELOCITY, 0);
         this.view = new ExplosiveBulletView(this);
-        this.explosionDamage = explosionDamage;
     }
 
     @Override
@@ -29,7 +28,7 @@ public class ExplosiveBullet extends Projectile {
         List<Command> commands = super.interact(other);
 
         if (other instanceof AbsorbsProjectiles) {
-            commands.add(new CreateEffect(new Explosion(this.position, this.explosionDamage)));
+            commands.add(new CreateEffect(new Explosion(this.position, EXPLOSION_DAMAGE)));
             commands.add(new ShakeCamera());
             SoundManager.getInstance().playSFX(SoundManager.SFX.EXPLOSION);
         }

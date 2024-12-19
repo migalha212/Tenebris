@@ -160,7 +160,7 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         switch (action) {
             case ESC -> stateChanger.setState(new MenuState(new PauseMenu(this.getModel())));
             case QUIT -> stateChanger.setState(null);
-            case SELECT_1, SELECT_2 -> this.getModel().getDylan().getController().setSelectedWeapon(action);
+            case SELECT_1, SELECT_2, RELOAD -> this.getModel().getDylan().getController().updateWeapon(action);
             case null, default -> {
             }
         }
@@ -177,7 +177,6 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
                 case MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT -> dylan_moves.add(activeAction);
                 case LOOK_UP, LOOK_DOWN, LOOK_LEFT, LOOK_RIGHT -> dylanController.setLooking(activeAction);
                 case EXEC -> dylanController.shoot(this);
-                case SELECT_3 -> dylanController.reload();
                 case null, default -> {
                 }
             }
@@ -227,14 +226,12 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         }
 
         // Dylan is Dead
-        if (this.getModel().getDylan() == null) {
+        if (this.getModel().getDylan() == null)
             if (saveDataProvider.getSaveData().getDifficulty() == Difficulty.Heartless) {
                 stateChanger.setState(new MenuState(new GameOverMenu()));
                 SaveDataManager.getInstance().deleteSave(saveDataProvider.getSaveData());
                 saveDataProvider.setSaveData(null);
-            }
-            else stateChanger.setState(new MenuState(new DeathMenu()));
-        }
+            } else stateChanger.setState(new MenuState(new DeathMenu()));
     }
 
     @Override

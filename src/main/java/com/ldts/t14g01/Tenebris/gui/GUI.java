@@ -60,6 +60,12 @@ public interface GUI {
         SPELL
     }
 
+    // Weapons
+    enum Weapon {
+        PISTOL,
+        GRENADE_LAUNCHER
+    }
+
     static GUI getGUI() {
         return LanternaGUI.getGUI();
     }
@@ -74,7 +80,9 @@ public interface GUI {
 
     void drawArenaBackGround();
 
-    void drawArenaUI(int maxHP, int hp, int selectedWeapon);
+    void drawArenaUI(int maxHP, int hp);
+
+    void drawWeapon(Weapon weapon, int numberOfBullets);
 
     void drawDylan(Vector2D position, AnimationState state);
 

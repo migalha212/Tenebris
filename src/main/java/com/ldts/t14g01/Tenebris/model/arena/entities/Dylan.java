@@ -8,9 +8,9 @@ import com.ldts.t14g01.Tenebris.model.arena._commands.KillDylan;
 import com.ldts.t14g01.Tenebris.model.arena.animation.Bounce;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesPlayer;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
-import com.ldts.t14g01.Tenebris.model.weapon.GrenadeLauncher;
-import com.ldts.t14g01.Tenebris.model.weapon.Pistol;
-import com.ldts.t14g01.Tenebris.model.weapon.Weapon;
+import com.ldts.t14g01.Tenebris.model.arena.weapons.GrenadeLauncher;
+import com.ldts.t14g01.Tenebris.model.arena.weapons.Pistol;
+import com.ldts.t14g01.Tenebris.model.arena.weapons.Weapon;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.utils.HitBoX;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
@@ -22,7 +22,7 @@ import java.util.List;
 public class Dylan extends Entity {
     private static final HitBoX hitBoX = new HitBoX(new Vector2D(-5, -6), new Vector2D(8, 13));
     private final DylanController controller;
-    private List<Weapon> weapons;
+    private final List<Weapon> weapons;
     private int selectedWeapon;
     private final int maxHP;
 
@@ -31,25 +31,25 @@ public class Dylan extends Entity {
         this.view = new DylanView(this);
         this.controller = new DylanController(this);
         this.weapons = new ArrayList<>();
-        weapons.add(new Pistol());
-        weapons.add(new GrenadeLauncher());
         this.selectedWeapon = 0;
         this.maxHP = hp;
+
+        // Add Weapons
+        weapons.add(new Pistol());
+        weapons.add(new GrenadeLauncher());
     }
 
     public int getMaxHP() {
-        return maxHP;
+        return this.maxHP;
     }
 
-    public int getSelectedWeapon() {
-        return selectedWeapon;
-    }
-
-    public Weapon getEquipedWeapon(){
-        return weapons.get(selectedWeapon);
+    public Weapon getEquipedWeapon() {
+        return this.weapons.get(this.selectedWeapon);
     }
 
     public void setSelectedWeapon(int selectedWeapon) {
+        if (selectedWeapon < 0 || selectedWeapon >= this.weapons.size())
+            throw new RuntimeException("Trying to select a weapon that doesn't exist");
         this.selectedWeapon = selectedWeapon;
     }
 

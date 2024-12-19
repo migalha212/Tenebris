@@ -14,5 +14,5 @@ public enum Action {
     EXEC,
     SELECT_1,
     SELECT_2,
-    SELECT_3
+    RELOAD
 }

@@ -79,7 +79,7 @@ public class CreditsMenuView extends View<Menu> {
         // Draw Regent and Supervisor Names
         List<String> professorsLines = new ArrayList<>();
         professorsLines.add("Rui Maranhão");
-        professorsLines.add("Juvenaldo Carvalho");
+        professorsLines.add("Juvenal Carvalho");
 
         for (int i = 0; i < professorsLines.size(); i++)
             gui.drawText(

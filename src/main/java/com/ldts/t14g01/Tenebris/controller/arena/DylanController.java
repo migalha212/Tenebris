@@ -17,10 +17,11 @@ public class DylanController {
         this.model = model;
     }
 
-    public void setSelectedWeapon(Action action) {
+    public void updateWeapon(Action action) {
         switch (action) {
             case SELECT_1 -> this.model.setSelectedWeapon(0);
             case SELECT_2 -> this.model.setSelectedWeapon(1);
+            case RELOAD -> this.model.getEquipedWeapon().getController().reload();
             case null, default -> {
             }
         }
@@ -78,16 +79,12 @@ public class DylanController {
             }
         }
 
-        this.model.getEquipedWeapon().getWeaponController().shoot(commandHandler, bulletPosition, direction);
-    }
-
-    public void reload() {
-        this.model.getEquipedWeapon().getWeaponController().reload();
+        this.model.getEquipedWeapon().getController().shoot(commandHandler, bulletPosition, direction);
     }
 
     public void update() {
-        // Tick Fire CoolDown Counter
-        this.model.getEquipedWeapon().getWeaponController().update();
+        // Tick Weapon Timer
+        this.model.getEquipedWeapon().getController().update();
 
         // If in animation execute
         Animation animation = this.model.getAnimation();
