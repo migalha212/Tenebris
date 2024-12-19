@@ -40,12 +40,4 @@ public class GUITest {
         Mockito.verify(textGraphics).setBackgroundColor(TextColor.ANSI.BLACK);
         Mockito.verify(textGraphics).putString(1, 1, "This is a Test!");
     }
-
-    @Test
-    void clearTest() {
-        gui.clear();
-        Mockito.verify(textGraphics).setBackgroundColor(TextColor.ANSI.BLACK);
-        Mockito.verify(textGraphics).fillRectangle(new TerminalPosition(0, 0), gui.getScreen().getTerminalSize(), ' ');
-    }
-
 }

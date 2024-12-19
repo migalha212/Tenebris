@@ -13,6 +13,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalResizeListener;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame;
+import com.ldts.t14g01.Tenebris.utils.Pair;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import javax.imageio.ImageIO;
@@ -24,27 +25,26 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     // Sets target window size and aspect ratio
-    private static final double MENU_SCREEN_OCCUPANCY = 0.65;
-    private static final double ARENA_SCREEN_OCCUPANCY = 0.8;
-    private static final int MENU_WIDTH = 64;
-    private static final int MENU_HEIGHT = 20;
-    private static final int ARENA_WIDTH = 486;
-    private static final int ARENA_HEIGHT = 306;
+    private static final double SCREEN_OCCUPANCY = 0.8;
+    private static final int SCREEN_WIDTH = 486;
+    private static final int SCREEN_HEIGHT = 306;
 
     // Instance Variables
-    private final Font ARENA_BASE_FONT;
+    private final Font BASE_FONT;
     private Screen screen;
-    private Type type;
     private TerminalSize terminalSize;
     private boolean quited = false;
     private final Set<Action> activeActions;
+
+    // Menus
+    private final EnumMap<Menus, BufferedImage> sprite_menu_backgrounds;
+    private final EnumMap<Menus, BufferedImage> sprite_menu_titles;
+    private final EnumMap<Menu_Options, Pair<BufferedImage>> sprite_menu_options;
 
     // Sprites
     private final BufferedImage sprite_dylan_idle_1;
@@ -147,7 +147,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
         // Load Square Font for the Arena
         Font font;
-
         try {
             URL resource = LanternaGUI.class.getClassLoader().getResource("fonts/square.ttf");
             File fontFile;
@@ -160,10 +159,14 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
-        this.ARENA_BASE_FONT = font;
+        this.BASE_FONT = font;
 
         // Load Sprites
         try {
+            this.sprite_menu_backgrounds = new EnumMap<>(Menus.class);
+            this.sprite_menu_titles = new EnumMap<>(Menus.class);
+            this.sprite_menu_options = new EnumMap<>(Menu_Options.class);
+
             this.sprite_dylan_idle_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/idle/1.png"));
             this.sprite_dylan_idle_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/idle/2.png"));
             this.sprite_dylan_front_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/walk-front/1.png"));
@@ -192,7 +195,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_spell_explostion = new ArrayList<>();
             for (int i = 1; i <= GUI.SPELL_EXPLOSION_FRAME_COUNT; i++)
                 this.sprite_spell_explostion.add(ImageIO.read(new File("src/main/resources/sprites/particles/spell-explosion/" + i + ".png")));
-
 
             this.sprite_death_blood = new ArrayList<>();
             for (int i = 1; i <= GUI.DEATH_BLOOD_FRAME_COUNT; i++)
@@ -266,56 +268,36 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_explosive = ImageIO.read(new File("src/main/resources/sprites/projectiles/explosive/explosive.png"));
             this.sprite_spell = ImageIO.read(new File("src/main/resources/sprites/projectiles/spell/spell.png"));
 
+            this.createScreen();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     private void createScreen() throws IOException {
         // Close current screen
         this.close();
 
-        // Calculate Terminal Cell Count
-        if (this.type == null) throw new RuntimeException("Trying to create screen without specifying a type");
-        int numberCols = 0;
-        int numberRows = 0;
-        switch (this.type) {
-            case MENU -> {
-                numberCols = LanternaGUI.MENU_WIDTH;
-                numberRows = LanternaGUI.MENU_HEIGHT;
-            }
-            case ARENA -> {
-                numberCols = LanternaGUI.ARENA_WIDTH;
-                numberRows = LanternaGUI.ARENA_HEIGHT;
-            }
-        }
-
         // Create TerminalSize
-        TerminalSize terminalSize = new TerminalSize(numberCols, numberRows);
-
-        // Get user's screen dimensions
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-
-        double screen_occupancy = LanternaGUI.MENU_SCREEN_OCCUPANCY;
-        if (this.type == Type.ARENA) screen_occupancy = LanternaGUI.ARENA_SCREEN_OCCUPANCY;
-
-        // Calculate terminal window dimensions (80% of screen)
-        int windowHeight = (int) (screenHeight * screen_occupancy);
-
-        // Calculate font size and height
-        int fontSize = windowHeight / numberRows;
+        TerminalSize terminalSize = new TerminalSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // Set Terminal Size
         DefaultTerminalFactory dtf = new DefaultTerminalFactory();
         dtf.setInitialTerminalSize(terminalSize);
 
+        // Get user's screen dimensions
+        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+
+        // Calculate terminal window dimensions (80% of screen)
+        int windowHeight = (int) (screenHeight * SCREEN_OCCUPANCY);
+
+        // Calculate font size and height
+        int fontSize = windowHeight / SCREEN_HEIGHT;
+
         // Set Font Configuration
-        switch (this.type) {
-            case MENU ->
-                    dtf.setTerminalEmulatorFontConfiguration(SwingTerminalFontConfiguration.newInstance(new Font("Monospaced", Font.BOLD, fontSize)));
-            case ARENA ->
-                    dtf.setTerminalEmulatorFontConfiguration(SwingTerminalFontConfiguration.newInstance(this.ARENA_BASE_FONT.deriveFont(Font.PLAIN, fontSize)));
-        }
+        dtf.setTerminalEmulatorFontConfiguration(SwingTerminalFontConfiguration.newInstance(this.BASE_FONT.deriveFont(Font.PLAIN, fontSize)));
 
         // Create Terminal Emulator
         SwingTerminalFrame terminal = (SwingTerminalFrame) dtf.createTerminal();
@@ -455,6 +437,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     }
 
     // Drawing
+    // TODO: TO BE DELETE
     @Override
     public void drawText(String text, Vector2D position, Colors foreGround, Colors backGround) {
         TextGraphics tg = this.screen.newTextGraphics();
@@ -686,6 +669,27 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         }
     }
 
+    private void drawImage(BufferedImage sprite) {
+        if (!this.stable()) return;
+
+        TextGraphics tg = this.screen.newTextGraphics();
+        for (int x = 0; x < sprite.getWidth(); x++) {
+            for (int y = 0; y < sprite.getHeight(); y++) {
+                int a = sprite.getRGB(x, y);
+                int alpha = (a >> 24) & 0xff;
+                int red = (int) (((a >> 16) & 255) * ((double) alpha / 255));
+                int green = (int) (((a >> 8) & 255) * ((double) alpha / 255));
+                int blue = (int) ((a & 255) * ((double) alpha / 255));
+
+                if (alpha != 0) {
+                    tg.setForegroundColor(new TextColor.RGB(red, green, blue));
+                    tg.setBackgroundColor(new TextColor.RGB(red, green, blue));
+                    tg.setCharacter(new TerminalPosition(x, y), ' ');
+                }
+            }
+        }
+    }
+
     private void drawImage(Vector2D position, BufferedImage sprite) {
         if (!this.stable()) return;
 
@@ -694,9 +698,9 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             for (int y = 0; y < sprite.getHeight(); y++) {
                 int a = sprite.getRGB(x, y);
                 int alpha = (a >> 24) & 0xff;
-                int red = (a >> 16) & 255;
-                int green = (a >> 8) & 255;
-                int blue = a & 255;
+                int red = (int) (((a >> 16) & 255) * ((double) alpha / 255));
+                int green = (int) (((a >> 8) & 255) * ((double) alpha / 255));
+                int blue = (int) ((a & 255) * ((double) alpha / 255));
 
                 int pX = position.x() - sprite.getWidth() / 2 + x;
                 int pY = position.y() - sprite.getHeight() / 2 + y;
@@ -712,34 +716,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
     // Screen Management
     @Override
-    public void setType(Type type) throws IOException {
-        // In case it's null close the screen
-        if (type == null) {
-            this.type = null;
-            this.close();
-            return;
-        }
-
-        // Return if nothing changed
-        if (type.equals(this.type)) return;
-
-        // Switch type
-        this.type = type;
-        this.createScreen();
-    }
-
-    @Override
     public void refresh() throws IOException {
         if (this.stable()) this.screen.refresh();
-    }
-
-    @Override
-    public void clear() {
-        if (this.stable()) {
-            TextGraphics tg = this.screen.newTextGraphics();
-            tg.setBackgroundColor(TextColor.ANSI.BLACK);
-            tg.fillRectangle(new TerminalPosition(0, 0), this.screen.getTerminalSize(), ' ');
-        }
     }
 
     @Override
@@ -747,11 +725,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         // Clear Active Actions
         this.activeActions.clear();
         if (this.stable()) this.screen.stopScreen();
-    }
-
-    // Utils
-    private boolean stable() {
-        return this.screen != null;
     }
 
     @Override
@@ -763,6 +736,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         if (ts != null) size = new Vector2D(ts.getColumns(), ts.getRows());
 
         return size;
+    }
+
+    // Utils
+    private boolean stable() {
+        return this.screen != null;
     }
 
     private void handleEOF() throws InterruptedException, IOException {
@@ -801,6 +779,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             throw new RuntimeException(e);
         }
     }
+
+    // For Tests
 
     // This function is only used for tests and should not be used in any other way
     public void setScreen(Screen screen) {

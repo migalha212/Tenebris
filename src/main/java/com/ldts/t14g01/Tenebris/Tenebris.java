@@ -60,7 +60,6 @@ public class Tenebris implements StateChanger, SaveDataProvider {
     public void setState(State state) throws IOException {
         this.stateChanged = true;
         this.state = state;
-        if (this.state != null) GUI.getGUI().setType(this.state.getGUIType());
     }
 
     @Override

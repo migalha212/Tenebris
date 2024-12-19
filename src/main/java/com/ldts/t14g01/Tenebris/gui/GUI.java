@@ -13,12 +13,38 @@ public interface GUI {
 
     // Colors
     enum Colors {
-        WHITE, BLACK, YELLOW, BRIGHT_YELLOW, BRIGHT_GREEN, GREEN, BLUE, RED, CYAN, ORANGE
+        WHITE,
+        BLACK,
+        YELLOW,
+        BRIGHT_YELLOW,
+        BRIGHT_GREEN,
+        GREEN,
+        BLUE,
+        RED,
+        CYAN,
+        ORANGE
     }
 
-    // Dylan States
+    // Menu Titles
+    enum Menus  {
+    }
+
+    // Menu Options
+    enum Menu_Options {
+    }
+
+    // Entity States
     enum AnimationState {
-        IDLE_1, IDLE_2, FRONT_1, FRONT_2, BACK_1, BACK_2, LEFT_1, LEFT_2, RIGHT_1, RIGHT_2
+        IDLE_1,
+        IDLE_2,
+        FRONT_1,
+        FRONT_2,
+        BACK_1,
+        BACK_2,
+        LEFT_1,
+        LEFT_2,
+        RIGHT_1,
+        RIGHT_2
     }
 
     // Monsters
@@ -95,11 +121,7 @@ public interface GUI {
     void drawProjectile(Vector2D position, Projectile projectile, Vector2D.Direction direction);
 
     // Screen Management
-    void setType(Type type) throws IOException;
-
     void refresh() throws IOException;
-
-    void clear();
 
     void close() throws IOException;
 

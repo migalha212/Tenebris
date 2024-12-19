@@ -1,7 +1,6 @@
 package com.ldts.t14g01.Tenebris.state;
 
 import com.ldts.t14g01.Tenebris.controller.Controller;
-import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.view.View;
 
@@ -25,8 +24,6 @@ public abstract class State<T> {
     protected abstract View<T> getView();
 
     protected abstract Controller<T> getController();
-
-    public abstract GUI.Type getGUIType();
 
     public void tick(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
         this.controller.tick(stateChanger, saveDataProvider);

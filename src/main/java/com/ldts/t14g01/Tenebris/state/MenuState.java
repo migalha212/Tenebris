@@ -21,9 +21,4 @@ public class MenuState extends State<Menu> {
     protected Controller<Menu> getController() {
         return this.getModel().getController();
     }
-
-    @Override
-    public GUI.Type getGUIType() {
-        return GUI.Type.MENU;
-    }
 }

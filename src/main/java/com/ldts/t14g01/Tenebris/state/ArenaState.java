@@ -23,9 +23,4 @@ public class ArenaState extends State<Arena> {
     protected Controller<Arena> getController() {
         return new ArenaController(this.getModel());
     }
-
-    @Override
-    public GUI.Type getGUIType() {
-        return GUI.Type.ARENA;
-    }
 }
