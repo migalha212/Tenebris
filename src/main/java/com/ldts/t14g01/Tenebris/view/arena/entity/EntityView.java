@@ -2,7 +2,6 @@ package com.ldts.t14g01.Tenebris.view.arena.entity;
 
 import com.ldts.t14g01.Tenebris.Tenebris;
 import com.ldts.t14g01.Tenebris.gui.GUI;
-import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
 import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.view.arena.ElementView;
 
@@ -47,29 +46,34 @@ public abstract class EntityView<T extends Entity> extends ElementView<T> {
     }
 
     protected void updateState() {
-        // Only if not Moving Idle
-        if (this.model.getMoving() == Dylan.State.IDLE) {
-            this.either(GUI.AnimationState.IDLE_1, GUI.AnimationState.IDLE_2);
-            return;
-        }
-
-        // When moving
-        // If the entity is looking somewhere then face that direction
-        // Otherwise face the direction the entity is moving
-        switch (this.model.getLooking()) {
-            case IDLE -> this.either(GUI.AnimationState.IDLE_1, GUI.AnimationState.IDLE_2);
-            case LEFT -> this.either(GUI.AnimationState.LEFT_1, GUI.AnimationState.LEFT_2);
-            case RIGHT -> this.either(GUI.AnimationState.RIGHT_1, GUI.AnimationState.RIGHT_2);
-            case FRONT -> this.either(GUI.AnimationState.FRONT_1, GUI.AnimationState.FRONT_2);
-            case BACK -> this.either(GUI.AnimationState.BACK_1, GUI.AnimationState.BACK_2);
-            case null, default -> {
-                switch (this.model.getMoving()) {
-                    case LEFT -> this.either(GUI.AnimationState.LEFT_1, GUI.AnimationState.LEFT_2);
-                    case RIGHT -> this.either(GUI.AnimationState.RIGHT_1, GUI.AnimationState.RIGHT_2);
-                    case FRONT -> this.either(GUI.AnimationState.FRONT_1, GUI.AnimationState.FRONT_2);
-                    case BACK -> this.either(GUI.AnimationState.BACK_1, GUI.AnimationState.BACK_2);
-                    case IDLE -> this.either(GUI.AnimationState.IDLE_1, GUI.AnimationState.IDLE_2);
-                    case null, default -> throw new RuntimeException("Invalid Entity Moving State");
+        // If not moving
+        if (this.model.getMoving() == Entity.State.IDLE) {
+            if (this.model.getLooking() != null) this.frameCounter = ANIMATION_FRAME_COUNT - 2;
+            switch (this.model.getLooking()) {
+                case LEFT -> this.state = GUI.AnimationState.LEFT_1;
+                case RIGHT -> this.state = GUI.AnimationState.RIGHT_1;
+                case FRONT -> this.state = GUI.AnimationState.FRONT_1;
+                case BACK -> this.state = GUI.AnimationState.BACK_1;
+                case null, default -> this.either(GUI.AnimationState.IDLE_1, GUI.AnimationState.IDLE_2);
+            }
+        } else {
+            // If the entity is looking somewhere then face that direction
+            // Otherwise face the direction the entity is moving
+            switch (this.model.getLooking()) {
+                case IDLE -> this.either(GUI.AnimationState.IDLE_1, GUI.AnimationState.IDLE_2);
+                case LEFT -> this.either(GUI.AnimationState.LEFT_1, GUI.AnimationState.LEFT_2);
+                case RIGHT -> this.either(GUI.AnimationState.RIGHT_1, GUI.AnimationState.RIGHT_2);
+                case FRONT -> this.either(GUI.AnimationState.FRONT_1, GUI.AnimationState.FRONT_2);
+                case BACK -> this.either(GUI.AnimationState.BACK_1, GUI.AnimationState.BACK_2);
+                case null, default -> {
+                    switch (this.model.getMoving()) {
+                        case LEFT -> this.either(GUI.AnimationState.LEFT_1, GUI.AnimationState.LEFT_2);
+                        case RIGHT -> this.either(GUI.AnimationState.RIGHT_1, GUI.AnimationState.RIGHT_2);
+                        case FRONT -> this.either(GUI.AnimationState.FRONT_1, GUI.AnimationState.FRONT_2);
+                        case BACK -> this.either(GUI.AnimationState.BACK_1, GUI.AnimationState.BACK_2);
+                        case IDLE -> this.either(GUI.AnimationState.IDLE_1, GUI.AnimationState.IDLE_2);
+                        case null, default -> throw new RuntimeException("Invalid Entity Moving State");
+                    }
                 }
             }
         }
