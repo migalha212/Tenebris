@@ -28,11 +28,17 @@ public interface GUI {
 
     // Menu Titles
     enum Menus {
-        MAIN_MENU
+        MAIN_MENU,
+        NEW_GAME_MENU
     }
 
     // Menu Options
     enum Menu_Options {
+        EASY_DIFFICULTY,
+        NORMAL_DIFFICULTY,
+        CHAMPION_DIFFICULTY,
+        HEARTLESS_DIFFICULTY,
+
         MAIN_MENU_NEW_GAME,
         MAIN_MENU_CONTINUE,
         MAIN_MENU_LOAD_GAME,
@@ -114,6 +120,8 @@ public interface GUI {
     void drawText(String text, Vector2D position, Colors foreGround, Colors backGround);
 
     void drawMainMenu(List<Menu_Options> options, int selectedOption);
+
+    void drawNewGameMenu(List<Menu_Options> options, int selectedOption);
 
     void drawArenaBackGround();
 

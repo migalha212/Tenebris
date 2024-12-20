@@ -45,6 +45,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final EnumMap<Menus, BufferedImage> sprite_menu_backgrounds;
     private final EnumMap<Menus, BufferedImage> sprite_menu_titles;
     private final EnumMap<Menu_Options, Pair<BufferedImage>> sprite_menu_options;
+    private final EnumMap<Menu_Options, BufferedImage> sprite_new_game_menu_text;
 
     // Sprites
     private final BufferedImage sprite_dylan_idle_1;
@@ -169,9 +170,17 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
 
             // Menus Backgrounds
             this.sprite_menu_backgrounds.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
+            this.sprite_menu_backgrounds.put(Menus.NEW_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
 
             // Menus Titles
             this.sprite_menu_titles.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/main-menu.png")));
+            this.sprite_menu_titles.put(Menus.NEW_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/new-game-menu.png")));
+
+            // Difficulties
+            this.sprite_menu_options.put(Menu_Options.EASY_DIFFICULTY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/easy-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/easy.png"))));
+            this.sprite_menu_options.put(Menu_Options.NORMAL_DIFFICULTY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/normal-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/normal.png"))));
+            this.sprite_menu_options.put(Menu_Options.CHAMPION_DIFFICULTY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/champion-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/champion.png"))));
+            this.sprite_menu_options.put(Menu_Options.HEARTLESS_DIFFICULTY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/heartless-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/heartless.png"))));
 
             // Main Menu Options
             this.sprite_menu_options.put(Menu_Options.MAIN_MENU_NEW_GAME, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/new-game-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/new-game.png"))));
@@ -181,6 +190,13 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_options.put(Menu_Options.MAIN_MENU_HOW_TO_PLAY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/how-to-play-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/how-to-play.png"))));
             this.sprite_menu_options.put(Menu_Options.MAIN_MENU_CREDITS, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/credits-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/credits.png"))));
             this.sprite_menu_options.put(Menu_Options.MAIN_MENU_EXIT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/exit-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/exit.png"))));
+
+
+            this.sprite_new_game_menu_text = new EnumMap<>(Menu_Options.class);
+            this.sprite_new_game_menu_text.put(Menu_Options.EASY_DIFFICULTY, ImageIO.read(new File("src/main/resources/sprites/menus/options/new-game-menu/descriptions/easy.png")));
+            this.sprite_new_game_menu_text.put(Menu_Options.NORMAL_DIFFICULTY, ImageIO.read(new File("src/main/resources/sprites/menus/options/new-game-menu/descriptions/normal.png")));
+            this.sprite_new_game_menu_text.put(Menu_Options.CHAMPION_DIFFICULTY, ImageIO.read(new File("src/main/resources/sprites/menus/options/new-game-menu/descriptions/champion.png")));
+            this.sprite_new_game_menu_text.put(Menu_Options.HEARTLESS_DIFFICULTY, ImageIO.read(new File("src/main/resources/sprites/menus/options/new-game-menu/descriptions/heartless.png")));
 
             // TODO ADD OTHERS
 
@@ -492,6 +508,44 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             else sprite = this.sprite_menu_options.get(option).second;
 
             this.drawImage(position, sprite);
+            position = position.add(new Vector2D(0, 20));
+        }
+    }
+
+    @Override
+    public void drawNewGameMenu(List<Menu_Options> options, int selectedOption) {
+        if (!this.stable()) return;
+        int centerX = this.getWindowSize().x() / 2;
+        int centerY = this.getWindowSize().y() / 2;
+        Vector2D center = new Vector2D(centerX, centerY);
+
+        // Draw BackGround
+        this.drawImage(this.sprite_menu_backgrounds.get(Menus.NEW_GAME_MENU));
+
+        // Draw Title
+        this.drawImage(center.minus(new Vector2D(0, 70)), this.sprite_menu_titles.get(Menus.NEW_GAME_MENU));
+
+        // Draw Options
+        if (selectedOption < 0 || selectedOption >= options.size())
+            throw new RuntimeException("Invalid Selected Option");
+
+
+        BufferedImage sprite;
+        Vector2D position;
+        if (options.size() > 5) position = center;
+        else position = new Vector2D(95, centerY);
+
+        for (Menu_Options option : options) {
+            boolean selected = option == options.get(selectedOption);
+            BufferedImage sprite_description = null;
+            if (selected) {
+                sprite = this.sprite_menu_options.get(option).first;
+                sprite_description = this.sprite_new_game_menu_text.get(option);
+            } else sprite = this.sprite_menu_options.get(option).second;
+
+            this.drawImage(position.add(new Vector2D(sprite.getWidth() / 2, 0)), sprite);
+            if (sprite_description != null)
+                this.drawImage(new Vector2D(getGUI().getWindowSize().x() - sprite_description.getWidth() / 2 - 55, position.y() + 5), sprite_description);
             position = position.add(new Vector2D(0, 20));
         }
     }
