@@ -2,6 +2,7 @@ package com.ldts.t14g01.Tenebris.view.arena;
 
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
+import com.ldts.t14g01.Tenebris.model.arena.entities.Dylan;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.View;
 
@@ -26,7 +27,8 @@ public class ArenaView extends View<Arena> {
         arena.getMonsters().forEach(monster -> monster.getView().draw(cameraOffset));
 
         // Draw Dylan
-        arena.getDylan().getView().draw(cameraOffset);
+        Dylan dylan = arena.getDylan();
+        if (dylan != null) arena.getDylan().getView().draw(cameraOffset);
 
         // Draw Particles
         arena.getParticles().forEach(particles -> particles.getView().draw(cameraOffset));
@@ -38,10 +40,12 @@ public class ArenaView extends View<Arena> {
         arena.getProjectiles().forEach(projectile -> projectile.getView().draw(cameraOffset));
 
         // Draw UI
-        GUI.getGUI().drawArenaUI(
-                this.getModel().getDylan().getMaxHP(),
-                this.getModel().getDylan().getHp()
-        );
-        arena.getDylan().getEquipedWeapon().getView().draw();
+        if (dylan != null) {
+            GUI.getGUI().drawArenaUI(
+                    this.getModel().getDylan().getMaxHP(),
+                    this.getModel().getDylan().getHp()
+            );
+            arena.getDylan().getEquipedWeapon().getView().draw();
+        }
     }
 }

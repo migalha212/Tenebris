@@ -31,10 +31,12 @@ import java.util.TreeSet;
 
 public class ArenaController extends Controller<Arena> implements CommandHandler {
     private final List<Command> commands;
+    private int endCounter;
 
     public ArenaController(Arena model) {
         super(model);
         this.commands = new ArrayList<>();
+        this.endCounter = 60;
     }
 
     public void checkCollisions() {
@@ -50,8 +52,9 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
             for (Monster monster : monsters)
                 if (HitBoX.collide(element.getPosition(), element.getHitBox(), monster.getPosition(), monster.getHitBox()))
                     collisions.add(new Pair<>(element, monster));
-            if (HitBoX.collide(element.getPosition(), element.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
-                collisions.add(new Pair<>(dylan, element));
+            if (dylan != null)
+                if (HitBoX.collide(element.getPosition(), element.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                    collisions.add(new Pair<>(dylan, element));
         }
 
         // Check Collisions between Projectiles and Static Elements
@@ -65,8 +68,9 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
             for (Monster monster : monsters)
                 if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), monster.getPosition(), monster.getHitBox()))
                     collisions.add(new Pair<>(projectile, monster));
-            if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
-                collisions.add(new Pair<>(projectile, dylan));
+            if (dylan != null)
+                if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                    collisions.add(new Pair<>(projectile, dylan));
         }
 
         // Check Collisions between Effects and Static Elements
@@ -80,8 +84,9 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
             for (Monster monster : monsters)
                 if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), monster.getPosition(), monster.getHitBox()))
                     collisions.add(new Pair<>(effect, monster));
-            if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
-                collisions.add(new Pair<>(effect, dylan));
+            if (dylan != null)
+                if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                    collisions.add(new Pair<>(effect, dylan));
         }
 
         // Check Collisions between Monsters
@@ -94,9 +99,10 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
             }
 
         // Check Collisions between Dylan and Monsters
-        for (Monster monster : monsters)
-            if (HitBoX.collide(monster.getPosition(), monster.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
-                collisions.add(new Pair<>(dylan, monster));
+        if (dylan != null)
+            for (Monster monster : monsters)
+                if (HitBoX.collide(monster.getPosition(), monster.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                    collisions.add(new Pair<>(dylan, monster));
 
         for (Pair<GameElement> p : collisions) {
             p.first.interact(p.second).forEach(this::handleCommand);
@@ -167,29 +173,32 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
         Set<Action> activeActions = GUI.getGUI().getActiveActions();
 
-        // Update Dylan
+        // If Dylan not Dead
         Dylan dylan = this.getModel().getDylan();
-        DylanController dylanController = this.getModel().getDylan().getController();
-        dylanController.setLooking(null);
-        Set<Action> dylan_moves = new TreeSet<>();
-        activeActions.forEach((activeAction -> {
-            switch (activeAction) {
-                case MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT -> dylan_moves.add(activeAction);
-                case LOOK_UP, LOOK_DOWN, LOOK_LEFT, LOOK_RIGHT -> dylanController.setLooking(activeAction);
-                case EXEC -> dylanController.shoot(this);
-                case null, default -> {
+        if (dylan != null) {
+            // Update Dylan
+            DylanController dylanController = dylan.getController();
+            dylanController.setLooking(null);
+            Set<Action> dylan_moves = new TreeSet<>();
+            activeActions.forEach((activeAction -> {
+                switch (activeAction) {
+                    case MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT -> dylan_moves.add(activeAction);
+                    case LOOK_UP, LOOK_DOWN, LOOK_LEFT, LOOK_RIGHT -> dylanController.setLooking(activeAction);
+                    case EXEC -> dylanController.shoot(this);
+                    case null, default -> {
+                    }
                 }
-            }
-        }));
-        dylanController.setMoving(dylan_moves);
-        dylanController.update();
+            }));
+            dylanController.setMoving(dylan_moves);
+            dylanController.update();
 
-        // Update Camera
-        this.getModel().getCamera().getController().update(dylan.getPosition());
+            // Update Camera
+            this.getModel().getCamera().getController().update(dylan.getPosition());
 
-        // Update Monsters with Dylan position
-        List<Monster> monsters = this.getModel().getMonsters();
-        monsters.forEach(monster -> monster.getController().update(dylan.getPosition(), this.getModel(), this));
+            // Update Monsters with Dylan position
+            List<Monster> monsters = this.getModel().getMonsters();
+            monsters.forEach(monster -> monster.getController().update(dylan.getPosition(), this.getModel(), this));
+        }
 
         // Update Effects
         List<Effect> effects = this.getModel().getEffects();
@@ -214,24 +223,34 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
 
         // If no monsters alive then player wins
         if (this.getModel().getMonsters().isEmpty() && saveDataProvider.getSaveData().getLevel() != SaveData.MAX_LEVEL) {
-            saveDataProvider.getSaveData().increaseLevel();
-            stateChanger.setState(new MenuState(new LevelCompletedMenu()));
-            return;
+            this.endCounter--;
+            if (this.endCounter <= 0) {
+                saveDataProvider.getSaveData().increaseLevel();
+                stateChanger.setState(new MenuState(new LevelCompletedMenu()));
+                return;
+            }
         }
 
         // If last level show Victory screen
         else if (this.getModel().getMonsters().isEmpty()) {
-            stateChanger.setState(new MenuState(new VictoryMenu()));
-            return;
+            this.endCounter--;
+            if (this.endCounter <= 0) {
+                stateChanger.setState(new MenuState(new VictoryMenu()));
+                return;
+            }
         }
 
         // Dylan is Dead
-        if (this.getModel().getDylan() == null)
-            if (saveDataProvider.getSaveData().getDifficulty() == Difficulty.Heartless) {
-                stateChanger.setState(new MenuState(new GameOverMenu()));
-                SaveDataManager.getInstance().deleteSave(saveDataProvider.getSaveData());
-                saveDataProvider.setSaveData(null);
-            } else stateChanger.setState(new MenuState(new DeathMenu()));
+        if (dylan == null) {
+            this.endCounter--;
+            if (this.endCounter <= 0) {
+                if (saveDataProvider.getSaveData().getDifficulty() == Difficulty.Heartless) {
+                    stateChanger.setState(new MenuState(new GameOverMenu()));
+                    SaveDataManager.getInstance().deleteSave(saveDataProvider.getSaveData());
+                    saveDataProvider.setSaveData(null);
+                } else stateChanger.setState(new MenuState(new DeathMenu()));
+            }
+        }
     }
 
     @Override
