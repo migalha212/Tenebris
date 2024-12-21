@@ -1,5 +1,6 @@
 package com.ldts.t14g01.Tenebris.gui;
 
+import com.ldts.t14g01.Tenebris.utils.Difficulty;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.io.IOException;
@@ -26,10 +27,12 @@ public interface GUI {
         ORANGE
     }
 
-    // Menu Titles
+    // Menu
     enum Menus {
         MAIN_MENU,
-        NEW_GAME_MENU
+        NEW_GAME_MENU,
+        LOAD_GAME_MENU,
+        LOAD_GAME_MENU_NO_SAVES
     }
 
     // Menu Options
@@ -45,7 +48,11 @@ public interface GUI {
         MAIN_MENU_LEVELS,
         MAIN_MENU_HOW_TO_PLAY,
         MAIN_MENU_CREDITS,
-        MAIN_MENU_EXIT
+        MAIN_MENU_EXIT,
+
+        LOAD_GAME_MENU_SENTENCE_1,
+        LOAD_GAME_MENU_SENTENCE_2,
+        LOAD_GAME_MENU_SENTENCE_3
     }
 
     // Entity States
@@ -122,6 +129,8 @@ public interface GUI {
     void drawMainMenu(List<Menu_Options> options, int selectedOption);
 
     void drawNewGameMenu(List<Menu_Options> options, int selectedOption);
+
+    void drawLoadGameMenu(int numberOfSaves, int activeSaveNumber, int activeLevel, Difficulty activeDifficulty);
 
     void drawArenaBackGround();
 

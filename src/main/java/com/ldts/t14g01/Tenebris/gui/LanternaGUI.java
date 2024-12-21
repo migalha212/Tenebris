@@ -13,6 +13,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalResizeListener;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame;
+import com.ldts.t14g01.Tenebris.utils.Difficulty;
 import com.ldts.t14g01.Tenebris.utils.Pair;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
@@ -41,11 +42,13 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private boolean quited = false;
     private final Set<Action> activeActions;
 
-    // Menus
+    // Menu Sprites
     private final EnumMap<Menus, BufferedImage> sprite_menu_backgrounds;
     private final EnumMap<Menus, BufferedImage> sprite_menu_titles;
+    private final List<Pair<BufferedImage>> sprite_numbers;
     private final EnumMap<Menu_Options, Pair<BufferedImage>> sprite_menu_options;
     private final EnumMap<Menu_Options, BufferedImage> sprite_new_game_menu_text;
+    private final EnumMap<Menu_Options, BufferedImage> sprite_load_game_menu_text;
 
     // Sprites
     private final BufferedImage sprite_dylan_idle_1;
@@ -171,6 +174,8 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             // Menus Backgrounds
             this.sprite_menu_backgrounds.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
             this.sprite_menu_backgrounds.put(Menus.NEW_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
+            this.sprite_menu_backgrounds.put(Menus.LOAD_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/load-game-background.png")));
+            this.sprite_menu_backgrounds.put(Menus.LOAD_GAME_MENU_NO_SAVES, ImageIO.read(new File("src/main/resources/sprites/menus/load-game-background-no-saves.png")));
 
             // Menus Titles
             this.sprite_menu_titles.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/main-menu.png")));
@@ -182,6 +187,19 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_options.put(Menu_Options.CHAMPION_DIFFICULTY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/champion-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/champion.png"))));
             this.sprite_menu_options.put(Menu_Options.HEARTLESS_DIFFICULTY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/heartless-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/heartless.png"))));
 
+            // Numbers
+            this.sprite_numbers = new ArrayList<>();
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/0.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/0.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/1.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/1.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/2.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/2.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/3.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/3.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/4.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/4.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/5.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/5.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/6.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/6.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/7.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/7.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/8.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/8.png"))));
+            this.sprite_numbers.add(new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers-selected/9.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/numbers/9.png"))));
+
             // Main Menu Options
             this.sprite_menu_options.put(Menu_Options.MAIN_MENU_NEW_GAME, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/new-game-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/new-game.png"))));
             this.sprite_menu_options.put(Menu_Options.MAIN_MENU_CONTINUE, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/continue-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/continue.png"))));
@@ -191,14 +209,17 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_options.put(Menu_Options.MAIN_MENU_CREDITS, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/credits-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/credits.png"))));
             this.sprite_menu_options.put(Menu_Options.MAIN_MENU_EXIT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/exit-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/main-menu/exit.png"))));
 
-
+            // New Game Menu Text
             this.sprite_new_game_menu_text = new EnumMap<>(Menu_Options.class);
             this.sprite_new_game_menu_text.put(Menu_Options.EASY_DIFFICULTY, ImageIO.read(new File("src/main/resources/sprites/menus/options/new-game-menu/descriptions/easy.png")));
             this.sprite_new_game_menu_text.put(Menu_Options.NORMAL_DIFFICULTY, ImageIO.read(new File("src/main/resources/sprites/menus/options/new-game-menu/descriptions/normal.png")));
             this.sprite_new_game_menu_text.put(Menu_Options.CHAMPION_DIFFICULTY, ImageIO.read(new File("src/main/resources/sprites/menus/options/new-game-menu/descriptions/champion.png")));
             this.sprite_new_game_menu_text.put(Menu_Options.HEARTLESS_DIFFICULTY, ImageIO.read(new File("src/main/resources/sprites/menus/options/new-game-menu/descriptions/heartless.png")));
 
-            // TODO ADD OTHERS
+            // Load Game Menu Text
+            this.sprite_load_game_menu_text = new EnumMap<>(Menu_Options.class);
+            this.sprite_load_game_menu_text.put(Menu_Options.LOAD_GAME_MENU_SENTENCE_1, ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/descriptions/sentence-1.png")));
+            this.sprite_load_game_menu_text.put(Menu_Options.LOAD_GAME_MENU_SENTENCE_2, ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/descriptions/sentence-2.png")));
 
             this.sprite_dylan_idle_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/idle/1.png"));
             this.sprite_dylan_idle_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/idle/2.png"));
@@ -548,6 +569,63 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
                 this.drawImage(new Vector2D(getGUI().getWindowSize().x() - sprite_description.getWidth() / 2 - 55, position.y() + 5), sprite_description);
             position = position.add(new Vector2D(0, 20));
         }
+    }
+
+    @Override
+    public void drawLoadGameMenu(int numberOfSaves, int activeSaveNumber, int activeLevel, Difficulty activeDifficulty) {
+        if (!this.stable()) return;
+
+        if (numberOfSaves == 0) {
+            this.drawImage(this.sprite_menu_backgrounds.get(Menus.LOAD_GAME_MENU_NO_SAVES));
+            return;
+        }
+
+        int centerX = this.getWindowSize().x() / 2;
+        int centerY = this.getWindowSize().y() / 2;
+        Vector2D center = new Vector2D(centerX, centerY);
+
+        // Draw BackGround
+        this.drawImage(this.sprite_menu_backgrounds.get(Menus.LOAD_GAME_MENU));
+
+        // Draw Number of Saves Number
+        Vector2D position = new Vector2D(450, 100);
+        if (numberOfSaves == 0) this.drawImage(position, this.sprite_numbers.getFirst().second);
+        while (numberOfSaves > 0) {
+            int digit = numberOfSaves % 10;
+            numberOfSaves /= 10;
+            this.drawImage(position, this.sprite_numbers.get(digit).second);
+            position = position.add(new Vector2D(-10, 0));
+        }
+
+        // Draw Number of Active Save Number
+        position = new Vector2D(180, 103);
+        if (activeSaveNumber == 0) this.drawImage(position, this.sprite_numbers.getFirst().first);
+        while (activeSaveNumber > 0) {
+            int digit = activeSaveNumber % 10;
+            activeSaveNumber /= 10;
+            this.drawImage(position, this.sprite_numbers.get(digit).first);
+            position = position.add(new Vector2D(-10, 0));
+        }
+
+        // Draw Sentence
+        BufferedImage sprite;
+        sprite = this.sprite_load_game_menu_text.get(Menu_Options.LOAD_GAME_MENU_SENTENCE_1);
+        this.drawImage(center.add(new Vector2D(-60, 20)), sprite);
+
+        sprite = this.sprite_numbers.get(activeLevel).first;
+        this.drawImage(center.add(new Vector2D(80, 25)), sprite);
+
+        sprite = this.sprite_load_game_menu_text.get(Menu_Options.LOAD_GAME_MENU_SENTENCE_2);
+        this.drawImage(center.add(new Vector2D(103, 20)), sprite);
+
+        switch (activeDifficulty) {
+            case Easy -> sprite = this.sprite_menu_options.get(Menu_Options.EASY_DIFFICULTY).first;
+            case Normal -> sprite = this.sprite_menu_options.get(Menu_Options.NORMAL_DIFFICULTY).first;
+            case Champion -> sprite = this.sprite_menu_options.get(Menu_Options.CHAMPION_DIFFICULTY).first;
+            case Heartless -> sprite = this.sprite_menu_options.get(Menu_Options.HEARTLESS_DIFFICULTY).first;
+            case null, default -> throw new RuntimeException("Invalid active Difficulty.");
+        }
+        this.drawImage(center.add(new Vector2D(105 + sprite.getWidth() / 2, 22)), sprite);
     }
 
     @Override
