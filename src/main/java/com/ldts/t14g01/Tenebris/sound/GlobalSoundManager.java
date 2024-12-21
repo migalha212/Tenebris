@@ -99,6 +99,9 @@ public class GlobalSoundManager implements SoundManager {
         if (sfxClip.isRunning()) sfxClip.stop();
         sfxClip.setFramePosition(0);
         sfxClip.start();
+        sfxClip.addLineListener(event -> {
+            if (event.getType() == LineEvent.Type.STOP) sfxClip.close();
+        });
     }
 
     @Override
