@@ -12,14 +12,21 @@ public abstract class WeaponController {
     }
 
     public void update() {
-        if (!this.model.isLoaded()) this.model.startReload();
-        this.model.tickWeaponTimer();
-        if (this.model.isReloading()) this.model.reload();
+        if (!this.model.isLoaded() && !this.model.isReloading()) this.reload();
+        else this.model.tickWeaponTimer();
+
+        if (this.model.isReloading()) {
+            this.model.tickWeaponTimer();
+            this.model.reload();
+        }
     }
 
     public void reload() {
-        if (!model.isReloading()) this.model.startReload();
+        this.model.startReload();
+        this.playReloadSound();
     }
+
+    protected abstract void playReloadSound();
 
     public abstract void shoot(CommandHandler commandHandler, Vector2D bulletPosition, Vector2D.Direction direction);
 }

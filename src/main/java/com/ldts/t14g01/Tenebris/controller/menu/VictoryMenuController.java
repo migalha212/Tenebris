@@ -6,6 +6,7 @@ import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
@@ -26,7 +27,14 @@ public class VictoryMenuController extends Controller<Menu> {
         if (frameCount < DELAY) return;
 
         switch (action) {
-            case ESC, EXEC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            case ESC -> {
+                SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_GO_BACK);
+                stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            }
+            case EXEC -> {
+                SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SELECT);
+                stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            }
             case QUIT -> stateChanger.setState(null);
             case null, default -> {
             }

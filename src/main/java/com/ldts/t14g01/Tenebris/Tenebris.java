@@ -5,6 +5,7 @@ import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.State;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
@@ -51,6 +52,7 @@ public class Tenebris implements StateChanger, SaveDataProvider {
             if (waitTime > 0) Thread.sleep(waitTime);
         }
 
+        SoundManager.getInstance().playSFX(SoundManager.SFX.QUIT);
         GUI.getGUI().close();
     }
 

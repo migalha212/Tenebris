@@ -38,7 +38,8 @@ public abstract class Weapon {
     }
 
     public void tickWeaponTimer() {
-        this.timer++;
+        if (this.timer < this.WEAPON_FIRE_COOLDOWN) this.timer++;
+        if (this.isReloading && this.timer < this.WEAPON_RELOAD_TIME) this.timer++;
     }
 
     public void shot() {

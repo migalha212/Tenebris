@@ -13,9 +13,16 @@ public interface SoundManager {
         GRENADE,
         SPELL_FIRE,
         SPELL_COLLISION,
+        PISTOL_RELOAD,
+        GRENADE_RELOAD,
 
         // Menu
-        MENU_SWITCH
+        MENU_SWITCH,
+        MENU_SELECT,
+        MENU_GO_BACK,
+        LEVEL_COMPLETED,
+        GAME_VICTORY,
+        QUIT
     }
 
 

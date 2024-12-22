@@ -13,6 +13,11 @@ public class PistolController extends WeaponController {
     }
 
     @Override
+    protected void playReloadSound() {
+        SoundManager.getInstance().playSFX(SoundManager.SFX.PISTOL_RELOAD);
+    }
+
+    @Override
     public void shoot(CommandHandler commandHandler, Vector2D bulletPosition, Vector2D.Direction direction) {
         if (this.model.canShoot()) {
             this.model.shot();

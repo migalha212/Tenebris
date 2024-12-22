@@ -6,6 +6,7 @@ import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.ArenaBuilder;
 import com.ldts.t14g01.Tenebris.model.menu.*;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.ArenaState;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
@@ -18,6 +19,7 @@ public class MainMenuController extends Controller<Menu> {
     }
 
     void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
+        SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SELECT);
         switch (MainMenu.MainMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case New_Game -> stateChanger.setState(new MenuState(new NewGameMenu()));
             case Continue -> stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));

@@ -14,8 +14,15 @@ public class GlobalSoundManager implements SoundManager {
     private final File spellFire;
     private final File entityDamage;
     private final File dylanDeath;
+    private final File pistolReload;
+    private final File grenadeReload;
 
     private final File menuSwitch;
+    private final File menuSelect;
+    private final File menuGoBack;
+    private final File levelCompleted;
+    private final File victory;
+    private final File quit;
 
     private final Clip menuBackgroundMusic;
     private final Clip arenaBackgroundMusic;
@@ -29,15 +36,22 @@ public class GlobalSoundManager implements SoundManager {
         this.spellCollision = new File("src/main/resources/sfx/spell-collision.wav");
         this.entityDamage = new File("src/main/resources/sfx/entity_damage.wav");
         this.dylanDeath = new File("src/main/resources/sfx/dylan_death.wav");
+        this.pistolReload = new File("src/main/resources/sfx/pistol_reload.wav");
+        this.grenadeReload = new File("src/main/resources/sfx/grenade_launcher_reload.wav");
 
         // Menu SFX
         this.menuSwitch = new File("src/main/resources/sfx/menu_switch.wav");
+        this.menuSelect = new File("src/main/resources/sfx/menu_select.wav");
+        this.menuGoBack = new File("src/main/resources/sfx/menu_go_back.wav");
+        this.levelCompleted = new File("src/main/resources/sfx/level_completed.wav");
+        this.victory = new File("src/main/resources/sfx/victory.wav");
+        this.quit = new File("src/main/resources/sfx/quit.wav");
 
         // Music
         this.arenaBackgroundMusic = this.open(new File("src/main/resources/music/arena_music.wav"));
         this.menuBackgroundMusic = this.open(new File("src/main/resources/music/menu_music.wav"));
-        ((FloatControl) this.menuBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-15.0f);
-        ((FloatControl) this.arenaBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-7.0f);
+        ((FloatControl) this.menuBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+        ((FloatControl) this.arenaBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
     }
 
     protected static GlobalSoundManager getInstance() {
@@ -62,27 +76,27 @@ public class GlobalSoundManager implements SoundManager {
         switch (sfx) {
             case ENTITY_DAMAGE -> {
                 sfxClip = this.open(this.entityDamage);
-                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
             }
             case DYLAN_DEATH -> {
                 sfxClip = this.open(this.dylanDeath);
-                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
             }
             case MENU_SWITCH -> {
                 sfxClip = this.open(this.menuSwitch);
-                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
             }
             case SHOOT -> {
                 sfxClip = this.open(this.shoot);
-                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
             }
             case GRENADE -> {
                 sfxClip = this.open(this.grenade);
-                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
             }
             case EXPLOSION -> {
                 sfxClip = this.open(this.explosion);
-                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
             }
             case SPELL_FIRE -> {
                 sfxClip = this.open(this.spellFire);
@@ -90,6 +104,34 @@ public class GlobalSoundManager implements SoundManager {
             }
             case SPELL_COLLISION -> {
                 sfxClip = this.open(this.spellCollision);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
+            }
+            case PISTOL_RELOAD -> {
+                sfxClip = this.open(this.pistolReload);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
+            }
+            case GRENADE_RELOAD -> {
+                sfxClip = this.open(this.grenadeReload);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
+            }
+            case MENU_SELECT -> {
+                sfxClip = this.open(this.menuSelect);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
+            }
+            case GAME_VICTORY -> {
+                sfxClip = this.open(this.victory);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
+            }
+            case LEVEL_COMPLETED -> {
+                sfxClip = this.open(this.levelCompleted);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
+            }
+            case MENU_GO_BACK -> {
+                sfxClip = this.open(this.menuGoBack);
+                ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
+            }
+            case QUIT -> {
+                sfxClip = this.open(this.quit);
                 ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
             }
 
@@ -115,7 +157,7 @@ public class GlobalSoundManager implements SoundManager {
         }
 
         if (musicClip.isRunning()) return;
-        musicClip.setFramePosition(0);
+        //musicClip.setFramePosition(0);
         musicClip.start();
         musicClip.loop(Clip.LOOP_CONTINUOUSLY);
     }

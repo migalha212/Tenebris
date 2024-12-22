@@ -9,6 +9,7 @@ import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.ArenaState;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
@@ -28,7 +29,10 @@ public class LevelsMenuController extends Controller<Menu> {
             case EXEC -> this.executeOption(stateChanger, saveDataProvider);
             case LOOK_UP -> this.getModel().moveUp();
             case LOOK_DOWN -> this.getModel().moveDown();
-            case ESC -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            case ESC -> {
+                SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_GO_BACK);
+                stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            }
             case QUIT -> stateChanger.setState(null);
             case null, default -> {
             }
@@ -36,6 +40,8 @@ public class LevelsMenuController extends Controller<Menu> {
     }
 
     public void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
+        SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SELECT);
+
         // load arena
         SaveData newSaveData = SaveDataManager.getInstance().createNewSave(
                 SaveDataManager.getInstance().getLastOpen().getDifficulty(),

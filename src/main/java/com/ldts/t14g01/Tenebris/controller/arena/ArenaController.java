@@ -17,6 +17,7 @@ import com.ldts.t14g01.Tenebris.model.menu.*;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
@@ -225,6 +226,7 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         if (this.getModel().getMonsters().isEmpty() && saveDataProvider.getSaveData().getLevel() != SaveData.MAX_LEVEL) {
             this.endCounter--;
             if (this.endCounter <= 0) {
+                SoundManager.getInstance().playSFX(SoundManager.SFX.LEVEL_COMPLETED);
                 saveDataProvider.getSaveData().increaseLevel();
                 stateChanger.setState(new MenuState(new LevelCompletedMenu()));
                 return;
@@ -235,6 +237,7 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         else if (this.getModel().getMonsters().isEmpty()) {
             this.endCounter--;
             if (this.endCounter <= 0) {
+                SoundManager.getInstance().playSFX(SoundManager.SFX.GAME_VICTORY);
                 stateChanger.setState(new MenuState(new VictoryMenu()));
                 return;
             }

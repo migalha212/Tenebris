@@ -8,6 +8,7 @@ import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.ArenaState;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
@@ -20,6 +21,7 @@ public class PauseMenuController extends Controller<Menu> {
     }
 
     void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
+        SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SELECT);
         switch (PauseMenu.PauseMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case Continue -> this.goBackToArena(stateChanger);
             case Restart_Level ->
@@ -32,6 +34,7 @@ public class PauseMenuController extends Controller<Menu> {
     }
 
     private void goBackToArena(StateChanger stateChanger) throws IOException {
+        SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_GO_BACK);
         stateChanger.setState(new ArenaState(((PauseMenu) this.getModel()).getArena()));
     }
 

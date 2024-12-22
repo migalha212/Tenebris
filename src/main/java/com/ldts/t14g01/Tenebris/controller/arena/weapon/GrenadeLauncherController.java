@@ -13,6 +13,11 @@ public class GrenadeLauncherController extends WeaponController {
     }
 
     @Override
+    protected void playReloadSound() {
+        SoundManager.getInstance().playSFX(SoundManager.SFX.GRENADE_RELOAD);
+    }
+
+    @Override
     public void shoot(CommandHandler commandHandler, Vector2D bulletPosition, Vector2D.Direction direction) {
         if (this.model.canShoot()) {
             this.model.shot();

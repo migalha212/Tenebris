@@ -6,6 +6,7 @@ import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.Menu;
 import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 
@@ -14,10 +15,6 @@ import java.io.IOException;
 public class CreditsMenuController extends Controller<Menu> {
     public CreditsMenuController(Menu model) {
         super(model);
-    }
-
-    void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {
-        stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
     }
 
     void quit(StateChanger stateChanger) throws IOException {
@@ -29,7 +26,14 @@ public class CreditsMenuController extends Controller<Menu> {
         Action action = GUI.getGUI().getAction();
 
         switch (action) {
-            case ESC, EXEC -> this.executeOption(stateChanger, saveDataProvider);
+            case ESC -> {
+                SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_GO_BACK);
+                stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            }
+            case EXEC -> {
+                SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SELECT);
+                stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            }
             case QUIT -> this.quit(stateChanger);
             case null, default -> {
 
