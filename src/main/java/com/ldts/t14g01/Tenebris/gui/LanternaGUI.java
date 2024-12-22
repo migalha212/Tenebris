@@ -177,6 +177,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_backgrounds.put(Menus.LOAD_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/load-game-background.png")));
             this.sprite_menu_backgrounds.put(Menus.LOAD_GAME_MENU_NO_SAVES, ImageIO.read(new File("src/main/resources/sprites/menus/load-game-background-no-saves.png")));
             this.sprite_menu_backgrounds.put(Menus.CREDITS_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/credits-background.png")));
+            this.sprite_menu_backgrounds.put(Menus.VICTORY_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/victory-background.png")));
 
             // Menus Titles
             this.sprite_menu_titles.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/main-menu.png")));
@@ -633,6 +634,13 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     public void drawCreditsMenu() {
         if (!this.stable()) return;
         this.drawImage(this.sprite_menu_backgrounds.get(Menus.CREDITS_MENU));
+    }
+
+    @Override
+    public void drawVictoryMenu() {
+        if (!this.stable()) return;
+        this.drawImage(this.sprite_menu_backgrounds.get(Menus.VICTORY_MENU));
+
     }
 
     @Override
