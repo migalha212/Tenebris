@@ -176,6 +176,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_backgrounds.put(Menus.NEW_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
             this.sprite_menu_backgrounds.put(Menus.LOAD_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/load-game-background.png")));
             this.sprite_menu_backgrounds.put(Menus.LOAD_GAME_MENU_NO_SAVES, ImageIO.read(new File("src/main/resources/sprites/menus/load-game-background-no-saves.png")));
+            this.sprite_menu_backgrounds.put(Menus.CREDITS_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/credits-background.png")));
 
             // Menus Titles
             this.sprite_menu_titles.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/main-menu.png")));
@@ -626,6 +627,12 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             case null, default -> throw new RuntimeException("Invalid active Difficulty.");
         }
         this.drawImage(center.add(new Vector2D(105 + sprite.getWidth() / 2, 22)), sprite);
+    }
+
+    @Override
+    public void drawCreditsMenu() {
+        if (!this.stable()) return;
+        this.drawImage(this.sprite_menu_backgrounds.get(Menus.CREDITS_MENU));
     }
 
     @Override
