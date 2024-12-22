@@ -36,7 +36,8 @@ public interface GUI {
         CREDITS_MENU,
         VICTORY_MENU,
         GAME_OVER_MENU,
-        DEATH_MENU
+        DEATH_MENU,
+        LEVEL_COMPLETED_MENU
     }
 
     // Menu Options
@@ -59,7 +60,10 @@ public interface GUI {
         LOAD_GAME_MENU_SENTENCE_3,
 
         DEATH_MENU_RETRY,
-        DEATH_MENU_RETURN
+        DEATH_MENU_RETURN,
+
+        LEVEL_COMPLETED_MENU_NEXT_LEVEL,
+        LEVEL_COMPLETED_MENU_RETURN
     }
 
     // Entity States
@@ -146,6 +150,8 @@ public interface GUI {
     void drawGameOverMenu();
 
     void drawDeathMenu(List<Menu_Options> options, int selectedOption);
+
+    void drawLevelCompletedMenu(List<Menu_Options> options, int selectedOption);
 
     void drawArenaBackGround();
 

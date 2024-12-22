@@ -180,11 +180,13 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_backgrounds.put(Menus.VICTORY_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/victory-background.png")));
             this.sprite_menu_backgrounds.put(Menus.GAME_OVER_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/game-over-background.png")));
             this.sprite_menu_backgrounds.put(Menus.DEATH_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
+            this.sprite_menu_backgrounds.put(Menus.LEVEL_COMPLETED_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
 
             // Menus Titles
             this.sprite_menu_titles.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/main-menu.png")));
             this.sprite_menu_titles.put(Menus.NEW_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/new-game-menu.png")));
             this.sprite_menu_titles.put(Menus.DEATH_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/death-menu.png")));
+            this.sprite_menu_titles.put(Menus.LEVEL_COMPLETED_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/level-completed-menu.png")));
 
             // Difficulties
             this.sprite_menu_options.put(Menu_Options.EASY_DIFFICULTY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/easy-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/easy.png"))));
@@ -217,6 +219,10 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             // Death Menu Options
             this.sprite_menu_options.put(Menu_Options.DEATH_MENU_RETRY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/death-menu/retry-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/death-menu/retry.png"))));
             this.sprite_menu_options.put(Menu_Options.DEATH_MENU_RETURN, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/death-menu/return-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/death-menu/return.png"))));
+
+            // Level Completed Menu Options
+            this.sprite_menu_options.put(Menu_Options.LEVEL_COMPLETED_MENU_RETURN, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/return-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/return.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVEL_COMPLETED_MENU_NEXT_LEVEL, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/next-level-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/next-level.png"))));
 
             // New Game Menu Text
             this.sprite_new_game_menu_text = new EnumMap<>(Menu_Options.class);
@@ -673,6 +679,35 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             throw new RuntimeException("Invalid Selected Option");
 
         BufferedImage sprite;
+        Vector2D position;
+        if (options.size() > 5) position = center;
+        else position = center.add(new Vector2D(-120, 20));
+        for (Menu_Options option : options) {
+            boolean selected = option == options.get(selectedOption);
+            if (selected) sprite = this.sprite_menu_options.get(option).first;
+            else sprite = this.sprite_menu_options.get(option).second;
+            this.drawImage(position, sprite);
+            position = position.add(new Vector2D(220, 0));
+        }
+    }
+
+    @Override
+    public void drawLevelCompletedMenu(List<Menu_Options> options, int selectedOption) {
+        if (!this.stable()) return;
+        int centerX = this.getWindowSize().x() / 2;
+        int centerY = this.getWindowSize().y() / 2;
+        Vector2D center = new Vector2D(centerX, centerY);
+
+        // Draw BackGround
+        this.drawImage(this.sprite_menu_backgrounds.get(Menus.LEVEL_COMPLETED_MENU));
+
+        // Draw Title
+        this.drawImage(center.minus(new Vector2D(0, 70)), this.sprite_menu_titles.get(Menus.LEVEL_COMPLETED_MENU));
+
+        // Draw Options
+        if (selectedOption < 0 || selectedOption >= options.size())
+            throw new RuntimeException("Invalid Selected Option");
+        BufferedImage sprite = null;
         Vector2D position;
         if (options.size() > 5) position = center;
         else position = center.add(new Vector2D(-120, 20));

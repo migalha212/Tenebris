@@ -28,7 +28,7 @@ public class LevelCompletedMenuController extends Controller<Menu> {
         switch (LevelCompletedMenu.LevelCompletedMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case Next_Level ->
                     stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));
-            case Back_To_Main_Menu -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            case Return_To_Main_Menu -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             default -> {
             }
         }
