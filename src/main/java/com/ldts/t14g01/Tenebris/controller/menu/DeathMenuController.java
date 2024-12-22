@@ -27,7 +27,7 @@ public class DeathMenuController extends Controller<Menu> {
         SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SELECT);
         switch (DeathMenu.DeathMenuOptions.valueOf(this.getModel().getOptions().get(this.getModel().getSelectedOption()))) {
             case Retry -> stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));
-            case Back_To_Main_Menu -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            case Return_To_Main_Menu -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             default -> {
             }
         }

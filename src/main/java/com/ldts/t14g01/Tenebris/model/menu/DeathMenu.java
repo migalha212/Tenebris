@@ -7,13 +7,13 @@ import com.ldts.t14g01.Tenebris.view.menu.DeathMenuView;
 
 public class DeathMenu extends Menu {
     public enum DeathMenuOptions {
-        Retry, Back_To_Main_Menu
+        Retry, Return_To_Main_Menu
     }
 
     public DeathMenu() {
         super();
         this.options.add(DeathMenuOptions.Retry.name());
-        this.options.add(DeathMenuOptions.Back_To_Main_Menu.name());
+        this.options.add(DeathMenuOptions.Return_To_Main_Menu.name());
     }
 
     @Override
