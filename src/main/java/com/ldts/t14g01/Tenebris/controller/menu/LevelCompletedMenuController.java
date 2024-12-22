@@ -15,7 +15,7 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import java.io.IOException;
 
 public class LevelCompletedMenuController extends Controller<Menu> {
-    private static final int DELAY = 30;
+    private static final int DELAY = 15;
     private int frameCount;
 
     public LevelCompletedMenuController(Menu model) {
@@ -35,9 +35,8 @@ public class LevelCompletedMenuController extends Controller<Menu> {
     @Override
     public void tick(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException, InterruptedException {
         frameCount++;
-        if (frameCount < DELAY) return;
-
         Action action = GUI.getGUI().getAction();
+        if (frameCount < DELAY) return;
 
         switch (action) {
             case LOOK_LEFT -> this.getModel().moveUp();
