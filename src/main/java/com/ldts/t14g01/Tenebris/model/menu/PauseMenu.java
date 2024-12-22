@@ -13,7 +13,7 @@ public class PauseMenu extends Menu {
         Continue,
         Restart_Level,
         // Statistics,
-        Back_to_Main_Menu
+        Return_to_Main_Menu
     }
 
     public PauseMenu(Arena arena) {
@@ -22,7 +22,7 @@ public class PauseMenu extends Menu {
         this.options.add(PauseMenuOptions.Continue.name());
         this.options.add(PauseMenuOptions.Restart_Level.name());
         // this.options.add(PauseMenuOptions.Statistics.name());
-        this.options.add(PauseMenuOptions.Back_to_Main_Menu.name());
+        this.options.add(PauseMenuOptions.Return_to_Main_Menu.name());
     }
 
     public Arena getArena() {

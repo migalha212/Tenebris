@@ -16,7 +16,6 @@ public class DeathMenuView extends View<Menu> {
 
     @Override
     protected void drawElements() throws IOException {
-
         List<GUI.Menu_Options> options = new ArrayList<>();
         for (String option : this.getModel().getOptions()) {
             switch (DeathMenu.DeathMenuOptions.valueOf(option)) {

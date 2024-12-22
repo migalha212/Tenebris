@@ -182,6 +182,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_backgrounds.put(Menus.DEATH_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
             this.sprite_menu_backgrounds.put(Menus.LEVEL_COMPLETED_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
             this.sprite_menu_backgrounds.put(Menus.LEVELS, ImageIO.read(new File("src/main/resources/sprites/menus/levels-background.png")));
+            this.sprite_menu_backgrounds.put(Menus.PAUSE, ImageIO.read(new File("src/main/resources/sprites/menus/pause-background.png")));
 
             // Menus Titles
             this.sprite_menu_titles.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/main-menu.png")));
@@ -226,7 +227,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_options.put(Menu_Options.LEVEL_COMPLETED_MENU_RETURN, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/return-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/return.png"))));
             this.sprite_menu_options.put(Menu_Options.LEVEL_COMPLETED_MENU_NEXT_LEVEL, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/next-level-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/next-level.png"))));
 
-            // Levels Options
+            // Levels Menu Options
             this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL1, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level1.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level1-blocked.png"))));
             this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL2, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level2.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level2-blocked.png"))));
             this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL3, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level3.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level3-blocked.png"))));
@@ -239,6 +240,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL4_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level4-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level4-text.png"))));
             this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL5_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level5-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level5-text.png"))));
             this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL6_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level6-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level6-text.png"))));
+
+            // Pause Menu Options
+            this.sprite_menu_options.put(Menu_Options.PAUSE_CONTINUE, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/pause-menu/continue-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/pause-menu/continue.png"))));
+            this.sprite_menu_options.put(Menu_Options.PAUSE_RESTART, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/pause-menu/restart-level-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/pause-menu/restart-level.png"))));
+            this.sprite_menu_options.put(Menu_Options.PAUSE_RETURN, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/pause-menu/return-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/pause-menu/return.png"))));
 
             // New Game Menu Text
             this.sprite_new_game_menu_text = new EnumMap<>(Menu_Options.class);
@@ -828,6 +834,32 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.drawImage(center.add(right).add(down), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL6).first);
         else
             this.drawImage(center.add(right).add(down), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL6).second);
+    }
+
+    @Override
+    public void drawPauseMenuMenu(List<Menu_Options> options, int selectedOption) {
+        if (!this.stable()) return;
+        int centerX = this.getWindowSize().x() / 2;
+        int centerY = this.getWindowSize().y() / 2;
+        Vector2D center = new Vector2D(centerX, centerY);
+
+        // Draw Background
+        this.drawImage(center, this.sprite_menu_backgrounds.get(Menus.PAUSE));
+
+        // Draw Options
+        if (selectedOption < 0 || selectedOption >= options.size())
+            throw new RuntimeException("Invalid Selected Option");
+
+        BufferedImage sprite;
+        Vector2D position = center.add(new Vector2D(5, 0));
+        for (Menu_Options option : options) {
+            boolean selected = option == options.get(selectedOption);
+            if (selected) sprite = this.sprite_menu_options.get(option).first;
+            else sprite = this.sprite_menu_options.get(option).second;
+            this.drawImage(position, sprite);
+            position = position.add(new Vector2D(0, 30));
+            if (option == Menu_Options.PAUSE_CONTINUE) position = position.add(new Vector2D(0, -5));
+        }
     }
 
     @Override

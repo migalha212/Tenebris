@@ -27,7 +27,7 @@ public class PauseMenuController extends Controller<Menu> {
             case Restart_Level ->
                     stateChanger.setState(new ArenaState(ArenaBuilder.build(saveDataProvider.getSaveData())));
             // case Statistics -> stateChanger.setState(new MenuState(new StatisticsMenu()));
-            case Back_to_Main_Menu -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
+            case Return_to_Main_Menu -> stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             default -> {
             }
         }
