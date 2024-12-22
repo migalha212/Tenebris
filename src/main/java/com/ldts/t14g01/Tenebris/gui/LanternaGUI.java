@@ -181,12 +181,14 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_menu_backgrounds.put(Menus.GAME_OVER_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/game-over-background.png")));
             this.sprite_menu_backgrounds.put(Menus.DEATH_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
             this.sprite_menu_backgrounds.put(Menus.LEVEL_COMPLETED_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/main-background.png")));
+            this.sprite_menu_backgrounds.put(Menus.LEVELS, ImageIO.read(new File("src/main/resources/sprites/menus/levels-background.png")));
 
             // Menus Titles
             this.sprite_menu_titles.put(Menus.MAIN_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/main-menu.png")));
             this.sprite_menu_titles.put(Menus.NEW_GAME_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/new-game-menu.png")));
             this.sprite_menu_titles.put(Menus.DEATH_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/death-menu.png")));
             this.sprite_menu_titles.put(Menus.LEVEL_COMPLETED_MENU, ImageIO.read(new File("src/main/resources/sprites/menus/titles/level-completed-menu.png")));
+            this.sprite_menu_titles.put(Menus.LEVELS, ImageIO.read(new File("src/main/resources/sprites/menus/titles/levels-menu.png")));
 
             // Difficulties
             this.sprite_menu_options.put(Menu_Options.EASY_DIFFICULTY, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/easy-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/difficulties/easy.png"))));
@@ -223,6 +225,20 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             // Level Completed Menu Options
             this.sprite_menu_options.put(Menu_Options.LEVEL_COMPLETED_MENU_RETURN, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/return-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/return.png"))));
             this.sprite_menu_options.put(Menu_Options.LEVEL_COMPLETED_MENU_NEXT_LEVEL, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/next-level-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/level-completed-menu/next-level.png"))));
+
+            // Levels Options
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL1, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level1.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level1-blocked.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL2, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level2.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level2-blocked.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL3, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level3.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level3-blocked.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL4, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level4.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level4-blocked.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL5, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level5.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level5-blocked.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL6, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level6.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level6-blocked.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL1_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level1-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level1-text.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL2_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level2-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level2-text.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL3_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level3-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level3-text.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL4_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level4-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level4-text.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL5_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level5-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level5-text.png"))));
+            this.sprite_menu_options.put(Menu_Options.LEVELS_LEVEL6_TEXT, new Pair<>(ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level6-text-selected.png")), ImageIO.read(new File("src/main/resources/sprites/menus/options/levels-menu/level6-text.png"))));
 
             // New Game Menu Text
             this.sprite_new_game_menu_text = new EnumMap<>(Menu_Options.class);
@@ -718,6 +734,100 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.drawImage(position, sprite);
             position = position.add(new Vector2D(220, 0));
         }
+    }
+
+    @Override
+    public void drawLevelsMenu(int unlockedLevel, int selectedLevel, Difficulty difficulty) {
+        if (!this.stable()) return;
+
+        int centerX = this.getWindowSize().x() / 2;
+        int centerY = this.getWindowSize().y() / 2;
+        Vector2D center = new Vector2D(centerX, centerY);
+
+        // Draw BackGround
+        this.drawImage(this.sprite_menu_backgrounds.get(Menus.LEVELS));
+
+        // Draw Title
+        this.drawImage(center.minus(new Vector2D(0, 120)), this.sprite_menu_titles.get(Menus.LEVELS));
+
+        // Draw Difficulty
+        BufferedImage sprite;
+        switch (difficulty) {
+            case Easy -> sprite = this.sprite_menu_options.get(Menu_Options.EASY_DIFFICULTY).first;
+            case Normal -> sprite = this.sprite_menu_options.get(Menu_Options.NORMAL_DIFFICULTY).first;
+            case Champion -> sprite = this.sprite_menu_options.get(Menu_Options.CHAMPION_DIFFICULTY).first;
+            case Heartless -> sprite = this.sprite_menu_options.get(Menu_Options.HEARTLESS_DIFFICULTY).first;
+            case null, default -> throw new RuntimeException("Invalid Difficulty");
+        }
+        this.drawImage(new Vector2D(SCREEN_WIDTH - sprite.getWidth() / 2, 30), sprite);
+
+        // Draw Options
+        Vector2D left = new Vector2D(-160, 0);
+        Vector2D right = new Vector2D(160, 0);
+        Vector2D up = new Vector2D(0, -80);
+        Vector2D down = new Vector2D(0, 45);
+        Vector2D textOffset = new Vector2D(5, 0);
+        if (selectedLevel == 1)
+            this.drawImage(center.add(left).add(up).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL1_TEXT).first);
+        else
+            this.drawImage(center.add(left).add(up).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL1_TEXT).second);
+
+        if (selectedLevel == 2)
+            this.drawImage(center.add(up).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL2_TEXT).first);
+        else
+            this.drawImage(center.add(up).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL2_TEXT).second);
+
+        if (selectedLevel == 3)
+            this.drawImage(center.add(right).add(up).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL3_TEXT).first);
+        else
+            this.drawImage(center.add(right).add(up).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL3_TEXT).second);
+
+        if (selectedLevel == 4)
+            this.drawImage(center.add(left).add(down).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL4_TEXT).first);
+        else
+            this.drawImage(center.add(left).add(down).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL4_TEXT).second);
+
+        if (selectedLevel == 5)
+            this.drawImage(center.add(down).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL5_TEXT).first);
+        else
+            this.drawImage(center.add(down).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL5_TEXT).second);
+
+        if (selectedLevel == 6)
+            this.drawImage(center.add(right).add(down).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL6_TEXT).first);
+        else
+            this.drawImage(center.add(right).add(down).add(textOffset), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL6_TEXT).second);
+
+
+        // Draw Levels
+        up = new Vector2D(0, -20);
+        down = new Vector2D(0, 100);
+
+        this.drawImage(center.add(left).add(up), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL1).first);
+
+        if (unlockedLevel >= 2)
+            this.drawImage(center.add(up), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL2).first);
+        else
+            this.drawImage(center.add(up), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL2).second);
+
+        if (unlockedLevel >= 3)
+            this.drawImage(center.add(right).add(up), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL3).first);
+        else
+            this.drawImage(center.add(right).add(up), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL3).second);
+
+        if (unlockedLevel >= 4)
+            this.drawImage(center.add(left).add(down), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL4).first);
+        else
+            this.drawImage(center.add(left).add(down), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL4).second);
+
+        if (unlockedLevel >= 5)
+            this.drawImage(center.add(down), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL5).first);
+        else
+            this.drawImage(center.add(down), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL5).second);
+
+        if (unlockedLevel >= 6)
+            this.drawImage(center.add(right).add(down), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL6).first);
+        else
+            this.drawImage(center.add(right).add(down), this.sprite_menu_options.get(Menu_Options.LEVELS_LEVEL6).second);
     }
 
     @Override

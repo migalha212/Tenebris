@@ -27,16 +27,26 @@ public class LevelsMenuController extends Controller<Menu> {
 
         switch (action) {
             case EXEC -> this.executeOption(stateChanger, saveDataProvider);
-            case LOOK_UP -> this.getModel().moveUp();
-            case LOOK_DOWN -> this.getModel().moveDown();
+            case LOOK_UP, LOOK_DOWN -> this.moveVertical();
+            case LOOK_LEFT -> this.getModel().moveUp();
+            case LOOK_RIGHT -> this.getModel().moveDown();
+            case QUIT -> stateChanger.setState(null);
             case ESC -> {
                 SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_GO_BACK);
                 stateChanger.setState(new MenuState(new MainMenu(saveDataProvider)));
             }
-            case QUIT -> stateChanger.setState(null);
             case null, default -> {
             }
         }
+    }
+
+    private void moveVertical() {
+        if (this.getModel().getOptions().isEmpty()) return;
+        if (this.getModel().getSelectedOption() + 1 > 3)
+            this.getModel().setSelectedOption(this.getModel().getSelectedOption() - 3);
+        else if (this.getModel().getSelectedOption() + 3 < this.getModel().getOptions().size())
+            this.getModel().setSelectedOption(this.getModel().getSelectedOption() + 3);
+        SoundManager.getInstance().playSFX(SoundManager.SFX.MENU_SWITCH);
     }
 
     public void executeOption(StateChanger stateChanger, SaveDataProvider saveDataProvider) throws IOException {

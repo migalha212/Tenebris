@@ -34,6 +34,10 @@ public abstract class Menu {
         return selectedOption;
     }
 
+    public void setSelectedOption(int selectedOption) {
+        this.selectedOption = selectedOption % this.options.size();
+    }
+
     public List<String> getOptions() {
         return options;
     }
