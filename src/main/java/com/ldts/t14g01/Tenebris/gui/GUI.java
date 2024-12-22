@@ -34,7 +34,8 @@ public interface GUI {
         LOAD_GAME_MENU,
         LOAD_GAME_MENU_NO_SAVES,
         CREDITS_MENU,
-        VICTORY_MENU
+        VICTORY_MENU,
+        GAME_OVER_MENU
     }
 
     // Menu Options
@@ -137,6 +138,8 @@ public interface GUI {
     void drawCreditsMenu();
 
     void drawVictoryMenu();
+
+    void drawGameOverMenu();
 
     void drawArenaBackGround();
 
