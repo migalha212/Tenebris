@@ -3,6 +3,8 @@ package com.ldts.t14g01.Tenebris.sound;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GlobalSoundManager implements SoundManager {
     private static GlobalSoundManager instance;
@@ -26,6 +28,7 @@ public class GlobalSoundManager implements SoundManager {
 
     private final Clip menuBackgroundMusic;
     private final Clip arenaBackgroundMusic;
+    private Clip lastPlayedClip;
 
     private GlobalSoundManager() {
         // Entity SFX
@@ -52,6 +55,8 @@ public class GlobalSoundManager implements SoundManager {
         this.menuBackgroundMusic = this.open(new File("src/main/resources/music/menu_music.wav"));
         ((FloatControl) this.menuBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
         ((FloatControl) this.arenaBackgroundMusic.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0f);
+
+        this.lastPlayedClip = null;
     }
 
     protected static GlobalSoundManager getInstance() {
@@ -135,10 +140,10 @@ public class GlobalSoundManager implements SoundManager {
                 ((FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(0.0f);
             }
 
-            case null, default -> throw new RuntimeException("Trying to Play non existent SFX");
+            case null -> throw new RuntimeException("Trying to Play non existent SFX");
         }
 
-        if (sfxClip.isRunning()) sfxClip.stop();
+        this.lastPlayedClip = sfxClip;
         sfxClip.setFramePosition(0);
         sfxClip.start();
         sfxClip.addLineListener(event -> {
@@ -153,18 +158,28 @@ public class GlobalSoundManager implements SoundManager {
         switch (music) {
             case MENU_BACKGROUND -> musicClip = this.menuBackgroundMusic;
             case ARENA_BACKGROUND -> musicClip = this.arenaBackgroundMusic;
-            case null, default -> throw new RuntimeException("Trying to Play non existent Music");
+            case null -> throw new RuntimeException("Trying to Play non existent Music");
         }
 
         if (musicClip.isRunning()) return;
-        //musicClip.setFramePosition(0);
         musicClip.start();
         musicClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     private void stopMusic(Music music) {
-        if (this.arenaBackgroundMusic.isRunning() && music != Music.ARENA_BACKGROUND)
-            this.arenaBackgroundMusic.stop();
+        if (this.arenaBackgroundMusic.isRunning() && music != Music.ARENA_BACKGROUND) this.arenaBackgroundMusic.stop();
         if (this.menuBackgroundMusic.isRunning() && music != Music.MENU_BACKGROUND) this.menuBackgroundMusic.stop();
+    }
+
+    // For Tests Only
+    public List<Clip> getMusics() {
+        List<Clip> musics = new ArrayList<>();
+        musics.add(this.menuBackgroundMusic);
+        musics.add(this.arenaBackgroundMusic);
+        return musics;
+    }
+
+    public Clip getLastPlayedClip() {
+        return this.lastPlayedClip;
     }
 }

@@ -1,6 +1,7 @@
 package com.ldts.t14g01.Tenebris.model.menu;
 
 import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
+import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.IntRange;
@@ -38,22 +39,28 @@ public class LoadGameMenuTest {
 
     @Property(tries = 100)
     void MenuProperty1(@ForAll @IntRange(min = 1, max = 1000) int a) {
-        try (MockedStatic<SaveDataManager> mockedSaveDataManager = mockStatic(SaveDataManager.class)) {
-            // Insure SavaDataManager returns the mock
-            this.mockSaveDataManager = mock(SaveDataManager.class);
-            mockedSaveDataManager.when(SaveDataManager::getInstance).thenReturn(mockSaveDataManager);
-            Mockito.when(this.mockSaveDataManager.getSaveCount()).thenReturn(a);
+        try (MockedStatic<SoundManager> soundManagerMockedStatic = mockStatic(SoundManager.class)) {
+            // Insure GUI returns the mock
+            SoundManager mockedSoundManager = mock(SoundManager.class);
+            soundManagerMockedStatic.when(SoundManager::getInstance).thenReturn(mockedSoundManager);
 
-            this.loadGameMenu = new LoadGameMenu();
-            Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount(), this.loadGameMenu.getOptions().size());
-            this.loadGameMenu.updateOptions();
-            Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount(), this.loadGameMenu.getOptions().size());
+            try (MockedStatic<SaveDataManager> mockedSaveDataManager = mockStatic(SaveDataManager.class)) {
+                // Insure SavaDataManager returns the mock
+                this.mockSaveDataManager = mock(SaveDataManager.class);
+                mockedSaveDataManager.when(SaveDataManager::getInstance).thenReturn(mockSaveDataManager);
+                Mockito.when(this.mockSaveDataManager.getSaveCount()).thenReturn(a);
 
-            this.loadGameMenu.moveUp();
-            Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount() - 1, this.loadGameMenu.selectedOption);
+                this.loadGameMenu = new LoadGameMenu();
+                Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount(), this.loadGameMenu.getOptions().size());
+                this.loadGameMenu.updateOptions();
+                Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount(), this.loadGameMenu.getOptions().size());
 
-            this.loadGameMenu.options.removeLast();
-            Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount() - 1, this.loadGameMenu.selectedOption);
+                this.loadGameMenu.moveUp();
+                Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount() - 1, this.loadGameMenu.selectedOption);
+
+                this.loadGameMenu.options.removeLast();
+                Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount() - 1, this.loadGameMenu.selectedOption);
+            }
         }
     }
 
