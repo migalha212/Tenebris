@@ -79,4 +79,19 @@ public class MenuTest {
             verify(mockSoundManager, times(2)).playSFX(SoundManager.SFX.MENU_SWITCH);
         }
     }
+
+    @Test
+    void setSelectedTest() {
+        this.menu.setSelectedOption(0);
+        Assertions.assertEquals(0, this.menu.getSelectedOption());
+
+        this.menu.setSelectedOption(2);
+        Assertions.assertEquals(2, this.menu.getSelectedOption());
+
+        this.menu.setSelectedOption(3);
+        Assertions.assertEquals(0, this.menu.getSelectedOption());
+
+        this.menu.setSelectedOption(4);
+        Assertions.assertEquals(1, this.menu.getSelectedOption());
+    }
 }

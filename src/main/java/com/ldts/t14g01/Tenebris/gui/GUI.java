@@ -164,8 +164,6 @@ public interface GUI {
     Set<Action> getActiveActions();
 
     // Drawing
-    void drawText(String text, Vector2D position, Colors foreGround, Colors backGround);
-
     void drawMainMenu(List<Menu_Options> options, int selectedOption);
 
     void drawNewGameMenu(List<Menu_Options> options, int selectedOption);

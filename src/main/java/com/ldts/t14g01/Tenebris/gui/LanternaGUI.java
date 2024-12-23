@@ -541,15 +541,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     }
 
     // Drawing
-    // TODO: TO BE DELETE
-    @Override
-    public void drawText(String text, Vector2D position, Colors foreGround, Colors backGround) {
-        TextGraphics tg = this.screen.newTextGraphics();
-        tg.setForegroundColor(LanternaGUI.mapTextColor(foreGround));
-        tg.setBackgroundColor(LanternaGUI.mapTextColor(backGround));
-        tg.putString(position.x(), position.y(), text);
-    }
-
     @Override
     public void drawMainMenu(List<Menu_Options> options, int selectedOption) {
         if (!this.stable()) return;

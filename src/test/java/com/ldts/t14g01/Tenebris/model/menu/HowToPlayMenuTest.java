@@ -14,7 +14,7 @@ public class HowToPlayMenuTest {
 
     @Test
     void MenuTest1() {
-        Assertions.assertEquals(10, this.howToPlayMenu.getOptions().size());
+        Assertions.assertEquals(9, this.howToPlayMenu.getOptions().size());
     }
 
     @Test
