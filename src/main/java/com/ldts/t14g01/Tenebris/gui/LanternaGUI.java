@@ -49,6 +49,7 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     private final EnumMap<Menu_Options, Pair<BufferedImage>> sprite_menu_options;
     private final EnumMap<Menu_Options, BufferedImage> sprite_new_game_menu_text;
     private final EnumMap<Menu_Options, BufferedImage> sprite_load_game_menu_text;
+    private final EnumMap<Menu_Options, BufferedImage> sprite_how_to_play_images;
 
     // Sprites
     private final BufferedImage sprite_dylan_idle_1;
@@ -257,6 +258,18 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.sprite_load_game_menu_text = new EnumMap<>(Menu_Options.class);
             this.sprite_load_game_menu_text.put(Menu_Options.LOAD_GAME_MENU_SENTENCE_1, ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/descriptions/sentence-1.png")));
             this.sprite_load_game_menu_text.put(Menu_Options.LOAD_GAME_MENU_SENTENCE_2, ImageIO.read(new File("src/main/resources/sprites/menus/options/load-game-menu/descriptions/sentence-2.png")));
+
+            // How To Play Menu Images
+            this.sprite_how_to_play_images = new EnumMap<>(Menu_Options.class);
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_MENU_NAVIGATION, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/menu-navigation.png")));
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_DEFAULT_CONTROLS, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/default-controls.png")));
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_OBJECTIVE, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/objective.png")));
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_GAME_BASICS, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/game-basics.png")));
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_WEAPONS, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/weapons.png")));
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_ENEMIES, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/enemies.png")));
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_DIFFICULTY_LEVELS, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/difficulty-levels.png")));
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_MAP_ELEMENTS, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/map-elements.png")));
+            this.sprite_how_to_play_images.put(Menu_Options.HOW_TO_PLAY_BACK, ImageIO.read(new File("src/main/resources/sprites/menus/options/how-to-play/back.png")));
 
             this.sprite_dylan_idle_1 = ImageIO.read(new File("src/main/resources/sprites/dylan/idle/1.png"));
             this.sprite_dylan_idle_2 = ImageIO.read(new File("src/main/resources/sprites/dylan/idle/2.png"));
@@ -859,6 +872,22 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
             this.drawImage(position, sprite);
             position = position.add(new Vector2D(0, 30));
             if (option == Menu_Options.PAUSE_CONTINUE) position = position.add(new Vector2D(0, -5));
+        }
+    }
+
+    @Override
+    public void drawHowToPlayMenu(int selectedOption) {
+        switch (selectedOption) {
+            case 0 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_MENU_NAVIGATION));
+            case 1 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_DEFAULT_CONTROLS));
+            case 2 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_OBJECTIVE));
+            case 3 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_GAME_BASICS));
+            case 4 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_WEAPONS));
+            case 5 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_ENEMIES));
+            case 6 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_DIFFICULTY_LEVELS));
+            case 7 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_MAP_ELEMENTS));
+            case 8 -> this.drawImage(this.sprite_how_to_play_images.get(Menu_Options.HOW_TO_PLAY_BACK));
+            default -> throw new RuntimeException("Invalid Selected Option");
         }
     }
 

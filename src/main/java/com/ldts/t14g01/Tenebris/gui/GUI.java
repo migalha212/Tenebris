@@ -82,7 +82,17 @@ public interface GUI {
 
         PAUSE_CONTINUE,
         PAUSE_RESTART,
-        PAUSE_RETURN
+        PAUSE_RETURN,
+
+        HOW_TO_PLAY_MENU_NAVIGATION,
+        HOW_TO_PLAY_DEFAULT_CONTROLS,
+        HOW_TO_PLAY_OBJECTIVE,
+        HOW_TO_PLAY_GAME_BASICS,
+        HOW_TO_PLAY_WEAPONS,
+        HOW_TO_PLAY_ENEMIES,
+        HOW_TO_PLAY_DIFFICULTY_LEVELS,
+        HOW_TO_PLAY_MAP_ELEMENTS,
+        HOW_TO_PLAY_BACK
     }
 
     // Entity States
@@ -175,6 +185,8 @@ public interface GUI {
     void drawLevelsMenu(int unlockedLevel, int selectedLevel, Difficulty difficulty);
 
     void drawPauseMenuMenu(List<Menu_Options> options, int selectedOption);
+
+    void drawHowToPlayMenu(int selectedOption);
 
     void drawArenaBackGround();
 

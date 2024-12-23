@@ -13,7 +13,6 @@ public class HowToPlayMenu extends Menu {
         Game_Basics,
         Weapons,
         Enemies,
-        Bosses,
         Difficulty_Levels,
         Map_Elements,
         Back
