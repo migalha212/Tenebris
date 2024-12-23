@@ -2,26 +2,40 @@
 
 ## **Game Description**
 
-A character named Dylan Macron finds himself jumping from arena to arena, fighting for his life. Each arena is filled with monsters of various types, all determined to kill him. Starting out relatively powerless, Dylan grows stronger with each fight as he gains experience. He can find weapons scattered around the arenas, and there are three types: Simple Shot, Explosion Shot, and Death Ray. Each shot consumes energy, which regenerates slowly and can also be dropped by defeated monsters. Dylan has only one life per level. If he dies, he will respawn at the beginning of the level and can continue fighting. However, if he dies on the hardest difficulty level, it’s game over.
+A character named Dylan Macron finds himself jumping from arena to arena, fighting for his life. Each arena is filled with monsters of various types, all determined to kill him. Starting out relatively powerless, Dylan grows stronger with each fight as he gains experience. HHe has two weapons at his disposal: a simple Pistol and a Grenade Launcher. Dylan has only one life per level. If he dies, he will respawn at the beginning of the level and can continue fighting. However, if he dies on the hardest difficulty level, it’s game over.
 
 > This project was developed by [Cláudio Meireles](https://github.com/Atum555) (up202306618), [Dinis Silva](https://github.com/DinisBSilva) (up202306207) and [Miguel Pereira](https://github.com/migalha212) (up202304387).
 
 ## Controls
-```↑```: Moves Player up.  
+```W```: Moves Player up.  
 
-```↓```: Moves Player down.  
+```A```: Moves Player left.  
 
-```←```: Moves Player left.  
+```S```: Moves Player down.  
 
-```→```: Moves Player right.  
+```D```: Moves Player right.  
+
+```↑```: Player Looks up.  
+
+```←```: Player Looks left.  
+
+```↓```: Player Looks down.  
+
+```→```: Player Looks right.  
+
+> Dylan shoots in the direction he is looking.
 
 > Arrow Keys are also used to navigate throw the Menus.
 
 ```Space```: Shoot.
 
+```R```: Reload. 
+
 ```Q```: Quits Game.
 
-```ESC```: Return to the previous menu (or quit game if you are in Main Menu).  
+```ESC```: Return to the previous menu (or quit game if you are in Main Menu). 
+
+> Can be also used to open the Pause Menu while in-game. 
 
 ```ENTER```: Select the desired options in the menu.  
 
@@ -33,7 +47,6 @@ First menu of the game. It will show up when opening the game and from here you 
 - **New Game**: Allows you to create a new game and select the difficulty.
 - **Load Game**: Allows you to access and continue a previously saved game session.
 - **Levels**: This option just appears if you have already some saved game session. It is used to select one of the unlocked levels to play next.
-- **Statistics**: Displays informations such as kills, deaths, levels completed, etc. of the current session.
 - **How to Play**: Explains you how you can play the game.
 - **Credits**: Shows the credits of the game.
 - **Exit**: Exits the Game.
@@ -49,6 +62,14 @@ Provides essential gameplay information, including navigation, controls, objecti
 ### Credits Menu
 A simple text-based screen that highlights the individuals who contributed to the development of the game and the purpose behind its creation. It provides a straightforward way to acknowledge the team. The menu includes a single option to return to the Main Menu, ensuring easy navigation.
 
+### Pause Menu
+
+This menu can be opened while in-game. It lets you pause your game and gives you some options such as:
+
+- **Continue** : Unpauses the game.
+- **Restart Level** : Reloads the current level.
+- **Return to the Main Menu** : Goes to Main Menu.
+
 ### Screen Resizer
 At the game's launch, the code dynamically detects the user's screen resolution to ensure that the game's proportionality remains consistent, regardless of the screen size. This approach guarantees that the full game window is always displayed without being cropped or cut off, providing an optimal experience across various screen resolutions.
 
@@ -58,52 +79,69 @@ This feature prevents the user from resizing the game window, ensuring the game�
 ### Collision Detection
 Although it is not yet fully apparent in gameplay due to ongoing feature development, the game already incorporates a collision detection mechanism. This system will be a crucial part of the game, determining whether entities can move to specific positions and if monsters successfully deal damage to Dylan.
 
-## **Features In Development**
-This section highlights the features that are currently being worked on but are not yet fully implemented. While these functionalities are in progress, they may not be fully functional or may be subject to changes before completion. Check back later for updates as we continue to improve and expand the game!
-
 ### Difficulty Levels
+
+- **Easy**
+
+- **Normal**
+
+- **Champion**
+
+- **Heartless**
+    
+Monsters become increasingly stronger the higher the difficulty chosen.
+In addition, there are also some changes worth highlighting:
+
 - **Easy**:
-  - The player’s HP resets at the beginning of every arena; 
-  - The player has a bigger starting Health Pool;
-  - Every monster drops a bit of energy, energy regenerates at a normal level.	
-
-- **Medium**:
-  - The player’s HP resets at the beginning of every arena;
-  - Every monster drops a bit of energy, energy regeneration slightly reduzed.
-
-- **Champion**:
-  - The player's HP resets at the beginning of every level;
-  - Only bigger monsters drop energy.
+  - Dylan has a bigger starting HP.
 
 - **Heartless**:
-  - Champion difficulty level;
-  - If you die, game over!
+  - Champion difficulty level but if you die, game over!
   
 ### **Game Elements**
-All Game Elements (entities, projectiles and static elements, like walls) are defined by their position and size.
+All Game Elements (entities, camera, projectiles, particles and static elements) are defined by their position, hitbox and the correspondent animation.
 
 ### Entity  
-
+    
 The entities in the game are Dylan (our player) and the monsters. While they share some common attributes, they also have distinct characteristics:
 
 **Shared Attributes:**
+- **Position** : a vector with 2 dimensions that represents the current position of the Entity.
+- **Hitbox** : a virtual boundary around the Entities, used to detect collisions and/or interactions.
 - **Health Points** (HP) : the amount of damage an Entity can take before dying.
 - **Velocity** :  the speed at which an entity can move, measured in units per second.
-- **Aceleration** : rate at which an entity's velocity changes over time. It is typically measured in units of speed per unit of time and can indicate how quickly an entity speeds up or slows down.
 
 **Distinguishing Attributes:**
-- **Damage** (DMG) : the amount of HP that is taken away from an entity in the interaction (Monsters only).
-- **Energy** (EN) : a resource used by the player (Dylan) to fire weapons.
+- Monsters:
+  - **Damage** (DMG) : the amount of HP that is taken away from an entity in the interaction (Monsters only).
+  - **Vision Range**: the distance that an Monster can detect Dylan and consequently react to him.
+- Dylan:
+  - **List of weapons and Selected Weapon**: these two combined represent our system of weapons. 
 
+### Camera
+Implemented with the objective of making levels with more than one arena (as shown on the level 6 of the game). it is responsible for changing the arena displayed to the player whenever he passes the limits of one arena and enters another. 
+    
 ### Projectiles
-Projectiles represent distinct types of ammunition in the game, with Bullet being a simple, linear damage-dealing projectile, and Explosive Bullet offering more advanced mechanics (such as area-of-effect damage).
+Projectiles represent distinct types of ammunition in the game, with Bullet being a simple, linear damage-dealing projectile, and Explosive Bullet offering more advanced mechanics (such as area-of-effect damage) and the Speel being the Tenebris Harbinger's means of attack.
 
 **Shared Attributes:**  
+> As expected, they have in common the common attributes of Game Elements. 
 - **Velocity** : projectile moves with a constant speed in the direction defined by its velocity vector.
-- **Damage** :  both projectiles inflict damage when they interact with entities that can take damage.
+- **Direction** : projectile can move in every direction, so it is useful to track it individually.
+- **Damage** : projectiles inflict damage when they interact with entities that can take damage.
 
 **Distinguish Attributes:**
 - While Bullet causes straightforward damage to any entity that can take damage, the Explosive Bullet deals area-of-effect damage upon impact, affecting multiple entities within the blast radius.
+- The Spell represents something like a fireball and does straightforward damage as the Bullet.
+  
+> Bullet and Explosive Bullet are projectiles used by Dylan (through his guns), while the speel is thrown by Tenebris Harbinger.
+
+### Particles
+We decided to implement some particles, effects that result from an interaction between Game Elements, into our game with the goal of giving it more life. On the game, it's possible to see four different types of particles:
+- Breakable Wall Damage: when a Breakable Wall takes damage some stones fall to the ground, with the aim of giving a visual indication to the player that their hit has been registered.
+- Damage Blood: happens when an Entity is hitted and consists of particles of blood falling to the ground, representing that the Entity took damage.
+- Death Blood: similar to Damage Blood but with a bigger ammount of blood, so it is easier to understand that the Entity died.
+- Speel Explosion: these particles are produced when a speel hits something.
 
 ### Static Elements
 
@@ -114,7 +152,7 @@ Projectiles represent distinct types of ammunition in the game, with Bullet bein
 - **Sand Bag**:
   - Blocks Entities: This wall type prevents entities (like players and monsters) from passing through it but allows projectiles to pass unhindered.
 - **Spike**:
-  - Damages Entities: Entities that pass through this take damage.
+  - Damages Entities: Entities that hit this take damage.
   - No Effect on Projectiles: Projectiles can pass through without being affected, unlike entities.
 
 ### **Arena**
@@ -124,20 +162,6 @@ The Arena is the battleground where players and enemies interact, filled with ob
 - **Boundaries**: The arena has defined boundaries that limit movement, ensuring that combat stays within a controlled space. These boundaries are defined by walls that block passage.
 - **Interactive Elements**: The arena features interactive elements such as breakable walls, sandbags, and spikes, each impacting gameplay differently. These elements can be used to block enemies, gain tactical advantages, or even cause harm to those who come into contact with them.
 - **Progressive Arenas**: The game features multiple arenas, each with its own unique layout and challenges. As players progress through the game, they will encounter increasingly difficult arenas, with more complex layouts and stronger enemies, pushing their skills to the limit.
-
-## Features Planned to be Implemented
-
-### Pause Menu
-
-This menu can be opened while in-game. It lets you pause your game and gives you some options such as:
-
-- **Continue** : Unpauses the game.
-- **Restart Level** : Reloads the current level.
-- **Statistics** : Displays informations such as kills, deaths, levels completed, etc. of the current session.
-- **Back to Main Menu** : Goes to Main Menu.
-
-### Statistics Menu
-This menu allows the player to view their game statistics, such as kills, deaths, levels completed, etc. of the session currently loaded. The only available option in this menu is to return to the previous menu.
 
 ### Player Movement
 The player will be able to move (using the arrow keys), shoot (Space bar). Also, the player's movement animations wiil be different according to the player's current action.
@@ -152,88 +176,131 @@ Monsters will have the ability to "see" the player within a certain range, provi
   - 150 hp for easy difficulty;
   - 100 hp for all others.
 
-- **Starting Energy Pool** :
-  - 100 en for every difficulty.
-
-- **Starting Energy Regen** :
-  - 1 en per second for Easy;
-  - 0,5 en per second for Medium;
-  - 0,1 en per second for Champion. 
-
 ### Monsters
+#### **Easy Difficulty**
+
 - **Tenebris Peon**:
-  - Health Points : 20 hp; 
-  - Speed : Normal;
-  - Damage : 15 hp;
-  - Range : 1 tile.
+  - Health Points: 15 hp; 
+  - Speed: 2;
+  - Damage: 10 hp;
+  - Attack Range: 1 tile;
+  - Vision Range: 50 tiles.
 
 - **Tenebris Heavy**:
-  - Health Points : 50 hp;
-  - Speed : Slow;       
-  - Damage : 10 hp;
-  - Range : 1 tile.
+  - Health Points: 25 hp;
+  - Speed: 1;       
+  - Damage: 25 hp;
+  - Attack Range: 1 tile;
+  - Vision Range: 35 tiles.
             
 - **Tenebris Spiked Scout**:
-  - Health Points : 15 hp;
-  - Speed : Fast;
-  - Damage : 35 hp;     
-  - Range : 1 tile.
+  - Health Points: 15 hp;
+  - Speed: 3;
+  - Damage: 15 hp;     
+  - Attack Range: 1 tile;
+  - Vision Range: 30 tiles.
 
-- **Tenebris Harbinger** :
-  - Health Points : 20 hp;
-  - Speed : Normal;
-  - Damage: 35hp;
-  - Range : 5 tiles.
+- **Tenebris Harbinger**:
+  - Health Points: 30 hp;
+  - Speed: 2;
+  - Damage: 20 hp;
+  - Attack Range: 75 tiles;
+  - Vision Range: 125 tiles.
 
-- **Tenebris Warden** :
-  - Health Points : 75 hp;     
-  - Speed : Normal;
-  - Damage : 45 hp;
-  - Range : 1 tile.
+- **Tenebris Warden**:
+  - Health Points: 50 hp;     
+  - Speed: 1;
+  - Damage: 25 hp;
+  - Attack Range: 1 tile.
+  - Vision Range: 40 tiles.
+ 
+#### **Normal Difficulty**
+
+- **Tenebris Peon**:
+  - Health Points: 20 hp; 
+  - Speed: 2;
+  - Damage: 15 hp;
+  - Attack Range: 1 tile;
+  - Vision Range: 80 tiles.
+
+- **Tenebris Heavy**:
+  - Health Points: 40 hp;
+  - Speed: 1;       
+  - Damage: 35 hp;
+  - Attack Range: 1 tile;
+  - Vision Range: 55 tiles.
+            
+- **Tenebris Spiked Scout**:
+  - Health Points: 25 hp;
+  - Speed: 4;
+  - Damage: 15 hp;     
+  - Attack Range: 1 tile;
+  - Vision Range: 40 tiles.
+
+- **Tenebris Harbinger**:
+  - Health Points: 35 hp;
+  - Speed: 2;
+  - Damage: 30 hp;
+  - Attack Range: 100 tiles;
+  - Vision Range: 200 tiles.
+
+- **Tenebris Warden**:
+  - Health Points: 75 hp;     
+  - Speed: 1;
+  - Damage: 35 hp;
+  - Attack Range: 1 tile.
+  - Vision Range: 50 tiles.
+
+#### **Champion and Heartless Difficulties**
+
+- **Tenebris Peon**:
+  - Health Points: 25 hp; 
+  - Speed: 3;
+  - Damage: 25 hp;
+  - Attack Range: 1 tile;
+  - Vision Range: 100 tiles.
+
+- **Tenebris Heavy**:
+  - Health Points: 50 hp;
+  - Speed: 2;       
+  - Damage: 40 hp;
+  - Attack Range: 1 tile;
+  - Vision Range: 80 tiles.
+            
+- **Tenebris Spiked Scout**:
+  - Health Points: 25 hp;
+  - Speed: 4;
+  - Damage: 15 hp;     
+  - Attack Range: 1 tile;
+  - Vision Range: 40 tiles.
+
+- **Tenebris Harbinger**:
+  - Health Points: 40 hp;
+  - Speed: 2;
+  - Damage: 35 hp;
+  - Attack Range: 150 tiles;
+  - Vision Range: 250 tiles.
+
+- **Tenebris Warden**:
+  - Health Points: 100 hp;     
+  - Speed: 2;
+  - Damage: 45 hp;
+  - Attack Range: 1 tile.
+  - Vision Range: 75 tiles.
  
 ### Weapons Available
-- **Simple Weapon** :
-  - Fire Rate - 2 bullets per second;
-  - Energy Cost to Shot - 10 en per bullet;
-  - Damage - 5 hp.
+- **Pistol** :
+  - Fire Rate - 6 bullets per second;
+  - Reload Time - 2 seconds;
+  - Magazine Size - 10 bullets;
+  - Damage - 10 hp.
 
-- **Explosion Weapon** :
-  - Fire Rate - 0,25 bullets per second;
-  - Energy Cost to shot - 25 en per bullet;
-  - Ability - when reaches a wall or a Monster it deals damage to all enemies in a radius of 4 tiles;
-  - Damage - (15 - 3,75 * radius) hp.
-
-- **Death Ray (Laser)** :
-  - Energy Cost to shot - 20en per second active;
-  - Ability - gives damage to all enemies in that direction;
-  - Max Laser duration - 5 seconds;
-  - Cooldown - 1 minute;
-  - Damage - 20 hp / sec.
-
-
-> All of these predefined values are provisional and subject to change as we conduct further in-game testing.
-
-### Bosses
-
-- **Black Sun Emissary**
-  - **Description**: An ancient being empowered by the power of the Black Sun. The Archon is a master of dark energy, unleashing beams of corrupting power and summoning tentacles from below to trap players.
-  - **Arena Type**: Boss sits on the top half of the screen (immobile ASCII art) with a clean walkable arena below it.
-  - **Attack Patters**: In certain intervals, coordinates around the arena will light up in warning, showing the Pattern for the coming attack; 
-                                After another interval if the player is standing in any of the highlighted spots, he will take heavy Damage.
-  - **How to damage**: The Boss sits above the player, so simply shooting upwards will hit the Boss and reduce its HP.
-
-- **Abyssal Archon**
-  - **Description**: An ancient being empowered by the depths of the Abyss. The Archon is a master of dark energy, unleashing the power of Abyssal Bulbs and his armies of Abissal Tenebris Warriors, be careful not to destroy it’s gems or it’s full rage will be awakened and destroy the players where they stand.
-  - **Arena Type**: a clean walkable arena with the boss sat in an unreachable spot in the middle, 2 other spots will be covered by an impassable yet destructible object.
-  - **Attack Patterns**: Divided in 2 phases, 1 that sends out enemies to protect the 2 spots, and another where the boss itself attacks with a set of attacks predefined.
-  - **How to damage**: at first the Boss is invulnerable this phase 1, only when both “Abyssal Bulbs” are destroyed will the boss become vulnerable, this also marks the beginning of the boss’ phase 2.
-  - **“Abyssal Bulb”**: the mentioned impassable yet destructible object, has HP, marks phase 1 of the Abyssal Archon, deals no damage to the player upon colision
-
-- **Nightmare Sovereign**
-  - **Description**: A malevolent ruler who twists reality around itself, bringing players into a nightmare realm. The Sovereign manipulates illusions, creating clones and warping the arena to confuse players.
-  - **Arena Type**: the only Boss(of the original 3) to have his battle happen through different rooms in the arena, each with an experience for the player be it a maze, a bullet hell, enemy gauntlet, or another boss’ room.
-  - **Attack Patterns**: Each room will mean different attacks, only when face to face with the boss is a pattern defined, though the rooms and teleporting is also an atack from the boss.
-  - **How to damage**: beat the challenge room the boss teleports you into, or when face to face with it, attacking it directly.
+- **Grenade Launcher** :
+  - Fire Rate - 1 bullet per 3 seconds;
+  - Reload Time - 3 seconds;
+  - Ability - when reaches a wall or a Monster it deals damage to all enemies in a certain radius;
+  - Magazine Size - 1 bullet;
+  - Damage - 15 hp at impact + explosion damage (if inside a certain radius).
 
 ## General Structure
 <p align="center">
