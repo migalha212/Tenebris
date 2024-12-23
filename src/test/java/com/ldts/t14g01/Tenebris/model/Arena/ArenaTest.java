@@ -1,7 +1,5 @@
-package com.ldts.t14g01.Tenebris.model;
+package com.ldts.t14g01.Tenebris.model.arena;
 
-import com.ldts.t14g01.Tenebris.model.arena.Arena;
-import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -15,8 +15,6 @@ import java.io.IOException;
 
 public class ArenaBuilder {
 
-    private ArenaBuilder() {
-    }
 
     public static Arena build(SaveData saveData) throws IOException {
         SaveDataManager.getInstance().markAsLastOpen(saveData);

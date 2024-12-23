@@ -51,4 +51,8 @@ public class BreakableWall extends GameElement implements BlocksVision, AbsorbsP
 
         return commands;
     }
+
+    public int getHp() {
+        return hp;
+    }
 }
