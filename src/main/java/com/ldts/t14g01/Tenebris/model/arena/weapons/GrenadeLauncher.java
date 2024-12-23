@@ -6,7 +6,7 @@ import com.ldts.t14g01.Tenebris.view.arena.weapon.GrenadeLauncherView;
 public class GrenadeLauncher extends Weapon {
     public GrenadeLauncher() {
         super(
-                90,
+                45,
                 0,
                 1
         );

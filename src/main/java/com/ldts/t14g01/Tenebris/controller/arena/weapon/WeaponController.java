@@ -12,16 +12,13 @@ public abstract class WeaponController {
     }
 
     public void update() {
-        if (!this.model.isLoaded() && !this.model.isReloading()) this.reload();
-        else this.model.tickWeaponTimer();
-
-        if (this.model.isReloading()) {
-            this.model.tickWeaponTimer();
-            this.model.reload();
-        }
+        if (!this.model.isLoaded()) this.reload();
+        if (this.model.isReloading()) this.model.reload();
+        this.model.tickWeaponTimer();
     }
 
     public void reload() {
+        if (this.model.isReloading()) return;
         this.model.startReload();
         this.playReloadSound();
     }

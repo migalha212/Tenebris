@@ -6,7 +6,7 @@ import com.ldts.t14g01.Tenebris.view.arena.weapon.PistolView;
 public class Pistol extends Weapon {
     public Pistol() {
         super(
-                60,
+                30,
                 5,
                 10
         );
