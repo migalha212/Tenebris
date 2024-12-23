@@ -11,7 +11,7 @@ import com.ldts.t14g01.Tenebris.model.arena.interfaces.Moves;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
 import com.ldts.t14g01.Tenebris.model.arena.projectiles.Projectile;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
         BACK
     }
 
-    public Entity(Vector2D position, HitBoX hitBoX, int hp, int velocity) {
+    public Entity(Vector2D position, HitBox hitBoX, int hp, int velocity) {
         super(position, hitBoX);
         this.velocity = velocity;
         this.hp = hp;
@@ -105,7 +105,7 @@ public abstract class Entity extends GameElement implements Moves, AbsorbsProjec
         Vector2D.Direction direction = other.getPosition().minus(this.getPosition()).multiply(-1).getMajorDirection();
 
         // Move in that direction until collision is no longer happening
-        while (HitBoX.collide(this.position, this.hitBox, other.getPosition(), other.getHitBox())) {
+        while (HitBox.collide(this.position, this.hitBox, other.getPosition(), other.getHitBox())) {
             switch (direction) {
                 case UP -> this.position = this.position.add(new Vector2D(0, -1));
                 case DOWN -> this.position = this.position.add(new Vector2D(0, 1));

@@ -3,7 +3,7 @@ package com.ldts.t14g01.Tenebris.model.arena.effects;
 import com.ldts.t14g01.Tenebris.controller.arena.EffectController;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public abstract class Effect extends GameElement {
     protected EffectController controller;
     private int currentFrame = 1;
 
-    public Effect(Vector2D position, HitBoX hitBox) {
+    public Effect(Vector2D position, HitBox hitBox) {
         super(position, hitBox);
         this.controller = new EffectController(this);
     }

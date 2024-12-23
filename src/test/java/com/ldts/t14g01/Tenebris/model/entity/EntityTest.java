@@ -1,7 +1,7 @@
 package com.ldts.t14g01.Tenebris.model.entity;
 
 import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ public class EntityTest {
         int size = 18 / 2;
         int hp = 10;
         int maxVelocity = 5;
-        entity = new Entity(position, new HitBoX(new Vector2D(0, 0), new Vector2D(0, 0)), hp, maxVelocity) {
+        entity = new Entity(position, new HitBox(new Vector2D(0, 0), new Vector2D(0, 0)), hp, maxVelocity) {
             @Override
             public void move() {
             }

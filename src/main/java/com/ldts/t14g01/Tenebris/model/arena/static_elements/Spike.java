@@ -4,7 +4,7 @@ import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksMovement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.staticelement.SpikeView;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Spike extends GameElement implements DamagesEntities, BlocksMovement {
-    private static final HitBoX hitBoX = new HitBoX(new Vector2D(-8, -7), new Vector2D(15, 13));
+    private static final HitBox hitBoX = new HitBox(new Vector2D(-8, -7), new Vector2D(15, 13));
     private final int damage;
 
     public Spike(Vector2D position, int damage) {

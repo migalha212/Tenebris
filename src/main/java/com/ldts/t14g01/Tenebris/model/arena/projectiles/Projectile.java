@@ -6,7 +6,7 @@ import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.DeleteProjectile;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public abstract class Projectile extends GameElement implements DamagesEntities 
     private final int velocity;
     private final int damage;
 
-    public Projectile(Vector2D position, HitBoX hitBox, Vector2D.Direction direction, int velocity, int damage) {
+    public Projectile(Vector2D position, HitBox hitBox, Vector2D.Direction direction, int velocity, int damage) {
         super(position, hitBox);
         this.controller = new ProjectileController(this);
         this.direction = direction;

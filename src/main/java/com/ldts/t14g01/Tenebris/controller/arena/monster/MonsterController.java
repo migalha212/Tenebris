@@ -7,7 +7,7 @@ import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.entities.monster.Monster;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.ElementProvider;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.Set;
@@ -107,7 +107,7 @@ public abstract class MonsterController<T extends Monster> {
 
         // Check if moving will cause damage
         for (GameElement element : elementProvider.getElements())
-            if (HitBoX.collide(element.getPosition(), element.getHitBox(), newPosition, this.model.getHitBox()))
+            if (HitBox.collide(element.getPosition(), element.getHitBox(), newPosition, this.model.getHitBox()))
                 return false;
 
         return true;

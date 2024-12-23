@@ -9,7 +9,7 @@ import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksMovement;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.BlocksVision;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesEntities;
 import com.ldts.t14g01.Tenebris.model.arena.particles.ParticleType;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.staticelement.BreakableWallView;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BreakableWall extends GameElement implements BlocksVision, AbsorbsProjectiles, BlocksMovement {
-    private static final HitBoX hitBoX = new HitBoX(new Vector2D(-9, -9), new Vector2D(17, 17));
+    private static final HitBox hitBoX = new HitBox(new Vector2D(-9, -9), new Vector2D(17, 17));
     private int hp;
 
     public BreakableWall(Vector2D position, int hp) {

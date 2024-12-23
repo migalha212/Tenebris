@@ -12,7 +12,7 @@ import com.ldts.t14g01.Tenebris.model.arena.weapons.GrenadeLauncher;
 import com.ldts.t14g01.Tenebris.model.arena.weapons.Pistol;
 import com.ldts.t14g01.Tenebris.model.arena.weapons.Weapon;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.entity.DylanView;
 
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dylan extends Entity {
-    private static final HitBoX hitBoX = new HitBoX(new Vector2D(-5, -6), new Vector2D(8, 13));
+    private static final HitBox hitBoX = new HitBox(new Vector2D(-5, -6), new Vector2D(8, 13));
     private final DylanController controller;
     private final List<Weapon> weapons;
     private int selectedWeapon;

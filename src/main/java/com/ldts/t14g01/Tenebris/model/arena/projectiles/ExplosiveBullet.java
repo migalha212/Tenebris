@@ -7,14 +7,14 @@ import com.ldts.t14g01.Tenebris.model.arena._commands.ShakeCamera;
 import com.ldts.t14g01.Tenebris.model.arena.effects.Explosion;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.AbsorbsProjectiles;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 import com.ldts.t14g01.Tenebris.view.arena.projectiles.ExplosiveBulletView;
 
 import java.util.List;
 
 public class ExplosiveBullet extends Projectile {
-    private static final HitBoX HIT_BOX = new HitBoX(new Vector2D(-4, -4), new Vector2D(6, 6));
+    private static final HitBox HIT_BOX = new HitBox(new Vector2D(-4, -4), new Vector2D(6, 6));
     private static final int VELOCITY = 4;
     private static final int EXPLOSION_DAMAGE = 15;
 

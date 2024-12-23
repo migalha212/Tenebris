@@ -1,14 +1,14 @@
 package com.ldts.t14g01.Tenebris.utils;
 
-public class HitBoX extends Pair<Vector2D> {
+public class HitBox extends Pair<Vector2D> {
     // First is the position of the upper left corner relative to the element position
     // Second is the position of the lower right corner relative to the upper left corner
 
-    public HitBoX(Vector2D first, Vector2D second) {
+    public HitBox(Vector2D first, Vector2D second) {
         super(first, second);
     }
 
-    public static boolean collide(Vector2D aPosition, HitBoX aHitBox, Vector2D bPosition, HitBoX bHitBox) {
+    public static boolean collide(Vector2D aPosition, HitBox aHitBox, Vector2D bPosition, HitBox bHitBox) {
         int a1x = aPosition.x() + aHitBox.first.x();
         int a1y = aPosition.y() + aHitBox.first.y();
         int b1x = bPosition.x() + bHitBox.first.x();

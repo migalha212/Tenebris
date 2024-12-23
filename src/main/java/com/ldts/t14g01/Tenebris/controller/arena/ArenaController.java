@@ -21,7 +21,7 @@ import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Pair;
 
 import java.io.IOException;
@@ -51,42 +51,42 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
         // Check Collisions between Entities and Static Elements
         for (GameElement element : elements) {
             for (Monster monster : monsters)
-                if (HitBoX.collide(element.getPosition(), element.getHitBox(), monster.getPosition(), monster.getHitBox()))
+                if (HitBox.collide(element.getPosition(), element.getHitBox(), monster.getPosition(), monster.getHitBox()))
                     collisions.add(new Pair<>(element, monster));
             if (dylan != null)
-                if (HitBoX.collide(element.getPosition(), element.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                if (HitBox.collide(element.getPosition(), element.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
                     collisions.add(new Pair<>(dylan, element));
         }
 
         // Check Collisions between Projectiles and Static Elements
         for (Projectile projectile : projectiles)
             for (GameElement element : elements)
-                if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), element.getPosition(), element.getHitBox()))
+                if (HitBox.collide(projectile.getPosition(), projectile.getHitBox(), element.getPosition(), element.getHitBox()))
                     collisions.add(new Pair<>(projectile, element));
 
         // Check Collision between Projectiles and Entities
         for (Projectile projectile : projectiles) {
             for (Monster monster : monsters)
-                if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), monster.getPosition(), monster.getHitBox()))
+                if (HitBox.collide(projectile.getPosition(), projectile.getHitBox(), monster.getPosition(), monster.getHitBox()))
                     collisions.add(new Pair<>(projectile, monster));
             if (dylan != null)
-                if (HitBoX.collide(projectile.getPosition(), projectile.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                if (HitBox.collide(projectile.getPosition(), projectile.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
                     collisions.add(new Pair<>(projectile, dylan));
         }
 
         // Check Collisions between Effects and Static Elements
         for (Effect effect : effects)
             for (GameElement element : elements)
-                if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), element.getPosition(), element.getHitBox()))
+                if (HitBox.collide(effect.getPosition(), effect.getHitBox(), element.getPosition(), element.getHitBox()))
                     collisions.add(new Pair<>(effect, element));
 
         // Check Collisions between Effects and Entities
         for (Effect effect : effects) {
             for (Monster monster : monsters)
-                if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), monster.getPosition(), monster.getHitBox()))
+                if (HitBox.collide(effect.getPosition(), effect.getHitBox(), monster.getPosition(), monster.getHitBox()))
                     collisions.add(new Pair<>(effect, monster));
             if (dylan != null)
-                if (HitBoX.collide(effect.getPosition(), effect.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                if (HitBox.collide(effect.getPosition(), effect.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
                     collisions.add(new Pair<>(effect, dylan));
         }
 
@@ -95,14 +95,14 @@ public class ArenaController extends Controller<Arena> implements CommandHandler
             for (int j = i + 1; j < monsters.size(); j++) {
                 Monster monster1 = monsters.get(i);
                 Monster monster2 = monsters.get(j);
-                if (HitBoX.collide(monster1.getPosition(), monster1.getHitBox(), monster2.getPosition(), monster2.getHitBox()))
+                if (HitBox.collide(monster1.getPosition(), monster1.getHitBox(), monster2.getPosition(), monster2.getHitBox()))
                     collisions.add(new Pair<>(monster1, monster2));
             }
 
         // Check Collisions between Dylan and Monsters
         if (dylan != null)
             for (Monster monster : monsters)
-                if (HitBoX.collide(monster.getPosition(), monster.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
+                if (HitBox.collide(monster.getPosition(), monster.getHitBox(), dylan.getPosition(), dylan.getHitBox()))
                     collisions.add(new Pair<>(dylan, monster));
 
         for (Pair<GameElement> p : collisions) {

@@ -6,7 +6,7 @@ import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
 import com.ldts.t14g01.Tenebris.model.arena._commands.DeleteMonster;
 import com.ldts.t14g01.Tenebris.model.arena.entities.Entity;
 import com.ldts.t14g01.Tenebris.model.arena.interfaces.DamagesPlayer;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public abstract class Monster extends Entity implements DamagesPlayer {
     private final int visionRange;
     private final int damage;
 
-    public Monster(Vector2D position, HitBoX hitBoX, int hp, int velocity, int damage, int visionRange) {
+    public Monster(Vector2D position, HitBox hitBoX, int hp, int velocity, int damage, int visionRange) {
         super(position, hitBoX, hp, velocity);
         this.controller = null;
         this.visionRange = visionRange;

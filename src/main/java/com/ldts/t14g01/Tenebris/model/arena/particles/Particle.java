@@ -3,7 +3,7 @@ package com.ldts.t14g01.Tenebris.model.arena.particles;
 import com.ldts.t14g01.Tenebris.controller.arena.ParticleController;
 import com.ldts.t14g01.Tenebris.model.arena.GameElement;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public abstract class Particle extends GameElement {
     private int currentFrame = 1;
 
     public Particle(Vector2D position) {
-        super(position, new HitBoX(new Vector2D(0, 0), new Vector2D(0, 0)));
+        super(position, new HitBox(new Vector2D(0, 0), new Vector2D(0, 0)));
         this.controller = new ParticleController(this);
     }
 

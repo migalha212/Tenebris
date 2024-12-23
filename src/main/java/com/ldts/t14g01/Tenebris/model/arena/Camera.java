@@ -2,7 +2,7 @@ package com.ldts.t14g01.Tenebris.model.arena;
 
 import com.ldts.t14g01.Tenebris.controller.arena.CameraController;
 import com.ldts.t14g01.Tenebris.model.arena._commands.Command;
-import com.ldts.t14g01.Tenebris.utils.HitBoX;
+import com.ldts.t14g01.Tenebris.utils.HitBox;
 import com.ldts.t14g01.Tenebris.utils.Vector2D;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Camera extends GameElement {
     private final CameraController controller;
 
     public Camera(Vector2D position) {
-        super(position, new HitBoX(new Vector2D(0, 0), new Vector2D(0, 0)));
+        super(position, new HitBox(new Vector2D(0, 0), new Vector2D(0, 0)));
         this.controller = new CameraController(this);
     }
 
