@@ -3,6 +3,7 @@ package com.ldts.t14g01.Tenebris.savedata;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,13 +11,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileSystemSaveDataManager implements SaveDataManager {
-    private static final String SAVE_FILE = "src/main/resources/saves/save.csv";
+    private static final String DEFAULT_FILE = "src/main/resources/saves/save.csv";
+    private String SAVE_FILE;
     private static FileSystemSaveDataManager instance;
 
     private final List<SaveData> saves;
 
     private FileSystemSaveDataManager() {
         this.saves = new ArrayList<>();
+        this.SAVE_FILE = DEFAULT_FILE;
         this.loadFromFile();
     }
 
@@ -28,10 +31,8 @@ public class FileSystemSaveDataManager implements SaveDataManager {
     private void loadFromFile() {
         this.saves.clear();
 
-        File saveFile = new File(SAVE_FILE);
+        File saveFile = new File(this.SAVE_FILE);
         try {
-            if (!saveFile.exists()) return;
-
             Scanner x = new Scanner(saveFile);
             x.useDelimiter("[;\\r\\n]");
             while (x.hasNext()) {
@@ -43,8 +44,8 @@ public class FileSystemSaveDataManager implements SaveDataManager {
 
                 saves.add(new SaveData(difficulty, level, lastOpen));
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File Not Found.");
         }
     }
 
@@ -67,7 +68,7 @@ public class FileSystemSaveDataManager implements SaveDataManager {
     @Override
     public void triggerUpdate() {
         // Save new Save List
-        try (FileOutputStream fos = new FileOutputStream(SAVE_FILE, false)) {
+        try (FileOutputStream fos = new FileOutputStream(this.SAVE_FILE, false)) {
             // The 'false' flag ensures overwriting; no append mode
             StringBuilder content = new StringBuilder();
 
@@ -118,5 +119,12 @@ public class FileSystemSaveDataManager implements SaveDataManager {
 
         this.saves.remove(saveData);
         this.triggerUpdate();
+    }
+
+    // Only used for tests
+    public void setFileName(String newFileName) {
+        if (newFileName == null) this.SAVE_FILE = DEFAULT_FILE;
+        else this.SAVE_FILE = newFileName;
+        this.loadFromFile();
     }
 }
