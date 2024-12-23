@@ -45,16 +45,23 @@ A character named Dylan Macron finds himself jumping from arena to arena, fighti
 First menu of the game. It will show up when opening the game and from here you can select one of the following options:
 
 - **New Game**: Allows you to create a new game and select the difficulty.
+- **Continue**: Allows player to enter in the last session played without needing to navigate through the Load Game Menu.
 - **Load Game**: Allows you to access and continue a previously saved game session.
 - **Levels**: This option just appears if you have already some saved game session. It is used to select one of the unlocked levels to play next.
 - **How to Play**: Explains you how you can play the game.
 - **Credits**: Shows the credits of the game.
 - **Exit**: Exits the Game.
 
-> Load Game, Levels and Statistics options only appear once the player has at least one saved game.
+> Continue, Load Game and Levels options only appear once the player has at least one saved game.
 
 ### New Game Menu
 Allows players to select their preferred difficulty level. [Options](#difficulty-levels) include Easy, Normal, Champion and Heartless, each accompanied by a brief description to guide the player. Once a difficulty is selected, the game proceeds to start.
+
+### Load Game Menu
+Allows players to select and load previously saved game progress. It also provides info about the selected load such as the maximum level reached and the current difficulty level.
+
+### Levels Menu
+This menu allows player to replay any of the levels achieved until that moment on the current selected save.
 
 ### How to Play Menu
 Provides essential gameplay information, including navigation, controls, objective (of the game), the game basics and details about weapons, enemies, bosses, difficulty levels, and map elements. Navigation instructions are shown on the right, with options to move through the menu or go back.
@@ -70,14 +77,53 @@ This menu can be opened while in-game. It lets you pause your game and gives you
 - **Restart Level** : Reloads the current level.
 - **Return to the Main Menu** : Goes to Main Menu.
 
+### Level Completed Menu
+Menu that appears when player sucessfully kills all monsters of the current level, without dying, giving him the options to go to the next level or to return to the main menu. For this menu to appear on the correct timings we have developed a system that detects if there is still any monster alive.
+
+### Victory Menu
+Menu that appears when player succesfully completes the last level of the game. The only option is to return to the main menu.
+
+### Monsters Alive Detection
+This system detects if there is still monsters alive. It is useful to understand if the Player completed sucessfully the level or not.
+
+### Death Menu
+Menu that appears when player dies, giving him the options to retry the current level or return to the main menu. For this menu to appear on the correct timings we have developed a system that detects if Dylan is still alive.
+
+### Game Over Menu
+Menu that appears if player dies on the Heartless Difficulty, once there is no second chance on that difficulty. The only option is to return to the main menu.
+
+### Dylan Alive Detection
+Useful to understand if player lost the game, by detecting if he died.
+
+### Collision Detection
+This system is a crucial part of the game, determining whether Game Elements collide with another, and if so calls the right interactions.
+
+### Damage Detection System
+Entities can lose HP from interactions (namely, attacks of other Entities or hitting spikes). As different entities have different HP's we needed to track their current HP's and reducing it accordingly to the Damage that is taken, resulted by the interaction.
+
+### Arena Builder 
+System that is capable to create the different arenas for each level from written text files with specific characters, allowing to generate static elements and the starting position of the Entities. This system makes it easier to create newer levels without having the need to change the code.
+
+### Sprite Image Loader
+A system that loads PNG images into the game representing them pixel by pixel on the screen, using Lanterna. This is used through everything that you can see on the game terminal.
+
+### Save System
+We developed a mechanism that stores the necessary game information, such as player progress and the difficulty level of that session, into a .txt file with the aim of letting the player continue that session latter if he wants so.
+
+### Sound System
+In order to create a more immersive experience for the player, we added music and sounds to our game. Different musics play during the menus and in-game. As for sounds, they are used to signal moves in menus and in-game interactions.
+
+### Animation System
+We implemented some animations such as bounce and camera shake. Bounces occur when an Entity collides with a Game Element and Camera shakes whenever an explosion occurs. We developed a general use Animation System and then created the specific cases. We decided to do that to improve maintenance and scability.
+
+### Effect System
+We implemented an effect, the explosion one. Even though it is only one effect, we created a system that lets you implement new effects relatively easy.
+
 ### Screen Resizer
 At the game's launch, the code dynamically detects the user's screen resolution to ensure that the game's proportionality remains consistent, regardless of the screen size. This approach guarantees that the full game window is always displayed without being cropped or cut off, providing an optimal experience across various screen resolutions.
 
 ### Screen Size Locker
 This feature prevents the user from resizing the game window, ensuring the game’s layout and functionality remain intact. If the user attempts to adjust the window size, the code detects this action, closes the current window, and reopens a new one with the predefined dimensions. The new window restores the exact state of the previous one, preserving all content and progress seamlessly.
-
-### Collision Detection
-Although it is not yet fully apparent in gameplay due to ongoing feature development, the game already incorporates a collision detection mechanism. This system will be a crucial part of the game, determining whether entities can move to specific positions and if monsters successfully deal damage to Dylan.
 
 ### Difficulty Levels
 
@@ -425,3 +471,9 @@ The State Pattern improves code organization and maintainability by encapsulatin
 <p align="center">
 <img src="/docs/resources/uml/gameElements.png">
 </p>
+
+## Code Smells
+
+## Coverage Report
+
+## Pitest Report
