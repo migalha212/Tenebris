@@ -218,6 +218,17 @@ The entities in the game are Dylan (our player) and the monsters. While they sha
 
 ### Camera
 Implemented with the objective of making levels with more than one arena (as shown on the level 6 of the game). it is responsible for changing the arena displayed to the player whenever he passes the limits of one arena and enters another. 
+
+[comment]: <> (Camera Showcase)
+
+<h3 align="center">
+  Camera Showcase
+</h3>
+
+<p align="center">
+<img src="resources/showcases/CameraShowcase.gif">
+</p>
+
     
 ### Projectiles
 Projectiles represent distinct types of ammunition in the game, with Bullet being a simple, linear damage-dealing projectile, and Explosive Bullet offering more advanced mechanics (such as area-of-effect damage) and the Speel being the Tenebris Harbinger's means of attack.
