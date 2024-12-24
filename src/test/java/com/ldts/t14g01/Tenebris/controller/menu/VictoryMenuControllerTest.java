@@ -3,10 +3,12 @@ package com.ldts.t14g01.Tenebris.controller.menu;
 import com.ldts.t14g01.Tenebris.Tenebris;
 import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.gui.GUI;
+import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.VictoryMenu;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -36,6 +38,11 @@ public class VictoryMenuControllerTest {
             mockedSoundManager.when(SoundManager::getInstance).thenReturn(this.soundManager);
 
             Mockito.when(this.gui.getAction()).thenReturn(Action.ESC);
+
+            Mockito.doAnswer(invocationOnMock -> {
+                Assertions.assertInstanceOf(MainMenu.class, ((MenuState) invocationOnMock.getArgument(0)).getModel());
+                return null;
+            }).when(this.stateChanger).setState(Mockito.any(MenuState.class));
 
             // Frame delay for actions is 15, so the game needs to tick 15 times to have an action go off
             for(int i = 0; i < 15; i++) this.controller.tick(stateChanger, Tenebris.getInstance());

@@ -5,6 +5,7 @@ import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
 import com.ldts.t14g01.Tenebris.model.arena.ArenaBuilder;
+import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
 import com.ldts.t14g01.Tenebris.model.menu.PauseMenu;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
@@ -15,6 +16,7 @@ import com.ldts.t14g01.Tenebris.state.StateChanger;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.IntRange;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -119,6 +121,11 @@ public class PauseMenuControllerTest {
             Mockito.when(mockedModel.getSelectedOption()).thenReturn(selectedOption);
             Mockito.when(mockedGui.getAction()).thenReturn(Action.EXEC);
 
+            Mockito.doAnswer(invocationOnMock -> {
+                Assertions.assertInstanceOf(MainMenu.class, ((MenuState) invocationOnMock.getArgument(0)).getModel());
+                return null;
+            }).when(mockedStateChanger).setState(Mockito.any(MenuState.class));
+
             controller1.tick(mockedStateChanger, Tenebris.getInstance());
 
             Mockito.verify(mockedSound, Mockito.times(1)).playSFX(SoundManager.SFX.MENU_SELECT);
@@ -131,8 +138,9 @@ public class PauseMenuControllerTest {
                 case Restart_Level ->
                         Mockito.verify(mockedStateChanger, Mockito.times(1)).setState(Mockito.any(ArenaState.class));
 
-                case Return_to_Main_Menu ->
-                        Mockito.verify(mockedStateChanger, Mockito.times(1)).setState(Mockito.any(MenuState.class));
+                case Return_to_Main_Menu -> {
+                    Mockito.verify(mockedStateChanger, Mockito.times(1)).setState(Mockito.any(MenuState.class));
+                }
             }
         }
     }

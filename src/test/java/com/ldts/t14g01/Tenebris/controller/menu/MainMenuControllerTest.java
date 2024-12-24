@@ -5,17 +5,13 @@ import com.ldts.t14g01.Tenebris.gui.Action;
 import com.ldts.t14g01.Tenebris.gui.GUI;
 import com.ldts.t14g01.Tenebris.model.arena.Arena;
 import com.ldts.t14g01.Tenebris.model.arena.ArenaBuilder;
-import com.ldts.t14g01.Tenebris.model.menu.MainMenu;
-import com.ldts.t14g01.Tenebris.model.menu.NewGameMenu;
+import com.ldts.t14g01.Tenebris.model.menu.*;
 import com.ldts.t14g01.Tenebris.savedata.SaveData;
-import com.ldts.t14g01.Tenebris.savedata.SaveDataManager;
-import com.ldts.t14g01.Tenebris.savedata.SaveDataProvider;
 import com.ldts.t14g01.Tenebris.sound.SoundManager;
 import com.ldts.t14g01.Tenebris.state.ArenaState;
 import com.ldts.t14g01.Tenebris.state.MenuState;
 import com.ldts.t14g01.Tenebris.state.State;
 import com.ldts.t14g01.Tenebris.state.StateChanger;
-import com.ldts.t14g01.Tenebris.utils.Difficulty;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.IntRange;
@@ -29,17 +25,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewGameMenuControllerTest {
-    private NewGameMenuController controller;
-    private NewGameMenu model;
+
+public class MainMenuControllerTest {
+    private MainMenuController controller;
+    private MainMenu model;
     private StateChanger stateChanger;
     private SoundManager soundManager;
     private GUI gui;
 
     @BeforeEach
-    public void setUp() {
-        this.model = Mockito.mock(NewGameMenu.class);
-        this.controller = new NewGameMenuController(model);
+    void setUp() {
+        this.model = Mockito.mock(MainMenu.class);
+        this.controller = new MainMenuController(model);
         this.stateChanger = Mockito.mock(StateChanger.class);
         this.soundManager = Mockito.mock(SoundManager.class);
         this.gui = Mockito.mock(GUI.class);
@@ -53,7 +50,7 @@ public class NewGameMenuControllerTest {
 
 
     @Test
-    void tickQuitTest() throws Exception {
+    void tickQuitEscTest() throws Exception {
         try (MockedStatic<GUI> mockedGUI = Mockito.mockStatic(GUI.class); MockedStatic<SoundManager> mockedSoundManager = Mockito.mockStatic(SoundManager.class)) {
             mockedGUI.when(GUI::getGUI).thenReturn(this.gui);
             mockedSoundManager.when(SoundManager::getInstance).thenReturn(this.soundManager);
@@ -62,27 +59,11 @@ public class NewGameMenuControllerTest {
 
             this.controller.tick(this.stateChanger, Tenebris.getInstance());
 
-            Mockito.verify(this.stateChanger, Mockito.times(1)).setState(null);
-        }
-    }
-
-    @Test
-    void tickEscTest() throws Exception {
-        try (MockedStatic<GUI> mockedGUI = Mockito.mockStatic(GUI.class); MockedStatic<SoundManager> mockedSoundManager = Mockito.mockStatic(SoundManager.class)) {
-            mockedGUI.when(GUI::getGUI).thenReturn(this.gui);
-            mockedSoundManager.when(SoundManager::getInstance).thenReturn(this.soundManager);
-
             Mockito.when(this.gui.getAction()).thenReturn(Action.ESC);
 
-            Mockito.doAnswer(invocationOnMock -> {
-                Assertions.assertInstanceOf(MainMenu.class, ((MenuState) invocationOnMock.getArgument(0)).getModel());
-                return null;
-            }).when(this.stateChanger).setState(Mockito.any(MenuState.class));
+            this.controller.tick(this.stateChanger, Tenebris.getInstance());
 
-            this.controller.tick(stateChanger, Tenebris.getInstance());
-
-            Mockito.verify(soundManager, Mockito.times(1)).playSFX(SoundManager.SFX.MENU_GO_BACK);
-            Mockito.verify(stateChanger, Mockito.times(1)).setState(Mockito.any(MenuState.class));
+            Mockito.verify(this.stateChanger, Mockito.times(2)).setState(null);
         }
     }
 
@@ -108,43 +89,55 @@ public class NewGameMenuControllerTest {
     }
 
     @Property
-    void tickExecTest(@ForAll @IntRange(min = 0, max = 3) int selectedOption) throws Exception {
+    void tickExecTest(@ForAll @IntRange(min = 0, max = 2) int selectedOption) throws Exception {
         try (MockedStatic<GUI> mockedGUI = Mockito.mockStatic(GUI.class);
              MockedStatic<SoundManager> mockedSoundManager = Mockito.mockStatic(SoundManager.class);
-             MockedStatic<ArenaBuilder> arenaBuilderMockedStatic = Mockito.mockStatic(ArenaBuilder.class);
-             MockedStatic<SaveDataManager> managerMockedStatic = Mockito.mockStatic(SaveDataManager.class)) {
+             MockedStatic<ArenaBuilder> arenaBuilderMockedStatic = Mockito.mockStatic(ArenaBuilder.class)) {
 
-            NewGameMenu mockedModel = Mockito.mock(NewGameMenu.class);
-            NewGameMenuController controller1 = new NewGameMenuController(mockedModel);
+            MainMenu mockedModel = Mockito.mock(MainMenu.class);
+            MainMenuController controller1 = new MainMenuController(mockedModel);
             GUI mockedGui = Mockito.mock(GUI.class);
             SoundManager mockedSound = Mockito.mock(SoundManager.class);
             StateChanger mockedStateChanger = Mockito.mock(StateChanger.class);
-            SaveDataProvider mockedTenebris = Mockito.mock(SaveDataProvider.class);
-            SaveDataManager mockedSaveDataManager = Mockito.mock(SaveDataManager.class);
-            SaveData mockedSaveData = Mockito.mock(SaveData.class);
 
             mockedGUI.when(GUI::getGUI).thenReturn(mockedGui);
             mockedSoundManager.when(SoundManager::getInstance).thenReturn(mockedSound);
-            managerMockedStatic.when(SaveDataManager::getInstance).thenReturn(mockedSaveDataManager);
             arenaBuilderMockedStatic.when(() -> ArenaBuilder.build(Mockito.any(SaveData.class))).thenReturn(new Arena());
 
             List<String> options = new ArrayList<>();
-            for (Difficulty difficulty : Difficulty.values()) {
-                options.add(difficulty.toString());
+            for (MainMenu.MainMenuOptions option : MainMenu.MainMenuOptions.values()) {
+                options.add(option.toString());
             }
 
             Mockito.when(mockedModel.getOptions()).thenReturn(options);
             Mockito.when(mockedModel.getSelectedOption()).thenReturn(selectedOption);
             Mockito.when(mockedGui.getAction()).thenReturn(Action.EXEC);
-            Mockito.when(mockedSaveDataManager.createNewSave(Mockito.any(Difficulty.class))).thenReturn(mockedSaveData);
-            controller1.tick(mockedStateChanger, mockedTenebris);
+
+            Class menuType = null;
+            switch (MainMenu.MainMenuOptions.valueOf(options.get(selectedOption))) {
+                case New_Game -> menuType = NewGameMenu.class;
+                case Load_Game -> menuType = LoadGameMenu.class;
+                case Levels -> menuType = LevelsMenu.class;
+                case How_to_Play -> menuType = HowToPlayMenu.class;
+                case Credits -> menuType = CreditsMenu.class;
+            }
+
+            Class finalMenuType = menuType;
+            Mockito.doAnswer(invocationOnMock -> {
+                Assertions.assertInstanceOf(finalMenuType, ((MenuState) invocationOnMock.getArgument(0)).getModel());
+                return null;
+            }).when(mockedStateChanger).setState(Mockito.any(MenuState.class));
+
+            controller1.tick(mockedStateChanger, Tenebris.getInstance());
 
             Mockito.verify(mockedSound, Mockito.times(1)).playSFX(SoundManager.SFX.MENU_SELECT);
-            Mockito.verify(mockedSaveDataManager).createNewSave(Difficulty.valueOf(options.get(selectedOption)));
-            Mockito.verify(mockedTenebris, Mockito.times(1)).setSaveData(mockedSaveData);
-            Mockito.verify(mockedStateChanger, Mockito.times(1)).setState(Mockito.any(ArenaState.class));
+            switch (MainMenu.MainMenuOptions.valueOf(options.get(selectedOption))) {
+                case New_Game, Load_Game, Levels, How_to_Play, Credits -> Mockito.verify(mockedStateChanger, Mockito.times(1)).setState(Mockito.any(MenuState.class));
+                case Continue -> Mockito.verify(mockedStateChanger, Mockito.times(1)).setState(Mockito.any(ArenaState.class));
+                case Exit -> Mockito.verify(mockedStateChanger, Mockito.times(1)).setState(null);
+            }
 
         }
     }
-}
 
+}
