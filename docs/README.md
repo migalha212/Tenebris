@@ -62,20 +62,44 @@ First menu of the game. It will show up when opening the game and from here you 
 
 > Continue, Load Game and Levels options only appear once the player has at least one saved game.
 
+<p align="center">
+  <img src="resources/screenshots/MainMenu.png">
+</p>
+
 ### New Game Menu
 Allows players to select their preferred difficulty level. [Options](#difficulty-levels) include Easy, Normal, Champion and Heartless, each accompanied by a brief description to guide the player. Once a difficulty is selected, the game proceeds to start.
+
+<p align="center">
+  <img src="resources/screenshots/NewGameMenu.png">
+</p>
 
 ### Load Game Menu
 Allows players to select and load previously saved game progress. It also provides info about the selected load such as the maximum level reached and the current difficulty level.
 
+<p align="center">
+  <img src="resources/screenshots/LoadGameMenu.png">
+</p>
+
 ### Levels Menu
 This menu allows player to replay any of the levels achieved until that moment on the current selected save.
+
+<p align="center">
+  <img src="resources/screenshots/LevelsMenu.png">
+</p>
 
 ### How to Play Menu
 Provides essential gameplay information, including navigation, controls, objective (of the game), the game basics and details about weapons, enemies, bosses, difficulty levels, and map elements. Navigation instructions are shown on the right, with options to move through the menu or go back.
 
+<p align="center">
+  <img src="resources/screenshots/HowToPlayMenu.png">
+</p>
+
 ### Credits Menu
 A simple text-based screen that highlights the individuals who contributed to the development of the game and the purpose behind its creation. It provides a straightforward way to acknowledge the team. The menu includes a single option to return to the Main Menu, ensuring easy navigation.
+
+<p align="center">
+  <img src="resources/screenshots/CreditsMenu.png">
+</p>
 
 ### Pause Menu
 
@@ -85,11 +109,23 @@ This menu can be opened while in-game. It lets you pause your game and gives you
 - **Restart Level** : Reloads the current level.
 - **Return to the Main Menu** : Goes to Main Menu.
 
+<p align="center">
+  <img src="resources/screenshots/PauseMenu.png">
+</p>
+
 ### Level Completed Menu
 Menu that appears when player sucessfully kills all monsters of the current level, without dying, giving him the options to go to the next level or to return to the main menu. For this menu to appear on the correct timings we have developed a system that detects if there is still any monster alive.
 
+<p align="center">
+  <img src="resources/screenshots/LevelCompletedMenu.png">
+</p>
+
 ### Victory Menu
 Menu that appears when player succesfully completes the last level of the game. The only option is to return to the main menu.
+
+<p align="center">
+  <img src="resources/screenshots/VictoryMenu.png">
+</p>
 
 ### Monsters Alive Detection
 This system detects if there is still monsters alive. It is useful to understand if the Player completed sucessfully the level or not.
@@ -97,8 +133,16 @@ This system detects if there is still monsters alive. It is useful to understand
 ### Death Menu
 Menu that appears when player dies, giving him the options to retry the current level or return to the main menu. For this menu to appear on the correct timings we have developed a system that detects if Dylan is still alive.
 
+<p align="center">
+  <img src="resources/screenshots/DeathMenu.png">
+</p>
+
 ### Game Over Menu
 Menu that appears if player dies on the Heartless Difficulty, once there is no second chance on that difficulty. The only option is to return to the main menu.
+
+<p align="center">
+  <img src="resources/screenshots/GameOverMenu.png">
+</p>
 
 ### Dylan Alive Detection
 Useful to understand if player lost the game, by detecting if he died.
