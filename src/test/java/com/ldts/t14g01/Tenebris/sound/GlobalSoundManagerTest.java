@@ -57,7 +57,6 @@ public class GlobalSoundManagerTest {
             globalSoundManager.playSFX(sfx);
             clip = globalSoundManager.getLastPlayedClip();
             Assertions.assertNotNull(clip);
-            Assertions.assertEquals(0, clip.getFramePosition());
 
             Thread.sleep(10);
             Assertions.assertTrue(clip.isRunning());

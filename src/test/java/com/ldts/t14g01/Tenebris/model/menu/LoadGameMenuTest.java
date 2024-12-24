@@ -31,10 +31,17 @@ public class LoadGameMenuTest {
 
     @Test
     void MenuTest1() {
-        Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount(), this.loadGameMenu.getOptions().size());
-        this.loadGameMenu.selectedOption = SaveDataManager.getInstance().getSaveCount();
-        this.loadGameMenu.updateOptions();
-        Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount() - 1, this.loadGameMenu.selectedOption);
+        try (MockedStatic<SaveDataManager> mockedSaveDataManager = mockStatic(SaveDataManager.class)) {
+            // Insure SavaDataManager returns the mock
+            this.mockSaveDataManager = mock(SaveDataManager.class);
+            mockedSaveDataManager.when(SaveDataManager::getInstance).thenReturn(mockSaveDataManager);
+            Mockito.when(mockSaveDataManager.getSaveCount()).thenReturn(0);
+            this.loadGameMenu = new LoadGameMenu();
+            Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount(), this.loadGameMenu.getOptions().size());
+            this.loadGameMenu.selectedOption = SaveDataManager.getInstance().getSaveCount();
+            this.loadGameMenu.updateOptions();
+            Assertions.assertEquals(SaveDataManager.getInstance().getSaveCount() - 1, this.loadGameMenu.selectedOption);
+        }
     }
 
     @Property(tries = 100)
