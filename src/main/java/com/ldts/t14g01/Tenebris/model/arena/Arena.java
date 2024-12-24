@@ -37,7 +37,6 @@ public class Arena implements ElementProvider {
             case Dylan dylan1 -> this.dylan = dylan1;
             case Particle particle -> this.particles.add(particle);
             case Monster monster -> this.monsters.add(monster);
-            case Projectile projectile -> this.projectiles.add(projectile);
             case null -> throw new RuntimeException("Trying to add null Element to Arena");
             default -> this.elements.add(element);
         }
