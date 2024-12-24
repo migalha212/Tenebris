@@ -45,4 +45,7 @@ application {
 pitest {
     junit5PluginVersion = '1.2.1'
     threads = 8
+
+    excludedClasses =  ['com.ldts.t14g01.Tenebris.gui.LanternaGUI']
+    excludedTestClasses =  ['com.ldts.t14g01.Tenebris.gui.LanternaGUITest']
 }

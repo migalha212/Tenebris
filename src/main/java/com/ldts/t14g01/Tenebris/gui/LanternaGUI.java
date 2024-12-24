@@ -11,6 +11,7 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalResizeListener;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame;
 import com.ldts.t14g01.Tenebris.utils.Difficulty;
@@ -1187,21 +1188,6 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
         if (keyStroke != null) if (keyStroke.getKeyType() == KeyType.EOF) this.quited = true;
     }
 
-    private static TextColor mapTextColor(GUI.Colors color) {
-        TextColor mapped = TextColor.ANSI.WHITE;
-        switch (color) {
-            case BLACK -> mapped = TextColor.ANSI.BLACK;
-            case CYAN -> mapped = TextColor.ANSI.CYAN;
-            case YELLOW -> mapped = TextColor.ANSI.YELLOW;
-            case BRIGHT_GREEN -> mapped = TextColor.ANSI.GREEN_BRIGHT;
-            case BRIGHT_YELLOW -> mapped = TextColor.Factory.fromString("#DAA520");
-            case GREEN -> mapped = TextColor.ANSI.GREEN;
-            case RED -> mapped = TextColor.ANSI.RED;
-            case ORANGE -> mapped = TextColor.Factory.fromString("#E26313");
-        }
-        return mapped;
-    }
-
     @Override
     public void onResized(Terminal terminal, TerminalSize newSize) {
         // Don't do anything unless it actually changed
@@ -1226,5 +1212,11 @@ public class LanternaGUI implements GUI, TerminalResizeListener, KeyListener {
     // This function is only used for tests and should not be used in any other way
     public Screen getScreen() {
         return this.screen;
+    }
+
+    // This function is only used for tests and should not be used in any other way
+    public void recreateScreen() throws IOException {
+        this.quited = false;
+        this.createScreen();
     }
 }
