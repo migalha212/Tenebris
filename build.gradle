@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'info.solidsoft.pitest' version '1.15.0'
+    id 'jacoco'
 }
 
 group = 'com.ldts.t14g01.Tenebris'
@@ -30,12 +31,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-test {
     useJUnitPlatform {
         includeEngines('junit-jupiter', 'jqwik')
     }
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
 }
 
 application {
