@@ -598,4 +598,26 @@ This pattern ensures that the arena creation process is both scalable and easy t
 
 ## Coverage Report
 
+[comment]: <> (Coverage Report)
+
+<h3 align="center">
+  Coverage Report
+</h3>
+
+<p align="center">
+<img src="/docs/resources/tests/CoverageTest.png">
+</p>
+
+
 ## Pitest Report
+
+[comment]: <> (Pitest Report)
+
+<h3 align="center">
+  Pitest Report
+</h3>
+
+<p align="center">
+<img src="/docs/resources/tests/PitestReport.png">
+</p>
+
