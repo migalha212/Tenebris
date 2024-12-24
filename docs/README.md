@@ -2,9 +2,17 @@
 
 ## **Game Description**
 
-A character named Dylan Macron finds himself jumping from arena to arena, fighting for his life. Each arena is filled with monsters of various types, all determined to kill him. Starting out relatively powerless, Dylan grows stronger with each fight as he gains experience. HHe has two weapons at his disposal: a simple Pistol and a Grenade Launcher. Dylan has only one life per level. If he dies, he will respawn at the beginning of the level and can continue fighting. However, if he dies on the hardest difficulty level, it’s game over.
+A character named Dylan Macron finds himself jumping from arena to arena, fighting for his life. Each arena is filled with monsters of various types, all determined to kill him. Starting out relatively powerless, Dylan grows stronger with each fight as he gains experience. He has two weapons at his disposal: a simple Pistol and a Grenade Launcher. Dylan has only one life per level. If he dies, he will respawn at the beginning of the level and can continue fighting. However, if he dies on the hardest difficulty level, it’s game over.
 
 > This project was developed by [Cláudio Meireles](https://github.com/Atum555) (up202306618), [Dinis Silva](https://github.com/DinisBSilva) (up202306207) and [Miguel Pereira](https://github.com/migalha212) (up202304387).
+
+## **Table of Contents**
+- [Controls](#controls)
+- [Implemented Features](#implemented-features)
+- [Design Patterns](#design-patterns)
+- [Code Smells](#code-smells)
+- [Coverage Report](#coverage-report)
+- [Pitest Report](#pitest-report)
 
 ## Controls
 ```W```: Moves Player up.  
@@ -439,6 +447,65 @@ We created, as per the design, a generic `State<T>` Class and the necessary more
 #### Consequences
 
 The State Pattern improves code organization and maintainability by encapsulating each state's behavior into distinct classes, ensuring modularity and clarity. It simplifies adding or modifying states, enabling scalability without impacting existing ones. By centralizing transition logic, it eliminates redundancy and ensures consistent, predictable flows. Delegating behavior to state classes removes complex conditional structures and enhances dynamic control over application behavior. This approach reinforces the single responsibility principle, resulting in a more robust, flexible, and clean system.
+
+### Command Pattern
+
+#### Problem in Context
+
+In a game, handling a wide variety of actions—such as creating or deleting objects, applying effects, and triggering animations—can result in tightly coupled and unmaintainable code. Scattering this logic across the codebase makes it harder to modify or extend, especially when new features are added. A centralized mechanism is needed to encapsulate these actions and execute them in a consistent and modular way.
+
+#### The Pattern
+
+The Command Pattern is a behavioral design pattern that encapsulates requests as objects, which allows to parameterize objects with operations, to delay their execution or to queue them. It is particularly effective for managing game actions, where diverse operations must be triggered dynamically.
+
+Key Components of the Command Pattern:
+- Command Interface: Defines the contract for executing commands.
+- Concrete Commands: Implement the command interface and encapsulate specific game actions (e.g., creating effects, deleting objects).
+- Invoker (Handler): The object responsible for triggering the execution of commands.
+- Receiver: The object that performs the actual operation when the command is executed.
+- Client: Configures the commands and their relationships with the invoker and receiver.
+
+#### Implementation
+
+In our game, the Command Pattern is used to encapsulate actions like creating and deleting objects (effects, particles, projectiles, walls, and monsters) and triggering dynamic behaviors (e.g., killing the main character or shaking the camera). Each of these operations is represented by a specific command, ensuring modularity and reuse. Our implementation can be found in the following [folder](/src/main/java/com/ldts/t14g01/Tenebris/model/arena/_commands).
+
+#### Consequences
+
+The Command Pattern brings the following benefits to managing game actions:
+- Modularity: Each action (e.g., creating or deleting game objects, shaking the camera) is encapsulated in its own command class, making the code easier to understand and maintain.
+- Extensibility: Adding new actions only requires creating new command classes without altering existing code.
+- Centralized Execution: The CommandHandler ensures that all commands are handled consistently, enabling features like action queuing or batch processing.
+- Dynamic Behavior: Commands can be composed, delayed, or executed conditionally, offering flexibility in gameplay mechanics.
+This approach allows our game to scale while maintaining a clean, organized, and flexible architecture.
+
+### Managing Arena Creation with the Factory Method Patterna
+
+#### Problem in Context
+In our game, constructing and initializing various elements like enemies, walls, and traps dynamically based on the level file and difficulty setting is a central challenge. Each game element requires specific configurations that change according to the selected difficulty (e.g., health, damage, vision range). Managing this complexity directly in the parsing logic would lead to scattered and unmaintainable code.
+
+To address this, we needed a centralized approach to handle the creation of game elements, ensuring consistency and maintainability without overengineering the solution.
+
+#### The Pattern
+We adopted a factory-based approach for this problem. Rather than implementing the traditional Factory Method Pattern with interfaces and concrete factories, we opted for a simpler solution using static factory methods. These methods encapsulate the logic for creating and configuring objects based on the level file and difficulty.
+
+Static factory methods are a design choice where object creation is handled by static methods in a utility class, making it easier to centralize creation logic while avoiding the need for additional factory instances.
+
+Key Components of the Factory Method Pattern:
+
+- Creator Class: Declares the factory method, which returns an object of a specific type.
+- Concrete Creators: Override the factory method to produce specific types of objects.
+- Product Interface: Defines the interface for the objects the factory creates.
+- Concrete Products: Implement the product interface and define the behavior of the objects.
+
+#### Implementation
+In our implementation, the ArenaBuilder class coordinates the parsing of level files and delegates the creation of game elements to the correspondent utility static factory method (like createDylan and createSpike). This factory method accomplishes the task to build and configure objects dynamically. Our implementation is defined [here](/src/main/java/com/ldts/t14g01/Tenebris/model/arena/ArenaBuilder.jalike createDylan and createSpikeva).
+
+#### Consequences
+Using the Factory Method Pattern for arena building provides the following benefits:
+- Centralized Creation Logic: All game element creation logic is centralized, ensuring consistency and making it easier to manage or modify.
+- Simplified Implementation: Static factory methods eliminate the need for interfaces and additional factory classes, making the implementation straightforward while reducing boilerplate code.
+- Perfomance: Static methods avoid the overhead of creating factory instances, improving runtime performance for object creation.
+This pattern ensures that the arena creation process is both scalable and easy to maintain, aligning with the overall design goals of the game.
 
 ## Class Hierarchies
 
